@@ -82,7 +82,7 @@ Warning the broadcast will send to all open clients if Vital sharing is on
 If you're missing recalls it will warn you that it is skipping associated quests.
 If all options are setup correctly a Start button will pop up. Press Start to start the meta loop. Settings must be setup before you send start or it will not function!
 
-If you have any feedback or run into any major issues please contact me on discord Ryn#7986
+If you have any feedback or run into any major issues please contact me on discord @ Ryn#7986 or submit an issue on the github with Meta Name, State Name, and issue that is occuring.
 
 Also if you play on Coldeve and would like to save running to get each portal tie I am willing provide them.
 ~~ Dependencies ~~
