@@ -221,7 +221,7 @@ STATE: {Default} ~~ {
 				SetOpt {NavPriorityBoost} {False}
 				SetOpt {EnableCombat} {False}
 				SetOpt {SummonPets} {False}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				SetOpt {EnableBuffing} {True}
 				SetOpt {EnableLooting} {True}
@@ -379,7 +379,7 @@ STATE: {Finished} ~~ {
 			Expr {testgvar[ApostateFinale]==0}
 			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				Chat {/vt meta load QuestCheckPublic}
 ~~ }
 STATE: {FirstDungeon} ~~ {
@@ -909,7 +909,7 @@ STATE: {HeartJump} ~~ {
 			CellE 8B030113
 		DO:	DoAll
 				SetOpt {NavPriorityBoost} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.1875]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.1875]]`]}
 				EmbedNav nav12 {[none]}
 	IF:	All
 			MobsInDist_Name 1 15 {Apostate Grand Director}

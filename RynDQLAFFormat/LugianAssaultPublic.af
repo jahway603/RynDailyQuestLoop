@@ -151,7 +151,7 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {EnableNav} {False}
 				SetOpt {SummonPets} {False}
 				EmbedNav nav0 {[none]}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {clearpvar[Door]}
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {clearvar[JumpStuck]}
@@ -209,7 +209,7 @@ STATE: {Default} ~~ {
 				SetOpt {NavPriorityBoost} {False}
 				SetOpt {EnableCombat} {False}
 				SetOpt {SummonPets} {False}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				SetOpt {Recharge-Norm-HitP} {75}
 				SetOpt {EnableBuffing} {True}
@@ -403,7 +403,7 @@ STATE: {Dungeon} ~~ {
 				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameEight]]==1}
 				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameNine]]==1}
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				EmbedNav nav1 {Junk.nav}
 	IF:	All
 			Expr {getpvar[Leader]==0}
@@ -422,7 +422,7 @@ STATE: {Dungeon} ~~ {
 				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameEight]]==1}
 				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameNine]]==1}
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				EmbedNav nav2 {Junk.nav}
 	IF:	All
 			Expr {getpvar[Door]==0}
@@ -629,7 +629,7 @@ STATE: {Dungeon} ~~ {
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5}
 		DO:	DoAll
 				DoExpr {setpvar[Door,0]}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0416666666666]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0416666666666]]`]}
 				EmbedNav nav13 {[none]}
 	IF:	Any
 			IntoPortal
@@ -688,9 +688,9 @@ STATE: {FightBoss} ~~ {
 	IF:	Always
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 	IF: Expr {getgvar[RangeDown]==1}
-		DO: DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+		DO: DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Captain Keeson]]==7}

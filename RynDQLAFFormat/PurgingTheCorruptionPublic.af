@@ -247,7 +247,7 @@ STATE: {Bosses} ~~ {
 		DO:	DoAll
 				EmbedNav nav2 {[none]}
 				SetOpt {DoorLockpickDiffExcessThreshold} {-50}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.625]]`]}
 	IF:	Expr {getpvar[Leader]==1}
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[51379]]}
 	IF:	All
@@ -456,7 +456,7 @@ STATE: {Default} ~~ {
 				SetOpt {NavPriorityBoost} {False}
 				SetOpt {EnableCombat} {False}
 				SetOpt {SummonPets} {False}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				SetOpt {EnableBuffing} {True}
 				SetOpt {EnableLooting} {True}
@@ -737,7 +737,7 @@ STATE: {GoTurnin} ~~ {
 				Chat {/vt meta load CheckPublic}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {EnableCombat} {False}
 ~~ }
 STATE: {Loot} ~~ {
@@ -1419,7 +1419,7 @@ STATE: {ToTN} ~~ {
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[Stuck, ToTN]}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {EnableCombat} {False}
 	IF:	BlockE F6820000
 		DO:	DoAll
@@ -1766,7 +1766,7 @@ STATE: {ToStudy} ~~ {
 			CellE 587002FA
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setpvar[StateName,ToBookcaseOne]}
 				Chat {/vt meta load CheckPublic}
 				SetOpt {EnableCombat} {True}

@@ -179,7 +179,7 @@ STATE: {Default} ~~ {
 				SetOpt {NavPriorityBoost} {False}
 				SetOpt {EnableCombat} {False}
 				SetOpt {SummonPets} {False}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				SetOpt {EnableBuffing} {True}
 				SetOpt {EnableLooting} {True}
@@ -292,10 +292,10 @@ STATE: {Dungeon} ~~ {
 	IF:	Always
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 	IF:	All
 			CellE F81E012E
-		DO:	DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.01041666666]]`]}
+		DO:	DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.01041666666]]`]}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			SecsInStateGE 3
@@ -505,7 +505,7 @@ STATE: {DungeonJump} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {clearvar[JumpStuck]}
 				SetOpt {EnableCombat} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.01041666666]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.01041666666]]`]}
 				SetOpt {SummonPets} {True}
 				SetState {Dungeon}
 	IF:	All
@@ -555,7 +555,7 @@ STATE: {FightBoss} ~~ {
 	IF:	Always
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			SecsInStateGE 3
@@ -917,7 +917,7 @@ STATE: {ToSurfacePortal} ~~ {
 	IF:	Always
 		DO:	DoAll
 				SetWatchdog 5 45 {ToSanc}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	Any
 			CellE F81E0125
@@ -991,7 +991,7 @@ STATE: {UseBistElle} ~~ {
 	IF:	Always
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 	IF:	Expr {getpvar[TurnIn]==1}
 		DO:	Return
 	IF:	All

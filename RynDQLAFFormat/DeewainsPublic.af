@@ -84,7 +84,7 @@ STATE: {Bridge} ~~ {
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
 				SetOpt {EnableCombat} {False}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 				EmbedNav nav0 {[none]}
 	IF:	All
 			NavEmpty
@@ -124,7 +124,7 @@ STATE: {Bridge} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {EnableCombat} {True}
 				SetOpt {SummonPets} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
 				DoExpr {setgvar[DeewainBridgeGo,1]}
 				SetState {DeewainFight}
 ~~ }
@@ -260,7 +260,7 @@ STATE: {DeewainFight} ~~ {
 			Expr {getgvar[Go]==0}
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[43781]]==7}
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 				SetOpt {EnableCombat} {True}
 				SetOpt {EnableNav} {False}
 				SetOpt {SummonPets} {True}
@@ -319,12 +319,12 @@ STATE: {DeewainFight} ~~ {
 				SetOpt {EnableCombat} {False}
 				SetOpt {EnableNav} {True}
 				DoExpr {setgvar[Go,1]}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 	IF:	Expr {getgvar[Go]==1}
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
 				SetOpt {EnableNav} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				EmbedNav nav2 {DeewainToReward.nav}
 	IF:	All
 			NavEmpty
@@ -378,7 +378,7 @@ STATE: {Default} ~~ {
 				SetOpt {NavPriorityBoost} {False}
 				SetOpt {EnableCombat} {False}
 				SetOpt {SummonPets} {False}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				SetOpt {EnableBuffing} {True}
 				SetOpt {EnableLooting} {True}
@@ -484,7 +484,7 @@ STATE: {Defenders} ~~ {
 				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				SetWatchdog 5 45 {WatchDog}
 	IF:	All
 			SecsInStateGE 2
@@ -526,7 +526,7 @@ STATE: {Defenders} ~~ {
 			CellE 7E030121
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				EmbedNav nav3 {DeewainDefender.nav}
 	IF:	All
 			Any
@@ -534,7 +534,7 @@ STATE: {Defenders} ~~ {
 				CellE 7E030426
 			NavEmpty
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {setpvar[StateName,PortalMaze]}
 				Chat {/vt meta load CheckPublic}
 ~~ }
@@ -636,7 +636,7 @@ STATE: {FallingRocks} ~~ {
 				SetOpt {Recharge-Helper-Mana} {15}
 				SetOpt {Recharge-Helper-Stam} {15}
 				SetOpt {EnableNav} {False}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}				
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}				
 				DoExpr {setgvar[DeewainBridge,1]}
 				DoExpr {setpvar[StateName,Bridge]}
 				Chat {/vt meta load CheckPublic}
@@ -651,7 +651,7 @@ STATE: {FallingRocks} ~~ {
 				SetOpt {Recharge-Norm-Stam} {50}
 				SetOpt {Recharge-Norm-Mana} {45}
 				SetOpt {EnableNav} {False}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}				
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}				
 				DoExpr {setgvar[DeewainBridge,1]}
 				DoExpr {setpvar[StateName,Bridge]}
 				Chat {/vt meta load CheckPublic}

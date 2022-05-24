@@ -109,7 +109,7 @@ STATE: {CatacombsOfTorment} ~~ {
 				Chat {/vt meta load CheckPublic}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				SetOpt {UseDispelItems} {True}
 				DoExpr {setpvar[ClearMobs,CatacombsOfTorment]}
 				SetWatchdog 5 30 {ClearMobs}
@@ -433,7 +433,7 @@ STATE: {Default} ~~ {
 				SetOpt {NavPriorityBoost} {False}
 				SetOpt {EnableCombat} {False}
 				SetOpt {SummonPets} {False}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				SetOpt {EnableBuffing} {True}
 				SetOpt {EnableLooting} {True}
@@ -560,7 +560,7 @@ STATE: {FightBoss} ~~ {
 		DO:	DoAll
 				SetOpt {NavPriorityBoost} {True}
 				SetOpt {EnableCombat} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
 	IF:	All
 			Expr {getpvar[QuestCompletedSkip]==0}
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Curator of Torment]]==7}
@@ -747,7 +747,7 @@ STATE: {GroundToTorment} ~~ {
 				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setpvar[ClearMobs,GroundToTorment]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	All
@@ -788,7 +788,7 @@ STATE: {GroundToTorment} ~~ {
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,GroundToTorment]}
 				Chat {/vt meta load CheckPublic}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.125]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.125]]`]}
 	IF:	All
 			NavEmpty
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -800,7 +800,7 @@ STATE: {GroundToTorment} ~~ {
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,GroundToTorment]}
 				Chat {/vt meta load CheckPublic}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.125]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.125]]`]}
 	IF:	All
 			NoMobsInDist 15
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -859,7 +859,7 @@ STATE: {GroundToTorment} ~~ {
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
 				EmbedNav nav10 {GroundToTormentAfterJump.nav}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==0}
 			Expr {getvar[PitStop]==2}
@@ -872,7 +872,7 @@ STATE: {GroundToTorment} ~~ {
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
 				EmbedNav nav10 {GroundToTormentAfterJump.nav}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 	IF:	Any
 			CellE 5879052B
 			CellE 5879052A
@@ -1229,7 +1229,7 @@ STATE: {MoveToHallway} ~~ {
 				SetOpt {NavPriorityBoost} {True}
 				SetOpt {EnableCombat} {True}
 				SetOpt {SummonPets} {False}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 	IF:	All
 			NoMobsInDist 80
 			Any
@@ -1281,7 +1281,7 @@ STATE: {MoveToHallway} ~~ {
 		DO:	SetState {TalkToCurator}
 	IF:	ChatMatch {^A voice echos in your mind, "So, you've worked so hard to find me. You've interrupted my experiments and you've interfered with my plans. I cannot let you continue to exist, but I'm still not convinced you're worth my time. Guards! Remove this vermin from my sanctum. Their presence pollutes this place."}
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {SummonPets} {False}
 				DoExpr {stopwatchstart[setvar[RyCountDown, stopwatchcreate[]]]}
 				SetOpt {NavPriorityBoost} {True}
@@ -1295,7 +1295,7 @@ STATE: {MoveToHallway} ~~ {
 				Expr {getobjectinternaltype[getvar[RyCountDown]]==7}
 				Expr {stopwatchelapsedseconds[getvar[RyCountDown]]>=315}
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
 				SetOpt {SummonPets} {True}
 				SetOpt {UseDispelItems} {True}
 				DoExpr {setvar[PitStop,0]}
@@ -1380,7 +1380,7 @@ STATE: {PathOfRage} ~~ {
 		DO:	DoExpr {setgvar[Pillar,4]}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setpvar[ClearMobs,PathOfRage]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	Expr {getgvar[Pillar]==4}
@@ -1541,7 +1541,7 @@ STATE: {PathOfTorment} ~~ {
 		DO:	DoExpr {setgvar[Pillar,4]}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				SetOpt {UseDispelItems} {True}
 				DoExpr {setpvar[ClearMobs,PathOfTorment]}
 				SetWatchdog 5 30 {ClearMobs}
@@ -1674,7 +1674,7 @@ STATE: {PlatformOfRage} ~~ {
 		DO:	DoExpr {setgvar[Pillar,4]}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setpvar[ClearMobs,PlatformOfRage]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	Expr {getgvar[Pillar]==4}
@@ -1833,7 +1833,7 @@ STATE: {PlatformOfTorment} ~~ {
 		DO:	DoExpr {setgvar[Pillar,4]}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setpvar[ClearMobs,PlatformOfTorment]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	Expr {getgvar[Pillar]==4}
@@ -1978,7 +1978,7 @@ STATE: {PlatformPicker} ~~ {
 		DO:	DoExpr {setgvar[Pillar,4]}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setpvar[ClearMobs,PlatformPicker]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	All
@@ -2073,7 +2073,7 @@ STATE: {TalkToCurator} ~~ {
 				Expr {getobjectinternaltype[getvar[RyCountDown]]==7}
 				Expr {stopwatchelapsedseconds[getvar[RyCountDown]]>=315}
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
 				SetOpt {SummonPets} {True}
 				SetOpt {UseDispelItems} {True}
 				DoExpr {setvar[PitStop,0]}
@@ -2081,7 +2081,7 @@ STATE: {TalkToCurator} ~~ {
 				SetState {FightBoss}
 	IF:	ChatMatch {^A voice echos in your mind, "So, you've worked so hard to find me. You've interrupted my experiments and you've interfered with my plans. I cannot let you continue to exist, but I'm still not convinced you're worth my time. Guards! Remove this vermin from my sanctum. Their presence pollutes this place."}
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {SummonPets} {False}
 				DoExpr {stopwatchstart[setvar[RyCountDown, stopwatchcreate[]]]}
 				DoExpr {setvar[Flag,1]}
@@ -2143,7 +2143,7 @@ STATE: {ToCatacombsOfTorment} ~~ {
 				Chat {/f Pillar One Respawned}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setpvar[ClearMobs,ToCatacombsOfTorment]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	All
@@ -2174,7 +2174,7 @@ STATE: {ToCatacombsOfTorment} ~~ {
 			CellE 2D310025
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,ToCatacombsOfTorment]}
@@ -2186,7 +2186,7 @@ STATE: {ToCatacombsOfTorment} ~~ {
 			CellE 2D310025
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,ToCatacombsOfTorment]}
@@ -2279,7 +2279,7 @@ STATE: {ToGroundPillarOne} ~~ {
 		DO:	DoExpr {setgvar[Pillar,4]}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setpvar[ClearMobs,ToGroundPillarOne]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	Expr {getgvar[Pillar]==4}
@@ -2345,7 +2345,7 @@ STATE: {ToGroundPillarOne} ~~ {
 				CellE 2D30000B
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.3333333]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3333333]]`]}
 	IF:	All
 			NavEmpty
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[51972]]==1}
@@ -2353,7 +2353,7 @@ STATE: {ToGroundPillarOne} ~~ {
 				CellE 2D30000B
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,3]}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {setpvar[StateName,ToGroundPillarTwo]}
 				Chat {/vt meta load CheckPublic}
 				DoExpr {clearvar[PitStop]}
@@ -2417,7 +2417,7 @@ STATE: {ToGroundPillarTwo} ~~ {
 		DO:	DoExpr {setgvar[Pillar,4]}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setpvar[ClearMobs,ToGroundPillarTwo]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	All
@@ -2531,7 +2531,7 @@ STATE: {ToPlatform} ~~ {
 		DO: DoExpr {setgvar[Pillar,0]}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setpvar[ClearMobs,ToPlatform]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	All
@@ -2542,7 +2542,7 @@ STATE: {ToPlatform} ~~ {
 	IF:	Always
 		DO:	DoAll
 				SetOpt {UseDispelItems} {False}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 	IF:	Any
 			CellE 3032001C
 			CellE 30320014

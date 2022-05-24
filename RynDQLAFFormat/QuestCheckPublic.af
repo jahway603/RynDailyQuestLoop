@@ -988,11 +988,14 @@ STATE: {CheckQuests} ~~ {
 ~~ }
 STATE: {Default} ~~ {
 	IF:	All
-			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
-			Any
-				Expr {getcharboolprop[44]==1}
-				Expr {getpvar[FellowCount]<2}
-		DO:	DoExpr {setpvar[AdminSkip,1]}
+			Expr {uboptget[`VTank.PatchExpressionEngine`]==0}
+			Expr {testpvar[Options]==0}
+			SecsInStateGE 30
+		DO:	DoAll
+				Chat {/ub opt set VTank.PatchExpressionEngine true}
+				Chat {/ub delay 3000 /ub mexec setpvar[PatchToggle,1]}
+	IF: Expr {testpvar[Options]==0}
+		DO: Chat {/vt meta load %%DQLOptionsPublic%%}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
 			Expr {getobjectinternaltype[getgvar[GKRecall]]==1}
@@ -1004,15 +1007,7 @@ STATE: {Default} ~~ {
 			Expr {listcontains[getgvar[GKRecall],getcharstringprop[1]]==0}
 		DO: DoAll
 				DoExpr {listadd[getgvar[GKRecall],getcharstringprop[1]]}
-	IF:	All
-			Expr {uboptget[`VTank.PatchExpressionEngine`]==0}
-			Expr {testpvar[Options]==0}
-			SecsInStateGE 30
-		DO:	DoAll
-				Chat {/ub opt set VTank.PatchExpressionEngine true}
-				Chat {/ub delay 3000 /ub mexec setpvar[PatchToggle,1]}
-	IF: Expr {testpvar[Options]==0}
-		DO: Chat {/vt meta load %%DQLOptionsPublic%%}
+				SetState {Default}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
 			Expr {getpvar[Profile]==QuestCheckPublic}
@@ -1021,6 +1016,12 @@ STATE: {Default} ~~ {
 		DO:	DoAll
 				ChatExpr {\/vt meta load +getpvar[Profile]}
 				ChatExpr {\/vt setmetastate +getpvar[StateName]}
+	IF:	All
+			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
+			Any
+				Expr {getcharboolprop[44]==1}
+				Expr {getpvar[FellowCount]<2}
+		DO:	DoExpr {setpvar[AdminSkip,1]}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
 			Expr {getpvar[SyncBuff]==0}
