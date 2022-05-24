@@ -1002,7 +1002,10 @@ STATE: {ToFreehold} ~~ {
 		DO:	EmbedNav nav12 {[none]}
 	IF:	All
 			NavEmpty
-			BlockE F3240000
+			CellE F324002C
+			CellE F3240033
+			CellE F3240034
+			CellE F324002B
 		DO:	SetState {TurnInNote}
 	IF:	BlockE C8E90000
 		DO:	SetState {ToTN}

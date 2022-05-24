@@ -262,7 +262,7 @@ STATE: {DeathRecall} ~~ {
 				EmbedNav nav0 {[none]}
 				DoExpr {clearvar[StateTimer]}
 	IF: Any
-			BlockE 3FB10000
+			CellE 3FB10024
 			BlockE 40B10000
 		DO: DoAll
 				SetOpt {EnableNav} {True}
@@ -274,7 +274,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	All
 			NavEmpty
 			Any
-				BlockE 3FB10000
+				CellE 3FB10024
 				BlockE 40B10000
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}
@@ -289,12 +289,10 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[StateName,ToPlateau]}
 				Chat {/vt meta load CheckPublic}
-	IF:	All
-			NavEmpty
-			Any
-				Not BlockE 3FB10000
-				Not BlockE 40B10000
-				Not BlockE 42AE0000
+	IF:	Any
+			Not CellE 3FB10024
+			Not BlockE 40B10000
+			Not BlockE 42AE0000
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[2645]} ~~ SpellId 2645 is "Portal Recall".
 				SetState {DeathRecall}
