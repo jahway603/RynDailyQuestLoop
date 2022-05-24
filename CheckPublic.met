@@ -3064,7 +3064,7 @@ n
 s
 e
 s
-getvar[ConfirmProfileFail]>=10
+getvar[ConfirmProfileFail]>=20
 i
 6
 i

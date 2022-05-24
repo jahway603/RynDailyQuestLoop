@@ -6059,7 +6059,7 @@ n
 s
 e
 s
-getvar[Recall]==0
+getvar[Recall]==1
 i
 17
 i
@@ -6083,7 +6083,7 @@ n
 s
 e
 s
-setvar[Recall,1]
+setvar[Recall,0]
 i
 1
 s
