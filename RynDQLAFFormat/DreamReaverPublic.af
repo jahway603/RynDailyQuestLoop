@@ -1225,7 +1225,6 @@ STATE: {ToSent} ~~ {
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Virindi Sentinel]]==7}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Virindi Sentinel's Message Shard]]==1}
 			NavEmpty
-			NoMobsInDist 60
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setvar[CorpseName,Corpse of Virindi Sentinel]}
