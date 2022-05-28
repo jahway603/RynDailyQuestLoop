@@ -670,7 +670,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
 i
 12
 TABLE
@@ -8555,7 +8555,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
 i
 12
 TABLE
@@ -9033,7 +9033,7 @@ n
 s
 e
 s
-getobjectinternaltype[getgvar[SyncBuffComplete]]==1
+testgvar[SyncBuffComplete]==0
 i
 21
 TABLE
@@ -9083,7 +9083,20 @@ K
 V
 n
 n
+3
+i
+26
+TABLE
 2
+k
+v
+n
+n
+1
+s
+e
+s
+testgvar[SyncBuffComplete]==1
 i
 26
 TABLE
@@ -9146,7 +9159,7 @@ K
 V
 n
 n
-2
+3
 i
 21
 TABLE
@@ -9160,6 +9173,19 @@ i
 15
 i
 0
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+testgvar[SyncBuffComplete]==1
 i
 3
 TABLE
@@ -9305,7 +9331,7 @@ n
 s
 e
 s
-clearpvar[Buffing]==1
+clearpvar[Buffing]
 i
 7
 TABLE
@@ -9318,7 +9344,7 @@ n
 s
 e
 s
-clearpvar[BuffingStartAll]==1
+clearpvar[BuffingStartAll]
 i
 7
 TABLE
@@ -9763,7 +9789,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]
 s
 FightBoss
 i
@@ -11767,7 +11793,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
 i
 7
 TABLE
@@ -12369,7 +12395,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.125]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.125]]`]
 s
 GroundToTorment
 i
@@ -12496,7 +12522,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.125]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.125]]`]
 s
 GroundToTorment
 i
@@ -13210,7 +13236,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
 s
 GroundToTorment
 i
@@ -13460,7 +13486,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
 s
 GroundToTorment
 i
@@ -17257,7 +17283,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
 s
 MoveToHallway
 i
@@ -17860,7 +17886,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
 i
 12
 TABLE
@@ -18028,7 +18054,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]
 i
 12
 TABLE
@@ -18834,7 +18860,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
 i
 7
 TABLE
@@ -21958,7 +21984,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
 i
 12
 TABLE
@@ -24238,7 +24264,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
 i
 7
 TABLE
@@ -26197,7 +26223,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
 i
 7
 TABLE
@@ -28268,7 +28294,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
 i
 7
 TABLE
@@ -29224,7 +29250,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]
 i
 12
 TABLE
@@ -29316,7 +29342,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
 i
 12
 TABLE
@@ -29896,7 +29922,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
 i
 7
 TABLE
@@ -30450,7 +30476,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
 i
 7
 TABLE
@@ -30577,7 +30603,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
 i
 7
 TABLE
@@ -31533,7 +31559,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
 i
 7
 TABLE
@@ -33101,7 +33127,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.3333333]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3333333]]`]
 s
 ToGroundPillarOne
 i
@@ -33177,7 +33203,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
 i
 7
 TABLE
@@ -33758,7 +33784,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
 i
 7
 TABLE
@@ -34991,7 +35017,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]
 i
 7
 TABLE
@@ -35124,7 +35150,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0083]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]
 s
 ToPlatform
 i
