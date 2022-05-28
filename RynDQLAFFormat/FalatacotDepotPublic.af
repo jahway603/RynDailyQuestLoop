@@ -84,12 +84,16 @@ STATE: {WaitClear} ~~ {
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
 				SetOpt {SummonPets} {False}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				Return
 	IF:	NoMobsInDist 15
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
 				SetOpt {SummonPets} {False}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				Return
+	IF: Always
+		DO: DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0625]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 ~~ }
 STATE: {FightBoss} ~~ {
 	IF:	All
@@ -362,8 +366,6 @@ STATE: {Depot} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	Always
-		DO:	DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Any
@@ -393,7 +395,9 @@ STATE: {Depot} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	CellE 585E0101
-		DO:	EmbedNav nav1 {FalatacotDepotPt1.nav}
+		DO:	DoAll
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				EmbedNav nav1 {FalatacotDepotPt1.nav}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[Stuck,WatchDog]}

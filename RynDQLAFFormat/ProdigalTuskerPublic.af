@@ -85,7 +85,7 @@ STATE: {Cavern} ~~ {
 		DO:	SetOpt {EnableNav} {True}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.125]]`,`vtsetsetting[AttackDistance,cstr[0.125]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.125]]`]}
 				SetOpt {EnableCombat} {True}
 	IF:	All
 			Any
@@ -98,7 +98,9 @@ STATE: {Cavern} ~~ {
 				CellE EA6C0108
 				CellE EA6C0111
 			MobsInDist_Name 1 15 {Dark Bobo}
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoAll
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0625]]`,`vtsetsetting[AttackDistance,cstr[0.125]]`]}
+				SetOpt {EnableCombat} {True}
 	IF:	MobsInDist_Name 1 15 {Mudmouth}
 		DO:	SetOpt {SummonPets} {True}
 	IF:	Any

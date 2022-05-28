@@ -723,6 +723,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getcharintprop[25]>=180}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getqueststatus[deewainrocktrophy0211]==1}
+			Expr {getqueststatus[deewaincompleted0211]==1}
 		DO:	DoExpr {setgvar[QuestDee,getgvar[QuestDee]+1]]}
 	IF:	All
 			SecsInStateGE 1
@@ -761,6 +762,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getisspellknown[2023]==1} ~~ Sanc
 			Expr {getqueststatus[blessedcavereachedend]==1}
+			Expr {getqueststatus[blessedcavecompleted_0912]==1}
 		DO:	DoExpr {setgvar[QuestReleasingTheLight,getgvar[QuestReleasingTheLight]+1]]}
 	IF:	All
 			SecsInStateGE 1
@@ -819,6 +821,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getpvar[FellowCount]>=4}
 			Expr {testquestflag[haltdericostritualquestflag]==1}
+			Expr {getqueststatus[ritualtimecompleted_0411]==1}
 			Expr {getqueststatus[sealedtomepickuptimer]==1}
 		DO:	DoExpr {setgvar[QuestHaltDericost,getgvar[QuestHaltDericost]+1]]}
 	IF:	All
@@ -839,6 +842,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getpvar[FellowCount]>=3}
 			Expr {getqueststatus[gerainestudybookpickup]==1}
+			Expr {getqueststatus[geraineslibrarycompleted0312]==1}
 		DO:	DoExpr {setgvar[QuestGeraineStudy,getgvar[QuestGeraineStudy]+1]]}
 	IF:	All
 			SecsInStateGE 1
@@ -897,6 +901,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getpvar[FellowCount]>=3}
 			Expr {getqueststatus[serpentburialgroundsbonepickup]==1}
+			Expr {getqueststatus[serpentburialgroundsdone]==1}
 		DO:	DoExpr {setgvar[QuestSBG,getgvar[QuestSBG]+1]]}
 	IF:	All
 			SecsInStateGE 1
@@ -917,6 +922,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getisspellknown[6150]==1} ~~ Rynthid
 			Expr {getpvar[FellowCount]>=4}
 			Expr {getqueststatus[crimsonscarabpickup]==1}
+			Expr {getqueststatus[eodcompleted_1013]==1}
 		DO:	DoExpr {setgvar[QuestEOD,getgvar[QuestEOD]+1]]}
 	IF:	All
 			SecsInStateGE 1
