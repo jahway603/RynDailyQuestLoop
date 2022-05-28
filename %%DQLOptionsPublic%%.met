@@ -11,7 +11,7 @@ n
 n
 n
 n
-143
+142
 i
 0
 i
@@ -34,25 +34,6 @@ s
 %% Options %%
 i
 0
-i
-7
-i
-0
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-setpvar[RouteTogglePhainor,Run]
-s
-%% Options %%
-i
-1
 i
 7
 i
@@ -90,16 +71,6 @@ setpvar[RouteTogglePhainor,SummonPortal]
 s
 %% Options %%
 i
-4
-i
-0
-s
-%% DeathsAllure Toggles %%
-i
-0
-s
-%% Options %%
-i
 0
 i
 7
@@ -115,11 +86,21 @@ n
 s
 e
 s
-setpvar[RouteToggleDeathsAllure,Run]
+setpvar[RouteTogglePhainor,Run]
 s
 %% Options %%
 i
-1
+4
+i
+0
+s
+%% DeathsAllure Toggles %%
+i
+0
+s
+%% Options %%
+i
+0
 i
 7
 i
@@ -157,16 +138,6 @@ setpvar[RouteToggleDeathsAllure,SummonPortal]
 s
 %% Options %%
 i
-4
-i
-0
-s
-%% NexusCrawl Toggles %%
-i
-0
-s
-%% Options %%
-i
 0
 i
 7
@@ -182,11 +153,21 @@ n
 s
 e
 s
-setpvar[RouteToggleNexusCrawl,Run]
+setpvar[RouteToggleDeathsAllure,Run]
 s
 %% Options %%
 i
-1
+4
+i
+0
+s
+%% NexusCrawl Toggles %%
+i
+0
+s
+%% Options %%
+i
+0
 i
 7
 i
@@ -224,16 +205,6 @@ setpvar[RouteToggleNexusCrawl,SummonPortal]
 s
 %% Options %%
 i
-4
-i
-0
-s
-%% ProdigalBanderling Toggles %%
-i
-0
-s
-%% Options %%
-i
 0
 i
 7
@@ -249,11 +220,21 @@ n
 s
 e
 s
-setpvar[RouteToggleProdigalBanderling,Run]
+setpvar[RouteToggleNexusCrawl,Run]
 s
 %% Options %%
 i
-1
+4
+i
+0
+s
+%% ProdigalBanderling Toggles %%
+i
+0
+s
+%% Options %%
+i
+0
 i
 7
 i
@@ -291,16 +272,6 @@ setpvar[RouteToggleProdigalBanderling,SummonPortal]
 s
 %% Options %%
 i
-4
-i
-0
-s
-%% PurgingTheCorruption Toggles %%
-i
-0
-s
-%% Options %%
-i
 0
 i
 7
@@ -316,11 +287,21 @@ n
 s
 e
 s
-setpvar[RouteTogglePurgingTheCorruption,Run]
+setpvar[RouteToggleProdigalBanderling,Run]
 s
 %% Options %%
 i
-1
+4
+i
+0
+s
+%% PurgingTheCorruption Toggles %%
+i
+0
+s
+%% Options %%
+i
+0
 i
 7
 i
@@ -358,16 +339,6 @@ setpvar[RouteTogglePurgingTheCorruption,SummonPortal]
 s
 %% Options %%
 i
-4
-i
-0
-s
-%% SplittingGrael Toggles %%
-i
-0
-s
-%% Options %%
-i
 0
 i
 7
@@ -383,11 +354,21 @@ n
 s
 e
 s
-setpvar[RouteToggleSplittingGrael,Run]
+setpvar[RouteTogglePurgingTheCorruption,Run]
 s
 %% Options %%
 i
-1
+4
+i
+0
+s
+%% SplittingGrael Toggles %%
+i
+0
+s
+%% Options %%
+i
+0
 i
 7
 i
@@ -425,16 +406,6 @@ setpvar[RouteToggleSplittingGrael,SummonPortal]
 s
 %% Options %%
 i
-4
-i
-0
-s
-%% UnleashTheGearknight Toggles %%
-i
-0
-s
-%% Options %%
-i
 0
 i
 7
@@ -450,11 +421,21 @@ n
 s
 e
 s
-setpvar[RouteToggleUGK,Run]
+setpvar[RouteToggleSplittingGrael,Run]
 s
 %% Options %%
 i
-1
+4
+i
+0
+s
+%% UnleashTheGearknight Toggles %%
+i
+0
+s
+%% Options %%
+i
+0
 i
 7
 i
@@ -507,11 +488,30 @@ n
 s
 e
 s
+setpvar[RouteToggleUGK,Run]
+s
+%% Options %%
+i
+0
+i
+7
+i
+0
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
 setpvar[LSRecall,1]
 s
 %% Options %%
 i
-1
+0
 i
 7
 i
@@ -549,7 +549,7 @@ setpvar[TuskerSecondary,1]
 s
 %% Options %%
 i
-1
+0
 i
 7
 i
@@ -602,7 +602,7 @@ n
 s
 e
 s
-setpvar[FellowCount,9]
+setpvar[FellowCount,Number]
 s
 %% Options %%
 i
@@ -640,7 +640,7 @@ n
 s
 e
 s
-setpvar[LeaderName,`Brycter G`]
+setpvar[LeaderName,`CharOne`]
 s
 %% Options %%
 i
@@ -668,7 +668,7 @@ n
 s
 e
 s
-setpvar[FellowNameTwo,`Brycter`]
+setpvar[FellowNameTwo,`CharTwo`]
 s
 %% Options %%
 i
@@ -696,7 +696,7 @@ n
 s
 e
 s
-setpvar[FellowNameThree,`Marble Memo`]
+setpvar[FellowNameThree,`CharThree`]
 s
 %% Options %%
 i
@@ -724,7 +724,7 @@ n
 s
 e
 s
-setpvar[FellowNameFour,`Fokus`]
+setpvar[FellowNameFour,`CharFour`]
 s
 %% Options %%
 i
@@ -752,7 +752,7 @@ n
 s
 e
 s
-setpvar[FellowNameFive,`Usa Staffmaster`]
+setpvar[FellowNameFive,`CharFive`]
 s
 %% Options %%
 i
@@ -780,7 +780,7 @@ n
 s
 e
 s
-setpvar[FellowNameSix,`Distress`]
+setpvar[FellowNameSix,`CharSix`]
 s
 %% Options %%
 i
@@ -808,7 +808,7 @@ n
 s
 e
 s
-setpvar[FellowNameSeven,`Crowley`]
+setpvar[FellowNameSeven,`CharSeven`]
 s
 %% Options %%
 i
@@ -836,7 +836,7 @@ n
 s
 e
 s
-setpvar[FellowNameEight,`Zamorath`]
+setpvar[FellowNameEight,`CharEight`]
 s
 %% Options %%
 i
@@ -864,7 +864,7 @@ n
 s
 e
 s
-setpvar[FellowNameNine,`Castiel'`]
+setpvar[FellowNameNine,`CharNine`]
 s
 %% Options %%
 i
@@ -2762,7 +2762,7 @@ K
 V
 n
 n
-7
+6
 i
 26
 TABLE
@@ -2789,19 +2789,6 @@ s
 e
 s
 testpvar[FellowCount]==1
-i
-26
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-testpvar[SettingsProfile]==1
 i
 26
 TABLE
@@ -3543,7 +3530,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==`#`
+getpvar[FellowCount]==`Number`
 TABLE
 2
 k
@@ -3555,56 +3542,6 @@ s
 e
 s
 \/t +getcharstringprop[1]+`,It appears you haven't changed FellowCount from default. Please refer to Dailies_readme.txt from the Zip file`
-s
-%% Options %%
-i
-2
-i
-8
-TABLE
-2
-K
-V
-n
-n
-2
-i
-26
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-getpvar[Options]==1
-i
-26
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-getpvar[SettingsProfile]==`SettingsProfile`
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-\/t +getcharstringprop[1]+`,It appears you haven't changed SettingsProfile from default. Please refer to Dailies_readme.txt from the Zip file`
 s
 %% Options %%
 i
@@ -5053,7 +4990,7 @@ K
 V
 n
 n
-3
+2
 i
 26
 TABLE
@@ -5067,28 +5004,6 @@ s
 e
 s
 getpvar[Options]==1
-i
-21
-TABLE
-2
-K
-V
-n
-n
-1
-i
-26
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-getpvar[SettingsProfile]==`SettingsProfile`
 i
 3
 TABLE

@@ -4460,7 +4460,7 @@ n
 s
 e
 s
-ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]
+ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.025]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]
 i
 12
 TABLE
@@ -10068,7 +10068,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[StateTimer]]>=120
+stopwatchelapsedseconds[getvar[StateTimer]]>=180
 TABLE
 2
 K
@@ -11308,7 +11308,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[StateTimer]]>=120
+stopwatchelapsedseconds[getvar[StateTimer]]>=180
 TABLE
 2
 K
@@ -12448,7 +12448,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[StateTimer]]>=180
+stopwatchelapsedseconds[getvar[StateTimer]]>=240
 TABLE
 2
 K
