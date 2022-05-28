@@ -752,7 +752,7 @@ STATE: {MenhirEastBoss} ~~ {
 			Expr {listcount[getgvar[QuestComplete]]<9}
 			NoMobsInDist 25
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Lord Winstead]]==1}
-		DO:	Chat {/ub bct DailyLoop /vt setmetastate MenhirEastBP}
+		DO:	Chat {/ub bct DailyLoop /vt setmetastate MenhirEastToBP}
 	IF:	Always
 		DO:	EmbedNav nav1 {HDREastToBP.nav}
 ~~ }
@@ -1205,12 +1205,14 @@ STATE: {MenhirSplit} ~~ {
 	IF: Expr {getpvar[Triangle]==4}
 		DO: DoExpr {setpvar[Step,1]}
 	IF:	All
+			BlockE 8B640000
 			SecsInStateGE 1
 			Expr {getpvar[Step]==0}
 		DO:	DoAll
 				DoExpr {actiontryuseitem[wobjectfindbyid[2025209861]]}
 				SetState {MenhirSplit}
 	IF:	All
+			BlockE 8B640000
 			SecsInStateGE 1
 			Expr {getpvar[Step]==1}
 		DO:	DoAll
@@ -1392,6 +1394,7 @@ STATE: {MenhirWest} ~~ {
 				Chat {/vt meta load CheckPublic}
 	IF:	All
 			CellE 8B64000A
+			Expr {getpvar[Triangle]==4}
 			NavEmpty
 		DO:	DoAll
 				DoExpr {setpvar[Step,1]}
