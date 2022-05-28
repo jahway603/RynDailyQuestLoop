@@ -291,13 +291,22 @@ STATE: {Dungeon} ~~ {
 			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 		DO:	SetState {Watchdog}
-	IF:	Always
+	IF:	CellE F81E04C8
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
-	IF:	All
-			CellE F81E012E
-		DO:	DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.01041666666]]`]}
+	IF:	Any
+			CellE F81E01BC
+			CellE F81E01BD
+			CellE F81E01C6
+			CellE F81E01CF
+			CellE F81E01CE
+			CellE F81E01CD
+			CellE F81E01C4
+			CellE F81E01BB
+			CellE F81E01D1
+			Expr {coordinategetz[getplayercoordinates[]]#-0.3566}
+		DO:	DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.03333333333]]`,`vtsetsetting[AttackDistance,cstr[0.01041666666]]`]}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			SecsInStateGE 3
@@ -507,7 +516,7 @@ STATE: {DungeonJump} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {clearvar[JumpStuck]}
 				SetOpt {EnableCombat} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.01041666666]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.125]]`,`vtsetsetting[AttackDistance,cstr[0.01041666666]]`]}
 				SetOpt {SummonPets} {True}
 				SetState {Dungeon}
 	IF:	All
@@ -702,6 +711,7 @@ STATE: {Shahhi} ~~ {
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	SetState {DeathRecall}
 	IF:	Any
+			ChatMatch {^Shah-hi tells you, "Have you found anything in the dig site\? Please hurry."}
 			ChatMatch {^Shah-hi tells you, "Welcome to my excavation site!"}
 			ChatMatch {^Shah-hi tells you, "I wonder if you'd be interested in a little job."}
 			ChatMatch {^Shah-hi tells you, "My mistress, Popkin of the Gate, sent me here to manage this dig site. We've uncovered a very promising Light Falatacot temple, but it's entirely overrun with gromnies. If you'd be willing to go in there and bring back word of anything you find, it'd be greatly appreciated."}
