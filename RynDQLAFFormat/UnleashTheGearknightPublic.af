@@ -187,9 +187,14 @@ STATE: {PortalRecall} ~~ {
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF:	Always
+		DO:	SetOpt {EnableCombat} {False}
+	IF:	Always
+		DO:	EmbedNav nav1 {[none]}
+	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[StateName,PortalRecall]}
-				DoExpr {setpvar[PortalRecall,1]}
+				DoExpr {clearvar[PitStop]}
+				DoExpr {clearvar[JumpTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				SetOpt {EnableCombat} {False}
 				SetOpt {EnableNav} {False}
@@ -197,9 +202,7 @@ STATE: {PortalRecall} ~~ {
 				DoExpr {clearvar[StateTimer]}
 	IF:	All
 			NavEmpty
-			Any
-				BlockE 3FB10000
-				BlockE 40B10000
+			CellE 3FB10024
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}
 				SetOpt {EnableNav} {True}
@@ -213,17 +216,20 @@ STATE: {PortalRecall} ~~ {
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[StateName,ToPlateau]}
 				SetState {ToPlateau}
-	IF:	Any
-			Not BlockE 3FB10000
-			Not BlockE 40B10000
-			Not BlockE 42AE0000
+	IF: All
+			Expr {getpvar[RouteToggleUGK]==SummonPortal}
+			Not CellE 3FB10024
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[2645]} ~~ SpellId 2645 is "Portal Recall".
 				SetState {PortalRecall}
-	IF:	Always
-		DO:	SetOpt {EnableCombat} {False}
-	IF:	Always
-		DO:	EmbedNav nav1 {[none]}
+	IF:	All
+			Expr {getpvar[RouteToggleUGK]==Run}
+			Any
+				Not BlockE 40B10000
+				Not BlockE 42AE0000
+		DO:	DoAll
+				DoExpr {actiontrycastbyid[2645]} ~~ SpellId 2645 is "Portal Recall".
+				SetState {PortalRecall}
 ~~ }
 STATE: {DeathRecall} ~~ {
 	IF:	All
@@ -256,6 +262,7 @@ STATE: {DeathRecall} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[StateName,DeathRecall]}
 				DoExpr {clearvar[PitStop]}
+				DoExpr {clearvar[JumpTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				SetOpt {EnableCombat} {False}
 				SetOpt {EnableNav} {False}
@@ -453,7 +460,7 @@ STATE: {FightBoss} ~~ {
 				EmbedNav nav2 {[none]}
 	IF:	MobsInDist_Name 1 60 {Iron Blade Lieutenant}
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.025]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.25]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 				SetOpt {EnableCombat} {True}
 	IF:	All
 			Expr {getpvar[Leader]==1}
@@ -1012,6 +1019,7 @@ STATE: {ReavingDoor} ~~ {
 			Expr {getvar[PitStop]==1}
 			Expr {getpvar[Leader]==1}
 			Expr {getvar[Open]==1}
+			SecsInStateGE 3
 			Any
 				Expr {getobjectinternaltype[wobjectfindininventorybyname[Arrival Chamber Key]]==1}
 				ChatMatch {^The Arrival Chamber has been unlocked.}
@@ -1033,15 +1041,29 @@ STATE: {ReavingDoor} ~~ {
 				EmbedNav nav4 {[none]}
 	IF:	All
 			Expr {getvar[PitStop]==1}
+			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
+			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==1}
+			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<10}
+			Any
+				Not CellE 3FB1010A
+				Not CellE 3FB10110
 			Any
 				All
-					Expr {getobjectinternaltype[getvar[JumpTimer]]==7}
+					Expr {testvar[JumpTimer]==1}
 					Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=5}
 				CellE 3FB1010B
-		DO:	DoAll
-				EmbedNav nav5 {[none]}
+		DO:	EmbedNav nav5 {[none]}
+	IF: All
+			Any
+				Not CellE 3FB1010A
+				Not CellE 3FB10110
+			Expr {testvar[JumpTimer]==1}
+			Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=10}
+		DO: DoAll
 				DoExpr {stopwatchstart[setvar[JumpTimer, stopwatchcreate[]]]}
 				SetState {ReavingDoor}
+	IF: CellE 3FB1010A
+		DO: EmbedNav nav18 {[none]}
 	IF:	CellE 3FB10110
 		DO:	EmbedNav nav6 {Clear}
 	IF:	CellE 3FB10104
@@ -1053,6 +1075,7 @@ STATE: {ReavingDoor} ~~ {
 			CellE 3FB10110
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
+				DoExpr {clearvar[JumpTimer]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {setpvar[StateName,FightBoss]}
 				Chat {/vt meta load CheckPublic}
@@ -1835,6 +1858,16 @@ NAV: nav17 once ~~ {
 	pnt -101.080703759193 -15.763249429067 2.08333134651184E-05
 	pnt -101.084879112244 -15.7745870272319 2.08333134651184E-05
 	pnt -101.083924218019 -15.7964228153229 2.08333134651184E-05
+~~ }
+NAV: nav18 once ~~ {
+	pnt -49.9855138142904 38.4004531860352 -0.214979155858358
+	pnt -49.983033879598 38.4112148284912 -0.214979155858358
+	pnt -49.9830176035563 38.4194807688395 -0.214979155858358
+	pnt -49.9830013275147 38.4310799916585 -0.214979155858358
+	pnt -49.982985051473 38.4381100972494 -0.214979155858358
+	chk -49.982985051473 38.4381100972494 -0.214979155858358
+	ptl -49.982985051473 38.4381100972494 -0.214979155858358 -49.9833333333333 38.4458333333333 -0.215262487530708 14 {Arrival Chamber}
+	pau -49.982985051473 38.4381100972494 -0.214979155858358 5000
 ~~ }
 NAV: DeathDelay once ~~ {
 	pnt -51.1232166608175 39.990905825297 0.0517921527226766
