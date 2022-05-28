@@ -80,7 +80,9 @@ STATE: {BabyFive} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Always
-		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Bag of Life Stone Chips`],wobjectfindnearestbynameandobjectclass[37,Baby Thrungus]]}
+		DO:	DoAll
+				EmbedNav nav0 {[none]}
+				DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Bag of Life Stone Chips`],wobjectfindnearestbynameandobjectclass[37,Baby Thrungus]]}
 	IF:	SecsInStateGE 3
 		DO:	SetState {BabyFive}
 	IF:	Any
@@ -129,7 +131,9 @@ STATE: {BabyFour} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Always
-		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Bag of Life Stone Chips`],wobjectfindnearestbynameandobjectclass[37,Baby Thrungus]]}
+		DO:	DoAll
+				EmbedNav nav0 {[none]}
+				DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Bag of Life Stone Chips`],wobjectfindnearestbynameandobjectclass[37,Baby Thrungus]]}
 	IF:	SecsInStateGE 3
 		DO:	SetState {BabyFour}
 	IF:	Any
@@ -183,7 +187,9 @@ STATE: {BabyOne} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Always
-		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Bag of Life Stone Chips`],wobjectfindnearestbynameandobjectclass[37,Baby Thrungus]]}
+		DO:	DoAll
+				EmbedNav nav0 {[none]}
+				DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Bag of Life Stone Chips`],wobjectfindnearestbynameandobjectclass[37,Baby Thrungus]]}
 	IF:	SecsInStateGE 3
 		DO:	SetState {BabyOne}
 	IF:	Any
@@ -237,7 +243,9 @@ STATE: {BabySix} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Always
-		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Bag of Life Stone Chips`],wobjectfindnearestbynameandobjectclass[37,Baby Thrungus]]}
+		DO:	DoAll
+				EmbedNav nav0 {[none]}
+				DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Bag of Life Stone Chips`],wobjectfindnearestbynameandobjectclass[37,Baby Thrungus]]}
 	IF:	SecsInStateGE 3
 		DO:	SetState {BabySix}
 	IF:	Any
@@ -294,7 +302,9 @@ STATE: {BabyThree} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Always
-		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Bag of Life Stone Chips`],wobjectfindnearestbynameandobjectclass[37,Baby Thrungus]]}
+		DO:	DoAll
+				EmbedNav nav0 {[none]}
+				DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Bag of Life Stone Chips`],wobjectfindnearestbynameandobjectclass[37,Baby Thrungus]]}
 	IF:	SecsInStateGE 3
 		DO:	SetState {BabyThree}
 	IF:	Any
@@ -348,7 +358,9 @@ STATE: {BabyTwo} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Always
-		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Bag of Life Stone Chips`],wobjectfindnearestbynameandobjectclass[37,Baby Thrungus]]}
+		DO:	DoAll
+				EmbedNav nav0 {[none]}
+				DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Bag of Life Stone Chips`],wobjectfindnearestbynameandobjectclass[37,Baby Thrungus]]}
 	IF:	SecsInStateGE 3
 		DO:	SetState {BabyTwo}
 	IF:	Any
