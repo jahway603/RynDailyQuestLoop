@@ -7921,7 +7921,7 @@ e
 s
 getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Lord Winstead]]==1
 s
-/ub bct DailyLoop /vt setmetastate MenhirEastBP
+/ub bct DailyLoop /vt setmetastate MenhirEastToBP
 s
 MenhirEastBoss
 i
@@ -12332,7 +12332,11 @@ K
 V
 n
 n
-2
+3
+i
+17
+i
+-1956380672
 i
 6
 i
@@ -12386,7 +12390,11 @@ K
 V
 n
 n
-2
+3
+i
+17
+i
+-1956380672
 i
 6
 i
@@ -14636,11 +14644,24 @@ K
 V
 n
 n
-2
+3
 i
 18
 i
 -1956380662
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+getpvar[Triangle]==4
 i
 7
 i
