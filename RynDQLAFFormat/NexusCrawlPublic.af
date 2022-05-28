@@ -146,11 +146,11 @@ STATE: {ClearMobs} ~~ {
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	SetState {DeathRecall}
-	IF:	Expr {getobjectinternaltype[getvar[StateTimer]]==1}
+	IF:	Expr {testvar[StateTimer]==0}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
+			Expr {testvar[StateTimer]==1}
+			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=480}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -290,18 +290,20 @@ STATE: {SyncBuff} ~~{
 			Expr {vtgetsetting[EnableBuffing]!=True}
 		DO: SetOpt {EnableBuffing} {True}
 	IF:	All
-			Expr {getobjectinternaltype[getgvar[SyncBuffComplete]]==1}
+			Expr {testgvar[SyncBuffComplete]==0}
 			Not NeedToBuff
 		DO:	DoAll
 				DoExpr {setgvar[SyncBuffComplete,listcreate[]]}
 				SetState {SyncBuff}
 	IF:	All
+			Expr {testgvar[SyncBuffComplete]==1}
 			Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]==0}
 			Not NeedToBuff
 		DO:	DoAll
 				DoExpr {listadd[getgvar[SyncBuffComplete],getcharstringprop[1]]}
 				SetState {SyncBuff}
 	IF:	All
+			Expr {testgvar[SyncBuffComplete]==1}
 			Not NeedToBuff
 			Any
 				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1}
@@ -314,8 +316,8 @@ STATE: {SyncBuff} ~~{
 				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1}
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]==1}		
 		DO: DoAll
-				DoExpr {clearpvar[Buffing]==1}
-				DoExpr {clearpvar[BuffingStartAll]==1}
+				DoExpr {clearpvar[Buffing]}
+				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~}
 STATE: {Finished} ~~ {
@@ -872,11 +874,11 @@ STATE: {Nexus} ~~ {
 		DO:	SetState {DeathRecall}
 	IF:	Always
 		DO:	DoExpr {setpvar[Step,2]}
-	IF:	Expr {getobjectinternaltype[getvar[StateTimer]]==1}
+	IF:	Expr {testvar[StateTimer]==0}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
+			Expr {testvar[StateTimer]==1}
+			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=480}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -950,11 +952,11 @@ STATE: {NexusDoor} ~~ {
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
 				DoExpr {setpvar[Step,2]}
-	IF:	Expr {getobjectinternaltype[getvar[StateTimer]]==1}
+	IF:	Expr {testvar[StateTimer]==0}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
+			Expr {testvar[StateTimer]==1}
+			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=480}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1042,11 +1044,11 @@ STATE: {NexusThree} ~~ {
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[Step,2]}
-	IF:	Expr {getobjectinternaltype[getvar[StateTimer]]==1}
+	IF:	Expr {testvar[StateTimer]==0}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
+			Expr {testvar[StateTimer]==1}
+			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=480}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1124,11 +1126,11 @@ STATE: {NexusTwo} ~~ {
 		DO:	SetOpt {EnableCombat} {False}
 	IF:	Always
 		DO:	DoExpr {setpvar[Step,2]}
-	IF:	Expr {getobjectinternaltype[getvar[StateTimer]]==1}
+	IF:	Expr {testvar[StateTimer]==0}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
+			Expr {testvar[StateTimer]==1}
+			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=480}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1159,12 +1161,34 @@ STATE: {NexusTwo} ~~ {
 				DoExpr {vtsetmetastate[vtgetmetastate[]]}
 	IF:	All
 			Expr {getpvar[FellowCount]>=2}
-			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Aetherium Vault Key`]]==7}
+			Any
+				CellE 7F0201A1
+				CellE 7F0201A0
+				CellE 7F02019F
+				CellE 7F020197
+				CellE 7F020196
+				CellE 7F020195
+				CellE 7F02019D
+				CellE 7F0201A6
+				CellE 7F0201A7
+				CellE 7F02019E
+			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Aetherium Vault Key`]]==7} ~~ Add Landcells
 		DO:	DoAll
 				EmbedNav nav11 {[none]}
 				SetOpt {EnableCombat} {False}
 	IF:	All
 			Expr {getpvar[FellowCount]<2}
+			Any
+				CellE 7F0201A1
+				CellE 7F0201A0
+				CellE 7F02019F
+				CellE 7F020197
+				CellE 7F020196
+				CellE 7F020195
+				CellE 7F02019D
+				CellE 7F0201A6
+				CellE 7F0201A7
+				CellE 7F02019E
 			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Aetherium Vault Key`]]==7}
 		DO:	DoAll
 				EmbedNav nav11 {[none]}
@@ -1240,11 +1264,11 @@ STATE: {OldNexus} ~~ {
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	SetState {DeathRecall}
-	IF:	Expr {getobjectinternaltype[getvar[StateTimer]]==1}
+	IF:	Expr {testvar[StateTimer]==0}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
+			Expr {testvar[StateTimer]==1}
+			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=480}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}

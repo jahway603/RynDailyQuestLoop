@@ -168,12 +168,13 @@ STATE: {SyncBuff} ~~{
 			Expr {vtgetsetting[EnableBuffing]!=True}
 		DO: SetOpt {EnableBuffing} {True}
 	IF:	All
-			Expr {getobjectinternaltype[getgvar[SyncBuffComplete]]==1}
+			Expr {testgvar[SyncBuffComplete]==0}
 			Not NeedToBuff
 		DO:	DoAll
 				DoExpr {setgvar[SyncBuffComplete,listcreate[]]}
 				SetState {SyncBuff}
 	IF:	All
+			Expr {testgvar[SyncBuffComplete]==1}
 			Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]==0}
 			Not NeedToBuff
 		DO:	DoAll
@@ -181,6 +182,7 @@ STATE: {SyncBuff} ~~{
 				SetState {SyncBuff}
 	IF:	All
 			Not NeedToBuff
+			Expr {testgvar[SyncBuffComplete]==1}
 			Any
 				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1}
 				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1}
@@ -192,8 +194,8 @@ STATE: {SyncBuff} ~~{
 				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1}
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]==1}		
 		DO: DoAll
-				DoExpr {clearpvar[Buffing]==1}
-				DoExpr {clearpvar[BuffingStartAll]==1}
+				DoExpr {clearpvar[Buffing]}
+				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~}
 STATE: {Dungeon} ~~ {
@@ -918,7 +920,7 @@ STATE: {LootStuckDelay} ~~ {
 				ChatExpr {\/ub bct DailyLoop \/vt opt set EnableCombat True}
 				DoExpr {vtsetmetastate[getvar[Return]]}
 ~~ }
-STATE: {ToDungeon} ~~ {
+STATE: {ToDungeon} ~~ { ~~ 0x4CE20108 [91.024208 177.416199 68.506500] 0.979783 0.000000 0.000000 0.200065
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -959,7 +961,9 @@ STATE: {ToDungeon} ~~ {
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=720}
 		DO:	SetState {Watchdog}
 	IF:	Always
-		DO:	DoExpr {setpvar[StateName,vtgetmetastate[]]}
+		DO:	DoAll
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	CellE 49E4002B
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
@@ -1001,6 +1005,7 @@ STATE: {ToDungeon} ~~ {
 			Expr {getvar[PitStop]==2}
 			CellE 4CE20104
 		DO:	DoAll
+				SetOpt {EnableCombat} {False}
 				EmbedNav nav10 {[none]}
 	IF:	All
 			NavEmpty

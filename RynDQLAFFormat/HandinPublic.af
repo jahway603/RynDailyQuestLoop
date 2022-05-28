@@ -322,6 +322,26 @@ STATE: {ColoGarbage} ~~ {
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Virindi Prison Key],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
+	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Aetherium Vault Key]]==7}
+		DO:	DoAll
+				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Aetherium Vault Key],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
+				SetState {ColoGarbage}
+	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Private Chamber Key]]==7}
+		DO:	DoAll
+				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Private Chamber Key],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
+				SetState {ColoGarbage}
+	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Phainor's Chamber Key]]==7}
+		DO:	DoAll
+				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Phainor's Chamber Key],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
+				SetState {ColoGarbage}
+	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Arrival Chamber Key]]==7}
+		DO:	DoAll
+				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Arrival Chamber Key],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
+				SetState {ColoGarbage}
+	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Treasury Key]]==7}
+		DO:	DoAll
+				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Treasury Key],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
+				SetState {ColoGarbage}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getitemcountininventorybyname[Bag of Life Stone Chips]>=2}
@@ -353,6 +373,11 @@ STATE: {ColoGarbage} ~~ {
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Shard of Harraag's Dagger]]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Casting Stone]]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Virindi Prison Key]]==1}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Aetherium Vault Key]]==1}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Private Chamber Key]]==1}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Phainor's Chamber Key]]==1}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Arrival Chamber Key]]==1}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Treasury Key]]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Letter from Uber P]]==1&&getobjectinternaltype[wobjectfindininventorybyname[Pet Mouf Igloo]]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sparkling Apostate Shard]]==1&&getobjectinternaltype[wobjectfindininventorybyname[Scintillating Apostate Shard]]==1&&getobjectinternaltype[wobjectfindininventorybyname[Shimmering Apostate Shard]]==1}
 			Expr {getitemcountininventorybyname[Bag of Life Stone Chips]<=1}

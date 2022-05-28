@@ -453,7 +453,7 @@ STATE: {FightBoss} ~~ {
 				EmbedNav nav2 {[none]}
 	IF:	MobsInDist_Name 1 60 {Iron Blade Lieutenant}
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.025]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 				SetOpt {EnableCombat} {True}
 	IF:	All
 			Expr {getpvar[Leader]==1}
@@ -965,11 +965,11 @@ STATE: {ReavingDoor} ~~ {
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO: SetState {DeathRecall}
-	IF:	Expr {getobjectinternaltype[getvar[StateTimer]]==1}
+	IF:	Expr {testvar[StateTimer]==0}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=120}
+			Expr {testvar[StateTimer]==1}
+			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=180}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1038,7 +1038,10 @@ STATE: {ReavingDoor} ~~ {
 					Expr {getobjectinternaltype[getvar[JumpTimer]]==7}
 					Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=5}
 				CellE 3FB1010B
-		DO:	EmbedNav nav5 {[none]}
+		DO:	DoAll
+				EmbedNav nav5 {[none]}
+				DoExpr {stopwatchstart[setvar[JumpTimer, stopwatchcreate[]]]}
+				SetState {ReavingDoor}
 	IF:	CellE 3FB10110
 		DO:	EmbedNav nav6 {Clear}
 	IF:	CellE 3FB10104
@@ -1087,7 +1090,7 @@ STATE: {ReavingFacility} ~~ {
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
 			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=120}
+			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=180}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1198,7 +1201,7 @@ STATE: {ToDungeon} ~~ {
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
 			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=180}
+			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=240}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}

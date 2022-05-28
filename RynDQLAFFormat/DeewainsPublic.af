@@ -79,7 +79,24 @@ STATE: {Bridge} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	All
-			CellE 7E030724
+			Any
+				CellE 7E030720
+				CellE 7E030721
+				CellE 7E030722
+				CellE 7E030723
+				CellE 7E030724
+			MobsInDist_Name 1 80 {Fallen Rock}
+		DO:	DoAll
+				SetOpt {EnableNav} {False}
+				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.125]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
+	IF:	All
+			Any
+				CellE 7E030720
+				CellE 7E030721
+				CellE 7E030722
+				CellE 7E030723
+				CellE 7E030724
 			Not MobsInDist_Name 1 80 {Fallen Rock}
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
@@ -159,6 +176,7 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
+				DoExpr {cleargvar[JumpComplete]}
 				DoExpr {cleargvar[Alive]}
 				DoExpr {cleargvar[Go]}
 				SetOpt {EnableCombat} {False}
@@ -260,7 +278,7 @@ STATE: {DeewainFight} ~~ {
 			Expr {getgvar[Go]==0}
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[43781]]==7}
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.25]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 				SetOpt {EnableCombat} {True}
 				SetOpt {EnableNav} {False}
 				SetOpt {SummonPets} {True}
@@ -421,12 +439,13 @@ STATE: {SyncBuff} ~~{
 			Expr {vtgetsetting[EnableBuffing]!=True}
 		DO: SetOpt {EnableBuffing} {True}
 	IF:	All
-			Expr {getobjectinternaltype[getgvar[SyncBuffComplete]]==1}
+			Expr {testgvar[SyncBuffComplete]==0}
 			Not NeedToBuff
 		DO:	DoAll
 				DoExpr {setgvar[SyncBuffComplete,listcreate[]]}
 				SetState {SyncBuff}
 	IF:	All
+			Expr {testgvar[SyncBuffComplete]==1}
 			Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]==0}
 			Not NeedToBuff
 		DO:	DoAll
@@ -434,6 +453,7 @@ STATE: {SyncBuff} ~~{
 				SetState {SyncBuff}
 	IF:	All
 			Not NeedToBuff
+			Expr {testgvar[SyncBuffComplete]==1}
 			Any
 				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1}
 				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1}
@@ -445,8 +465,8 @@ STATE: {SyncBuff} ~~{
 				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1}
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]==1}		
 		DO: DoAll
-				DoExpr {clearpvar[Buffing]==1}
-				DoExpr {clearpvar[BuffingStartAll]==1}
+				DoExpr {clearpvar[Buffing]}
+				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~}
 STATE: {Defenders} ~~ {
@@ -1843,8 +1863,6 @@ STATE: {Zstuck} ~~ {
 ~~========================= ONLY NAVS APPEAR BELOW THIS LINE =========================~~
 
 NAV: nav0 once ~~ {
-	pnt -0.0247491200764974 -100.046467177073 0.0250208338101705
-	pnt -0.0255835215250651 -99.846621576945 0.0250208338101705
 	pnt -0.0263403574625651 -99.7749294757843 0.0250208338101705
 ~~ }
 NAV: nav1 circular ~~ {

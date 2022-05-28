@@ -65,7 +65,7 @@ STATE: {Finished} ~~ {
 		DO:	DoAll
 				DoExpr {clearvar[NPC]}
 				SetOpt {EnableCombat} {True}
-				SetOpt {AttackDistance} {0.0208333333}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				ChatExpr {\/vt meta load +getpvar[Profile]}
 				ChatExpr {\/vt setmetastate +getpvar[StateName]}
 				EmbedNav nav1 {[none]}

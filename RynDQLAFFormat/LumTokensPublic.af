@@ -40,7 +40,6 @@
 STATE: {Default} ~~ {
 	IF:	Always
 		DO:	DoAll
-				ChatExpr {\/vt settings loadchar +getpvar[SettingsProfile]}
 				SetOpt {EnableCombat} {False}
 				SetOpt {IdlePeaceMode} {False}
 				SetOpt {EnableBuffing} {False}

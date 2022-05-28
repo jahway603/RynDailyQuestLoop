@@ -71,6 +71,7 @@ STATE: {ClearMobs} ~~ {
 				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0208]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {EnableNav} {False}
 	IF:	Any
 			NoMobsInDist 5
@@ -79,6 +80,7 @@ STATE: {ClearMobs} ~~ {
 				SecsInStateGE 15
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				ChatExpr {\/vt setmetastate +getpvar[ClearMobs]}
 ~~ }
 STATE: {DaenerahTurnIn} ~~ {
@@ -276,12 +278,13 @@ STATE: {SyncBuff} ~~{
 			Expr {vtgetsetting[EnableBuffing]!=True}
 		DO: SetOpt {EnableBuffing} {True}
 	IF:	All
-			Expr {getobjectinternaltype[getgvar[SyncBuffComplete]]==1}
+			Expr {testgvar[SyncBuffComplete]==0}
 			Not NeedToBuff
 		DO:	DoAll
 				DoExpr {setgvar[SyncBuffComplete,listcreate[]]}
 				SetState {SyncBuff}
 	IF:	All
+			Expr {testgvar[SyncBuffComplete]==1}
 			Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]==0}
 			Not NeedToBuff
 		DO:	DoAll
@@ -289,6 +292,7 @@ STATE: {SyncBuff} ~~{
 				SetState {SyncBuff}
 	IF:	All
 			Not NeedToBuff
+			Expr {testgvar[SyncBuffComplete]==1}
 			Any
 				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1}
 				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1}
@@ -300,8 +304,8 @@ STATE: {SyncBuff} ~~{
 				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1}
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]==1}		
 		DO: DoAll
-				DoExpr {clearpvar[Buffing]==1}
-				DoExpr {clearpvar[BuffingStartAll]==1}
+				DoExpr {clearpvar[Buffing]}
+				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~}
 STATE: {Finished} ~~ {
@@ -1170,7 +1174,7 @@ STATE: {MenhirEastWaves} ~~ {
 				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.25]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 				SetOpt {SummonPets} {True}
 	IF:	Always
 		DO:	DoAll
@@ -1201,13 +1205,13 @@ STATE: {MenhirSplit} ~~ {
 	IF: Expr {getpvar[Triangle]==4}
 		DO: DoExpr {setpvar[Step,1]}
 	IF:	All
-			SecsInStateGE 6
+			SecsInStateGE 1
 			Expr {getpvar[Step]==0}
 		DO:	DoAll
 				DoExpr {actiontryuseitem[wobjectfindbyid[2025209861]]}
 				SetState {MenhirSplit}
 	IF:	All
-			SecsInStateGE 6
+			SecsInStateGE 1
 			Expr {getpvar[Step]==1}
 		DO:	DoAll
 				DoExpr {actiontryuseitem[wobjectfindbyid[2025209862]]}
@@ -1393,6 +1397,7 @@ STATE: {MenhirWest} ~~ {
 				DoExpr {setpvar[Step,1]}
 				DoExpr {clearvar[RampTimer]}
 				DoExpr {clearvar[StateTimer]}
+				DoExpr {setpvar[StateName,MenhirSplit]}
 				SetState {MenhirSplit}
 	IF:	All
 			Expr {getvar[RampTimer]==0}

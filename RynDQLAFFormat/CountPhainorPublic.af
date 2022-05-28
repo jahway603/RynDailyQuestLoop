@@ -564,7 +564,7 @@ STATE: {Finished} ~~ {
 				Expr {getpvar[AdminSkip]==1}
 		DO:	DoExpr {setpvar[Finished,1]}
 	IF:	All
-			SecsInStateGE 20
+			SecsInStateGE 5
 			Expr {getpvar[Finished]==1}
 			Expr {testpvar[Profile]==0}
 			Expr {testpvar[StateName]==0}

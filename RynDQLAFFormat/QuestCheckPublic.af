@@ -799,6 +799,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getpvar[FellowCount]>=4}
 			Expr {getqueststatus[shatteredmasterbloodstoneshardpickedup]==1}
+			Expr {getqueststatus[oracleportalentry]==0}
 		DO:	DoExpr {setgvar[QuestBSI,getgvar[QuestBSI]+1]]}
 	IF:	All
 			SecsInStateGE 1
@@ -941,6 +942,7 @@ STATE: {CheckQuests} ~~ {
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
+			Expr {getgvar[MeleeGroupCheck]==0}
 			Expr {getpvar[RynthidWeapon]==1}
 			Expr {getpvar[FellowCount]>=3}
 			Any
@@ -998,7 +1000,7 @@ STATE: {Default} ~~ {
 		DO: Chat {/vt meta load %%DQLOptionsPublic%%}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
-			Expr {getobjectinternaltype[getgvar[GKRecall]]==1}
+			Expr {testgvar[GKRecall]==0}
 		DO: DoExpr {setgvar[GKRecall,listcreate[]]}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
@@ -1007,6 +1009,18 @@ STATE: {Default} ~~ {
 			Expr {listcontains[getgvar[GKRecall],getcharstringprop[1]]==0}
 		DO: DoAll
 				DoExpr {listadd[getgvar[GKRecall],getcharstringprop[1]]}
+				SetState {Default}
+	IF: All
+			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
+			Expr {testgvar[MeleeGroup]==0}
+		DO: DoExpr {setgvar[MeleeGroup,listcreate[]]}
+	IF: All
+			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
+			Expr {testgvar[MeleeGroupCheck]==0}
+			Expr {getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3}
+			Expr {listcontains[getgvar[MeleeGroup],getcharstringprop[1]]==0}
+		DO: DoAll
+				DoExpr {listadd[getgvar[MeleeGroup],getcharstringprop[1]]}
 				SetState {Default}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
@@ -2124,6 +2138,8 @@ STATE: {Finished} ~~ {
 STATE: {KeyCheck} ~~ {
 	IF: Expr {listcount[getgvar[GKRecall]]==getpvar[FellowCount]}
 		DO: DoExpr {setgvar[ApostateFinaleGo,1]}
+	IF: Expr {listcount[getgvar[MeleeGroup]]==getpvar[FellowCount]}
+		DO: DoExpr {setgvar[MeleeGroupCheck,1]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Sparkling Key]]==7}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Crackling Key]]==7}
@@ -2209,7 +2225,7 @@ STATE: {PackCleanUp} ~~ {
 			Expr {getpvar[Finished]==0}
 			CellE 00AF0118
 		DO:	DoAll
-				DoExpr {setpvar[StateName,Default]}
+				DoExpr {setpvar[StateName,Quests]}
 				Chat {/vt meta load HandinPublic}
 ~~ }
 STATE: {Quests} ~~ {
@@ -2288,6 +2304,11 @@ STATE: {Quests} ~~ {
 				Expr {getobjectinternaltype[wobjectfindininventorybyname[Translated Orders for Zrikux]]==7}
 				Expr {getobjectinternaltype[wobjectfindininventorybyname[Forging Gloves]]==7}
 				Expr {getobjectinternaltype[wobjectfindininventorybyname[Virindi Prison Key]]==7}
+				Expr {getobjectinternaltype[wobjectfindininventorybyname[Aetherium Vault Key]]==7}
+				Expr {getobjectinternaltype[wobjectfindininventorybyname[Private Chamber Key]]==7}
+				Expr {getobjectinternaltype[wobjectfindininventorybyname[Phainor's Chamber Key]]==7}
+				Expr {getobjectinternaltype[wobjectfindininventorybyname[Arrival Chamber Key]]==7}
+				Expr {getobjectinternaltype[wobjectfindininventorybyname[Treasury Key]]==7}
 		DO:	DoAll
 				Chat {/ub autocram}
 				DoExpr {cleargvar[MeetUp]}

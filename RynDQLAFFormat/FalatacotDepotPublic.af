@@ -129,7 +129,7 @@ STATE: {FightBoss} ~~ {
 	~~	DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
 			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=240}
+			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -140,7 +140,7 @@ STATE: {FightBoss} ~~ {
 				DoExpr {setgvar[QuestComplete,listcreate[]]}
 				SetState {FightBoss}
 	IF: Always
-		DO: DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
+		DO: DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.25]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 	IF:	All
 			Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]==0}
 			Any
@@ -173,7 +173,7 @@ STATE: {FightBoss} ~~ {
 			Expr {getpvar[QuestCompletedSkip]==0}
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[47190]]==1}
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Zrikux]]==7}
-			NoMobsInDist 15
+			NoMobsInDist 25
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setvar[CorpseName,Corpse of Zrikux]]}
@@ -318,12 +318,13 @@ STATE: {SyncBuff} ~~{
 			Expr {vtgetsetting[EnableBuffing]!=True}
 		DO: SetOpt {EnableBuffing} {True}
 	IF:	All
-			Expr {getobjectinternaltype[getgvar[SyncBuffComplete]]==1}
+			Expr {testgvar[SyncBuffComplete]==0}
 			Not NeedToBuff
 		DO:	DoAll
 				DoExpr {setgvar[SyncBuffComplete,listcreate[]]}
 				SetState {SyncBuff}
 	IF:	All
+			Expr {testgvar[SyncBuffComplete]==1}
 			Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]==0}
 			Not NeedToBuff
 		DO:	DoAll
@@ -331,6 +332,7 @@ STATE: {SyncBuff} ~~{
 				SetState {SyncBuff}
 	IF:	All
 			Not NeedToBuff
+			Expr {testgvar[SyncBuffComplete]==1}
 			Any
 				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1}
 				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1}
@@ -342,8 +344,8 @@ STATE: {SyncBuff} ~~{
 				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1}
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]==1}		
 		DO: DoAll
-				DoExpr {clearpvar[Buffing]==1}
-				DoExpr {clearpvar[BuffingStartAll]==1}
+				DoExpr {cleargvar[Buffing]}
+				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~}
 STATE: {Depot} ~~ {
@@ -396,7 +398,7 @@ STATE: {Depot} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Stuck,WatchDog]}
 				DoExpr {setpvar[ClearMobs,Depot]}
-				SetWatchdog 5 30 {WatchDog}
+				SetWatchdog 5 90 {WatchDog}
 	IF:	All
 			Not NoMobsInDist 10
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -502,6 +504,8 @@ STATE: {Depot} ~~ {
 		DO:	DoAll
 				SetOpt {SummonPets} {False}
 				SetOpt {EnableNav} {True}
+	IF: CellE 585E0167
+		DO: DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0625]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[47201]]==7}
 			CellE 585E0167
@@ -518,6 +522,7 @@ STATE: {Depot} ~~ {
 			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==1}
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<8}
 		DO:	DoAll
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0208]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				SetOpt {SummonPets} {False}
 				SetOpt {EnableNav} {True}
 ~~ }
@@ -1112,7 +1117,6 @@ STATE: {WatchDog} ~~ {
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
-				Chat {/f !ManDown}
 				DoExpr {clearvar[StateTimer]}
 				SetState {DeathRecall}
 ~~ }

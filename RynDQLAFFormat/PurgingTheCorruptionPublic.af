@@ -242,12 +242,11 @@ STATE: {Bosses} ~~ {
 				DoExpr {setpvar[StateName,GoTurnin]}
 				DoExpr {setpvar[Step,1]}
 				Chat {/vt meta load CheckPublic}
-	IF:	All
-			CellE 5870010C
+	IF:	CellE 5870010C
 		DO:	DoAll
 				EmbedNav nav2 {[none]}
 				SetOpt {DoorLockpickDiffExcessThreshold} {-50}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.625]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.25]]`,`vtsetsetting[AttackDistance,cstr[0.625]]`]}
 	IF:	Expr {getpvar[Leader]==1}
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[51379]]}
 	IF:	All
@@ -393,17 +392,17 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {NavPriorityBoost} {False}
 				SetOpt {EnableNav} {False}
 				EmbedNav nav6 {[none]}
-	IF:	Not CellE 5119002C
+	IF:	Not BlockE 51190000
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[2645]} ~~ SpellId 2645 is "Portal Recall".
 				SetState {DeathRecall}
-	IF:	CellE 5119002C
+	IF:	BlockE 51190000
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
 				EmbedNav nav7 {[DeathDelay]}
 	IF:	All
 			NavEmpty
-			CellE 5119002C
+			BlockE 51190000
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {clearvar[CombatStuck]}
@@ -530,12 +529,13 @@ STATE: {SyncBuff} ~~{
 			Expr {vtgetsetting[EnableBuffing]!=True}
 		DO: SetOpt {EnableBuffing} {True}
 	IF:	All
-			Expr {getobjectinternaltype[getgvar[SyncBuffComplete]]==1}
+			Expr {testgvar[SyncBuffComplete]==0}
 			Not NeedToBuff
 		DO:	DoAll
 				DoExpr {setgvar[SyncBuffComplete,listcreate[]]}
 				SetState {SyncBuff}
 	IF:	All
+			Expr {testgvar[SyncBuffComplete]==1}
 			Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]==0}
 			Not NeedToBuff
 		DO:	DoAll
@@ -543,6 +543,7 @@ STATE: {SyncBuff} ~~{
 				SetState {SyncBuff}
 	IF:	All
 			Not NeedToBuff
+			Expr {testgvar[SyncBuffComplete]==1}
 			Any
 				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1}
 				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1}
@@ -554,8 +555,8 @@ STATE: {SyncBuff} ~~{
 				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1}
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]==1}		
 		DO: DoAll
-				DoExpr {clearpvar[Buffing]==1}
-				DoExpr {clearpvar[BuffingStartAll]==1}
+				DoExpr {clearpvar[Buffing]}
+				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~}
 STATE: {Finished} ~~ {
@@ -1755,7 +1756,7 @@ STATE: {ToStudy} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Stuck, DeathRecall]}
 				DoExpr {setpvar[StateName,vtgetmetastate[]]}
-	IF:	CellE 5119002C
+	IF:	BlockE 51190000
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
 				EmbedNav nav21 {[none]}
