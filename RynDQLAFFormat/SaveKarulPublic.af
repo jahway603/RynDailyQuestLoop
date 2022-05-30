@@ -609,7 +609,6 @@ STATE: {KarulDoor} ~~ {
 				DoExpr {setvar[Open,2]}
 				EmbedNav nav6 {[MoveUP]}
 	IF:	All
-			CellE 5864011A
 			Expr {getobjectinternaltype[getvar[JumpStuck]]==7}
 			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=7}
 		DO:	EmbedNav nav7 {[JUMP]}
@@ -1008,6 +1007,21 @@ STATE: {ToDungeon} ~~ { ~~ 0x4CE20108 [91.024208 177.416199 68.506500] 0.979783 
 				SetOpt {EnableCombat} {False}
 				EmbedNav nav10 {[none]}
 	IF:	All
+			Expr {getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3}
+			NavEmpty
+			Expr {getvar[PitStop]==2}
+			Any
+				CellE 4CE20102
+				CellE 4CE20109
+				CellE 4CE20108
+		DO:	DoAll
+				SetOpt {EnableCombat} {False}
+				SetOpt {SummonPets} {False}
+				DoExpr {setvar[PitStop,3]}
+				DoExpr {setpvar[StateName,ToDungeon]}
+				Chat {/vt meta load CheckPublic}
+	IF:	All
+			Not Expr {getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3}
 			NavEmpty
 			Expr {getvar[PitStop]==2}
 			Any
@@ -1023,7 +1037,7 @@ STATE: {ToDungeon} ~~ { ~~ 0x4CE20108 [91.024208 177.416199 68.506500] 0.979783 
 	IF:	All
 			NavEmpty
 			Expr {getvar[PitStop]==3}
-			SecsInStateGE 3
+			SecsInStateGE 1
 			Any
 				CellE 4CE20109
 				CellE 4CE20102
@@ -1224,6 +1238,11 @@ STATE: {UseRoothe} ~~ {
 				ChatMatch {^Lieutenant Roothe tells you, "Recently, Lieutenant Karul rushed ahead despite my warning."}
 				ChatMatch {^Lieutenant Roothe tells you, "I fear they will not survive long without assistance."}
 				ChatMatch {^Lieutenant Roothe tells you, "Any news on Lieutenant Karul}
+			All
+				Expr {getpvar[TurnIn]==0}
+				Any
+					Expr {getpvar[Flag]==0}
+					Expr {getpvar[Flag]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Flag,1]}
 				DoExpr {setpvar[StateName,ToRoothe]}

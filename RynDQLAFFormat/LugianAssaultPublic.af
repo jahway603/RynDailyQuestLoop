@@ -394,16 +394,16 @@ STATE: {Dungeon} ~~ {
 				CellE 59510139
 				CellE 59510138
 			Expr {getobjectinternaltype[getgvar[InsideDungeon]]==7}
-			All
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameFour]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameFive]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameSix]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameSeven]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameEight]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameNine]]==1}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFour]]==1}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFour]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFive]]==1}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFour]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFive]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameSix]]==1}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFour]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFive]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameSix]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameSeven]]==1}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFour]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFive]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameSix]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameEight]]==1}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFour]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFive]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameSix]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameEight]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameNine]]==1}		
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				EmbedNav nav1 {Junk.nav}
@@ -413,16 +413,16 @@ STATE: {Dungeon} ~~ {
 				CellE 59510139
 				CellE 59510138
 			Expr {getobjectinternaltype[getgvar[InsideDungeon]]==7}
-			All
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameFour]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameFive]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameSix]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameSeven]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameEight]]==1}
-				Expr {listcontains[getgvar[InsideDungeon],getpvar[FellowNameNine]]==1}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFour]]==1}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFour]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFive]]==1}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFour]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFive]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameSix]]==1}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFour]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFive]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameSix]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameSeven]]==1}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFour]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFive]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameSix]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameEight]]==1}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[InsideDungeon],getpvar[LeaderName]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameThree]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFour]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameFive]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameSix]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameEight]]==1&&listcontains[getgvar[InsideDungeon],getpvar[FellowNameNine]]==1}		
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				EmbedNav nav2 {Junk.nav}
@@ -633,6 +633,39 @@ STATE: {Dungeon} ~~ {
 				DoExpr {setpvar[Door,0]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0416666666666]]`]}
 				EmbedNav nav13 {[none]}
+	IF:	All
+			Expr {getpvar[FellowCount]<2}
+			NavEmpty
+			Expr {getvar[PitStop]==0}
+			Any
+				CellE 59510161
+				CellE 5951016A
+		DO:	DoAll
+				SetOpt {EnableCombat} {False}
+				DoExpr {setvar[PitStop,1]}
+				DoExpr {setpvar[StateName,Dungeon]}
+				Chat {/vt meta load CheckPublic}
+	IF:	All
+			Expr {getpvar[FellowCount]>=2}
+			NavEmpty
+			Expr {getvar[PitStop]==0}
+			Any
+				CellE 59510161
+				CellE 5951016A
+		DO:	DoAll
+				SetOpt {EnableCombat} {True}
+				DoExpr {setvar[PitStop,1]}
+				DoExpr {setpvar[StateName,Dungeon]}
+				Chat {/vt meta load CheckPublic}
+	IF:	All
+			NavEmpty
+			Expr {getvar[PitStop]==1}
+			Any
+				CellE 59510161
+				CellE 5951016A
+		DO:	DoAll
+				SetOpt {EnableCombat} {False}
+				EmbedNav nav33 {Portal.nav}
 	IF:	Any
 			IntoPortal
 			CellE 5951010F
@@ -1923,6 +1956,8 @@ NAV: nav13 once ~~ {
 	pnt -29.5809379577637 -37.1665902694066 2.08333134651184E-05
 	pnt -29.5968299865723 -37.1462843472759 2.08333134651184E-05
 	pnt -29.6502769470215 -37.1493256319935 2.08333134651184E-05
+~~ }
+NAV: nav33 once ~~ {	
 	ptl -29.6502769470215 -37.1493256319935 2.08333134651184E-05 -29.6666666666667 -37.15 -0.000262499845121056 14 {Presk's Treasury}
 	pau -29.6502769470215 -37.1493256319935 2.08333134651184E-05 5000
 ~~ }

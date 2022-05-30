@@ -395,8 +395,11 @@ STATE: {KeeperDoor} ~~ {
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Virindi Research Center Key`]]==7}
 			CellE 5655018F
-		DO:	DoExpr {actiontryapplyitem[wobjectfindininventorybynamerx[`Virindi Research Center Key`],wobjectfindnearestbynameandobjectclass[26, Virindi Research Center]]}
+		DO:	DoAll
+				DoExpr {actiontryapplyitem[wobjectfindininventorybynamerx[`Virindi Research Center Key`],wobjectfindnearestbynameandobjectclass[26, Virindi Research Center]]}
+				SetState {KeeperDoor}
 	IF:	All
+			SecsInStateGE 1
 			Expr {getpvar[Leader]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Virindi Research Center Key`]]==1}
 			CellE 5655018F
@@ -413,6 +416,11 @@ STATE: {KeeperDoor} ~~ {
 				DoExpr {cleargvar[Go]}
 				DoExpr {clearvar[StateTimer]}
 				SetState {ResearchFac}
+	IF: All
+			Expr {getpvar[Leader]==1}
+			SecsInStateGE 15
+			CellE 5655018F
+		DO: SetState {KeeperDoor}
 ~~ }
 STATE: {Loot} ~~ {
 	IF:	All
@@ -906,10 +914,10 @@ STATE: {PrisonerOne} ~~ {
 				DoExpr {actiontryapplyitem[wobjectfindininventorybytemplatetype[45898],wobjectfindnearestbynameandobjectclass[26, Cell Door]]}
 				SetState {PrisonerOne}
 	IF:	All
+			SecsInStateGE 1
 			Expr {getpvar[Leader]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45898]]==1}
-			Any
-				CellE 5655039C
+			CellE 5655039C
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbynameandobjectclass[26, Cell Door]]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
@@ -942,6 +950,11 @@ STATE: {PrisonerOne} ~~ {
 				DoExpr {cleargvar[Go]}
 				DoExpr {clearvar[StateTimer]}
 				SetState {ResearchFac}
+	IF: All
+			Expr {getpvar[Leader]==1}
+			SecsInStateGE 15
+			CellE 5655039C
+		DO: SetState {PrisonerOne}
 ~~ }
 STATE: {PrisonerThree} ~~ {
 	IF:	All
@@ -1004,16 +1017,18 @@ STATE: {PrisonerThree} ~~ {
 			SecsInStateGE 3
 			NavEmpty
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45902]]==7}
+			CellE 56550296
 		DO:	DoAll
 				DoExpr {actiontryapplyitem[wobjectfindininventorybytemplatetype[45902],wobjectfindnearestbynameandobjectclass[26, Cell Door]]}
 				SetState {PrisonerThree}
 	IF:	All
+			SecsInStateGE 1
 			Expr {getpvar[Leader]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45902]]==1}
-			Any
-				CellE 56550296
+			CellE 56550296
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbynameandobjectclass[26, Cell Door]]}
 	IF:	All
+			CellE 56550296
 			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==1}
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5}
@@ -1022,12 +1037,6 @@ STATE: {PrisonerThree} ~~ {
 			Expr {getpvar[Leader]==0}
 			Expr {getgvar[Go]==1}
 		DO:	EmbedNav nav8 {[none]}
-	IF:	All
-			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
-			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==1}
-			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5}
-			Expr {getpvar[Leader]==1}
-		DO: DoExpr {setgvar[Go,1]}
 	IF: All
 			Expr {getpvar[Leader]==1}
 			Expr {getgvar[Go]==1}
@@ -1046,6 +1055,11 @@ STATE: {PrisonerThree} ~~ {
 				DoExpr {cleargvar[Go]}
 				DoExpr {clearvar[StateTimer]}
 				SetState {ResearchFac}
+	IF: All
+			Expr {getpvar[Leader]==1}
+			SecsInStateGE 15
+			CellE 56550296
+		DO: SetState {PrisonerThree}
 ~~ }
 STATE: {PrisonerTwo} ~~ {
 	IF:	All
@@ -1114,6 +1128,7 @@ STATE: {PrisonerTwo} ~~ {
 				DoExpr {actiontryapplyitem[wobjectfindininventorybytemplatetype[45900],wobjectfindnearestbynameandobjectclass[26, Cell Door]]}
 				SetState {PrisonerTwo}
 	IF:	All
+			SecsInStateGE 1
 			Expr {getpvar[Leader]==1}
 			CellE 56550392
 			Any
@@ -1151,6 +1166,11 @@ STATE: {PrisonerTwo} ~~ {
 				DoExpr {cleargvar[Go]}
 				DoExpr {clearvar[StateTimer]}
 				SetState {ResearchFac}
+	IF: All
+			Expr {getpvar[Leader]==1}
+			SecsInStateGE 15
+			CellE 56550392
+		DO: SetState {PrisonerTwo}
 ~~ }
 STATE: {ResearchFac} ~~ {
 	IF:	All

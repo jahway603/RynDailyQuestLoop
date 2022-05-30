@@ -741,25 +741,6 @@ STATE: {CheckQuests} ~~ {
 	IF:	All
 			Expr {getcharintprop[25]>=180}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
-			Expr {getisspellknown[6150]==1} ~~ Rynthid
-			Expr {getqueststatus[lugianassaultcompleted_0913]==1}
-		DO:	DoExpr {setgvar[QuestLugianAssault,getgvar[QuestLugianAssault]+1]]}
-	IF:	All
-			SecsInStateGE 1
-			Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Any
-				Expr {getgvar[QuestLugianAssault]>=2}
-				All
-					Any	
-						Expr {getpvar[AdminSkip]==1}
-						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestLugianAssault]>=1}
-		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestLugianAssault]]}
-				SetState {LoadQuest}
-	IF:	All
-			Expr {getcharintprop[25]>=180}
-			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getisspellknown[2023]==1} ~~ Sanc
 			Expr {getqueststatus[blessedcavereachedend]==1}
 			Expr {getqueststatus[blessedcavecompleted_0912]==1}
@@ -776,25 +757,6 @@ STATE: {CheckQuests} ~~ {
 					Expr {getgvar[QuestReleasingTheLight]>=1}
 		DO:	DoAll
 				DoExpr {setgvar[Quest,QuestReleasingTheLight]]}
-				SetState {LoadQuest}
-	IF:	All
-			Expr {getcharintprop[25]>=180}
-			Expr {getisspellknown[2931]==1} ~~ Aphus
-			Expr {getpvar[FellowCount]>=4}
-			Expr {getqueststatus[deconstructioncompleted_0213]==1}
-		DO:	DoExpr {setgvar[QuestSaveKarul,getgvar[QuestSaveKarul]+1]]}
-	IF:	All
-			SecsInStateGE 1
-			Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Any
-				Expr {getgvar[QuestSaveKarul]>=2}
-				All
-					Any	
-						Expr {getpvar[AdminSkip]==1}
-						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestSaveKarul]>=1}
-		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestSaveKarul]]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=200}
@@ -915,6 +877,44 @@ STATE: {CheckQuests} ~~ {
 					Expr {getgvar[QuestSBG]>=1}
 		DO:	DoAll
 				DoExpr {setgvar[Quest,QuestSBG]]}
+				SetState {LoadQuest}
+	IF:	All
+			Expr {getcharintprop[25]>=180}
+			Expr {getisspellknown[2931]==1} ~~ Aphus
+			Expr {getpvar[FellowCount]>=4}
+			Expr {getqueststatus[deconstructioncompleted_0213]==1}
+		DO:	DoExpr {setgvar[QuestSaveKarul,getgvar[QuestSaveKarul]+1]]}
+	IF:	All
+			SecsInStateGE 1
+			Expr {getcharstringprop[1]==getpvar[LeaderName]}
+			Any
+				Expr {getgvar[QuestSaveKarul]>=2}
+				All
+					Any	
+						Expr {getpvar[AdminSkip]==1}
+						Expr {getpvar[FellowCount]<2}
+					Expr {getgvar[QuestSaveKarul]>=1}
+		DO:	DoAll
+				DoExpr {setgvar[Quest,QuestSaveKarul]]}
+				SetState {LoadQuest}
+	IF:	All
+			Expr {getcharintprop[25]>=180}
+			Expr {getisspellknown[2931]==1} ~~ Aphus
+			Expr {getisspellknown[6150]==1} ~~ Rynthid
+			Expr {getqueststatus[lugianassaultcompleted_0913]==1}
+		DO:	DoExpr {setgvar[QuestLugianAssault,getgvar[QuestLugianAssault]+1]]}
+	IF:	All
+			SecsInStateGE 1
+			Expr {getcharstringprop[1]==getpvar[LeaderName]}
+			Any
+				Expr {getgvar[QuestLugianAssault]>=2}
+				All
+					Any	
+						Expr {getpvar[AdminSkip]==1}
+						Expr {getpvar[FellowCount]<2}
+					Expr {getgvar[QuestLugianAssault]>=1}
+		DO:	DoAll
+				DoExpr {setgvar[Quest,QuestLugianAssault]]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=200}

@@ -840,6 +840,7 @@ STATE: {HeartJump} ~~ {
 				CellE 8B03016E
 				CellE 8B03016C
 				CellE 8B03016D
+				CellE 8B0301CA
 		DO:	DoAll
 				DoExpr {stopwatchstart[setvar[JumpTimer, stopwatchcreate[]]]}
 	IF:	All
@@ -852,6 +853,7 @@ STATE: {HeartJump} ~~ {
 				CellE 8B03016E
 				CellE 8B03016C
 				CellE 8B03016D
+				CellE 8B0301CA
 		DO:	EmbedNav nav10 {[none]}
 	IF:	All
 			All
@@ -863,6 +865,7 @@ STATE: {HeartJump} ~~ {
 				CellE 8B03016E
 				CellE 8B03016C
 				CellE 8B03016D
+				CellE 8B0301CA
 		DO:	DoAll
 				DoExpr {stopwatchstart[setvar[JumpTimer, stopwatchcreate[]]]}
 				SetState {HeartJump}

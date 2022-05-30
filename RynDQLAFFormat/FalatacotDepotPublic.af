@@ -890,7 +890,7 @@ STATE: {ToDepot} ~~ {
 		DO: DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	Always
 		DO:	SetOpt {EnableCombat} {False}
-	IF:	CellE A21E0026
+	IF:	BlockE A21E0000
 		DO:	EmbedNav nav5 {[none]}
 	IF:	CellE A220002F
 		DO:	DoAll
@@ -998,12 +998,17 @@ STATE: {ToNeelic} ~~ {
 			ChatMatch {^Neelic tells you, "My apologies, but it appears we have been the victim of theft. How could this happen here? Our guards are second to none!"}
 			ChatMatch {^Neelic tells you, "Allow me to explain. Our caches of raw materials used to craft the finest of Lugian weapons have been pillaged}
 			ChatMatch {^Neelic tells you, "Have you found the cause}
+			All
+				Expr {getpvar[FalatacotFinished]==0}
+				ChatMatch {^Neelic tells you, "Your work has proven to be of great help. We have increased security for our resource caches and all workers have been notified of the threat."}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,ToDepot]}
 				Chat {/vt meta load CheckPublic}
 	IF:	Any
 			All
-				Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[47196]]==7}
+				Any
+					Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[47196]]==7}
+					Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[47196]]==1}
 				Expr {getpvar[FalatacotFinished]==1}
 			ChatMatch {^You've earned}
 			ChatMatch {^Neelic gives}
