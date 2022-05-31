@@ -77,6 +77,8 @@ STATE: {ClearMobs} ~~ {
 			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 		DO:	SetState {Watchdog}
+	IF: Always
+		DO: DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0208]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 	IF:	Any
 			All
 				NoMobsInDist 5
@@ -87,11 +89,13 @@ STATE: {ClearMobs} ~~ {
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
 				SetOpt {SummonPets} {False}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				Return
 	IF:	NoMobsInDist 15
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
 				SetOpt {SummonPets} {False}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				Return
 ~~ }
 STATE: {DeathRecall} ~~ {
@@ -120,6 +124,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[StateName,DeathRecall]}
+				DoExpr {setpvar[Death,1]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
@@ -189,6 +194,7 @@ STATE: {Default} ~~ {
 	IF:	SecsInStateGE 180
 		DO:	Chat {/ub quit}
 	IF:	Any
+			NeedToBuff
 			All
 				Expr {getcharskill_buffed[32]>=400}
 				Not SecsOnSpellGE 900 4400 ~~ SpellId 4400 is "Aura of Incantation of Defender Self".
@@ -575,7 +581,7 @@ STATE: {FightBoss} ~~ {
 				SetOpt {EnableNav} {False}
 				CallState {ClearMobs} {FightBoss}
 	IF:	All
-			Expr {getpvar[TurnIn]==0}
+			Expr {getpvar[UseBistElleDone]==0}
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[72785]]==7}
 			Any
 				CellE F81E0125
@@ -593,16 +599,17 @@ STATE: {FightBoss} ~~ {
 				DoExpr {vtsetmetastate[vtgetmetastate[]]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
-			Expr {getpvar[TurnIn]==1}
+			Expr {getpvar[UseBistElleDone]==1}
 			Expr {getobjectinternaltype[getgvar[QuestComplete]]==1}
 		DO:	DoAll
 				DoExpr {setgvar[QuestComplete,listcreate[]]}
 				SetState {FightBoss}
 	IF:	All
+			Expr {getobjectinternaltype[getgvar[QuestComplete]]==7}
 			Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]==0}
 			Any
 				Expr {getpvar[QuestCompletedSkip]==1}
-				Expr {getpvar[TurnIn]==1}
+				Expr {getpvar[UseBistElleDone]==1}
 		DO:	DoAll
 				DoExpr {listadd[getgvar[QuestComplete],getcharstringprop[1]]}
 				SetState {FightBoss}
@@ -620,8 +627,9 @@ STATE: {FightBoss} ~~ {
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameNine]]==1}
 				All
 					Expr {getpvar[AdminSkip]==1}
-					Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[72785]]==7}
+					~~ Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[72785]]==7}
 		DO:	DoAll
+				DoExpr {setpvar[TurnIn,1]}
 				DoExpr {setpvar[StateName,ToSurfacePortal]}
 				Chat {/vt meta load CheckPublic}
 ~~ }
@@ -634,6 +642,7 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[Stuck]==1}
 				Expr {testpvar[Step]==1}
 				Expr {testpvar[TurnIn]==1}
+				Expr {testpvar[UseBistElleDone]==1}
 				Expr {testpvar[QuestCompletedSkip]==1}
 				Expr {testgvar[QuestComplete]==1}
 				Expr {testgvar[GoNow+getworldname[]]==1}
@@ -648,6 +657,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Stuck]}
 				DoExpr {clearpvar[Step]}
+				DoExpr {clearpvar[UseBistElleDone]}
 				DoExpr {clearpvar[TurnIn]}
 				DoExpr {clearpvar[QuestCompletedSkip]}
 				DoExpr {cleargvar[QuestComplete]}
@@ -664,6 +674,7 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[StateName]==0}
 			Expr {testpvar[Stuck]==0}
 			Expr {testpvar[Step]==0}
+			Expr {testpvar[UseBistElleDone]==0}
 			Expr {testpvar[TurnIn]==0}
 			Expr {testpvar[QuestCompletedSkip]==0}
 			Expr {testgvar[QuestComplete]==0}
@@ -711,11 +722,13 @@ STATE: {Shahhi} ~~ {
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	SetState {DeathRecall}
 	IF:	Any
+			Expr {getpvar[Death]==1}
 			ChatMatch {^Shah-hi tells you, "Have you found anything in the dig site\? Please hurry."}
 			ChatMatch {^Shah-hi tells you, "Welcome to my excavation site!"}
 			ChatMatch {^Shah-hi tells you, "I wonder if you'd be interested in a little job."}
 			ChatMatch {^Shah-hi tells you, "My mistress, Popkin of the Gate, sent me here to manage this dig site. We've uncovered a very promising Light Falatacot temple, but it's entirely overrun with gromnies. If you'd be willing to go in there and bring back word of anything you find, it'd be greatly appreciated."}
 		DO:	DoAll
+				DoExpr {clearpvar[Death]}
 				DoExpr {setpvar[StateName,ToDungeon]}
 				Chat {/vt meta load CheckPublic}
 	IF:	Any
@@ -877,6 +890,9 @@ STATE: {ToShahhi} ~~ {
 	IF:	All
 			NavEmpty
 			Any
+				Expr {getpvar[Death]==0}
+				Expr {getpvar[UseBistElleDone]==1}
+			Any
 				CellE F81E002B
 				CellE F81E0023
 				CellE F81E0022
@@ -884,6 +900,19 @@ STATE: {ToShahhi} ~~ {
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
 				SetState {Shahhi}
+	IF:	All
+			NavEmpty
+			Expr {getpvar[Death]==1}
+			Any
+				CellE F81E002B
+				CellE F81E0023
+				CellE F81E0022
+				CellE F81E002A
+		DO:	DoAll
+				SetOpt {EnableCombat} {True}
+				DoExpr {clearpvar[Death]}
+				DoExpr {setpvar[StateName,ToDungeon]}
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {ToSurfacePortal} ~~ {
 	IF:	All
@@ -1004,8 +1033,6 @@ STATE: {UseBistElle} ~~ {
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
-	IF:	Expr {getpvar[TurnIn]==1}
-		DO:	Return
 	IF:	All
 			Expr {getpvar[TurnIn]==0}
 			SecsInStateGE 3
@@ -1018,10 +1045,10 @@ STATE: {UseBistElle} ~~ {
 			ChatMatch {^Spirit of Bist'elle tells you, "Forgive my intrusion, but I needed a moment to figure out the language to speak to you in, and I have little time here before this echo of me fades."}
 			ChatMatch {^Spirit of Bist'elle tells you, "And also forgive my poor gromnies; the darkness that has entered this place has tainted them over the ages. They're growing into something far more twisted and corrupt than their blessed ancestors were."}
 			ChatMatch {^Spirit of Bist'elle tells you, "I sense the reason why you are here. Tell your employer to seek the Seed of the Morning. It can be found near to where that which is sacred to the Lady of Morning can be found. She will find her path there. What they seek to do, to combat the powers of Darkness that have corrupted love, it can be done. Trust in the Light..."}
-			ChatMatch {^Spirit of Bist'elle tells you, "You've returned}
+			ChatMatch {^Spirit of Bist'elle tells you,}
 		DO:	DoAll
+				DoExpr {setpvar[UseBistElleDone,1]}
 				DoExpr {clearvar[StateTimer]}
-				DoExpr {setpvar[TurnIn,1]}
 				Return
 ~~ }
 STATE: {Watchdog} ~~ {

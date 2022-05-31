@@ -435,6 +435,7 @@ STATE: {FirstDungeon} ~~ {
 				DoExpr {setgvar[QuestComplete,listcreate[]]}
 				SetState {FirstDungeon}
 	IF:	All
+			Expr {getobjectinternaltype[getgvar[QuestComplete]]==7}
 			Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]==0}
 			Any
 				Expr {getpvar[QuestCompletedSkip]==1}
@@ -568,6 +569,7 @@ STATE: {GetShardThree} ~~ {
 				DoExpr {setgvar[QuestComplete,listcreate[]]}
 				SetState {GetShardThree}
 	IF:	All
+			Expr {getobjectinternaltype[getgvar[QuestComplete]]==7}
 			Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]==0}
 			Any
 				Expr {getpvar[QuestCompletedSkip]==1}
@@ -669,6 +671,7 @@ STATE: {GetShardTwo} ~~ {
 				DoExpr {setgvar[QuestComplete,listcreate[]]}
 				SetState {GetShardTwo}
 	IF:	All
+			Expr {getobjectinternaltype[getgvar[QuestComplete]]==7}
 			Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]==0}
 			Any
 				Expr {getpvar[QuestCompletedSkip]==1}
@@ -876,6 +879,7 @@ STATE: {HeartJump} ~~ {
 				DoExpr {setgvar[QuestComplete,listcreate[]]}
 				SetState {HeartJump}
 	IF:	All
+			Expr {getobjectinternaltype[getgvar[QuestComplete]]==7}
 			Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]==0}
 			Any
 				Expr {getpvar[QuestCompletedSkip]==1}

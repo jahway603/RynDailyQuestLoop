@@ -551,6 +551,7 @@ STATE: {Garbage} ~~ {
 				DoExpr {setgvar[QuestComplete,listcreate[]]}
 				SetState {Garbage}
 	IF:	All
+			Expr {getobjectinternaltype[getgvar[QuestComplete]]==7}
 			Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]==0}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Stone Tablet]]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Door Key]]==1}
@@ -1565,6 +1566,7 @@ STATE: {ToGY} ~~ {
 				DoExpr {setgvar[QuestComplete,listcreate[]]}
 				SetState {ToGY}
 	IF:	All
+			Expr {getobjectinternaltype[getgvar[QuestComplete]]==7}
 			Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]==0}
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==1}
 		DO:	DoAll

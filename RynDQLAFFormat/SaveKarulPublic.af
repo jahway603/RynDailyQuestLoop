@@ -463,6 +463,7 @@ STATE: {Karul} ~~ {
 				DoExpr {setgvar[QuestComplete,listcreate[]]}
 				SetState {Karul}
 	IF:	All
+			Expr {getobjectinternaltype[getgvar[QuestComplete]]==7}
 			Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]==0}
 			Any
 				Expr {getpvar[QuestCompletedSkip]==1}

@@ -1963,6 +1963,9 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {clearpvar[Stuck]}
 				DoExpr {clearpvar[Step]}
 				DoExpr {clearpvar[Town]}
+				DoExpr {clearpvar[UseBistElleDone]}
+				DoExpr {clearpvar[Scroll]}
+				DoExpr {clearpvar[ToTranslator]}
 				DoExpr {clearpvar[Run]}
 				DoExpr {clearpvar[Recall]}
 				DoExpr {clearpvar[LegendaryKey]}
