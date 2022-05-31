@@ -1628,9 +1628,31 @@ s
 s
 Default
 i
-26
+2
 i
 3
+TABLE
+2
+K
+V
+n
+n
+2
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+testgvar[GoNowClear+getworldname[]]==1
+i
+26
 TABLE
 2
 k
@@ -1943,7 +1965,7 @@ n
 s
 e
 s
-cleargvar[GoNowClear+getworldname[]]
+listremove[getgvar[GoNowClear+getworldname[]],getcharstringprop[1]]
 s
 Default
 i
@@ -4515,7 +4537,7 @@ setpvar[StateName,Default]
 i
 2
 s
-/vt meta load QuestCheckPublic
+/ub bct DailyLoop /vt meta load QuestCheckPublic
 s
 Fellow
 i
@@ -4632,7 +4654,7 @@ n
 s
 e
 s
-cleargvar[GoNowClear+getworldname[]]
+listremove[getgvar[GoNowClear+getworldname[]],getcharstringprop[1]]
 i
 7
 TABLE
@@ -5720,7 +5742,7 @@ n
 s
 e
 s
-cleargvar[GoNowClear+getworldname[]]
+listremove[getgvar[GoNowClear+getworldname[]],getcharstringprop[1]]
 i
 7
 TABLE
@@ -6403,7 +6425,7 @@ n
 s
 e
 s
-cleargvar[GoNowClear+getworldname[]]
+listremove[getgvar[GoNowClear+getworldname[]],getcharstringprop[1]]
 i
 7
 TABLE
