@@ -184,11 +184,11 @@ STATE: {Default} ~~ {
 		DO:	Chat {/ub quit}
 	IF:	Any
 			All
-				Expr {getcharskill_buffed[32]>=400}
-				Not SecsOnSpellGE 900 4400 ~~ SpellId 4400 is "Aura of Incantation of Defender Self".
+				Expr {getcharskill_buffed[32]>=391}
+				Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=900}
 			All
-				Expr {getcharskill_buffed[32]<=399}
-				Not SecsOnSpellGE 900 2101 ~~ SpellId 2101 is "Aura of Cragstone's Will".
+				Expr {getcharskill_buffed[32]<=390}
+				Expr {getspellexpirationbyname[Aura of Cragstone's Will]<=900}
 		DO:	DoAll
 				Chat {/vt forcebuff}
 				DoExpr {setgvar[Buffing,1]}
@@ -243,6 +243,7 @@ STATE: {SyncBuff} ~~{
 		DO: DoAll
 				DoExpr {clearpvar[Buffing]}
 				DoExpr {clearpvar[BuffingStartAll]}
+				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~}
 STATE: {Finished} ~~ {
@@ -558,7 +559,7 @@ STATE: {LostRuin} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {EnableCombat} {True}
 				DoExpr {clearpvar[QuestCompletedSkip]}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.1875]]`,`vtsetsetting[AttackDistance,cstr[0.1875]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.08333333333]]`,`vtsetsetting[AttackDistance,cstr[0.08333333333]]`]}
 	IF:	All
 			Any
 				CellE 57650101
@@ -577,7 +578,7 @@ STATE: {LostRuin} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {EnableCombat} {True}
 				DoExpr {clearpvar[QuestCompletedSkip]}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.1875]]`,`vtsetsetting[AttackDistance,cstr[0.1875]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.08333333333]]`,`vtsetsetting[AttackDistance,cstr[0.08333333333]]`]}
 				CallState {PickUp} {LostRuin}
 	IF:	All
 			NavEmpty
