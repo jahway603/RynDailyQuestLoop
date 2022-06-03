@@ -5492,7 +5492,7 @@ n
 s
 e
 s
-wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile
+getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee
 s
 /ub quit
 s
@@ -6350,7 +6350,7 @@ n
 s
 e
 s
-wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile
+getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee
 s
 /ub quit
 s
@@ -9635,7 +9635,7 @@ n
 s
 e
 s
-wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile
+getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee
 s
 /ub quit
 s

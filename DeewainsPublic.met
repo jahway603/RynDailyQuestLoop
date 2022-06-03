@@ -1243,7 +1243,7 @@ n
 s
 e
 s
-wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile
+getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee
 s
 /ub quit
 s
@@ -1947,7 +1947,7 @@ n
 s
 e
 s
-wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile
+getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee
 s
 /ub quit
 s
@@ -4617,7 +4617,7 @@ K
 V
 n
 n
-4
+3
 i
 7
 TABLE
@@ -4630,20 +4630,7 @@ n
 s
 e
 s
-clearpvar[Buffing]
-i
-7
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-clearpvar[BuffingStartAll]
+cleargvar[Buffing]
 i
 7
 TABLE
@@ -6963,7 +6950,7 @@ K
 V
 n
 n
-17
+18
 i
 7
 TABLE
@@ -7003,6 +6990,19 @@ s
 e
 s
 clearpvar[Stuck]
+i
+7
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+clearpvar[BuffingStartAll]
 i
 7
 TABLE
@@ -14971,7 +14971,7 @@ n
 s
 e
 s
-wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile
+getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee
 s
 /ub quit
 s
