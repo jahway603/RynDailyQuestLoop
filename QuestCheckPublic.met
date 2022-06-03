@@ -4418,7 +4418,7 @@ n
 s
 e
 s
-getgvar[QuestMouf]>=2
+getgvar[QuestMouf]>=1
 i
 2
 TABLE
@@ -4729,7 +4729,7 @@ n
 s
 e
 s
-getgvar[QuestUnleashTheGearknight]>=2
+getgvar[QuestUnleashTheGearknight]>=1
 i
 2
 TABLE
@@ -4938,7 +4938,7 @@ n
 s
 e
 s
-getgvar[QuestProdigalBanderling]>=2
+getgvar[QuestProdigalBanderling]>=1
 i
 2
 TABLE
@@ -5147,7 +5147,7 @@ n
 s
 e
 s
-getgvar[QuestLostLore]>=2
+getgvar[QuestLostLore]>=1
 i
 2
 TABLE
@@ -5343,7 +5343,7 @@ n
 s
 e
 s
-getgvar[QuestFalatacotDepot]>=2
+getgvar[QuestFalatacotDepot]>=1
 i
 2
 TABLE
@@ -5574,7 +5574,7 @@ n
 s
 e
 s
-getgvar[QuestProdigalTusker]>=2
+getgvar[QuestProdigalTusker]>=1
 i
 2
 TABLE
@@ -5783,7 +5783,7 @@ n
 s
 e
 s
-getgvar[QuestIQSQ]>=2
+getgvar[QuestIQSQ]>=1
 i
 2
 TABLE
@@ -6005,7 +6005,7 @@ n
 s
 e
 s
-getgvar[QuestGrael]>=2
+getgvar[QuestGrael]>=1
 i
 2
 TABLE
@@ -6201,7 +6201,7 @@ n
 s
 e
 s
-getgvar[QuestVR]>=2
+getgvar[QuestVR]>=1
 i
 2
 TABLE
@@ -6397,7 +6397,7 @@ n
 s
 e
 s
-getgvar[QuestNexus]>=2
+getgvar[QuestNexus]>=1
 i
 2
 TABLE
@@ -6593,7 +6593,7 @@ n
 s
 e
 s
-getgvar[QuestHermit]>=2
+getgvar[QuestHermit]>=1
 i
 2
 TABLE
@@ -6802,7 +6802,7 @@ n
 s
 e
 s
-getgvar[QuestDR]>=2
+getgvar[QuestDR]>=1
 i
 2
 TABLE
@@ -7024,7 +7024,7 @@ n
 s
 e
 s
-getgvar[QuestAF]>=2
+getgvar[QuestAF]>=1
 i
 2
 TABLE
@@ -7255,7 +7255,7 @@ n
 s
 e
 s
-getgvar[QuestPurge]>=2
+getgvar[QuestPurge]>=1
 i
 2
 TABLE
@@ -7451,7 +7451,7 @@ n
 s
 e
 s
-getgvar[QuestGX]>=2
+getgvar[QuestGX]>=1
 i
 2
 TABLE
@@ -7660,7 +7660,7 @@ n
 s
 e
 s
-getgvar[QuestDee]>=2
+getgvar[QuestDee]>=1
 i
 2
 TABLE
@@ -7882,7 +7882,7 @@ n
 s
 e
 s
-getgvar[QuestReleasingTheLight]>=2
+getgvar[QuestReleasingTheLight]>=1
 i
 2
 TABLE
@@ -8104,7 +8104,7 @@ n
 s
 e
 s
-getgvar[QuestBSI]>=2
+getgvar[QuestBSI]>=1
 i
 2
 TABLE
@@ -8339,7 +8339,7 @@ n
 s
 e
 s
-getgvar[QuestHaltDericost]>=2
+getgvar[QuestHaltDericost]>=1
 i
 2
 TABLE
@@ -8561,7 +8561,7 @@ n
 s
 e
 s
-getgvar[QuestGeraineStudy]>=2
+getgvar[QuestGeraineStudy]>=1
 i
 2
 TABLE
@@ -8757,7 +8757,7 @@ n
 s
 e
 s
-getgvar[QuestLU]>=2
+getgvar[QuestLU]>=1
 i
 2
 TABLE
@@ -8988,7 +8988,7 @@ n
 s
 e
 s
-getgvar[QuestCP]>=2
+getgvar[QuestCP]>=1
 i
 2
 TABLE
@@ -9210,7 +9210,7 @@ n
 s
 e
 s
-getgvar[QuestSBG]>=2
+getgvar[QuestSBG]>=1
 i
 2
 TABLE
@@ -9419,7 +9419,7 @@ n
 s
 e
 s
-getgvar[QuestSaveKarul]>=2
+getgvar[QuestSaveKarul]>=1
 i
 2
 TABLE
@@ -9628,7 +9628,7 @@ n
 s
 e
 s
-getgvar[QuestLugianAssault]>=2
+getgvar[QuestLugianAssault]>=1
 i
 2
 TABLE
@@ -9876,7 +9876,7 @@ n
 s
 e
 s
-getgvar[QuestEOD]>=2
+getgvar[QuestEOD]>=1
 i
 2
 TABLE
@@ -10137,7 +10137,7 @@ n
 s
 e
 s
-getgvar[QuestRynthidWeapon]>=2
+getgvar[QuestRynthidWeapon]>=1
 i
 2
 TABLE
@@ -11694,7 +11694,7 @@ K
 V
 n
 n
-3
+2
 i
 7
 TABLE
@@ -11707,20 +11707,7 @@ n
 s
 e
 s
-clearpvar[Buffing]
-i
-7
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-clearpvar[BuffingStartAll]
+cleargvar[Buffing]
 i
 1
 s
@@ -21944,7 +21931,7 @@ K
 V
 n
 n
-39
+40
 i
 7
 TABLE
@@ -21997,6 +21984,19 @@ s
 e
 s
 clearpvar[Stuck]
+i
+7
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+clearpvar[BuffingStartAll]
 i
 7
 TABLE
