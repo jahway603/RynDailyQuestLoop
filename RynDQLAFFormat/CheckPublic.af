@@ -191,12 +191,16 @@ STATE: {Default} ~~ {
 				ChatExpr {\/vt meta load +getpvar[Profile]}
 				ChatExpr {\/vt setmetastate +getpvar[StateName]}
 	IF: All
+			SecsInStateGE 1
 			Expr {testgvar[GoNowClear+getworldname[]]}
 			Expr {listcontains[getgvar[GoNowClear+getworldname[]],getcharstringprop[1]]}
 		DO: DoAll
 				DoExpr {listremove[getgvar[GoNowClear+getworldname[]],getcharstringprop[1]]}
 				SetState {Default}
-	IF: Expr {listcontains[getgvar[getpvar[CheckSync]+getworldname[]],getcharstringprop[1]]}
+	IF: All
+			SecsInStateGE 1
+			Expr {testgvar[getgvar[getpvar[CheckSync]+getworldname[]]}
+			Expr {listcontains[getgvar[getpvar[CheckSync]+getworldname[]],getcharstringprop[1]]}
 		DO: DoAll
 				DoExpr {listremove[getgvar[getpvar[CheckSync]+getworldname[]],getcharstringprop[1]]}
 				SetState {Default}
@@ -396,9 +400,7 @@ STATE: {DefaultPass}  ~~{
 	IF:	All
 			Expr {testvar[DefaultPassStuck]}
 			Expr {stopwatchelapsedseconds[getvar[DefaultPassStuck]]>=600}
-		DO:	DoAll
-				DoExpr {setpvar[StateName,Default]}
-				Chat {/vt meta load QuestCheckPublic}
+		DO:	DoExpr {setgvar[Zstuck,1]}
 	IF:	All
 			Expr {testgvar[getpvar[CheckSync]+getworldname[]]}
 			Expr {listcount[getgvar[GoNowClear+getworldname[]]]==0}

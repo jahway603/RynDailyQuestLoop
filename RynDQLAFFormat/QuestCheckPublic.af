@@ -438,7 +438,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestMouf]>=2}
+				Expr {getgvar[QuestMouf]>=1}
 				All
 					Any
 						Expr {getpvar[AdminSkip]==1}
@@ -466,7 +466,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestUnleashTheGearknight]>=2}
+				Expr {getgvar[QuestUnleashTheGearknight]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -485,7 +485,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestProdigalBanderling]>=2}
+				Expr {getgvar[QuestProdigalBanderling]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -504,7 +504,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestLostLore]>=2}
+				Expr {getgvar[QuestLostLore]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -522,7 +522,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestFalatacotDepot]>=2}
+				Expr {getgvar[QuestFalatacotDepot]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -543,7 +543,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestProdigalTusker]>=2}
+				Expr {getgvar[QuestProdigalTusker]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -561,7 +561,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {testquestflag[quiddityseedquestflag]==1}
 		DO:	DoExpr {setgvar[QuestIQSQ,getgvar[QuestIQSQ]+1]]}
 	IF:	Any
-			Expr {getgvar[QuestIQSQ]>=2}
+			Expr {getgvar[QuestIQSQ]>=1}
 			All
 				Any	
 					Expr {getpvar[AdminSkip]==1}
@@ -581,7 +581,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestGrael]>=2}
+				Expr {getgvar[QuestGrael]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -599,7 +599,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestVR]>=2}
+				Expr {getgvar[QuestVR]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -617,7 +617,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestNexus]>=2}
+				Expr {getgvar[QuestNexus]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -635,7 +635,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestHermit]>=2}
+				Expr {getgvar[QuestHermit]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -654,7 +654,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestDR]>=2}
+				Expr {getgvar[QuestDR]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -674,7 +674,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestAF]>=2}
+				Expr {getgvar[QuestAF]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -695,7 +695,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestPurge]>=2}
+				Expr {getgvar[QuestPurge]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -713,7 +713,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestGX]>=2}
+				Expr {getgvar[QuestGX]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -732,7 +732,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestDee]>=2}
+				Expr {getgvar[QuestDee]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -752,7 +752,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestReleasingTheLight]>=2}
+				Expr {getgvar[QuestReleasingTheLight]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -772,7 +772,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestBSI]>=2}
+				Expr {getgvar[QuestBSI]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -793,7 +793,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestHaltDericost]>=2}
+				Expr {getgvar[QuestHaltDericost]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -813,7 +813,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestGeraineStudy]>=2}
+				Expr {getgvar[QuestGeraineStudy]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -831,7 +831,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestLU]>=2}
+				Expr {getgvar[QuestLU]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -852,7 +852,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestCP]>=2}
+				Expr {getgvar[QuestCP]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -872,7 +872,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestSBG]>=2}
+				Expr {getgvar[QuestSBG]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -891,7 +891,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestSaveKarul]>=2}
+				Expr {getgvar[QuestSaveKarul]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -910,7 +910,7 @@ STATE: {CheckQuests} ~~ {
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestLugianAssault]>=2}
+				Expr {getgvar[QuestLugianAssault]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -932,7 +932,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Expr {getgvar[EoDAbort]==0}
 			Any
-				Expr {getgvar[QuestEOD]>=2}
+				Expr {getgvar[QuestEOD]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -955,7 +955,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getpvar[RynthidWeapon]==1}
 			Expr {getpvar[FellowCount]>=3}
 			Any
-				Expr {getgvar[QuestRynthidWeapon]>=2}
+				Expr {getgvar[QuestRynthidWeapon]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
@@ -1102,8 +1102,7 @@ STATE: {SyncBuff} ~~{
 				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]}
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}		
 		DO: DoAll
-				DoExpr {clearpvar[Buffing]}
-				DoExpr {clearpvar[BuffingStartAll]}
+				DoExpr {cleargvar[Buffing]}
 				SetState {NetworkChirpCheck}
 ~~}
 STATE: {NetworkChirpCheck} ~~{
@@ -1964,6 +1963,7 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[Finished]}
 				DoExpr {clearpvar[Stuck]}
+				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[Step]}
 				DoExpr {clearpvar[Town]}
 				DoExpr {clearpvar[UseBistElleDone]}

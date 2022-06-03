@@ -524,7 +524,7 @@ STATE: {ToCastle} ~~ {
 			Expr {getpvar[Recall]==0}
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=60}
-			Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
+			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	All
 			Expr {getpvar[Recall]==0}
@@ -582,7 +582,7 @@ STATE: {ToKahiri} ~~ {
 			Expr {getpvar[Recall]==0}
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=60}
-			Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
+			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	All
 			Expr {getpvar[Recall]==0}
@@ -812,7 +812,7 @@ STATE: {ToSanctuary} ~~ {
 			Expr {getpvar[Recall]==0}
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=60}
-			Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
+			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	All
 			Expr {getpvar[Recall]==0}

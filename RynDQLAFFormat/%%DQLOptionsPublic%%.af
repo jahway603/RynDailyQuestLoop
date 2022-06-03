@@ -285,18 +285,18 @@ STATE: {%% Options %%} ~~ {
 			Expr {getpvar[RouteToggleSplittingGrael]==`Run`}
 			Expr {getpvar[RouteToggleUGK]==`Run`}
 		DO:	DoExpr {setpvar[Run,1]}
-	IF: Expr {getvar[ReloadOptions]==0}
+	IF: Expr {getvar[ReloadOptions]<3}
 		DO: DoAll
-				DoExpr {setvar[ReloadOptions,1]}
+				DoExpr {setvar[ReloadOptions,getvar[ReloadOptions]+1]}
 				SetState {%% Options %%}
 	IF:	All
 			Expr {getpvar[UseBot]==1}
-			Expr {getobjectinternaltype[getpvar[BotName]]==7}
+			Expr {testpvar[BotName]}
 			Expr {listcount[getpvar[BotName]]<getpvar[BotCount]}
 		DO:	DoExpr {setpvar[BotName,listcreate[getpvar[BotNameOne],getpvar[BotNameTwo],getpvar[BotNameThree],getpvar[BotNameFour],getpvar[BotNameFive],getpvar[BotNameSix],getpvar[BotNameSeven],getpvar[BotNameEight],getpvar[BotNameNine],getpvar[BotNameTen],getpvar[BotNameEleven]]]}
 	IF:	All
-			Expr {testpvar[LeaderName]==1}
-			Expr {testpvar[FellowCount]==1}
+			Expr {testpvar[LeaderName]}
+			Expr {testpvar[FellowCount]}
 			Expr {getvar[ReloadOptions]==1}
 			Any
 				Expr {getpvar[FellowCount]==2&&testpvar[FellowNameTwo]==1}

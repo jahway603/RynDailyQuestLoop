@@ -138,6 +138,10 @@ STATE: {FightBoss} ~~ {
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+	IF:	All
+			Expr {getpvar[QuestCompletedSkip]==0}
+			Not Expr {testvar[LootCurrent]}
+		DO: DoExpr {setvar[LootCurrent,getinventorycountbytemplatetype[47190]+1]}
 	IF: All
 			Expr {getpvar[Leader]==1}
 			Not Expr {testgvar[QuestComplete]}
@@ -151,7 +155,7 @@ STATE: {FightBoss} ~~ {
 			Not Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]}
 			Any
 				Expr {getpvar[QuestCompletedSkip]==1}
-				Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[47190]]==7}
+				Expr {getinventorycountbytemplatetype[47190]==getvar[LootCurrent]}
 		DO:	DoAll
 				DoExpr {listadd[getgvar[QuestComplete],getcharstringprop[1]]}
 				SetState {FightBoss}
@@ -169,7 +173,7 @@ STATE: {FightBoss} ~~ {
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameNine]]}
 				All
 					Expr {getpvar[AdminSkip]==1}
-					Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[47190]]==7}
+					Expr {getinventorycountbytemplatetype[47190]==getvar[LootCurrent]}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[FalatacotFinished,1]}
@@ -178,7 +182,7 @@ STATE: {FightBoss} ~~ {
 				Chat {/vt meta load CheckPublic} ~~ ToTN
 	IF:	All
 			Expr {getpvar[QuestCompletedSkip]==0}
-			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[47190]]==1}
+			Expr {getinventorycountbytemplatetype[47190]<getvar[LootCurrent]}
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Zrikux]]==7}
 			NoMobsInDist 25
 		DO:	DoAll
@@ -186,6 +190,7 @@ STATE: {FightBoss} ~~ {
 				DoExpr {setvar[CorpseName,Corpse of Zrikux]]}
 				DoExpr {setvar[LootItem,Orders for Zrikux]}
 				DoExpr {listadd[getgvar[FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[LootingCounter],getcharstringprop[1]]}
 				DoExpr {setvar[Return,FightBoss]}
 				CallState {Loot} {FightBoss}
 	IF: Expr {getobjectinternaltype[wobjectgetopencontainer[]]==7}
@@ -212,7 +217,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	All
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=60}
-			Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
+			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -352,8 +357,7 @@ STATE: {SyncBuff} ~~{
 				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]}
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}		
 		DO: DoAll
-				DoExpr {clearpvar[Buffing]}
-				DoExpr {clearpvar[BuffingStartAll]}
+				DoExpr {cleargvar[Buffing]}
 				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~}
@@ -564,6 +568,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Stuck]}
+				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[FalatacotFinished]}
 				DoExpr {cleargvar[QuestComplete]}
 				DoExpr {cleargvar[FailDelayCounter]}
@@ -625,6 +630,7 @@ STATE: {Loot} ~~ {
 				SetOpt {EnableLooting} {True}
 				SetOpt {NavCloseStopRange} {0.00625}
 				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
 				DoExpr {clearvar[CorpseName]}
 				DoExpr {clearvar[LootItem]}
 				DoExpr {clearvar[Loot]}
@@ -647,6 +653,7 @@ STATE: {Loot} ~~ {
 				SetOpt {EnableLooting} {True}
 				SetOpt {NavCloseStopRange} {0.00625}
 				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
 				DoExpr {clearvar[CorpseName]}
 				DoExpr {clearvar[LootItem]}
 				DoExpr {clearvar[Loot]}
@@ -667,6 +674,7 @@ STATE: {Loot} ~~ {
 				SetOpt {EnableLooting} {True}
 				SetOpt {NavCloseStopRange} {0.00625}
 				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
 				DoExpr {clearvar[CorpseName]}
 				DoExpr {clearvar[LootItem]}
 				DoExpr {clearvar[Loot]}
@@ -703,6 +711,7 @@ STATE: {Loot} ~~ {
 				SetOpt {EnableLooting} {True}
 				SetOpt {NavCloseStopRange} {0.00625}
 				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
 				DoExpr {clearvar[CorpseName]}
 				DoExpr {clearvar[LootItem]}
 				DoExpr {clearvar[Loot]}
@@ -720,6 +729,7 @@ STATE: {Loot} ~~ {
 			ChatMatch {^You have solved this quest too recently!}
 		DO:	DoAll
 				DoExpr {setvar[LootCount,getitemcountininventorybyname[getvar[LootItem]]}
+				DoExpr {setvar[LootCurrent,getitemcountininventorybyname[getvar[LootItem]]}
 				DoExpr {setpvar[QuestCompletedSkip,1]}
 				SetState {Loot}
 	IF:	Expr {testvar[LootCount]==0}
@@ -823,6 +833,12 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootStuckDelay]}
 				DoExpr {setgvar[Looting,0]}
 				SetState {LootStuckDelay}
+	IF: All
+			Expr {listcount[getgvar[FailDelayCounter]]==getpvar[FellowCount]}
+			SecsInStateGE 30
+		DO: DoAll
+				DoExpr {setgvar[Looting,0]}
+				SetState {Loot}
 ~~ }
 STATE: {LootStuckDelay} ~~ {
 	IF:	All
@@ -833,6 +849,7 @@ STATE: {LootStuckDelay} ~~ {
 				SetOpt {EnableLooting} {True}
 				SetOpt {NavCloseStopRange} {0.00625}
 				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
 				DoExpr {clearvar[CorpseName]}
 				DoExpr {clearvar[LootItem]}
 				DoExpr {clearvar[Loot]}
@@ -865,6 +882,7 @@ STATE: {LootStuckDelay} ~~ {
 				DoExpr {cleargvar[LootFail]}
 				SetOpt {EnableLooting} {True}
 				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
 				DoExpr {clearvar[CorpseName]}
 				DoExpr {clearvar[LootItem]}
 				DoExpr {clearvar[Loot]}
@@ -896,7 +914,7 @@ STATE: {ToDepot} ~~ {
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[Stuck, DeathRecall]}
-				SetWatchdog 5 45 {DeathRecall}
+				SetWatchdog 5 45 {WatchDog}
 	IF: Always
 		DO: DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	Always
@@ -1062,7 +1080,7 @@ STATE: {ToTN} ~~ {
 			All
 				Expr {testvar[CombatStuck]]}
 				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=40}
-				Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}

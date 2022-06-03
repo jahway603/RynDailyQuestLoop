@@ -468,7 +468,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	All
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
-			Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
+			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -705,8 +705,7 @@ STATE: {SyncBuff} ~~{
 				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]}
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}		
 		DO: DoAll
-				DoExpr {clearpvar[Buffing]}
-				DoExpr {clearpvar[BuffingStartAll]}
+				DoExpr {cleargvar[Buffing]}
 				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~}
@@ -733,6 +732,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[B]}
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[Stuck]}
+				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[Meta\ +getpvar[Profile]]}
 				DoExpr {clearpvar[TN]}
 				DoExpr {clearpvar[Return]}
@@ -788,16 +788,6 @@ STATE: {Hermit} ~~ {
 	IF:	CellE 002902E7
 		DO:	EmbedNav nav9 {Clear}
 	IF:	All
-			Expr {getpvar[B]==0}
-			CellE 49F50100
-			SecsInStateGE 12
-		DO:	SetState {Hermit}
-	IF:	All
-			Expr {getpvar[B]==7}
-			CellE 49F50100
-			SecsInStateGE 2
-		DO:	SetState {Hermit}
-	IF:	All
 			NavEmpty
 			CellE 002902E7
 		DO:	DoAll
@@ -806,14 +796,17 @@ STATE: {Hermit} ~~ {
 				DoExpr {setpvar[StateName,ToBabyOne]}
 				DoExpr {setpvar[CheckSync,ToBabyOne]}
 				Chat {/vt meta load CheckPublic} ~~ ToBabyOne
-	IF:	Any
-			ChatMatch {^Hermit tells you, "Yes! This is it!"}
-			ChatMatch {^Hermit carefully collects the Thrungus Dust from your clothes and then suddenly her smile turns to one of sadness.}
-			ChatMatch {^Hermit tells you, "You deserve to know the truth. It is my belief that this dust will sever my ties to the Life Stones so when next I die I will not be brought back. My heart aches for having to deceive you, but I feared you would not help me had I told you the truth."}
-			ChatMatch {^Hermit tells you, "But do not despair my friend. For while you were gone I started to have misgivings about my actions. Perhaps death is not the answer I should seek."}
-			ChatMatch {^Hermit gives you 5 Trade Notes (250,000).}
-			ChatMatch {^Hermit tells you, "Thanks to you I now have a means to put end to my torment and yet I now lack the courage to use it. Does my life mean so little that I can throw it away so carelessly? Was I put here on this land for a purpose? So many questions to be answered."}
-		DO:	DoExpr {setpvar[Hermit,1]}
+	IF:	All
+			Expr {getpvar[B]==7}
+			Any
+				ChatMatch {^Hermit tells you, "Yes! This is it!"}
+				ChatMatch {^Hermit carefully collects the Thrungus Dust from your clothes and then suddenly her smile turns to one of sadness.}
+				ChatMatch {^Hermit tells you, "You deserve to know the truth. It is my belief that this dust will sever my ties to the Life Stones so when next I die I will not be brought back. My heart aches for having to deceive you, but I feared you would not help me had I told you the truth."}
+				ChatMatch {^Hermit tells you, "But do not despair my friend. For while you were gone I started to have misgivings about my actions. Perhaps death is not the answer I should seek."}
+				ChatMatch {^Hermit gives you 5 Trade Notes (250,000).}
+				ChatMatch {^Hermit tells you, "Thanks to you I now have a means to put end to my torment and yet I now lack the courage to use it. Does my life mean so little that I can throw it away so carelessly\? Was I put here on this land for a purpose? So many questions to be answered."}
+				ChatMatch {^Hermit tells you, "}
+		DO:	DoExpr {setvar[Hermit,1]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Expr {getvar[Hermit]==1}
@@ -848,6 +841,16 @@ STATE: {Hermit} ~~ {
 				DoExpr {setpvar[StateName,Finished]}
 				DoExpr {setpvar[CheckSync,Finished]}
 				Chat {/vt meta load CheckPublic} ~~ Finished
+	IF:	All
+			Expr {getpvar[B]==0}
+			CellE 49F50100
+			SecsInStateGE 12
+		DO:	SetState {Hermit}
+	IF:	All
+			Expr {getpvar[B]==7}
+			CellE 49F50100
+			SecsInStateGE 2
+		DO:	SetState {Hermit}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Hermit]]==7}
 			CellE 49F50100
@@ -885,6 +888,8 @@ STATE: {Mp} ~~ {
 			Expr {getcharstringprop[1]==getpvar[DeathsAllureSummon]}
 			Any
 				CellE 016C0171
+				CellE 016C0155
+				CellE 016C0170
 				CellE 016C0146
 				CellE 016C0147
 		DO:	DoAll
@@ -897,6 +902,8 @@ STATE: {Mp} ~~ {
 			Expr {getcharstringprop[1]!=getpvar[DeathsAllureSummon]}
 			Any
 				CellE 016C0171
+				CellE 016C0155
+				CellE 016C0170
 				CellE 016C0146
 				CellE 016C0147
 		DO:	DoAll
@@ -932,7 +939,7 @@ STATE: {RecallDrop} ~~ {
 	IF:	All
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
-			Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
+			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -1054,7 +1061,7 @@ STATE: {Summon} ~~ {
 	IF:	All
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=40}
-			Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
+			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -1503,7 +1510,7 @@ STATE: {ToTN} ~~ {
 			All
 				Expr {testvar[CombatStuck]]}
 				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=40}
-				Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
