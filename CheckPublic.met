@@ -4082,7 +4082,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[DefaultPassStuck]]>=600
+stopwatchelapsedseconds[getvar[DefaultPassStuck]]>=30
 TABLE
 2
 k

@@ -14854,9 +14854,22 @@ n
 n
 3
 i
+3
+TABLE
+2
+K
+V
+n
+n
+2
+i
 18
 i
 1994981759
+i
+18
+i
+1994981760
 i
 26
 TABLE
@@ -14945,7 +14958,7 @@ n
 s
 e
 s
-wobjectgetisdooropen[wobjectfindnearestdoor[]]==0
+wobjectgetisdooropen[wobjectfindnearestbytemplatetype[43515]]==0
 i
 26
 TABLE
@@ -14958,7 +14971,7 @@ n
 s
 e
 s
-coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5
+coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[43515]],getplayercoordinates[]]<15
 i
 18
 i
@@ -15029,7 +15042,7 @@ n
 s
 e
 s
-wobjectgetisdooropen[wobjectfindnearestdoor[]]==0
+wobjectgetisdooropen[wobjectfindnearestbytemplatetype[43515]]==0
 i
 26
 TABLE
@@ -15042,7 +15055,7 @@ n
 s
 e
 s
-coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5
+coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[43515]],getplayercoordinates[]]<15
 i
 18
 i
@@ -15096,7 +15109,7 @@ n
 s
 e
 s
-wobjectgetisdooropen[wobjectfindnearestdoor[]]==1
+wobjectgetisdooropen[wobjectfindnearestbytemplatetype[43515]]==1
 i
 26
 TABLE
@@ -15109,7 +15122,7 @@ n
 s
 e
 s
-coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5
+coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[43515]],getplayercoordinates[]]<15
 TABLE
 2
 K
@@ -19471,7 +19484,7 @@ n
 s
 s
 s
-DeathRecall
+Watchdog
 s
 r
 d
@@ -20163,7 +20176,7 @@ n
 s
 s
 s
-DeathRecall
+Watchdog
 s
 r
 d
@@ -20822,7 +20835,7 @@ n
 s
 s
 s
-DeathRecall
+Watchdog
 s
 r
 d
@@ -22627,7 +22640,7 @@ n
 s
 s
 s
-DeathRecall
+Watchdog
 s
 r
 d
