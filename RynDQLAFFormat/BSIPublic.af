@@ -1318,29 +1318,31 @@ STATE: {LPDoor} ~~ {
 	IF:	ChatMatch {The Door has been unlocked.}
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestdoor[]]}
 	IF:	All
-			CellE 76E9017F
+			Any
+				CellE 76E9017F
+				CellE 76E90180
 			Expr {getcharskill_traininglevel[23]<2}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Entryway Key]]==7}
 		DO:	DoExpr {actiontryapplyitem[wobjectfindininventorybyname[Entryway Key],wobjectfindnearestbynameandobjectclass[26,Door]]}
 	IF:	All
 			Expr {getcharskill_traininglevel[23]>=2}
 			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
-			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==0}
-			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5}
+			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[43515]]==0}
+			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[43515]],getplayercoordinates[]]<15}
 			CellE 76E9017F
 		DO:	DoExpr {actiontrycastbyidontarget[4420,wobjectfindnearestbynameandobjectclass[26,Door]]} ~~ SpellId 4420 is "Incantation of Weaken Lock".
 	IF:	All
 			SecsInStateGE 5
 			Expr {getcharskill_traininglevel[23]>=2}
 			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
-			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==0}
-			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5}
+			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[43515]]==0}
+			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[43515]],getplayercoordinates[]]<15}
 			CellE 76E9017F
 		DO:	DoExpr {actiontryapplyitem[wobjectfindininventorybyname[Peerless Lockpick],wobjectfindnearestbynameandobjectclass[26,Door]]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
-			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==1}
-			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5}
+			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[43515]]==1}
+			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[43515]],getplayercoordinates[]]<15}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				SetState {ToFrozenTomb}
@@ -1738,7 +1740,7 @@ STATE: {ToFactory} ~~ {
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	Always
-		DO:	SetWatchdog 5 45 {DeathRecall}
+		DO:	SetWatchdog 5 45 {Watchdog}
 	IF:	Always
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
@@ -1799,7 +1801,7 @@ STATE: {ToFrozenTomb} ~~ {
 	IF:	Always
 		DO:	DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	Always
-		DO:	SetWatchdog 5 90 {DeathRecall}
+		DO:	SetWatchdog 5 90 {Watchdog}
 	IF:	Any
 			CellE 79E9016B
 			CellE 76E9017F
@@ -1853,7 +1855,7 @@ STATE: {ToIceCave} ~~ {
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	SetState {DeathRecall}
 	IF:	Always
-		DO:	SetWatchdog 5 90 {DeathRecall}
+		DO:	SetWatchdog 5 90 {Watchdog}
 	IF:	Any
 			CellE 7AE80002
 			CellE 79E8003A
@@ -1966,7 +1968,7 @@ STATE: {ToLockedDoor} ~~ {
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	SetState {DeathRecall}
 	IF:	Always
-		DO:	SetWatchdog 5 90 {DeathRecall}
+		DO:	SetWatchdog 5 90 {Watchdog}
 	IF:	Always
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}

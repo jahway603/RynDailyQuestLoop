@@ -399,7 +399,7 @@ STATE: {DefaultPass}  ~~{
 		DO:	DoExpr {stopwatchstart[setvar[DefaultPassStuck, stopwatchcreate[]]]}
 	IF:	All
 			Expr {testvar[DefaultPassStuck]}
-			Expr {stopwatchelapsedseconds[getvar[DefaultPassStuck]]>=600}
+			Expr {stopwatchelapsedseconds[getvar[DefaultPassStuck]]>=30}
 		DO:	DoExpr {setgvar[Zstuck,1]}
 	IF:	All
 			Expr {testgvar[getpvar[CheckSync]+getworldname[]]}

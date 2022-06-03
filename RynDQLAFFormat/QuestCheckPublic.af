@@ -1045,6 +1045,10 @@ STATE: {Default} ~~ {
 				Expr {getcharboolprop[44]==1}
 				Expr {getpvar[FellowCount]<2}
 		DO:	DoExpr {setpvar[AdminSkip,1]}
+	IF: Always
+		DO: SetState {SyncBuff}
+~~}
+STATE: {SyncBuff} ~~{
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
 			Expr {getpvar[SyncBuff]==0}
@@ -1062,13 +1066,9 @@ STATE: {Default} ~~ {
 		DO: DoAll
 				Chat {/vt forcebuff}
 				SetState {SyncBuff}
-	IF: Not NeedToBuff
-		DO: SetState {SyncBuff}
-~~}
-STATE: {SyncBuff} ~~{
 	IF: All
 			NeedToBuff
-			Expr {testpvar[BuffingStartAll]==0}
+			Not Expr {testpvar[BuffingStartAll]}
 		DO: DoAll
 				DoExpr {setpvar[BuffingStartAll,1]}
 				Chat {/vt forcebuff}
@@ -2003,7 +2003,6 @@ STATE: {DefaultTwo} ~~ {
 		DO: DoAll
 				DoExpr {cleargvar[QuestCheckPublic]}
 				DoExpr {cleargvar[SyncBuffComplete]}
-				DoExpr {cleargvar[Zstuck]}
 				DoExpr {cleargvar[LumTokens]}
 				DoExpr {cleargvar[IQSQ]}
 				DoExpr {cleargvar[Mouf ]}
@@ -2109,6 +2108,7 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {setpvar[Profile, QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Quests]}
 				DoExpr {setpvar[CheckSync,QuestsDefaultTwo]}
+				DoExpr {cleargvar[Zstuck]}
 				Chat {/vt meta load CheckPublic} ~~ QuestsDefaultTwo
 ~~ }
 STATE: {Finished} ~~ {

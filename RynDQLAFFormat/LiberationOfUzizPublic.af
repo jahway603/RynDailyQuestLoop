@@ -271,7 +271,7 @@ STATE: {EdificeDoorThree} ~~ {
 				SetState {DeathRecall}
 	IF:	All
 			CellE 58670187
-			Expr {getvar[JumpStuck]==0}
+			Not Expr {testvar[JumpStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 	IF:	All
 			CellE 58670187
@@ -281,10 +281,10 @@ STATE: {EdificeDoorThree} ~~ {
 				EmbedNav nav2 {JunkDelete.nav}
 				SetState {EdificeDoorThree}
 	IF:	CellE 58670182
-		DO:	DoExpr {setvar[JumpStuck,0]}
+		DO:	DoExpr {clearvar[JumpStuck]}
 	IF:	All
 			CellE 58670181
-			Expr {getvar[JumpStuck]==0}
+			Not Expr {testvar[JumpStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 	IF:	All
 			CellE 58670181
@@ -294,10 +294,10 @@ STATE: {EdificeDoorThree} ~~ {
 				EmbedNav nav3 {JunkDelete.nav}
 				SetState {EdificeDoorThree}
 	IF:	CellE 58670179
-		DO:	DoExpr {setvar[JumpStuck,0]}
+		DO:	DoExpr {clearvar[JumpStuck]}
 	IF:	All
 			CellE 5867017B
-			Expr {getvar[JumpStuck]==0}
+			Not Expr {testvar[JumpStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 	IF:	All
 			CellE 5867017B
@@ -307,7 +307,7 @@ STATE: {EdificeDoorThree} ~~ {
 				EmbedNav nav4 {JunkDelete.nav}
 				SetState {EdificeDoorThree}
 	IF:	CellE 58670156
-		DO:	DoExpr {setvar[JumpStuck,0]}
+		DO:	DoExpr {clearvar[JumpStuck]}
 	IF:	All
 			Expr {getvar[PitStop]==0}
 			CellE 58670156
@@ -560,7 +560,7 @@ STATE: {EdificeLeverThree} ~~ {
 				EmbedNav nav13 {[MoveUp]}
 				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 	IF:	All
-			Expr {testvar[JumpStuck]}
+			Expr {testvar[JumpStuck]==1}
 			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=5}
 			Any
 				CellE 58670262
@@ -1269,18 +1269,18 @@ STATE: {ToDelegate} ~~ {
 			Any
 				CellE 5867013E
 				CellE 5867013D
-			Not Expr {testvar[JumpStuck]}
+			Expr {testvar[JumpStuck]==0}
 		DO:	DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 	IF:	All
-			Expr {testvar[JumpStuck]}
-			Expr {testvar[JumpStuck]&&stopwatchelapsedseconds[getvar[JumpStuck]]>=5}
+			Expr {testvar[JumpStuck]==1}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=5}
 			Any
 				CellE 5867013E
 				CellE 5867013D
 		DO:	EmbedNav nav22 {JunkDelete.nav}
 	IF:	All
-			Expr {testvar[JumpStuck]}
-			Expr {testvar[JumpStuck]&&stopwatchelapsedseconds[getvar[JumpStuck]]>=9}
+			Expr {testvar[JumpStuck]==1}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=9}
 			Any
 				CellE 5867013E
 				CellE 5867013D
