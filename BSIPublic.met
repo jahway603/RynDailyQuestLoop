@@ -14906,7 +14906,7 @@ n
 s
 e
 s
-actiontryapplyitem[wobjectfindininventorybyname[Entryway Key],wobjectfindnearestbynameandobjectclass[26,Door]]
+actiontryapplyitem[wobjectfindininventorybyname[Entryway Key],wobjectfindnearestbytemplatetype[43515]]
 s
 LPDoor
 i
@@ -14986,7 +14986,7 @@ n
 s
 e
 s
-actiontrycastbyidontarget[4420,wobjectfindnearestbynameandobjectclass[26,Door]]
+actiontrycastbyidontarget[4420,wobjectfindnearestbytemplatetype[43515]]
 s
 LPDoor
 i
@@ -15070,7 +15070,7 @@ n
 s
 e
 s
-actiontryapplyitem[wobjectfindininventorybyname[Peerless Lockpick],wobjectfindnearestbynameandobjectclass[26,Door]]
+actiontryapplyitem[wobjectfindininventorybyname[Peerless Lockpick],wobjectfindnearestbytemplatetype[43515]]
 s
 LPDoor
 i
