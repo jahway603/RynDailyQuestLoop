@@ -44,7 +44,7 @@ STATE: {CatacombsOfTorment} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -90,7 +90,7 @@ STATE: {CatacombsOfTorment} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -106,7 +106,8 @@ STATE: {CatacombsOfTorment} ~~ {
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,CatacombsOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,CatacombsOfTorment]}
+				Chat {/vt meta load CheckPublic} ~~ CatacombsOfTorment
 	IF:	Always
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
@@ -132,7 +133,8 @@ STATE: {CatacombsOfTorment} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,CatacombsOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,CatacombsOfTormentPitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ CatacombsOfTormentPitStopOne
 	IF:	All
 			NavEmpty
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -145,7 +147,8 @@ STATE: {CatacombsOfTorment} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,CatacombsOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,CatacombsOfTormentPitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ CatacombsOfTormentPitStopOne
 	IF:	All
 			NoMobsInDist 15
 			Expr {getvar[PitStop]==1}
@@ -177,7 +180,8 @@ STATE: {CatacombsOfTorment} ~~ {
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,CatacombsOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,CatacombsOfTormentPitStopTwo]}
+				Chat {/vt meta load CheckPublic} ~~ CatacombsOfTormentPitStopTwo
 	IF:	All
 			NavEmpty
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -190,7 +194,8 @@ STATE: {CatacombsOfTorment} ~~ {
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,CatacombsOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,CatacombsOfTormentPitStopTwo]}
+				Chat {/vt meta load CheckPublic} ~~ CatacombsOfTormentPitStopTwo
 	IF:	All
 			NoMobsInDist 15
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -223,7 +228,8 @@ STATE: {CatacombsOfTorment} ~~ {
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {stopwatchstart[setvar[DelayCurator, stopwatchcreate[]]]}
 				DoExpr {setpvar[StateName,CatacombsOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,CatacombsOfTormentPitStopThree]}
+				Chat {/vt meta load CheckPublic} ~~ CatacombsOfTormentPitStopThree
 	IF:	All
 			NavEmpty
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -237,7 +243,8 @@ STATE: {CatacombsOfTorment} ~~ {
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {stopwatchstart[setvar[DelayCurator, stopwatchcreate[]]]}
 				DoExpr {setpvar[StateName,CatacombsOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,CatacombsOfTormentPitStopThree]}
+				Chat {/vt meta load CheckPublic} ~~ CatacombsOfTormentPitStopThree
 	IF:	All
 			Any
 				All
@@ -279,7 +286,7 @@ STATE: {ClearMobs} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -307,7 +314,7 @@ STATE: {ClearMobs} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -342,17 +349,17 @@ STATE: {DeathRecall} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	Expr {getvar[CombatStuck]==0}
+	IF:	Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[CombatStuck]]==7}
+			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
 			Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
 		DO:	Chat {/ub quit}
@@ -396,7 +403,8 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {IdlePeaceMode} {False}
 				DoExpr {clearvar[CombatStuck]}
 				DoExpr {setpvar[StateName,ToPlatform]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToPlatform]}
+				Chat {/vt meta load CheckPublic} ~~ ToPlatform
 ~~ }
 STATE: {Default} ~~ {
 	IF:	All
@@ -421,7 +429,7 @@ STATE: {Default} ~~ {
 			Expr {getcharboolprop[44]==1}
 			Expr {getpvar[FellowCount]<2}
 		DO:	DoExpr {setpvar[AdminSkip,1]}
-	IF:	Expr {getobjectinternaltype[getvar[FailDelayCounter]]==1}
+	IF:	Not Expr {testvar[FailDelayCounter]}
 		DO:	DoExpr {setgvar[FailDelayCounter,listcreate[]]}
 	IF:	Always
 		DO:	DoAll
@@ -444,11 +452,11 @@ STATE: {Default} ~~ {
 		DO:	Chat {/ub quit}
 	IF:	Any
 			All
-				Expr {getcharskill_buffed[32]>=400}
-				Not SecsOnSpellGE 900 4400 ~~ SpellId 4400 is "Aura of Incantation of Defender Self".
+				Expr {getcharskill_buffed[32]>=391}
+				Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=1800}
 			All
-				Expr {getcharskill_buffed[32]<=399}
-				Not SecsOnSpellGE 900 2101 ~~ SpellId 2101 is "Aura of Cragstone's Will".
+				Expr {getcharskill_buffed[32]<=390}
+				Expr {getspellexpirationbyname[Aura of Cragstone's Will]<=1800}
 		DO:	DoAll
 				Chat {/vt forcebuff}
 				DoExpr {setgvar[Buffing,1]}
@@ -457,7 +465,7 @@ STATE: {Default} ~~ {
 	IF: Expr {getgvar[Buffing]==1}
 		DO: DoAll
 				DoExpr {setpvar[StateName,vtgetmetastate[]]}
-				DoExpr {SyncBuff}
+				SetState {SyncBuff}
 	IF:	All
 			SecsInStateGE 3
 			Not NeedToBuff
@@ -466,7 +474,7 @@ STATE: {Default} ~~ {
 				SetState {ToRynthid}
 ~~ }
 STATE: {SyncBuff} ~~{
-	IF: Expr {testpvar[BuffingStartAll]==0}
+	IF: Not Expr {testpvar[BuffingStartAll]}
 		DO: DoAll
 				DoExpr {setpvar[BuffingStartAll,1]}
 				Chat {/vt forcebuff}
@@ -475,34 +483,35 @@ STATE: {SyncBuff} ~~{
 			Expr {vtgetsetting[EnableBuffing]!=True}
 		DO: SetOpt {EnableBuffing} {True}
 	IF:	All
-			Expr {testgvar[SyncBuffComplete]==0}
+			Not Expr {testgvar[SyncBuffComplete]}
 			Not NeedToBuff
 		DO:	DoAll
 				DoExpr {setgvar[SyncBuffComplete,listcreate[]]}
 				SetState {SyncBuff}
 	IF:	All
-			Expr {testgvar[SyncBuffComplete]==1}
-			Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]==0}
+			Expr {testgvar[SyncBuffComplete]}
+			Not Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]}
 			Not NeedToBuff
 		DO:	DoAll
 				DoExpr {listadd[getgvar[SyncBuffComplete],getcharstringprop[1]]}
 				SetState {SyncBuff}
 	IF:	All
 			Not NeedToBuff
-			Expr {testgvar[SyncBuffComplete]==1}
+			Expr {testgvar[SyncBuffComplete]}
 			Any
-				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1}
-				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1}
-				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1}
-				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1}
-				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1}
-				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1}
-				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1}
-				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]==1}		
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}		
 		DO: DoAll
 				DoExpr {clearpvar[Buffing]}
 				DoExpr {clearpvar[BuffingStartAll]}
+				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~}
 STATE: {FightBoss} ~~ {
@@ -512,7 +521,7 @@ STATE: {FightBoss} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -552,7 +561,7 @@ STATE: {FightBoss} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -580,13 +589,13 @@ STATE: {FightBoss} ~~ {
 				DoExpr {vtsetmetastate[vtgetmetastate[]]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
-			Expr {getobjectinternaltype[getgvar[QuestComplete]]==1}
+			Not Expr {testgvar[QuestComplete]}
 		DO:	DoAll
 				DoExpr {setgvar[QuestComplete,listcreate[]]}
 				SetState {FightBoss}
 	IF:	All
-			Expr {getobjectinternaltype[getgvar[QuestComplete]]==7}
-			Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]==0}
+			Expr {testgvar[QuestComplete]}
+			Not Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]}
 			Any
 				Expr {getpvar[QuestCompletedSkip]==1}
 				Expr {getitemcountininventorybyname[Shard of the Curator of Torment's Mask]==getpvar[Shard]}
@@ -594,23 +603,24 @@ STATE: {FightBoss} ~~ {
 				DoExpr {listadd[getgvar[QuestComplete],getcharstringprop[1]]}
 				SetState {FightBoss}
 	IF:	All
-			Expr {getobjectinternaltype[getgvar[QuestComplete]]==7}
+			Expr {testgvar[QuestComplete]}
 			Any
-				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1}
-				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1}
-				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1}
-				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]==1}
-				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]==1}
-				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]==1}
-				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]==1}
-				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]==1}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameNine]]==1}
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameNine]]}
 				All
 					Expr {getpvar[AdminSkip]==1}
 					Expr {getitemcountininventorybyname[Shard of the Curator of Torment's Mask]==getpvar[Shard]}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,DeathRecall]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,DeathRecall]}
+				Chat {/vt meta load CheckPublic} ~~ DeathRecall
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Curator of Torment]]==7}
 			CellE 59540144
@@ -696,7 +706,7 @@ STATE: {GroundToTorment} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -736,7 +746,7 @@ STATE: {GroundToTorment} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -790,7 +800,8 @@ STATE: {GroundToTorment} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,GroundToTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,GroundToTormentPitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ GroundToTormentPitStopOne
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.125]]`]}
 	IF:	All
 			NavEmpty
@@ -802,7 +813,8 @@ STATE: {GroundToTorment} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,GroundToTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,GroundToTormentPitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ GroundToTormentPitStopOne
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.125]]`]}
 	IF:	All
 			NoMobsInDist 15
@@ -833,7 +845,8 @@ STATE: {GroundToTorment} ~~ {
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,GroundToTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,GroundToTormentPitStopTwo]}
+				Chat {/vt meta load CheckPublic} ~~ GroundToTormentPitStopTwo
 	IF:	All
 			NavEmpty
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -848,7 +861,8 @@ STATE: {GroundToTorment} ~~ {
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,GroundToTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,GroundToTormentPitStopTwo]}
+				Chat {/vt meta load CheckPublic} ~~GroundToTormentPitStopTwo
 	IF:	All
 			NoMobsInDist 15
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -890,7 +904,8 @@ STATE: {GroundToTorment} ~~ {
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,PathOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PathOfTorment]}
+				Chat {/vt meta load CheckPublic} ~~ PathOfTorment
 				DoExpr {clearvar[PitStop]}
 ~~ }
 STATE: {Loot} ~~ {
@@ -900,7 +915,7 @@ STATE: {Loot} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1179,7 +1194,7 @@ STATE: {MoveToHallway} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1219,7 +1234,7 @@ STATE: {MoveToHallway} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -1261,7 +1276,8 @@ STATE: {MoveToHallway} ~~ {
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setvar[Flag,0]}
 				DoExpr {setpvar[StateName,MoveToHallway]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,MoveToHallway]}
+				Chat {/vt meta load CheckPublic} ~~ MoveToHallway
 	IF:	All
 			NoMobsInDist 15
 			Expr {getvar[PitStop]==1}
@@ -1295,7 +1311,7 @@ STATE: {MoveToHallway} ~~ {
 				Not NoMobsInDist 80
 			All
 				CellE 5954013C
-				Expr {getobjectinternaltype[getvar[RyCountDown]]==7}
+				Expr {testvar[RyCountDown]}
 				Expr {stopwatchelapsedseconds[getvar[RyCountDown]]>=315}
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
@@ -1327,7 +1343,7 @@ STATE: {PathOfRage} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1373,7 +1389,7 @@ STATE: {PathOfRage} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -1407,7 +1423,8 @@ STATE: {PathOfRage} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PathOfRage]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PathOfRagePitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ PathOfRagePitStopOne
 	IF:	All
 			NavEmpty
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -1418,7 +1435,8 @@ STATE: {PathOfRage} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PathOfRage]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PathOfRagePitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ PathOfRagePitStopOne
 	IF:	All
 			NoMobsInDist 5
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -1444,7 +1462,8 @@ STATE: {PathOfRage} ~~ {
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PathOfRage]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PathOfRagePitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ PathOfRagePitStopTwo
 	IF:	All
 			NavEmpty
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -1455,7 +1474,8 @@ STATE: {PathOfRage} ~~ {
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PathOfRage]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PathOfRagePitStopTwo]}
+				Chat {/vt meta load CheckPublic} ~~ PathOfRagePitStopTwo
 	IF:	All
 			NoMobsInDist 5
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -1480,7 +1500,8 @@ STATE: {PathOfRage} ~~ {
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,PlatformOfRage]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PlatformOfRage]}
+				Chat {/vt meta load CheckPublic} ~~ PlatformOfRage
 				DoExpr {clearvar[PitStop]}
 ~~ }
 STATE: {PathOfTorment} ~~ {
@@ -1490,7 +1511,7 @@ STATE: {PathOfTorment} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1534,7 +1555,7 @@ STATE: {PathOfTorment} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -1572,7 +1593,8 @@ STATE: {PathOfTorment} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PathOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PathOfTormentPitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ PathOfTormentPitStopOne
 	IF:	All
 			NavEmpty
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -1583,7 +1605,8 @@ STATE: {PathOfTorment} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PathOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PathOfTormentPitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ PathOfTormentPitStopOne
 	IF:	All
 			NoMobsInDist 5
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -1607,7 +1630,8 @@ STATE: {PathOfTorment} ~~ {
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,PlatformOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PlatformOfTorment]}
+				Chat {/vt meta load CheckPublic} ~~ PlatformOfTorment
 				DoExpr {clearvar[PitStop]}
 ~~ }
 STATE: {PlatformOfRage} ~~ {
@@ -1617,7 +1641,7 @@ STATE: {PlatformOfRage} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1667,7 +1691,7 @@ STATE: {PlatformOfRage} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -1700,7 +1724,8 @@ STATE: {PlatformOfRage} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PlatformOfRage]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PlatformOfRagePitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ PlatformOfRagePitStopOne
 	IF:	All
 			NoMobsInDist 15
 			Expr {getvar[PitStop]==1}
@@ -1715,7 +1740,8 @@ STATE: {PlatformOfRage} ~~ {
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PlatformOfRage]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PlatformOfRagePitStopTwo]}
+				Chat {/vt meta load CheckPublic} ~~ PlatformOfRagePitStopTwo
 	IF:	All
 			NoMobsInDist 15
 			Expr {getvar[PitStop]==2}
@@ -1730,7 +1756,8 @@ STATE: {PlatformOfRage} ~~ {
 				DoExpr {setvar[PitStop,3]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PlatformOfRage]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PlatformOfRagePitStopThree]}
+				Chat {/vt meta load CheckPublic} ~~ PlatformOfRagePitStopThree
 	IF:	All
 			NoMobsInDist 15
 			Expr {getvar[PitStop]==3}
@@ -1755,7 +1782,8 @@ STATE: {PlatformOfRage} ~~ {
 				DoExpr {setgvar[Pillar,2]}
 				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,ToGroundPillarOne]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToGroundPillarOnePitStopTwo]}
+				Chat {/vt meta load CheckPublic} ~~ ToGroundPillarOnePitStopTwo
 				DoExpr {clearvar[PitStop]}
 ~~ }
 STATE: {PlatformOfTorment} ~~ {
@@ -1765,7 +1793,7 @@ STATE: {PlatformOfTorment} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1818,7 +1846,7 @@ STATE: {PlatformOfTorment} ~~ {
 			NavEmpty
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[51974]]==1}
 			Expr {getgvar[PillarOneAlive]==1}
-			Expr {getobjectinternaltype[getvar[PillarOneTimer]]==1}
+			Not Expr {testvar[PillarOneTimer]}
 			CellE 2D310008
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,1]}
@@ -1826,7 +1854,7 @@ STATE: {PlatformOfTorment} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -1867,7 +1895,8 @@ STATE: {PlatformOfTorment} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PlatformOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PlatformOfTormentPitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ PlatformOfTormentPitStopOne
 	IF:	All
 			NoMobsInDist 15
 			Expr {getvar[PitStop]==1}
@@ -1884,7 +1913,8 @@ STATE: {PlatformOfTorment} ~~ {
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PlatformOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PlatformOfTormentPitStopTwo]}
+				Chat {/vt meta load CheckPublic} ~~ PlatformOfTormentPitStopTwo
 	IF:	All
 			NoMobsInDist 15
 			Expr {getvar[PitStop]==2}
@@ -1901,7 +1931,8 @@ STATE: {PlatformOfTorment} ~~ {
 				DoExpr {setvar[PitStop,3]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PlatformOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PlatformOfTormentPitStopThree]}
+				Chat {/vt meta load CheckPublic} ~~ PlatformOfTormentPitStopThree
 	IF:	All
 			NoMobsInDist 15
 			Expr {getvar[PitStop]==3}
@@ -1921,7 +1952,8 @@ STATE: {PlatformOfTorment} ~~ {
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,PathOfRage]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PathOfRage]}
+				Chat {/vt meta load CheckPublic} ~~ PathOfRage
 				DoExpr {clearvar[PitStop]}
 ~~ }
 STATE: {PlatformPicker} ~~ {
@@ -1931,7 +1963,7 @@ STATE: {PlatformPicker} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1971,7 +2003,7 @@ STATE: {PlatformPicker} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -1996,7 +2028,8 @@ STATE: {PlatformPicker} ~~ {
 			CellE 2D31002A
 		DO:	DoAll
 				DoExpr {setpvar[StateName,GroundToTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,GroundToTorment]}
+				Chat {/vt meta load CheckPublic} ~~ GroundToTorment
 	IF:	All
 			Any
 				Expr {getgvar[Pillar]==2}
@@ -2004,13 +2037,15 @@ STATE: {PlatformPicker} ~~ {
 			CellE 2D31002A
 		DO:	DoAll
 				DoExpr {setpvar[StateName,ToGroundPillarOne]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToGroundPillarOne]}
+				Chat {/vt meta load CheckPublic} ~~ ToGroundPillarOne
 	IF:	All
 			Expr {getgvar[Pillar]==4}
 			CellE 2D31002A
 		DO:	DoAll
 				DoExpr {setpvar[StateName,ToCatacombsOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToCatacombsOfTorment]}
+				Chat {/vt meta load CheckPublic} ~~ ToCatacombsOfTorment
 ~~ }
 STATE: {TalkToCurator} ~~ {
 	IF:	All
@@ -2019,7 +2054,7 @@ STATE: {TalkToCurator} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -2047,7 +2082,7 @@ STATE: {TalkToCurator} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -2073,7 +2108,7 @@ STATE: {TalkToCurator} ~~ {
 				Not NoMobsInDist 80
 			All
 				CellE 5954013C
-				Expr {getobjectinternaltype[getvar[RyCountDown]]==7}
+				Expr {testvar[RyCountDown]}
 				Expr {stopwatchelapsedseconds[getvar[RyCountDown]]>=315}
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
@@ -2098,7 +2133,7 @@ STATE: {ToCatacombsOfTorment} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -2138,7 +2173,7 @@ STATE: {ToCatacombsOfTorment} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -2181,7 +2216,8 @@ STATE: {ToCatacombsOfTorment} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,ToCatacombsOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToCatacombsOfTormentPitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ ToCatacombsOfTormentPitStopOne
 	IF:	All
 			NavEmpty
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -2193,7 +2229,8 @@ STATE: {ToCatacombsOfTorment} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,ToCatacombsOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToCatacombsOfTormentPitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ ToCatacombsOfTormentPitStopOne
 	IF:	All
 			NoMobsInDist 15
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -2219,7 +2256,8 @@ STATE: {ToCatacombsOfTorment} ~~ {
 				SetOpt {EnableCombat} {True}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {setpvar[StateName,CatacombsOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,CatacombsOfTorment]}
+				Chat {/vt meta load CheckPublic} ~~ CatacombsOfTorment
 ~~ }
 STATE: {ToGroundPillarOne} ~~ {
 	IF:	All
@@ -2228,7 +2266,7 @@ STATE: {ToGroundPillarOne} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -2272,7 +2310,7 @@ STATE: {ToGroundPillarOne} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -2309,7 +2347,8 @@ STATE: {ToGroundPillarOne} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,ToGroundPillarOne]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToGroundPillarOnePitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ ToGroundPillarOnePitStopOne
 	IF:	All
 			NavEmpty
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -2321,7 +2360,8 @@ STATE: {ToGroundPillarOne} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,ToGroundPillarOne]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToGroundPillarOnePitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ ToGroundPillarOnePitStopOne
 	IF:	All
 			NoMobsInDist 15
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -2358,7 +2398,8 @@ STATE: {ToGroundPillarOne} ~~ {
 				DoExpr {setgvar[Pillar,3]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {setpvar[StateName,ToGroundPillarTwo]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToGroundPillarTwo]}
+				Chat {/vt meta load CheckPublic} ~~ ToGroundPillarTwo
 				DoExpr {clearvar[PitStop]}
 ~~ }
 STATE: {ToGroundPillarTwo} ~~ {
@@ -2368,7 +2409,7 @@ STATE: {ToGroundPillarTwo} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -2410,7 +2451,7 @@ STATE: {ToGroundPillarTwo} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -2447,7 +2488,8 @@ STATE: {ToGroundPillarTwo} ~~ {
 				SetOpt {EnableCombat} {True}
 				DoExpr {setgvar[Pillar,4]}
 				DoExpr {setpvar[StateName,ToCatacombsOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToCatacombsOfTorment]}
+				Chat {/vt meta load CheckPublic} ~~ ToCatacombsOfTorment
 	IF:	All
 			NavEmpty
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -2458,7 +2500,8 @@ STATE: {ToGroundPillarTwo} ~~ {
 				DoExpr {setgvar[Pillar,4]}
 				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,ToCatacombsOfTorment]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToCatacombsOfTorment]}
+				Chat {/vt meta load CheckPublic} ~~ ToCatacombsOfTorment
 ~~ }
 STATE: {ToPlatform} ~~ {
 	IF:	All
@@ -2467,7 +2510,7 @@ STATE: {ToPlatform} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -2517,7 +2560,7 @@ STATE: {ToPlatform} ~~ {
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
-				Expr {getobjectinternaltype[getvar[PillarOneTimer]]==7}
+				Expr {testvar[PillarOneTimer]}
 				Expr {stopwatchelapsedseconds[getvar[PillarOneTimer]]>=3600}
 		DO:	DoAll
 				DoExpr {setgvar[Pillar,0]}
@@ -2562,7 +2605,8 @@ STATE: {ToPlatform} ~~ {
 				SetOpt {EnableCombat} {True}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {setpvar[StateName,ToPlatform]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToPlatformPitStopOne]}
+				Chat {/vt meta load CheckPublic} ~~ ToPlatformPitStopOne
 	IF:	All
 			NoMobsInDist 10
 			Expr {getvar[PitStop]==1}
@@ -2583,7 +2627,8 @@ STATE: {ToPlatform} ~~ {
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,ToPlatform]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToPlatformPitStopTwo]}
+				Chat {/vt meta load CheckPublic} ~~ ToPlatformPitStopTwo
 	IF:	All
 			NoMobsInDist 10
 			Expr {getvar[PitStop]==2}
@@ -2601,7 +2646,8 @@ STATE: {ToPlatform} ~~ {
 				DoExpr {setvar[PitStop,0]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PlatformPicker]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,PlatformPicker]}
+				Chat {/vt meta load CheckPublic} ~~ PlatformPicker
 ~~ }
 STATE: {ToRynthid} ~~ {
 	IF:	All
@@ -2610,17 +2656,17 @@ STATE: {ToRynthid} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	Expr {getvar[CombatStuck]==0}
+	IF:	Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[CombatStuck]]==7}
+			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
 			Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
 		DO:	Chat {/ub quit}
@@ -2645,7 +2691,7 @@ STATE: {ToRynthid} ~~ {
 		DO:	EmbedNav nav48 {[none]}
 ~~ }
 STATE: {TurnIn} ~~ {
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[NoClear,2]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -2670,7 +2716,8 @@ STATE: {TurnIn} ~~ {
 			Expr {getitemcountininventorybyname[Shard of the Curator of Torment's Mask]<1}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Finished]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,Finished]}
+				Chat {/vt meta load CheckPublic} ~~ Finished
 ~~ }
 STATE: {Zstuck} ~~ {
 	IF:	Always

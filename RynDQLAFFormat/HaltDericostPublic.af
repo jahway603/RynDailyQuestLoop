@@ -44,7 +44,7 @@ STATE: {ClearMobs} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -90,7 +90,7 @@ STATE: {DaenerahTurnIn} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -113,7 +113,8 @@ STATE: {DaenerahTurnIn} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Town,Alarqas]}
 				DoExpr {setpvar[StateName,ToTN]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToTN]}
+				Chat {/vt meta load CheckPublic} ~~ ToTN
 	IF:	All
 			Expr {getpvar[Step]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Tome]]==7}
@@ -129,7 +130,8 @@ STATE: {DaenerahTurnIn} ~~ {
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Tome]]==1}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Finished]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,Finished]}
+				Chat {/vt meta load CheckPublic} ~~ Finished
 ~~ }
 STATE: {DeathRecall} ~~ {
 	IF:	All
@@ -138,7 +140,7 @@ STATE: {DeathRecall} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -149,10 +151,10 @@ STATE: {DeathRecall} ~~ {
 			Expr {getpvar[TurnIn]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Tome]]==7}
 		DO:	SetState {ToTN}
-	IF:	Expr {getvar[CombatStuck]==0}
+	IF:	Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[CombatStuck]]==7}
+			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
 			Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
 		DO:	Chat {/ub quit}
@@ -184,7 +186,8 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[StateName,ToMenhir]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,Death]}
+				Chat {/vt meta load CheckPublic} ~~ Death
 ~~ }
 STATE: {Default} ~~ {
 	IF: All
@@ -200,7 +203,7 @@ STATE: {Default} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -219,7 +222,7 @@ STATE: {Default} ~~ {
 			Expr {getcharboolprop[44]==1}
 			Expr {getpvar[FellowCount]<2}
 		DO:	DoExpr {setpvar[AdminSkip,1]}
-	IF: Expr {getobjectinternaltype[getvar[FailDelayCounter]]==1}
+	IF: Not Expr {testvar[FailDelayCounter]}
 		DO: DoExpr {setgvar[FailDelayCounter,listcreate[]]}
 	IF:	Always
 		DO:	DoAll
@@ -241,11 +244,11 @@ STATE: {Default} ~~ {
 		DO:	Chat {/ub quit}
 	IF:	Any
 			All
-				Expr {getcharskill_buffed[32]>=400}
-				Not SecsOnSpellGE 900 4400 ~~ SpellId 4400 is "Aura of Incantation of Defender Self".
+				Expr {getcharskill_buffed[32]>=391}
+				Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=1800}
 			All
-				Expr {getcharskill_buffed[32]<=399}
-				Not SecsOnSpellGE 900 2101 ~~ SpellId 2101 is "Aura of Cragstone's Will".
+				Expr {getcharskill_buffed[32]<=390}
+				Expr {getspellexpirationbyname[Aura of Cragstone's Will]<=1800}
 		DO:	DoAll
 				Chat {/vt forcebuff}
 				DoExpr {setgvar[Buffing,1]}
@@ -254,7 +257,7 @@ STATE: {Default} ~~ {
 	IF: Expr {getgvar[Buffing]==1}
 		DO: DoAll
 				DoExpr {setpvar[StateName,vtgetmetastate[]]}
-				DoExpr {SyncBuff}
+				SetState {SyncBuff}
 	IF:	All
 			BlockE 7DE80000
 			Not NeedToBuff
@@ -269,7 +272,7 @@ STATE: {Default} ~~ {
 				SetState {ToTN}
 ~~ }
 STATE: {SyncBuff} ~~{
-	IF: Expr {testpvar[BuffingStartAll]==0}
+	IF: Not Expr {testpvar[BuffingStartAll]}
 		DO: DoAll
 				DoExpr {setpvar[BuffingStartAll,1]}
 				Chat {/vt forcebuff}
@@ -278,34 +281,35 @@ STATE: {SyncBuff} ~~{
 			Expr {vtgetsetting[EnableBuffing]!=True}
 		DO: SetOpt {EnableBuffing} {True}
 	IF:	All
-			Expr {testgvar[SyncBuffComplete]==0}
+			Not Expr {testgvar[SyncBuffComplete]}
 			Not NeedToBuff
 		DO:	DoAll
 				DoExpr {setgvar[SyncBuffComplete,listcreate[]]}
 				SetState {SyncBuff}
 	IF:	All
-			Expr {testgvar[SyncBuffComplete]==1}
-			Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]==0}
+			Expr {testgvar[SyncBuffComplete]}
+			Not Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]}
 			Not NeedToBuff
 		DO:	DoAll
 				DoExpr {listadd[getgvar[SyncBuffComplete],getcharstringprop[1]]}
 				SetState {SyncBuff}
 	IF:	All
 			Not NeedToBuff
-			Expr {testgvar[SyncBuffComplete]==1}
+			Expr {testgvar[SyncBuffComplete]}
 			Any
-				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1}
-				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1}
-				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1}
-				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1}
-				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1}
-				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1}
-				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1}
-				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]==1}		
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}		
 		DO: DoAll
 				DoExpr {clearpvar[Buffing]}
 				DoExpr {clearpvar[BuffingStartAll]}
+				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~}
 STATE: {Finished} ~~ {
@@ -381,7 +385,7 @@ STATE: {Loot} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -662,7 +666,7 @@ STATE: {MenhirEastBoss} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -690,20 +694,20 @@ STATE: {MenhirEastBoss} ~~ {
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO: SetState {DeathRecall}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
+			Expr {testvar[StateTimer]}
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	All
 			Expr {getpvar[Leader]==1}
-			Expr {getobjectinternaltype[getgvar[QuestComplete]]==1}
+			Not Expr {testgvar[QuestComplete]}
 		DO:	DoAll
 				DoExpr {setgvar[QuestComplete,listcreate[]]}
 				SetState {MenhirEastBoss}
 	IF:	All
-			Expr {getobjectinternaltype[getgvar[QuestComplete]]==7}
-			Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]==0}
+			Expr {testgvar[QuestComplete]}
+			Not Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]}
 			Any
 				Expr {getpvar[QuestCompletedSkip]==1}
 				Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Tome]]==7}
@@ -711,17 +715,17 @@ STATE: {MenhirEastBoss} ~~ {
 				DoExpr {listadd[getgvar[QuestComplete],getcharstringprop[1]]}
 				SetState {MenhirEastBoss}
 	IF:	All
-			Expr {getobjectinternaltype[getgvar[QuestComplete]]==7}
+			Expr {testgvar[QuestComplete]}
 			Any
-				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1}
-				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1}
-				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1}
-				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]==1}
-				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]==1}
-				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]==1}
-				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]==1}
-				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]==1}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]==1&&listcontains[getgvar[QuestComplete],getpvar[FellowNameNine]]==1}
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameNine]]}
 				All
 					Expr {getpvar[AdminSkip]==1}
 					Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Tome]]==7}
@@ -730,7 +734,8 @@ STATE: {MenhirEastBoss} ~~ {
 				DoExpr {setpvar[TurnIn,1]}
 				DoExpr {clearpvar[Town]}
 				DoExpr {setpvar[StateName,ToTN]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,ToTN]}
+				Chat {/vt meta load CheckPublic} ~~ ToTN
 	IF:	All
 			Expr {getpvar[QuestCompletedSkip]==0}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Tome]]==1}
@@ -750,7 +755,9 @@ STATE: {MenhirEastBoss} ~~ {
 	IF:	All
 			Expr {getpvar[QuestCompletedSkip]==0}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Tome]]==1}
-			Expr {listcount[getgvar[QuestComplete]]<9}
+			All
+				Expr {getgvar[QuestComplete]}
+				Expr {listcount[getgvar[QuestComplete]]<=9}
 			NoMobsInDist 25
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Lord Winstead]]==1}
 		DO:	Chat {/ub bct DailyLoop /vt setmetastate MenhirEastToBP}
@@ -764,7 +771,7 @@ STATE: {MenhirEastBP} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -792,7 +799,7 @@ STATE: {MenhirEastBP} ~~ {
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO: SetState {DeathRecall}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
+			Expr {testvar[StateTimer]}
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
 		DO:	DoAll
 				Chat {/f !ManDown}
@@ -851,7 +858,7 @@ STATE: {MenhirEastJumpToBottom} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -879,7 +886,7 @@ STATE: {MenhirEastJumpToBottom} ~~ {
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO: SetState {DeathRecall}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
+			Expr {testvar[StateTimer]}
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=120}
 		DO:	DoAll
 				Chat {/f !ManDown}
@@ -913,7 +920,8 @@ STATE: {MenhirEastJumpToBottom} ~~ {
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,MenhirEastToBP]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,MenhirEastToBP]}
+				Chat {/vt meta load CheckPublic} ~~ MenhirEastToBP
 ~~ }
 STATE: {MenhirEastToBP} ~~{
 	IF:	Expr {coordinategetz[getplayercoordinates[]]#-0.4245}
@@ -926,7 +934,8 @@ STATE: {MenhirEastToBP} ~~{
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,MenhirEastBP]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,MenhirEastBP]}
+				Chat {/vt meta load CheckPublic} ~~ MenhirEastBP
 ~~}
 STATE: {MenhirEastJumpToMid} ~~ {
 	IF:	All
@@ -935,7 +944,7 @@ STATE: {MenhirEastJumpToMid} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -963,7 +972,7 @@ STATE: {MenhirEastJumpToMid} ~~ {
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO: SetState {DeathRecall}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
+			Expr {testvar[StateTimer]}
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=120}
 		DO:	DoAll
 				Chat {/f !ManDown}
@@ -997,7 +1006,8 @@ STATE: {MenhirEastJumpToMid} ~~ {
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,MenhirEastToBottom]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,MenhirEastToBottom]}
+				Chat {/vt meta load CheckPublic} ~~ MenhirEastToBottom
 ~~ }
 STATE: {MenhirEastToBottom} ~~ {
 	IF:	All
@@ -1006,7 +1016,7 @@ STATE: {MenhirEastToBottom} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1034,7 +1044,7 @@ STATE: {MenhirEastToBottom} ~~ {
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO: SetState {DeathRecall}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
+			Expr {testvar[StateTimer]}
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
 		DO:	DoAll
 				Chat {/f !ManDown}
@@ -1070,7 +1080,8 @@ STATE: {MenhirEastToBottom} ~~ {
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,MenhirEastJumpToBottom]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,MenhirEastJumpToBottom]}
+				Chat {/vt meta load CheckPublic} ~~ MenhirEastJumpToBottom
 ~~ }
 STATE: {MenhirEastToMid} ~~ {
 	IF:	All
@@ -1079,7 +1090,7 @@ STATE: {MenhirEastToMid} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1107,7 +1118,7 @@ STATE: {MenhirEastToMid} ~~ {
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO: SetState {DeathRecall}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
+			Expr {testvar[StateTimer]}
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
 		DO:	DoAll
 				Chat {/f !ManDown}
@@ -1131,7 +1142,8 @@ STATE: {MenhirEastToMid} ~~ {
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,MenhirEastJumpToMid]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,MenhirEastJumpToMid]}
+				Chat {/vt meta load CheckPublic} ~~ MenhirEastJumpToMid
 ~~ }
 STATE: {MenhirEastWaves} ~~ {
 	IF:	All
@@ -1140,7 +1152,7 @@ STATE: {MenhirEastWaves} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1168,7 +1180,7 @@ STATE: {MenhirEastWaves} ~~ {
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO: SetState {DeathRecall}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
+			Expr {testvar[StateTimer]}
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
 		DO:	DoAll
 				Chat {/f !ManDown}
@@ -1196,7 +1208,7 @@ STATE: {MenhirSplit} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1220,7 +1232,7 @@ STATE: {MenhirSplit} ~~ {
 				DoExpr {actiontryuseitem[wobjectfindbyid[2025209862]]}
 				SetState {MenhirSplit}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
+			Expr {testvar[StateTimer]}
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
 		DO:	DoAll
 				Chat {/f !ManDown}
@@ -1237,14 +1249,16 @@ STATE: {MenhirSplit} ~~ {
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,MenhirWest]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,MenhirWest]}
+				Chat {/vt meta load CheckPublic} ~~ MenhirWest
 	IF:	All
 			NavEmpty
 			CellE 56520245
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,MenhirEastToMid]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,MenhirEastToMid]}
+				Chat {/vt meta load CheckPublic} ~~ MenhirEastToMid
 ~~ }
 STATE: {MenhirWest} ~~ {
 	IF:	All
@@ -1253,7 +1267,7 @@ STATE: {MenhirWest} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1281,7 +1295,7 @@ STATE: {MenhirWest} ~~ {
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO: SetState {DeathRecall}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[StateTimer]]==7}
+			Expr {testvar[StateTimer]}
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
 		DO:	DoAll
 				Chat {/f !ManDown}
@@ -1368,31 +1382,61 @@ STATE: {MenhirWest} ~~ {
 	IF:	All
 			NoMobsInDist 25
 			Expr {getpvar[Triangle]==0}
-			CellE 56520270
+			Any
+				CellE 56520270 ~~ Mnemo on this
+				CellE 5652028C
+				CellE 5652026F
+				CellE 5652025D
+				CellE 5652025E
+				CellE 5652025F
 		DO:	DoAll
 				DoExpr {setpvar[StateName,UseEnchantedMnemosynes]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,UseEnchantedMnemosynesOne]}
+				Chat {/vt meta load CheckPublic} ~~ UseEnchantedMnemosynesOne
 	IF:	All
 			NoMobsInDist 25
 			Expr {getpvar[Triangle]==1}
-			CellE 56520289
+			Any
+				CellE 56520288
+				CellE 56520289 ~~ Mnemo on this
+				CellE 5652026D
+				CellE 5652028A
+				CellE 5652029B
 		DO:	DoAll
 				DoExpr {setpvar[StateName,UseEnchantedMnemosynes]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,UseEnchantedMnemosynesTwo]}
+				Chat {/vt meta load CheckPublic} ~~ UseEnchantedMnemosynesTwo
 	IF:	All
 			NoMobsInDist 25
 			Expr {getpvar[Triangle]==2}
-			CellE 565202B1
+			Any
+				CellE 565202B1 ~~ Mnemo on this
+				CellE 5652029F
+				CellE 5652029E
+				CellE 565202B0
+				CellE 565202CC
+				CellE 565202CD
+				CellE 565202B3
 		DO:	DoAll
 				DoExpr {setpvar[StateName,UseEnchantedMnemosynes]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,UseEnchantedMnemosynesThree]}
+				Chat {/vt meta load CheckPublic} ~~ UseEnchantedMnemosynesThree
 	IF:	All
 			NoMobsInDist 25
 			Expr {getpvar[Triangle]==3}
-			CellE 565202CA
+			Any
+				CellE 565202CA~~ Mnemo on this
+				CellE 565202C9
+				CellE 565202DC
+				CellE 565202DD
+				CellE 565202CB
+				CellE 565202AF
+				CellE 565202AE
+				CellE 565202AD
 		DO:	DoAll
 				DoExpr {setpvar[StateName,UseEnchantedMnemosynes]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,UseEnchantedMnemosynesFour]}
+				Chat {/vt meta load CheckPublic} ~~ UseEnchantedMnemosynesFour
 	IF:	All
 			CellE 8B64000A
 			Expr {getpvar[Triangle]==4}
@@ -1412,7 +1456,7 @@ STATE: {MenhirWest} ~~ {
 				CellE 56520272
 		DO:	DoExpr {stopwatchstart[setvar[RampTimer, stopwatchcreate[]]]}
 	IF:	All
-			Expr {getobjectinternaltype[getvar[RampTimer]]==7}
+			Expr {testvar[RampTimer]}
 			Expr {stopwatchelapsedseconds[getvar[RampTimer]]>=20}
 			Any
 				CellE 565202B3
@@ -1444,7 +1488,7 @@ STATE: {ToDaenerah} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1466,12 +1510,6 @@ STATE: {ToDaenerah} ~~ {
 		DO:	EmbedNav nav23 {[none]} ~~ Stonehold SettlementPortals
 	IF:	BlockE 64D50000
 		DO:	EmbedNav nav24 {[none]}
-	~~ IF: All
-			~~ Expr {getgvar[Checking]==1}
-			~~ BlockE 7DE80000
-		~~ DO: DoAll
-				~~ DoExpr {setpvar[StateName,ToDaenerah]}
-				~~ Chat {/vt meta load CheckPublic}
 	IF:	BlockE 7DE80000
 		DO:	EmbedNav nav25 {Junkdelete.nav}
 	IF:	All
@@ -1516,7 +1554,7 @@ STATE: {ToMenhir} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1569,19 +1607,25 @@ STATE: {ToTN} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	Expr {getvar[CombatStuck]==0}
+	IF:	Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
-	IF:	All
-			Expr {getobjectinternaltype[getvar[CombatStuck]]==7}
-			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=40}
-			Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
+	IF:	Any
+			All
+				SecsInStateGE 10
+				BlockE F6820000
+				Expr {getvar[Recall]==1}
+				Not Expr {wobjectfindnearestbynameandobjectclass[14,Portal to Town Network]}
+			All
+				Expr {testvar[CombatStuck]]}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=40}
+				Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -1631,7 +1675,7 @@ STATE: {UseEnchantedMnemosynes} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1663,7 +1707,13 @@ STATE: {UseEnchantedMnemosynes} ~~ {
 				SetOpt {SummonPets} {True}
 				SetOpt {EnableNav} {False}
 	IF:	All
-			CellE 56520270
+			Any
+				CellE 56520270 ~~ Mnemo on this
+				CellE 5652028C
+				CellE 5652026F
+				CellE 5652025D
+				CellE 5652025E
+				CellE 5652025F
 			Expr {getpvar[Triangle]==0}
 		DO:	DoExpr {actiontryuseitem[wobjectfindbyid[1969561602]]}
 	IF:	All
@@ -1676,9 +1726,15 @@ STATE: {UseEnchantedMnemosynes} ~~ {
 				SetOpt {EnableNav} {True}
 				SetOpt {SummonPets} {False}
 				DoExpr {setpvar[StateName,MenhirWest]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,MenhirWestTriangleOne]}
+				Chat {/vt meta load CheckPublic} ~~ MenhirWestTriangleOne
 	IF:	All
-			CellE 56520289
+			Any
+				CellE 56520288
+				CellE 56520289 ~~ Mnemo on this
+				CellE 5652026D
+				CellE 5652028A
+				CellE 5652029B
 			Expr {getpvar[Triangle]==1}
 		DO:	DoExpr {actiontryuseitem[wobjectfindbyid[1969561601]]}
 	IF:	All
@@ -1691,9 +1747,17 @@ STATE: {UseEnchantedMnemosynes} ~~ {
 				SetOpt {EnableNav} {True}
 				SetOpt {SummonPets} {False}
 				DoExpr {setpvar[StateName,MenhirWest]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,MenhirWestTriangleTwo]}
+				Chat {/vt meta load CheckPublic} ~~ MenhirWestTriangleTwo
 	IF:	All
-			CellE 565202B1
+			Any
+				CellE 565202B1 ~~ Mnemo on this
+				CellE 5652029F
+				CellE 5652029E
+				CellE 565202B0
+				CellE 565202CC
+				CellE 565202CD
+				CellE 565202B3
 			Expr {getpvar[Triangle]==2}
 		DO:	DoExpr {actiontryuseitem[wobjectfindbyid[1969561603]]}
 	IF:	All
@@ -1706,9 +1770,18 @@ STATE: {UseEnchantedMnemosynes} ~~ {
 				SetOpt {EnableNav} {True}
 				SetOpt {SummonPets} {False}
 				DoExpr {setpvar[StateName,MenhirWest]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,MenhirWestTriangleThree]}
+				Chat {/vt meta load CheckPublic} ~~ MenhirWestTriangleThree
 	IF:	All
-			CellE 565202CA
+			Any
+				CellE 565202CA~~ Mnemo on this
+				CellE 565202C9
+				CellE 565202DC
+				CellE 565202DD
+				CellE 565202CB
+				CellE 565202AF
+				CellE 565202AE
+				CellE 565202AD
 			Expr {getpvar[Triangle]==3}
 		DO:	DoExpr {actiontryuseitem[wobjectfindbyid[1969561604]]}
 	IF:	All
@@ -1721,7 +1794,8 @@ STATE: {UseEnchantedMnemosynes} ~~ {
 				SetOpt {EnableNav} {True}
 				SetOpt {SummonPets} {False}
 				DoExpr {setpvar[StateName,MenhirWest]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,MenhirWestTriangleFour]}
+				Chat {/vt meta load CheckPublic} ~~ MenhirWestTriangleFour
 	IF:	SecsInStateGE 3
 		DO:	SetState {UseEnchantedMnemosynes}
 ~~ }
@@ -1732,7 +1806,7 @@ STATE: {WaitClear} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -1895,6 +1969,10 @@ NAV: nav12 once ~~ {
 	pnt -33.0674978971481 -36.7573221524557 -0.124979170163473
 	pnt -33.0685992479324 -36.7379765510559 -0.124979170163473
 	pnt -33.0691238164902 -36.7286142667135 -0.124979170163473
+	pnt -33.0691238164902 -36.7286142667135 -0.124979170163473
+	pnt -33.0691238164902 -36.7286142667135 -0.124979170163473
+	pnt -33.0691238164902 -36.7286142667135 -0.124979170163473
+	pnt -33.0691238164902 -36.7286142667135 -0.124979170163473
 ~~ }
 NAV: nav13 once ~~ {
 	pnt -33.0691238164902 -36.7286142667135 -0.124979170163473
@@ -1906,6 +1984,10 @@ NAV: nav13 once ~~ {
 	pnt -33.065335170428 -36.870094426473 -0.124979170163473
 	pnt -33.0638243675232 -36.923998260498 -0.0927478313446045
 	pnt -33.0678492943446 -36.9562077204386 -0.0749791701634725
+	pnt -33.0668684005737 -36.973334312439 -0.0749791701634725
+	pnt -33.0668684005737 -36.973334312439 -0.0749791701634725
+	pnt -33.0668684005737 -36.973334312439 -0.0749791701634725
+	pnt -33.0668684005737 -36.973334312439 -0.0749791701634725
 	pnt -33.0668684005737 -36.973334312439 -0.0749791701634725
 ~~ }
 NAV: nav14 once ~~ {

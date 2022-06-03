@@ -51,7 +51,7 @@ STATE: {ToTN} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -95,7 +95,7 @@ STATE: {Default} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -236,7 +236,7 @@ STATE: {UseBot} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -319,8 +319,9 @@ STATE: {SwapToRunToggle} ~~ {
 		DO: DoAll
 				DoExpr {setpvar[Profile,getpvar[Return]]}
 				DoExpr {setpvar[StateName,ToTN]}
+				DoExpr {setpvar[CheckSync,ToTN]}
 				DoExpr {clearvar[CombatStuck]}
-				Chat {/vt meta load CheckPublic}
+				Chat {/vt meta load CheckPublic} ~~ ToTN
 ~~ }
 STATE: {CheckSummon} ~~ {
 	IF:	All
@@ -329,7 +330,7 @@ STATE: {CheckSummon} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -360,7 +361,7 @@ STATE: {CheckSummonTwo} ~~ {
 		DO:	DoAll
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Expr {uiviewexists[STUCK]==0}
+	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
 		DO: DoAll
@@ -373,63 +374,70 @@ STATE: {CheckSummonTwo} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Profile,getpvar[Return]]}
 				DoExpr {setpvar[StateName,ToHoshar]}
+				DoExpr {setpvar[CheckSync,ToHoshar]}
 				DoExpr {clearvar[CombatStuck]}
 				DoExpr {cleargvar[UseBotPublic]}
-				Chat {/vt meta load CheckPublic}
+				Chat {/vt meta load CheckPublic} ~~ ToHoshar
 	IF:	All
 			Expr {getpvar[Return]==CountPhainorPublic}
 			BlockE 482E0000
 		DO:	DoAll
 				DoExpr {setpvar[Profile,getpvar[Return]]}
 				DoExpr {setpvar[StateName,GY]}
+				DoExpr {setpvar[CheckSync,GY]}
 				DoExpr {clearvar[CombatStuck]}
 				DoExpr {cleargvar[UseBotPublic]}
-				Chat {/vt meta load CheckPublic}
+				Chat {/vt meta load CheckPublic} ~~ ToGY
 	IF:	All
 			Expr {getpvar[Return]==DeathsAllurePublic}
 			BlockE 49F50000
 		DO:	DoAll
 				DoExpr {setpvar[Profile,getpvar[Return]]}
 				DoExpr {setpvar[StateName,Hermit]}
+				DoExpr {setpvar[CheckSync,Hermit]}
 				DoExpr {clearvar[CombatStuck]}
 				DoExpr {cleargvar[UseBotPublic]}
-				Chat {/vt meta load CheckPublic}
+				Chat {/vt meta load CheckPublic} ~~ Hermit
 	IF:	All
 			Expr {getpvar[Return]==PurgingTheCorruptionPublic}
 			BlockE 51190000
 		DO:	DoAll
 				DoExpr {setpvar[Profile,getpvar[Return]]}
 				DoExpr {setpvar[StateName,ToStudy]}
+				DoExpr {setpvar[CheckSync,ToStudy]}
 				DoExpr {clearvar[CombatStuck]}
 				DoExpr {cleargvar[UseBotPublic]}
-				Chat {/vt meta load CheckPublic}
+				Chat {/vt meta load CheckPublic} ~~ ToStudy
 	IF:	All
 			Expr {getpvar[Return]==ProdigalBanderlingPublic}
 			BlockE 11330000
 		DO:	DoAll
 				DoExpr {setpvar[Profile,getpvar[Return]]}
 				DoExpr {setpvar[StateName,ToWinterborn]}
+				DoExpr {setpvar[CheckSync,ToWinterborn]}
 				DoExpr {clearvar[CombatStuck]}
 				DoExpr {cleargvar[UseBotPublic]}
-				Chat {/vt meta load CheckPublic}
+				Chat {/vt meta load CheckPublic} ~~ ToWinterborn
 	IF:	All
 			Expr {getpvar[Return]==NexusCrawlPublic}
 			BlockE 1C4D0000
 		DO:	DoAll
 				DoExpr {setpvar[Profile,getpvar[Return]]}
 				DoExpr {setpvar[StateName,ToNexus]}
+				DoExpr {setpvar[CheckSync,ToNexus]}
 				DoExpr {clearvar[CombatStuck]}
 				DoExpr {cleargvar[UseBotPublic]}
-				Chat {/vt meta load CheckPublic}
+				Chat {/vt meta load CheckPublic} ~~ ToNexus
 	IF:	All
 			Expr {getpvar[Return]==UnleashTheGearknightPublic}
 			BlockE 3FB10000
 		DO:	DoAll
 				DoExpr {setpvar[Profile,getpvar[Return]]}
 				DoExpr {setpvar[StateName,ToDungeon]}
+				DoExpr {setpvar[CheckSync,ToDungeon]}
 				DoExpr {clearvar[CombatStuck]}
 				DoExpr {cleargvar[UseBotPublic]}
-				Chat {/vt meta load CheckPublic}
+				Chat {/vt meta load CheckPublic} ~~ ToDungeon
 	IF: All
 			Any
 				ExitPortal

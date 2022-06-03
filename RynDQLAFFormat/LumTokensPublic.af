@@ -74,36 +74,37 @@ STATE: {LumAuraCheck} ~~ {
 		DO:	DoExpr {setpvar[LumAuraCheck,1]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
-			Expr {getobjectinternaltype[getgvar[LumAuraCheck]]==1}
+			Not Expr {testgvar[LumAuraCheckList]}
 			Expr {getpvar[LumAuraCheck]==1}
 		DO:	DoAll
-				DoExpr {setgvar[LumAuraCheck,listcreate[]]}
+				DoExpr {setgvar[LumAuraCheckList,listcreate[]]}
 				SetState {LumAuraCheck}
 	IF:	All
-			Expr {listcontains[getgvar[LumAuraCheck],getcharstringprop[1]]==0}
-			Expr {getpvar[LumAuraCheck]==1}
+			Expr {listcontains[getgvar[LumAuraCheckList],getcharstringprop[1]]==0}
+			Expr {testpvar[LumAuraCheckList]}
 		DO:	DoAll
-				DoExpr {listadd[getgvar[LumAuraCheck],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[LumAuraCheckList],getcharstringprop[1]]}
 				SetState {LumAuraCheck}
 	IF:	All
-			Expr {getobjectinternaltype[getgvar[LumAuraCheck]]==7}
-			Expr {getpvar[LumAuraCheck]==1}
+			Expr {testgvar[LumAuraCheckList]}
+			Expr {testpvar[LumAuraCheck]}
 			Any
 				Expr {getgvar[LumaAuraCheckFinished]==1}
 				Any
-					Expr {getpvar[FellowCount]==1&&listcontains[getgvar[LumAuraCheck],getpvar[LeaderName]]==1}
-					Expr {getpvar[FellowCount]==2&&listcontains[getgvar[LumAuraCheck],getpvar[LeaderName]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameTwo]]==1}
-					Expr {getpvar[FellowCount]==3&&listcontains[getgvar[LumAuraCheck],getpvar[LeaderName]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameThree]]==1}
-					Expr {getpvar[FellowCount]==4&&listcontains[getgvar[LumAuraCheck],getpvar[LeaderName]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameThree]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameFour]]==1}
-					Expr {getpvar[FellowCount]==5&&listcontains[getgvar[LumAuraCheck],getpvar[LeaderName]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameThree]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameFour]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameFive]]==1}
-					Expr {getpvar[FellowCount]==6&&listcontains[getgvar[LumAuraCheck],getpvar[LeaderName]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameThree]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameFour]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameFive]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameSix]]==1}
-					Expr {getpvar[FellowCount]==7&&listcontains[getgvar[LumAuraCheck],getpvar[LeaderName]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameThree]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameFour]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameFive]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameSix]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameSeven]]==1}
-					Expr {getpvar[FellowCount]==8&&listcontains[getgvar[LumAuraCheck],getpvar[LeaderName]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameThree]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameFour]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameFive]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameSix]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameEight]]==1}
-					Expr {getpvar[FellowCount]==9&&listcontains[getgvar[LumAuraCheck],getpvar[LeaderName]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameThree]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameFour]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameFive]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameSix]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameEight]]==1&&listcontains[getgvar[LumAuraCheck],getpvar[FellowNameNine]]==1}
+					Expr {getpvar[FellowCount]==1&&listcontains[getgvar[LumAuraCheckList],getpvar[LeaderName]]}
+					Expr {getpvar[FellowCount]==2&&listcontains[getgvar[LumAuraCheckList],getpvar[LeaderName]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameTwo]]}
+					Expr {getpvar[FellowCount]==3&&listcontains[getgvar[LumAuraCheckList],getpvar[LeaderName]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameTwo]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameThree]]}
+					Expr {getpvar[FellowCount]==4&&listcontains[getgvar[LumAuraCheckList],getpvar[LeaderName]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameTwo]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameThree]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameFour]]}
+					Expr {getpvar[FellowCount]==5&&listcontains[getgvar[LumAuraCheckList],getpvar[LeaderName]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameTwo]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameThree]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameFour]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameFive]]}
+					Expr {getpvar[FellowCount]==6&&listcontains[getgvar[LumAuraCheckList],getpvar[LeaderName]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameTwo]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameThree]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameFour]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameFive]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameSix]]}
+					Expr {getpvar[FellowCount]==7&&listcontains[getgvar[LumAuraCheckList],getpvar[LeaderName]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameTwo]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameThree]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameFour]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameFive]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameSix]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameSeven]]}
+					Expr {getpvar[FellowCount]==8&&listcontains[getgvar[LumAuraCheckList],getpvar[LeaderName]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameTwo]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameThree]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameFour]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameFive]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameSix]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameSeven]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameEight]]}
+					Expr {getpvar[FellowCount]==9&&listcontains[getgvar[LumAuraCheckList],getpvar[LeaderName]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameTwo]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameThree]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameFour]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameFive]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameSix]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameSeven]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameEight]]&&listcontains[getgvar[LumAuraCheckList],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setgvar[LumaAuraCheckFinished,1]}
 				DoExpr {setpvar[StateName,CompleteFinished]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,CompleteFinished]}
+				Chat {/vt meta load CheckPublic} ~~ List Finished
 	IF:	SecsInStateGE 30
 		DO:	SetState {SetTokenVar}
 ~~ }
@@ -123,66 +124,66 @@ STATE: {Done} ~~ {
 ~~ }
 STATE: {Finished} ~~ {
 	IF:	All
-			Expr {testgvar[FellowTwoGo]==1}
+			Expr {testgvar[FellowTwoGo]}
 			Expr {getcharstringprop[1]==getpvar[FellowNameTwo]}
 		DO:	DoAll
 				DoExpr {cleargvar[FellowTwoGo]}
 				SetState {Finished}
 	IF:	All
-			Expr {testgvar[FellowThreeGo]==1}
+			Expr {testgvar[FellowThreeGo]}
 			Expr {getcharstringprop[1]==getpvar[FellowNameThree]}
 		DO:	DoAll
 				DoExpr {cleargvar[FellowThreeGo]}
 				SetState {Finished}
 	IF:	All
-			Expr {testgvar[FellowFourGo]==1}
+			Expr {testgvar[FellowFourGo]}
 			Expr {getcharstringprop[1]==getpvar[FellowNameFour]}
 		DO:	DoAll
 				DoExpr {cleargvar[FellowFourGo]}
 				SetState {Finished}
 	IF:	All
-			Expr {testgvar[FellowFiveGo]==1}
+			Expr {testgvar[FellowFiveGo]}
 			Expr {getcharstringprop[1]==getpvar[FellowNameFive]}
 		DO:	DoAll
 				DoExpr {cleargvar[FellowFiveGo]}
 				SetState {Finished}
 	IF:	All
-			Expr {testgvar[FellowSixGo]==1}
+			Expr {testgvar[FellowSixGo]}
 			Expr {getcharstringprop[1]==getpvar[FellowNameSix]}
 		DO:	DoAll
 				DoExpr {cleargvar[FellowSixGo]}
 				SetState {Finished}
 	IF:	All
-			Expr {testgvar[FellowSevenGo]==1}
+			Expr {testgvar[FellowSevenGo]}
 			Expr {getcharstringprop[1]==getpvar[FellowNameSeven]}
 		DO:	DoAll
 				DoExpr {cleargvar[FellowSevenGo]}
 				SetState {Finished}
 	IF:	All
-			Expr {testgvar[FellowEightGo]==1}
+			Expr {testgvar[FellowEightGo]}
 			Expr {getcharstringprop[1]==getpvar[FellowNameEight]}
 		DO:	DoAll
 				DoExpr {cleargvar[FellowEightGo]}
 				SetState {Finished}
 	IF:	All
-			Expr {testgvar[FellowNineGo]==1}
+			Expr {testgvar[FellowNineGo]}
 			Expr {getcharstringprop[1]==getpvar[FellowNameNine]}
 		DO:	DoAll
 				DoExpr {cleargvar[FellowNineGo]}
 				SetState {Finished}
 	IF:	Any
-			Expr {testpvar[Profile]==1}
-			Expr {testpvar[TokenCount]==1}
-			Expr {testpvar[TokenVar]==1}
-			Expr {testpvar[TokenLocation]==1}
-			Expr {testpvar[CurrentAura]==1}
-			Expr {testpvar[Recall]==1}
-			Expr {testgvar[GoNow+getworldname[]]==1}
-			Expr {testgvar[DefaultPass]==1}
-			Expr {testgvar[GoNowClear]==1}
-			Expr {testgvar[Checking]==1}
-			Expr {testgvar[GoNowTwo]==1}
-			Expr {testgvar[getcharstringprop[1]+getworldname[]]==1}
+			Expr {testpvar[Profile]}
+			Expr {testpvar[TokenCount]}
+			Expr {testpvar[TokenVar]}
+			Expr {testpvar[TokenLocation]}
+			Expr {testpvar[CurrentAura]}
+			Expr {testpvar[Recall]}
+			Expr {testgvar[GoNow+getworldname[]]}
+			Expr {testgvar[DefaultPass]}
+			Expr {testgvar[GoNowClear]}
+			Expr {testgvar[Checking]}
+			Expr {testgvar[GoNowTwo]}
+			Expr {testgvar[getcharstringprop[1]+getworldname[]]}
 		DO:	DoAll
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[TokenCount]}
@@ -199,30 +200,31 @@ STATE: {Finished} ~~ {
 				SetState {Finished}
 	IF:	All
 			SecsInStateGE 5
-			Expr {testpvar[Profile]==0}
-			Expr {testpvar[TokenCount]==0}
-			Expr {testpvar[TokenVar]==0}
-			Expr {testpvar[TokenLocation]==0}
-			Expr {testpvar[CurrentAura]==0}
-			Expr {testpvar[Recall]==0}
-			Expr {testgvar[FellowTwoGo]==0}
-			Expr {testgvar[FellowThreeGo]==0}
-			Expr {testgvar[FellowFourGo]==0}
-			Expr {testgvar[FellowFiveGo]==0}
-			Expr {testgvar[FellowSixGo]==0}
-			Expr {testgvar[FellowSevenGo]==0}
-			Expr {testgvar[FellowEightGo]==0}
-			Expr {testgvar[FellowNineGo]==0}
-			Expr {testgvar[GoNow+getworldname[]]==0}
-			Expr {testgvar[DefaultPass]==0}
-			Expr {testgvar[GoNowClear]==0}
-			Expr {testgvar[Checking]==0}
-			Expr {testgvar[GoNowTwo]==0}
-			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
+			Not Expr {testpvar[Profile]}
+			Not Expr {testpvar[TokenCount]}
+			Not Expr {testpvar[TokenVar]}
+			Not Expr {testpvar[TokenLocation]}
+			Not Expr {testpvar[CurrentAura]}
+			Not Expr {testpvar[Recall]}
+			Not Expr {testgvar[FellowTwoGo]}
+			Not Expr {testgvar[FellowThreeGo]}
+			Not Expr {testgvar[FellowFourGo]}
+			Not Expr {testgvar[FellowFiveGo]}
+			Not Expr {testgvar[FellowSixGo]}
+			Not Expr {testgvar[FellowSevenGo]}
+			Not Expr {testgvar[FellowEightGo]}
+			Not Expr {testgvar[FellowNineGo]}
+			Not Expr {testgvar[GoNow+getworldname[]]}
+			Not Expr {testgvar[DefaultPass]}
+			Not Expr {testgvar[GoNowClear]}
+			Not Expr {testgvar[Checking]}
+			Not Expr {testgvar[GoNowTwo]}
+			Not Expr {testgvar[getcharstringprop[1]+getworldname[]]}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,getpvar[ReturnProfile]]}
 				DoExpr {setpvar[StateName,KeyCheck]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,FinishedQuest]}
+				Chat {/vt meta load CheckPublic} ~~ FinishedQuest
 ~~ }
 STATE: {InvulnerabilityMath} ~~ {
 	IF:	All
@@ -263,8 +265,9 @@ STATE: {LocationSplit} ~~ {
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[Profile,LumTokensPublic]}
 				DoExpr {setpvar[StateName,TokenPickup]}
-				Chat {/vt meta load CheckPublic}
-	IF:	All
+				DoExpr {setpvar[CheckSync,TokenPickup]}
+				Chat {/vt meta load CheckPublic} ~~ TokenPickUpCastle
+	IF:	All 
 			Expr {getpvar[TokenLocation]==Sanctuary}
 			Not BlockE F4180000
 		DO:	DoAll
@@ -279,7 +282,8 @@ STATE: {LocationSplit} ~~ {
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[Profile,LumTokensPublic]}
 				DoExpr {setpvar[StateName,TokenPickup]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,TokenPickup]}
+				Chat {/vt meta load CheckPublic} ~~ TokenPickupSanc
 	IF:	All
 			Expr {getpvar[TokenLocation]==Kahiri}
 			Not BlockE BC5D0000
@@ -295,7 +299,8 @@ STATE: {LocationSplit} ~~ {
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[Profile,LumTokensPublic]}
 				DoExpr {setpvar[StateName,TokenPickup]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,TokenPickup]}
+				Chat {/vt meta load CheckPublic} ~~ TokenPickupKahiri
 ~~ }
 STATE: {NextPerson} ~~ {
 	IF:	Always
@@ -335,7 +340,8 @@ STATE: {NextPerson} ~~ {
 	IF:	Expr {stopwatchelapsedseconds[getvar[Stopwatch]]>=getvar[Timer]+3}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Finished]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,Finished]}
+				Chat {/vt meta load CheckPublic} ~~ Finished
 ~~ }
 STATE: {SetTokenVar} ~~ {
 	IF:	All
@@ -512,11 +518,11 @@ STATE: {SpecializationMath} ~~ {
 STATE: {ToCastle} ~~ {
 	IF:	All
 			Expr {getpvar[Recall]==0}
-			Expr {getvar[CombatStuck]==0}
+			Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	All
 			Expr {getpvar[Recall]==0}
-			Expr {getobjectinternaltype[getvar[CombatStuck]]==7}
+			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=60}
 			Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
 		DO:	Chat {/ub quit}
@@ -564,16 +570,17 @@ STATE: {ToCastle} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Profile,LumTokensPublic]}
 				DoExpr {setpvar[StateName,TokenPickup]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,TokenPickup]}
+				Chat {/vt meta load CheckPublic} ~~ TokenPickup
 ~~ }
 STATE: {ToKahiri} ~~ {
 	IF:	All
 			Expr {getpvar[Recall]==0}
-			Expr {getvar[CombatStuck]==0}
+			Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	All
 			Expr {getpvar[Recall]==0}
-			Expr {getobjectinternaltype[getvar[CombatStuck]]==7}
+			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=60}
 			Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
 		DO:	Chat {/ub quit}
@@ -615,7 +622,8 @@ STATE: {ToKahiri} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Profile,LumTokensPublic]}
 				DoExpr {setpvar[StateName,TokenPickup]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,TokenPickup]}
+				Chat {/vt meta load CheckPublic}~~ TokenPickUp
 ~~ }
 STATE: {TokenCountVar} ~~ {
 	IF:	All
@@ -668,7 +676,8 @@ STATE: {TokenPickup} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Profile,LumTokensPublic]}
 				DoExpr {setpvar[StateName,TokenQueue]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,TokenQueue]}
+				Chat {/vt meta load CheckPublic} ~~ TokenQueue
 	IF:	All
 			SecsInStateGE 5
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[11,getpvar[TokenVar]]]==7}
@@ -797,11 +806,11 @@ STATE: {TokenTurnin} ~~ {
 STATE: {ToSanctuary} ~~ {
 	IF:	All
 			Expr {getpvar[Recall]==0}
-			Expr {getvar[CombatStuck]==0}
+			Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	All
 			Expr {getpvar[Recall]==0}
-			Expr {getobjectinternaltype[getvar[CombatStuck]]==7}
+			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=60}
 			Expr {wobjectgetintprop[wobjectfindnearestbyobjectclass[31],218103818]==wobjectgetid[wobjectgetplayer[]]&&getcombatstate[]==Missile}
 		DO:	Chat {/ub quit}
@@ -836,7 +845,8 @@ STATE: {ToSanctuary} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Profile,LumTokensPublic]}
 				DoExpr {setpvar[StateName,TokenPickup]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,TokenPickup]}
+				Chat {/vt meta load CheckPublic} ~~ TokenPickUp
 ~~ }
 STATE: {WorldMath} ~~ {
 	IF:	Always

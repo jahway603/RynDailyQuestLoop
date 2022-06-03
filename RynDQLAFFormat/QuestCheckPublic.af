@@ -45,8 +45,9 @@ STATE: {CheckNearby} ~~ {
 			Expr {getgvar[MeetUp]==`No`}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
-				DoExpr {setpvar[StateName,DefaultTwo]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[StateName,Quests]}
+				DoExpr {setpvar[CheckSync,QuestsCheckNearby]}
+				Chat {/vt meta load CheckPublic} ~~ QuestsCheckNearby
 	IF:	All
 			SecsInStateGE 3
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
@@ -478,6 +479,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getcharintprop[25]>=150}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getqueststatus[shardofharraagsdaggerpickuptimer]==1}
+			Expr {getqueststatus[aerbaxsprodigalbanderling_wait]==1}
 		DO:	DoExpr {setgvar[QuestProdigalBanderling,getgvar[QuestProdigalBanderling]+1]]}
 	IF:	All
 			SecsInStateGE 1
@@ -556,6 +558,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getisspellknown[2023]==1} ~~ Sanc
 			Expr {getqueststatus[clawofthehopeslayerpickuptimer]==1}
 			Expr {testquestflag[clawofthehopeslayerfirstrun]==1}
+			Expr {testquestflag[quiddityseedquestflag]==1}
 		DO:	DoExpr {setgvar[QuestIQSQ,getgvar[QuestIQSQ]+1]]}
 	IF:	Any
 			Expr {getgvar[QuestIQSQ]>=2}
@@ -1051,11 +1054,11 @@ STATE: {Default} ~~ {
 				SetState {SyncBuff}
 	IF: Any
 			All
-				Expr {getcharskill_buffed[32]>=400}
-				Not SecsOnSpellGE 1800 4400 ~~ SpellId 4400 is "Aura of Incantation of Defender Self".
+				Expr {getcharskill_buffed[32]>=391}
+				Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=1800}
 			All
-				Expr {getcharskill_buffed[32]<=399}
-				Not SecsOnSpellGE 1800 2101 ~~ SpellId 2101 is "Aura of Cragstone's Will".
+				Expr {getcharskill_buffed[32]<=390}
+				Expr {getspellexpirationbyname[Aura of Cragstone's Will]<=1800}
 		DO: DoAll
 				Chat {/vt forcebuff}
 				SetState {SyncBuff}
@@ -1081,7 +1084,7 @@ STATE: {SyncBuff} ~~{
 				SetState {SyncBuff}
 	IF:	All
 			Expr {testgvar[SyncBuffComplete]==1}
-			Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]==0}
+			Not Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]}
 			Not NeedToBuff
 		DO:	DoAll
 				DoExpr {listadd[getgvar[SyncBuffComplete],getcharstringprop[1]]}
@@ -1089,15 +1092,15 @@ STATE: {SyncBuff} ~~{
 	IF:	All
 			Not NeedToBuff
 			Any
-				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1}
-				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1}
-				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1}
-				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1}
-				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1}
-				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1}
-				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1}
-				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]==1}		
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}		
 		DO: DoAll
 				DoExpr {clearpvar[Buffing]}
 				DoExpr {clearpvar[BuffingStartAll]}
@@ -2105,7 +2108,8 @@ STATE: {DefaultTwo} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Profile, QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Quests]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,QuestsDefaultTwo]}
+				Chat {/vt meta load CheckPublic} ~~ QuestsDefaultTwo
 ~~ }
 STATE: {Finished} ~~ {
 	IF: Expr {getpvar[PatchToggle]==1}
@@ -2174,7 +2178,8 @@ STATE: {MeetUp} ~~ {
 				DoExpr {clearvar[Recall]}
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,DefaultTwo]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,DefaultTwoMeetUp]}
+				Chat {/vt meta load CheckPublic} ~~ DefaultTwoMeetUp
 	IF:	All
 			CellE 00AF0118
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
@@ -2207,7 +2212,8 @@ STATE: {MeetUp} ~~ {
 				DoExpr {clearvar[Recall]}
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,DefaultTwo]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,DefaultTwoMeetUp]}
+				Chat {/vt meta load CheckPublic} ~~ DefaultTwoMeetUp
 	IF: SecsInStateGE 5
 		DO: DoAll
 				DoExpr {setvar[MeetUpFail,getvar[MeetUpFail]+1]}
@@ -2300,7 +2306,8 @@ STATE: {Quests} ~~ {
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,KeyCheck]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,KeyCheckSolo]}
+				Chat {/vt meta load CheckPublic} ~~ KeyCheckSolo
 	IF:	All
 			Expr {getqueststatus[moufreward]==1}
 			Expr {isrefreshingquests[]==0}
@@ -2340,13 +2347,14 @@ STATE: {Quests} ~~ {
 				DoExpr {cleargvar[MeetUp]}
 				DoExpr {setpvar[Profile, QuestCheckPublic]}
 				DoExpr {setpvar[StateName,KeyCheck]}
-				Chat {/vt meta load CheckPublic}
+				DoExpr {setpvar[CheckSync,KeyCheckQuests]}
+				Chat {/vt meta load CheckPublic} ~~ KeyCheck
 ~~ }
 STATE: {Zstuck} ~~ {
 	IF: Always
 		DO: DoAll
 				DoExpr {cleargvar[Checking]}
-				DoExpr {setpvar[StateName,DefaultTwo]}
+				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 ~~ }
 ~~========================= ONLY NAVS APPEAR BELOW THIS LINE =========================~~

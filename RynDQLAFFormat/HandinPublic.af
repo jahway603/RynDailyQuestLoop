@@ -130,220 +130,327 @@ STATE: {ColoBosses} ~~ {
 		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Sparkling Apostate Shard],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 ~~ }
 STATE: {ColoGarbage} ~~ {
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Fists of Stone]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Fists of Stone]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Fists of Stone],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Colosseum Master's Robe]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Colosseum Master's Robe]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Colosseum Master's Robe],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Club of Killagurg]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Club of Killagurg]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Club of Killagurg],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Sickle of Azaxis]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sickle of Azaxis]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Sickle of Azaxis],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Demon Swarm Sword]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Demon Swarm Sword]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Demon Swarm Sword],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Letter from Uber P]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Letter from Uber P]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Letter from Uber P],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Pet Mouf Igloo]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Pet Mouf Igloo]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Pet Mouf Igloo],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Scintillating Apostate Shard]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Scintillating Apostate Shard]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Scintillating Apostate Shard],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Shimmering Apostate Shard]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Shimmering Apostate Shard]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Shimmering Apostate Shard],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Gladiator Diemos Statue]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Gladiator Diemos Statue]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Gladiator Diemos Statue],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Sparkling Apostate Shard]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sparkling Apostate Shard]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Sparkling Apostate Shard],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Apostate Grand Director's Mask]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Apostate Grand Director's Mask]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Apostate Grand Director's Mask],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Gear Crossbow]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Gear Crossbow]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Gear Crossbow],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Adventurer's Token]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Adventurer's Token]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Adventurer's Token],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Helm of the Abyssal Totem]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Helm of the Abyssal Totem]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Helm of the Abyssal Totem],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Asheron's Lesser Raiment]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Asheron's Lesser Raiment]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Asheron's Lesser Raiment],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Asheron's Raiment]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Asheron's Raiment]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Asheron's Raiment],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Asheron's Greater Raiment]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Asheron's Greater Raiment]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Asheron's Greater Raiment],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Asheron's Supreme Raiment]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Asheron's Supreme Raiment]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Asheron's Supreme Raiment],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Empowered Pauldrons of the Perfect Light]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Empowered Pauldrons of the Perfect Light]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Empowered Pauldrons of the Perfect Light],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Translated Message Shard]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Translated Message Shard]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Translated Message Shard],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Virindi Cage]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Virindi Cage]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Virindi Cage],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[The Temple of Forgetfulness]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[The Temple of Forgetfulness]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[The Temple of Forgetfulness],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[The Temple of Enlightenment]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[The Temple of Enlightenment]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[The Temple of Enlightenment],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Watery Token]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Watery Token]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Watery Token],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Crystal of Perception]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Crystal of Perception]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Crystal of Perception],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Purified Crimson Scarab]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Purified Crimson Scarab]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Purified Crimson Scarab],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Stone Tablet]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Stone Tablet]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Stone Tablet],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Door Key]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Door Key]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Door Key],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Torn Parchment]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Torn Parchment]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Torn Parchment],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Empowered Robe of the Perfect Light]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Empowered Robe of the Perfect Light]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Empowered Robe of the Perfect Light],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybytemplatetype[45680],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Translated Orders for Zrikux]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Translated Orders for Zrikux]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Translated Orders for Zrikux],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Forging Gloves]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Forging Gloves]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Forging Gloves],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Shard of Harraag's Dagger]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Shard of Harraag's Dagger]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Shard of Harraag's Dagger],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Renegade Herbal Kit]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Renegade Herbal Kit]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Renegade Herbal Kit],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Greater Mana Kit]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Greater Mana Kit]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Greater Mana Kit],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Greater Stamina Kit]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Greater Stamina Kit]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Greater Stamina Kit],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[30807]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[30807]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybytemplatetype[30807],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Ivory Gromnie Wings]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Ivory Gromnie Wings]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Ivory Gromnie Wings],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Candy Corn]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Candy Corn]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Candy Corn],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[44727]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[44727]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybytemplatetype[44727],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Licorice Rat]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Licorice Rat]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Licorice Rat],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Chocolate Gromnie]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Chocolate Gromnie]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Chocolate Gromnie],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Pack Scarecrow]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Pack Scarecrow]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Pack Scarecrow],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Lugian Commander's Insignia]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Lugian Commander's Insignia]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Lugian Commander's Insignia],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Casting Stone]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Casting Stone]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Casting Stone],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Virindi Prison Key]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Virindi Prison Key]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Virindi Prison Key],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Aetherium Vault Key]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Aetherium Vault Key]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Aetherium Vault Key],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Private Chamber Key]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Private Chamber Key]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Private Chamber Key],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Phainor's Chamber Key]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Phainor's Chamber Key]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Phainor's Chamber Key],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Arrival Chamber Key]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Arrival Chamber Key]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Arrival Chamber Key],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
-	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Treasury Key]]==7}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Treasury Key]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Treasury Key],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
 	IF:	All
 			SecsInStateGE 1
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
 			Expr {getitemcountininventorybyname[Bag of Life Stone Chips]>=2}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Bag of Life Stone Chips],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
