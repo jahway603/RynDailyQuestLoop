@@ -1323,14 +1323,14 @@ STATE: {LPDoor} ~~ {
 				CellE 76E90180
 			Expr {getcharskill_traininglevel[23]<2}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Entryway Key]]==7}
-		DO:	DoExpr {actiontryapplyitem[wobjectfindininventorybyname[Entryway Key],wobjectfindnearestbynameandobjectclass[26,Door]]}
+		DO:	DoExpr {actiontryapplyitem[wobjectfindininventorybyname[Entryway Key],wobjectfindnearestbytemplatetype[43515]]}
 	IF:	All
 			Expr {getcharskill_traininglevel[23]>=2}
 			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[43515]]==0}
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[43515]],getplayercoordinates[]]<15}
 			CellE 76E9017F
-		DO:	DoExpr {actiontrycastbyidontarget[4420,wobjectfindnearestbynameandobjectclass[26,Door]]} ~~ SpellId 4420 is "Incantation of Weaken Lock".
+		DO:	DoExpr {actiontrycastbyidontarget[4420,wobjectfindnearestbytemplatetype[43515]]} ~~ SpellId 4420 is "Incantation of Weaken Lock".
 	IF:	All
 			SecsInStateGE 5
 			Expr {getcharskill_traininglevel[23]>=2}
@@ -1338,7 +1338,7 @@ STATE: {LPDoor} ~~ {
 			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[43515]]==0}
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[43515]],getplayercoordinates[]]<15}
 			CellE 76E9017F
-		DO:	DoExpr {actiontryapplyitem[wobjectfindininventorybyname[Peerless Lockpick],wobjectfindnearestbynameandobjectclass[26,Door]]}
+		DO:	DoExpr {actiontryapplyitem[wobjectfindininventorybyname[Peerless Lockpick],wobjectfindnearestbytemplatetype[43515]]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[43515]]==1}
