@@ -1062,7 +1062,7 @@ STATE: {Default} ~~ {
 		DO: DoAll
 				Chat {/vt forcebuff}
 				SetState {SyncBuff}
-	IF: Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
+	IF: Not NeedToBuff
 		DO: SetState {SyncBuff}
 ~~}
 STATE: {SyncBuff} ~~{
