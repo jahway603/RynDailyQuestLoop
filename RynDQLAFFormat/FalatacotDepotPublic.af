@@ -279,6 +279,8 @@ STATE: {Default} ~~ {
 		DO:	DoExpr {setpvar[AdminSkip,1]}
 	IF: Not Expr {testvar[FailDelayCounter]}
 		DO: DoExpr {setgvar[FailDelayCounter,listcreate[]]}
+	IF: Not Expr {testgvar[LootingCounter]}
+		DO: DoExpr {setgvar[LootingCounter,listcreate[]]}
 	IF:	Always
 		DO:	DoAll
 				Chat {/vt loot load DailyLoopPublic.utl}

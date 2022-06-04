@@ -196,8 +196,10 @@ STATE: {Default} ~~ {
 			Expr {getcharboolprop[44]==1}
 			Expr {getpvar[FellowCount]<2}
 		DO:	DoExpr {setpvar[AdminSkip,1]}
-	IF: Not Expr {testvar[FailDelayCounter]}
+	IF: Not Expr {testgvar[FailDelayCounter]}
 		DO: DoExpr {setgvar[FailDelayCounter,listcreate[]]}
+	IF: Not Expr {testgvar[LootingCounter]}
+		DO: DoExpr {setgvar[LootingCounter,listcreate[]]}
 	IF:	Always
 		DO:	DoAll
 				Chat {/vt loot load DailyLoopPublic.utl}
@@ -444,7 +446,7 @@ STATE: {Dungeon} ~~ {
 				DoExpr {setvar[Room,1]}
 				DoExpr {clearvar[Safe]}
 				DoExpr {setpvar[StateName,Dungeon]}
-				DoExpr {setpvar[StateName,DungeonRoomOne]}
+				DoExpr {setpvar[CheckSync,DungeonRoomOne]}
 				Chat {/vt meta load CheckPublic} ~~DungeonRoomOne
 	IF:	All
 			Expr {getvar[Safe]==1}
@@ -464,7 +466,7 @@ STATE: {Dungeon} ~~ {
 				DoExpr {setvar[Room,2]}
 				DoExpr {clearvar[Safe]}
 				DoExpr {setpvar[StateName,Dungeon]}
-				DoExpr {setpvar[StateName,DungeonRoomTwo]}
+				DoExpr {setpvar[CheckSync,DungeonRoomTwo]}
 				Chat {/vt meta load CheckPublic} ~~ DungeonRoomTwo
 	IF:	All
 			Expr {getvar[Safe]==1}
@@ -484,7 +486,7 @@ STATE: {Dungeon} ~~ {
 				DoExpr {setvar[Room,3]}
 				DoExpr {clearvar[Safe]}
 				DoExpr {setpvar[StateName,Dungeon]}
-				DoExpr {setpvar[StateName,DungeonRoomThree]}
+				DoExpr {setpvar[CheckSync,DungeonRoomThree]}
 				Chat {/vt meta load CheckPublic} ~~ DungeonRoomThree
 	IF:	All
 			Expr {getvar[Safe]==1}
@@ -546,6 +548,7 @@ STATE: {Dungeon} ~~ {
 			CellE 595201F3
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
+				DoExpr {setpvar[StateName,FightBoss]}
 				SetState {FightBoss}
 	IF:	CellE 5952022E
 		DO:	DoExpr {setvar[ClearMobs,1]}
@@ -629,7 +632,7 @@ STATE: {FightBoss} ~~ {
 			Not Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]}
 			Any
 				Expr {getpvar[QuestCompletedSkip]==1}
-			Expr {getitemcountininventorybyname[Crimson Scarab]==getvar[LootCurrent]}
+				Expr {getitemcountininventorybyname[Crimson Scarab]==getvar[LootCurrent]}
 		DO:	DoAll
 				DoExpr {listadd[getgvar[QuestComplete],getcharstringprop[1]]}
 				SetState {FightBoss}
@@ -1287,7 +1290,7 @@ STATE: {ToDungeon} ~~ {
 				Chat {/vt meta load CheckPublic} ~~ ToDungeonPitStopThree
 	IF:	All
 			Expr {getvar[PitStop]==3}
-			NoMobsInDist 15
+			Not MobsInDist_Name 3 15 {}
 			Any
 				CellE 2C310009
 				CellE 2C310001
