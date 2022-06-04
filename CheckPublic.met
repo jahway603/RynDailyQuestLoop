@@ -1797,7 +1797,7 @@ n
 s
 e
 s
-testgvar[getgvar[getpvar[CheckSync]+getworldname[]]
+testgvar[getpvar[CheckSync]+getworldname[]]
 i
 26
 TABLE
