@@ -1986,8 +1986,7 @@ STATE: {ToLockedDoor} ~~ {
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Entryway Key]]==1}
 			All
 				Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Gurog Soldier]]==7}
-				Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[27,Corpse of Gurog Soldier]],getplayercoordinates[]]<18}
-			NavEmpty
+				Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[27,Corpse of Gurog Soldier]],getplayercoordinates[]]<20}
 			Any
 				CellE 79E9016B
 				CellE 76E9017F
@@ -2149,6 +2148,10 @@ STATE: {TranslatorTurnIn} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
+	IF: Any
+			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Bloodstone Report`]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[43810]]==7}
+		DO: DoExpr {setpvar[Step,2]}
 	IF:	All
 			Expr {getpvar[Step]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Carefully rolled scroll`]]==7}
@@ -2169,8 +2172,6 @@ STATE: {TranslatorTurnIn} ~~ {
 		DO:	DoAll
 				DoExpr {clearpvar[ToTranslator]}
 				SetState {ToTN}
-	IF: Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[43810]]==7}
-		DO: DoExpr {setpvar[Step,2]}
 ~~ }
 STATE: {TurnInCheck} ~~ {
 	IF:	All

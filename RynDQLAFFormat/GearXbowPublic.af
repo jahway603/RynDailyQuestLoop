@@ -518,7 +518,9 @@ STATE: {TurnIn} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[87260]]==7}
+	IF:	All
+			Expr {getvar[TurnIn]==0}
+			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[87260]]==7}
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[87260]]}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}

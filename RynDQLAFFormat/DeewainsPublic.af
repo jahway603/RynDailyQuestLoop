@@ -357,6 +357,7 @@ STATE: {DeewainFight} ~~ {
 				CellE 7E030861
 		DO:	DoAll
 				DoExpr {cleargvar[QuestComplete]}
+				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,LootRock]}
 				DoExpr {setpvar[CheckSync,LootRock]}
 				Chat {/vt meta load CheckPublic} ~~ LootRock
