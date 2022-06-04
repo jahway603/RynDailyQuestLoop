@@ -201,7 +201,7 @@ STATE: {Default} ~~ {
 				SetState {Default}
 	IF: All
 			SecsInStateGE 1
-			Expr {testgvar[getgvar[getpvar[CheckSync]+getworldname[]]}
+			Expr {testgvar[getpvar[CheckSync]+getworldname[]]}
 			Expr {listcontains[getgvar[getpvar[CheckSync]+getworldname[]],getcharstringprop[1]]}
 		DO: DoAll
 				DoExpr {listremove[getgvar[getpvar[CheckSync]+getworldname[]],getcharstringprop[1]]}
