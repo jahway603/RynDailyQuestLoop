@@ -1045,10 +1045,6 @@ STATE: {Default} ~~ {
 				Expr {getcharboolprop[44]==1}
 				Expr {getpvar[FellowCount]<2}
 		DO:	DoExpr {setpvar[AdminSkip,1]}
-	IF: Always
-		DO: SetState {SyncBuff}
-~~}
-STATE: {SyncBuff} ~~{
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
 			Expr {getpvar[SyncBuff]==0}
@@ -1066,6 +1062,10 @@ STATE: {SyncBuff} ~~{
 		DO: DoAll
 				Chat {/vt forcebuff}
 				SetState {SyncBuff}
+	IF: Always
+		DO: SetState {SyncBuff}
+~~}
+STATE: {SyncBuff} ~~{
 	IF: All
 			NeedToBuff
 			Not Expr {testpvar[BuffingStartAll]}
