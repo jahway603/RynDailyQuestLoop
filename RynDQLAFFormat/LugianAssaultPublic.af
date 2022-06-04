@@ -139,7 +139,9 @@ STATE: {DeathRecall} ~~ {
 	IF:	All
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
-			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -201,12 +203,13 @@ STATE: {Default} ~~ {
 			Expr {getcharboolprop[44]==1}
 			Expr {getpvar[FellowCount]<2}
 		DO:	DoExpr {setpvar[AdminSkip,1]}
-	IF: Not Expr {testvar[FailDelayCounter]}
+	IF: Not Expr {testgvar[FailDelayCounter]}
 		DO: DoExpr {setgvar[FailDelayCounter,listcreate[]]}
 	IF: Not Expr {testgvar[LootingCounter]}
 		DO: DoExpr {setgvar[LootingCounter,listcreate[]]}
 	IF:	Always
 		DO:	DoAll
+				Chat {/vt settings loadchar DQLProfile}
 				Chat {/vt loot load DailyLoopPublic.utl}
 				SetOpt {EnableNav} {True}
 				SetOpt {AutoCram} {False}
@@ -1561,7 +1564,9 @@ STATE: {ToRynthid} ~~ {
 	IF:	All
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=40}
-			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	BlockE 30320000
 		DO:	DoExpr {clearvar[CombatStuck]}

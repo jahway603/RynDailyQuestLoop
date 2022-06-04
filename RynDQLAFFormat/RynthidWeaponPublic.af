@@ -361,7 +361,9 @@ STATE: {DeathRecall} ~~ {
 	IF:	All
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
-			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -436,6 +438,7 @@ STATE: {Default} ~~ {
 	IF:	Always
 		DO:	DoAll
 				Chat {/ub opt set Networking.Tags add DailyLoop}
+				Chat {/vt settings loadchar DQLProfile}
 				Chat {/vt loot load DailyLoopPublic.utl}
 				SetOpt {EnableNav} {True}
 				SetOpt {AutoCram} {False}
@@ -2683,7 +2686,9 @@ STATE: {ToRynthid} ~~ {
 	IF:	All
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
-			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	BlockE 30320000
 		DO:	DoExpr {clearvar[CombatStuck]}

@@ -56,7 +56,9 @@ STATE: {DeathRecall} ~~ {
 	IF:	All
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
-			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -65,6 +67,8 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {setpvar[StateName,DeathRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
+				DoExpr {cleargvar[DoorOpen]}
+				DoExpr {cleargvar[Go]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				SetOpt {EnableCombat} {False}
 				SetOpt {EnableNav} {False}
@@ -114,6 +118,7 @@ STATE: {Default} ~~ {
 		DO:	DoExpr {setgvar[LootingCounter,listcreate[]]}
 	IF:	Always
 		DO:	DoAll
+				Chat {/vt settings loadchar DQLProfile}
 				Chat {/vt loot load DailyLoopPublic.utl}
 				SetOpt {EnableNav} {True}
 				SetOpt {AutoCram} {False}
@@ -512,16 +517,20 @@ STATE: {LeverDoor} ~~ {
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
-			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
-			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<10}
-			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==1}
-		DO:	EmbedNav nav6 {[none]}
+			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[46292]]==7}
+			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[46292]],getplayercoordinates[]]<10}
+			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[46292]]==1}
+		DO:	DoAll
+				DoExpr {setgvar[DoorOpen,1]}
+				EmbedNav nav6 {[none]}
 	IF:	All
-			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
-			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<10}
-			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==0}
+			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[46292]]==7}
+			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[46292]],getplayercoordinates[]]<10}
+			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[46292]]==0}
 			Expr {getpvar[Leader]==1}
-		DO:	SetState {UseLever}
+		DO:	DoAll
+				DoExpr {setgvar[DoorOpen,0]}
+				SetState {UseLever}
 	IF:	CellE 584D010F
 		DO:	DoAll
 				SetOpt {Recharge-Norm-HitP} {75}
@@ -1092,7 +1101,9 @@ STATE: {ToTN} ~~ {
 			All
 				Expr {testvar[CombatStuck]]}
 				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=40}
-				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
+				Any
+					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -1260,17 +1271,39 @@ STATE: {UseLever} ~~ {
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	SetState {DeathRecall}
-	IF:	CellE 584D0114
+	IF: All
+			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[46292]]==7}
+			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[46292]],getplayercoordinates[]]<70}
+			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[46292]]==1}
+		DO: DoExpr {setgvar[DoorOpen,1]}
+	IF: All
+			Expr {getgvar[DoorOpen]==0}
+			Any
+				CellE 584D0130
+				CellE 584D0131
+		DO: DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[46293]]}
+	IF: All
+			Expr {getgvar[DoorOpen]==0}
+			SecsInStateGE 3
+			Any
+				CellE 584D0130
+				CellE 584D0131
+		DO: SetState {UseLever}
+	IF:	All
+			Expr {getgvar[DoorOpen]==0}
+			CellE 584D0114
 		DO:	EmbedNav nav17 {[none]}
+	IF:	Expr {getgvar[DoorOpen]==1}
+		DO:	EmbedNav nav18 {[none]} ~~ Split Route after lever use
 	IF:	All
 			CellE 584D0114
 			SecsInStateGE 12
 		DO:	SetOpt {Recharge-Norm-HitP} {75}
 	IF:	Always
 		DO:	SetOpt {Recharge-Norm-HitP} {0}
-	IF:	Any
-			CellE 584D010F
+	IF:	CellE 584D010F
 		DO:	DoAll
+				SetOpt {Recharge-Norm-HitP} {75}
 				DoExpr {setpvar[StateName,FightBoss]}
 				DoExpr {setpvar[CheckSync,FightBoss]}
 				Chat {/vt meta load CheckPublic} ~~ FightBoss
@@ -1843,8 +1876,8 @@ NAV: nav17 once ~~ {
 	pnt -30.9061743418376 -40.6954794565837 -0.0999791701634725
 	pnt -30.8618986765544 -40.7004933039347 -0.0999791701634725
 	pnt -30.7813966751099 -40.7041459401449 -0.0999791701634725
-	cht -31.0495391845703 -40.598597574234 -0.0999791701634725 {/ub mexec actiontryuseitem[wobjectfindnearestbynameandobjectclass[8,Lever]]}
-	pau -31.0495391845703 -40.598597574234 -0.0999791701634725 3000
+~~ }
+NAV: nav18 once ~~ {
 	pnt -30.8021708170573 -40.7009533882141 -0.0999791701634725
 	pnt -30.8387483596802 -40.6972119013468 -0.0999791701634725
 	pnt -30.8809037526449 -40.6970772107442 -0.0999791701634725

@@ -1944,6 +1944,7 @@ STATE: {DefaultTwo} ~~ {
 	IF: Always
 		DO: DoAll
 				Chat {/vt settings loadchar DQLProfile}
+				Chat {/vt loot load DailyLoopPublic.utl}
 				Chat {/ub delay 2000 /vt opt set EnableMeta True}
 	IF:	Expr {getpvar[IntialProfileSetup]==0}
 		DO:	SetState {IntialProfileSetup}

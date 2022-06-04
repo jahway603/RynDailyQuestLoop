@@ -56,7 +56,9 @@ STATE: {DeathRecall} ~~ {
 	IF:	All
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
-			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -65,6 +67,7 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {setpvar[StateName,DeathRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
+				DoExpr {cleargvar[DoorOpen]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				DoExpr {clearvar[ShadeStuck]}
 				SetOpt {EnableCombat} {False}
@@ -117,6 +120,7 @@ STATE: {Default} ~~ {
 		DO:	DoExpr {setgvar[LootingCounter,listcreate[]]}
 	IF:	Always
 		DO:	DoAll
+				Chat {/vt settings loadchar DQLProfile}
 				Chat {/vt loot load DailyLoopPublic.utl}
 				SetOpt {EnableNav} {True}
 				SetOpt {AutoCram} {False}
@@ -413,23 +417,31 @@ STATE: {DungeonTwoDoor} ~~ {
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+	IF: All
+			Expr {getgvar[DoorOpen]==0}
+			CellE 00A7015B
+			SecsInStateGE 3
+		DO: SetState {DungeonTwoDoor}
 	IF:	All
 			Expr {getpvar[Leader]==1}
+			Expr {getgvar[DoorOpen]==0}
 			CellE 00A7015B
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[269]]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			CellE 00A7015B
-			SecsInStateGE 3
+			Expr {getgvar[DoorOpen]==1}
 		DO:	EmbedNav nav5 {IQSQDungeonPt2.nav}
 	IF:	All
 			Any
 				CellE 00A701A1
 				CellE 00A7019F
-			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
-			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==1}
-			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5}
-		DO:	EmbedNav nav6 {[none]}
+			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[8410]]==7}
+			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[8410]]==1}
+			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[8410]],getplayercoordinates[]]<5}
+		DO:	DoAll
+				DoExpr {setgvar[DoorOpen,1]]}
+				EmbedNav nav6 {[none]}
 	IF:	Any
 			CellE 00A701A8
 			CellE 00A701AA
@@ -1029,7 +1041,7 @@ STATE: {ToAun} ~~ {
 				SetState {ToAun}
 	IF:	All
 			CellE 25810033
-			SecsInStateGE 15
+			SecsInStateGE 8
 			Any
 				Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[36943]]==1}
 				Expr {getobjectinternaltype[wobjectfindininventorybyname[Claw of the Hopeslayer]]==1}
@@ -1190,7 +1202,9 @@ STATE: {ToSanc} ~~ {
 	IF:	All
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
-			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -1406,7 +1420,9 @@ STATE: {ToTN} ~~ {
 			All
 				Expr {testvar[CombatStuck]]}
 				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=40}
-				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
+				Any
+					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}

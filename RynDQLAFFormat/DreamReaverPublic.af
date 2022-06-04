@@ -56,7 +56,9 @@ STATE: {DeathRecall} ~~ {
 	IF:	All
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
-			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -124,6 +126,7 @@ STATE: {Default} ~~ {
 		DO:	DoExpr {setpvar[Step,0]}
 	IF:	Always
 		DO:	DoAll
+				Chat {/vt settings loadchar DQLProfile}
 				Chat {/vt loot load DailyLoopPublic.utl}
 				SetOpt {EnableNav} {True}
 				SetOpt {AutoCram} {False}
@@ -1297,7 +1300,9 @@ STATE: {ToTN} ~~ {
 			All
 				Expr {testvar[CombatStuck]]}
 				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=40}
-				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
+				Any
+					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}

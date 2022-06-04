@@ -108,7 +108,9 @@ STATE: {DeathRecall} ~~ {
 	IF:	All
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
-			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -165,6 +167,7 @@ STATE: {Default} ~~ {
 		DO:	DoExpr {setpvar[AdminSkip,1]}
 	IF:	Always
 		DO:	DoAll
+				Chat {/vt settings loadchar DQLProfile}
 				Chat {/vt loot load DailyLoopPublic.utl}
 				SetOpt {EnableNav} {True}
 				SetOpt {LootFellowCorpses} {True}
@@ -340,6 +343,7 @@ STATE: {PickUp} ~~ {
 		DO: SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
+				Chat {/vt loot load DailyLoopPublic.utl}
 				SetOpt {BlacklistCorpseOpenAttemptCount} {400}
 				SetOpt {EnableLooting} {False}
 				EmbedNav nav1 {[none]}
@@ -383,6 +387,7 @@ STATE: {PickUp} ~~ {
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[46350]]==1}
 		DO:	DoAll
 				SetOpt {EnableLooting} {True}
+				Chat {/vt loot load DailyLoopPublic.utl}
 				SetOpt {LootOnlyRareCorpses} {False}
 	IF:	All
 			Expr {getpvar[Step]==2}
@@ -957,7 +962,9 @@ STATE: {ToSanc} ~~ {
 	IF:	All
 			Expr {testvar[CombatStuck]]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
-			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -1006,7 +1013,9 @@ STATE: {ToTN} ~~ {
 			All
 				Expr {testvar[CombatStuck]]}
 				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=40}
-				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee}
+				Any
+					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
