@@ -407,7 +407,7 @@ STATE: {DonovanTurnIn} ~~ {
 			Expr {getpvar[TurnIn]==1}
 		DO:	SetState {NextPerson}
 	IF:	All
-			Expr {getpvar[Step]==1}
+			Expr {getpvar[Step]==2}
 			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Bloodstone Report`]]==1}
 			Any
 				ChatMatch {^You give Sir Donovan Bloodstone Report.}
@@ -419,7 +419,6 @@ STATE: {DonovanTurnIn} ~~ {
 				ChatMatch {^Sir Donovan tells you, "If nothing else, we at least need to shut down the creation of these Bloodstones."}
 				ChatMatch {^Sir Donovan tells you, "This ritual they mention worries me. Anything that involves the Archons and Geraine bodes very ill for the rest of us."}
 		DO:	DoAll
-				DoExpr {setpvar[Step,2]}
 				DoExpr {setpvar[StateName,ToIceCave]}
 				DoExpr {setpvar[CheckSync,ToIceCave]}
 				Chat {/vt meta load CheckPublic} ~~ ToIceCave
@@ -822,14 +821,12 @@ STATE: {KillStockpile} ~~ {
 				SetOpt {EnableCombat} {True}
 				SetOpt {SummonPets} {True}
 				CallState {ClearMobs} {KillStockpile}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Not Expr {testgvar[QuestComplete]}
+	IF:	Not Expr {testgvar[QuestComplete]}
 		DO:	DoAll
 				DoExpr {setgvar[QuestComplete,listcreate[]]}
 				SetState {KillStockpile}
 	IF:	All
-			Not Expr {testgvar[QuestComplete]}
+			Expr {testgvar[QuestComplete]}
 			Not Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]}
 			Any
 				Expr {getpvar[QuestCompletedSkip]==1}
@@ -2084,7 +2081,6 @@ STATE: {ToTN} ~~ {
 			BlockE 00070000
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}
-				DoExpr {clearpvar[ToTranslator]}
 				DoExpr {clearpvar[Scroll]}
 				SetState {ToTranslator}
 				DoExpr {clearvar[Recall]}
@@ -2152,18 +2148,22 @@ STATE: {TranslatorTurnIn} ~~ {
 		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Carefully rolled scroll`],wobjectfindnearestbynameandobjectclass[37,Kuyiza bint Zayi the Translator]]}
 	IF:	All
 			Expr {getpvar[Step]==2}
-			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Large Tome`]]==7}
-		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Large Tome`],wobjectfindnearestbynameandobjectclass[37,Kuyiza bint Zayi the Translator]]}
+			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[43810]]==7}
+		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybytemplatetype[43810],wobjectfindnearestbynameandobjectclass[37,Kuyiza bint Zayi the Translator]]}
 	IF:	All
 			SecsInStateGE 5
 			Any
 				Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Carefully rolled scroll`]]==7}
-				Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Large Tome`]]==7}
+				Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[43810]]==7}
 		DO:	SetState {TranslatorTurnIn}
 	IF:	Any
 			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Bloodstone Report`]]==7}
 			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Research Notes`]]==7}
-		DO:	SetState {ToTN}
+		DO:	DoAll
+				DoExpr {clearpvar[ToTranslator]}
+				SetState {ToTN}
+	IF: Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[43810]]==7}
+		DO: DoExpr {setpvar[Step,2]}
 ~~ }
 STATE: {TurnInCheck} ~~ {
 	IF:	All
