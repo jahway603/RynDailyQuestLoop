@@ -21776,11 +21776,15 @@ K
 V
 n
 n
-2
+3
 i
 2
 s
 /vt settings loadchar DQLProfile
+i
+2
+s
+/vt loot load DailyLoopPublic.utl
 i
 2
 s

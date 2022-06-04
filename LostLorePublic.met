@@ -734,6 +734,15 @@ e
 s
 stopwatchelapsedseconds[getvar[CombatStuck]]>=15
 i
+3
+TABLE
+2
+K
+V
+n
+n
+2
+i
 26
 TABLE
 2
@@ -745,7 +754,20 @@ n
 s
 e
 s
-getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee
+getequippedweapontype[]==Wand&&getcombatstate[]==Missile
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+getequippedweapontype[]==Wand&&getcombatstate[]==Melee
 s
 /ub quit
 s
@@ -1383,7 +1405,11 @@ K
 V
 n
 n
-16
+17
+i
+2
+s
+/vt settings loadchar DQLProfile
 i
 2
 s
@@ -3321,7 +3347,11 @@ K
 V
 n
 n
-3
+4
+i
+2
+s
+/vt loot load DailyLoopPublic.utl
 i
 12
 TABLE
@@ -3772,7 +3802,7 @@ K
 V
 n
 n
-2
+3
 i
 12
 TABLE
@@ -3790,6 +3820,10 @@ s
 v
 s
 True
+i
+2
+s
+/vt loot load DailyLoopPublic.utl
 i
 12
 TABLE
@@ -10708,6 +10742,15 @@ e
 s
 stopwatchelapsedseconds[getvar[CombatStuck]]>=15
 i
+3
+TABLE
+2
+K
+V
+n
+n
+2
+i
 26
 TABLE
 2
@@ -10719,7 +10762,20 @@ n
 s
 e
 s
-getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee
+getequippedweapontype[]==Wand&&getcombatstate[]==Missile
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+getequippedweapontype[]==Wand&&getcombatstate[]==Melee
 s
 /ub quit
 s
@@ -11255,6 +11311,15 @@ e
 s
 stopwatchelapsedseconds[getvar[CombatStuck]]>=40
 i
+3
+TABLE
+2
+K
+V
+n
+n
+2
+i
 26
 TABLE
 2
@@ -11266,7 +11331,20 @@ n
 s
 e
 s
-getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee
+getequippedweapontype[]==Wand&&getcombatstate[]==Missile
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+getequippedweapontype[]==Wand&&getcombatstate[]==Melee
 s
 /ub quit
 s

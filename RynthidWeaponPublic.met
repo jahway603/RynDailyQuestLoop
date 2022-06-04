@@ -7746,6 +7746,15 @@ e
 s
 stopwatchelapsedseconds[getvar[CombatStuck]]>=15
 i
+3
+TABLE
+2
+K
+V
+n
+n
+2
+i
 26
 TABLE
 2
@@ -7757,7 +7766,20 @@ n
 s
 e
 s
-getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee
+getequippedweapontype[]==Wand&&getcombatstate[]==Missile
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+getequippedweapontype[]==Wand&&getcombatstate[]==Melee
 s
 /ub quit
 s
@@ -8618,11 +8640,15 @@ K
 V
 n
 n
-15
+16
 i
 2
 s
 /ub opt set Networking.Tags add DailyLoop
+i
+2
+s
+/vt settings loadchar DQLProfile
 i
 2
 s
@@ -37941,6 +37967,15 @@ e
 s
 stopwatchelapsedseconds[getvar[CombatStuck]]>=15
 i
+3
+TABLE
+2
+K
+V
+n
+n
+2
+i
 26
 TABLE
 2
@@ -37952,7 +37987,20 @@ n
 s
 e
 s
-getequippedweapontype[]==Wand&&getcombatstate[]==Missile||getcombatstate[]==Melee
+getequippedweapontype[]==Wand&&getcombatstate[]==Missile
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+getequippedweapontype[]==Wand&&getcombatstate[]==Melee
 s
 /ub quit
 s
