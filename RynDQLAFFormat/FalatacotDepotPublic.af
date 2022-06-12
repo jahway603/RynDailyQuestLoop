@@ -366,9 +366,7 @@ STATE: {FightBoss} ~~ {
 			Expr {getpvar[QuestCompletedSkip]==0}
 			Not Expr {testvar[LootCurrent]}
 		DO:	DoExpr {setvar[LootCurrent,getinventorycountbytemplatetype[47190]+1]}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Not Expr {testgvar[QuestComplete]}
+	IF:	Not Expr {testgvar[QuestComplete]}
 		DO:	DoAll
 				DoExpr {setgvar[QuestComplete,listcreate[]]}
 				SetState {FightBoss}
@@ -929,7 +927,6 @@ STATE: {ToNeelic} ~~ {
 				ChatMatch {^Neelic tells you,}
 		DO:	DoExpr {setpvar[DepotTurnIn,1]}
 	IF:	All
-			Expr {getpvar[Leader]==1}
 			Expr {getpvar[DepotTurnIn]==1}
 			CellE A21E0026
 			Not Expr {testgvar[DepotTurnIn]}
@@ -963,17 +960,19 @@ STATE: {ToNeelic} ~~ {
 				DoExpr {setpvar[StateName,Finished]}
 				DoExpr {setpvar[CheckSync,Finished]}
 				Chat {/vt meta load CheckPublic}
-	IF:	Any
-			ChatMatch {^Neelic appears preoccupied.}
-			ChatMatch {^Neelic tells you, "My apologies, but it appears we have been the victim of theft. How could this happen here? Our guards are second to none!"}
-			ChatMatch {^Neelic tells you, "Allow me to explain. Our caches of raw materials used to craft the finest of Lugian weapons have been pillaged}
-			ChatMatch {^Neelic tells you, "Have you found the cause}
-			All
-				Expr {getpvar[FalatacotFinished]==0}
-				ChatMatch {^Neelic tells you, "Your work has proven to be of great help. We have increased security for our resource caches and all workers have been notified of the threat."}
+	IF:	All
+			Expr {getpvar[DepotFlag]==0}
+			Expr {getpvar[FalatacotFinished]==0}
+			Any
+				ChatMatch {^Neelic appears preoccupied.}
+				ChatMatch {^Neelic tells you, "My apologies, but it appears we have been the victim of theft. How could this happen here? Our guards are second to none!"}
+				ChatMatch {^Neelic tells you, "Allow me to explain. Our caches of raw materials used to craft the finest of Lugian weapons have been pillaged}
+				ChatMatch {^Neelic tells you, "Have you found the cause}
+				All
+					Expr {getpvar[FalatacotFinished]==0}
+					ChatMatch {^Neelic tells you, "Your work has proven to be of great help. We have increased security for our resource caches and all workers have been notified of the threat."}
 		DO:	DoExpr {setpvar[DepotFlag,1]}
 	IF:	All
-			Expr {getpvar[Leader]==1}
 			Expr {getpvar[DepotFlag]==1}
 			Expr {getpvar[FalatacotFinished]==0}
 			CellE A21E0026
@@ -1012,6 +1011,7 @@ STATE: {ToNeelic} ~~ {
 				Chat {/vt meta load CheckPublic}
 	IF:	All
 			CellE A21E0026
+			Expr {getpvar[DepotFlag]==0}
 			Any
 				Expr {getpvar[Flag]==0}
 				Expr {getpvar[FalatacotFinished]==1}
