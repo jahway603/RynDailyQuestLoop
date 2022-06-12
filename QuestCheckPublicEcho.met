@@ -11,7 +11,7 @@ n
 n
 n
 n
-71
+72
 i
 2
 i
@@ -1730,7 +1730,7 @@ n
 s
 e
 s
-getqueststatus[countphainorsamuletwait]==1
+getqueststatus[graverobbercompleted_0213]==1
 TABLE
 2
 k
@@ -2858,7 +2858,7 @@ n
 s
 e
 s
-\/vt settings loadchar DQLProfile
+\/vt settings loadchar +getpvar[SettingsProfile]
 i
 7
 TABLE
@@ -3264,3 +3264,48 @@ s
 KeyCheck
 s
 Quests
+i
+1
+i
+3
+i
+0
+TABLE
+2
+K
+V
+n
+n
+3
+i
+7
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+cleargvar[Checking]
+i
+7
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+setpvar[StateName,DefaultTwo]
+i
+2
+s
+/vt meta load QuestCheckPublic
+s
+Zstuck

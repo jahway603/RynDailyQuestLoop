@@ -260,7 +260,7 @@ n
 s
 e
 s
-\/vt meta load +getpvar[Profile]
+\/vt meta load +getpvar[ReturnMetaProfile]
 i
 8
 TABLE
@@ -6356,7 +6356,7 @@ n
 s
 e
 s
-getpvar[Profile]==LugianAssault
+getpvar[ReturnMetaProfile]==LugianAssault
 i
 26
 TABLE
@@ -6369,7 +6369,7 @@ n
 s
 e
 s
-getpvar[Profile]==LugianAssaultPublic
+getpvar[ReturnMetaProfile]==LugianAssaultPublic
 i
 3
 TABLE
@@ -6491,7 +6491,7 @@ n
 s
 e
 s
-getpvar[Profile]==EndOfDays
+getpvar[ReturnMetaProfile]==EndOfDays
 i
 26
 TABLE
@@ -6504,7 +6504,7 @@ n
 s
 e
 s
-getpvar[Profile]==EndOfDaysPublic
+getpvar[ReturnMetaProfile]==EndOfDaysPublic
 i
 3
 TABLE
@@ -6588,7 +6588,7 @@ n
 s
 e
 s
-getpvar[Profile]==RynthidWeapon
+getpvar[ReturnMetaProfile]==RynthidWeapon
 i
 26
 TABLE
@@ -6601,7 +6601,7 @@ n
 s
 e
 s
-getpvar[Profile]==RynthidWeaponPublic
+getpvar[ReturnMetaProfile]==RynthidWeaponPublic
 i
 3
 TABLE
