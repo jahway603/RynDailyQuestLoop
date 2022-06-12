@@ -51,24 +51,27 @@ STATE: {CatacombsOfTorment} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			Expr {getgvar[NoClear]==1}
@@ -293,24 +296,27 @@ STATE: {ClearMobs} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
@@ -373,6 +379,7 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {EnableCombat} {False}
 				SetOpt {EnableNav} {False}
 				EmbedNav nav4 {[none]}
@@ -383,6 +390,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	BlockE 30320000
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
+				DoExpr {clearvar[CombatStuck]}
 				EmbedNav nav5 {[DeathDelay]}
 	IF:	All
 			NavEmpty
@@ -394,6 +402,8 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {clearvar[CombatStuck]}
 				SetOpt {IdlePeaceMode} {False}
 				DoExpr {setpvar[StateName,TurnIn]}
+				DoExpr {setpvar[ReturnMetaProfile,RynthidWeaponPublic]}
+				DoExpr {setpvar[Profile,KillTasksPublic]}
 				Chat {/vt meta load KillTasksPublic}
 	IF:	All
 			NavEmpty
@@ -532,36 +542,27 @@ STATE: {FightBoss} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	~~ IF:	All
-			~~ Expr {vtgetsetting[EnableCombat]==1}
-			~~ Expr {getgvar[NoClear]==1}
-		~~ DO:	DoAll
-				~~ DoExpr {setvar[ClearReturn,vtgetmetastate[]]}
-				~~ SetState {NoClear}
-	~~ IF:	All
-			~~ Expr {vtgetsetting[EnableCombat]==0}
-			~~ Expr {getgvar[NoClear]==2}
-		~~ DO:	DoAll
-				~~ DoExpr {setvar[ClearReturn,vtgetmetastate[]]}
-				~~ SetState {Clear}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
@@ -643,6 +644,7 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[ClearMobs]==1}
 				Expr {testpvar[Profile]==1}
 				Expr {testpvar[Stuck]==1}
+				Expr {testpvar[RWTurnIn]==1}
 				Expr {testpvar[Shard]==1}
 				Expr {testpvar[Meta\ +getpvar[Profile]]==1}
 				Expr {testpvar[QuestCompletedSkip]==1}
@@ -657,6 +659,7 @@ STATE: {Finished} ~~ {
 				Expr {testgvar[GoNowClear]==1}
 				Expr {testgvar[Checking]==1}
 				Expr {testgvar[GoNowTwo]==1}
+				Expr {testgvar[RWTurnIn]==1}
 				Expr {testgvar[RynthidWeapon]==1}
 				Expr {testgvar[getcharstringprop[1]+getworldname[]]==1}
 		DO:	DoAll
@@ -664,6 +667,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[ClearMobs]}
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[Stuck]}
+				DoExpr {clearpvar[RWTurnIn]}
 				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[Shard]}
 				DoExpr {clearpvar[Meta\ +getpvar[Profile]]}
@@ -679,6 +683,7 @@ STATE: {Finished} ~~ {
 				DoExpr {cleargvar[GoNowClear]}
 				DoExpr {cleargvar[Checking]}
 				DoExpr {cleargvar[GoNowTwo]}
+				DoExpr {cleargvar[RWTurnIn]}
 				DoExpr {cleargvar[RynthidWeapon]}
 				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
 				SetState {Finished}
@@ -687,6 +692,7 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[ClearMobs]==0}
 			Expr {testpvar[Profile]==0}
 			Expr {testpvar[Stuck]==0}
+			Expr {testpvar[RWTurnIn]==0}
 			Expr {testpvar[Shard]==0}
 			Expr {testpvar[Meta\ +getpvar[Profile]]==0}
 			Expr {testpvar[QuestCompletedSkip]==0}
@@ -701,6 +707,7 @@ STATE: {Finished} ~~ {
 			Expr {testgvar[GoNowClear]==0}
 			Expr {testgvar[Checking]==0}
 			Expr {testgvar[GoNowTwo]==0}
+			Expr {testgvar[RWTurnIn]==0}
 			Expr {testgvar[RynthidWeapon]==0}
 			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
 		DO:	Chat {/vt meta load QuestCheckPublic}
@@ -719,24 +726,28 @@ STATE: {GroundToTorment} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Expr {getgvar[Pillar]==4}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			Expr {getgvar[NoClear]==1}
@@ -760,10 +771,6 @@ STATE: {GroundToTorment} ~~ {
 				Chat {/f Pillar One Respawned}
 	IF:	ChatMatch {^With the last of the Warding Crystals shattered, the path to the Curator of Torment's catacombs is now open.}
 		DO:	DoExpr {setgvar[Pillar,4]}
-	IF:	Expr {getgvar[Pillar]==4}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
@@ -928,37 +935,13 @@ STATE: {Loot} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
-				SetOpt {EnableLooting} {True}
-				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
-				DoExpr {clearvar[CorpseName]}
-				DoExpr {clearvar[LootItem]}
-				DoExpr {clearvar[Loot]}
-				DoExpr {clearvar[CorpseDetect]}
-				DoExpr {clearvar[LootCount]}
-				DoExpr {clearvar[CloseCorpseTimer]}
-				DoExpr {clearvar[SourceNotFound]}
-				DoExpr {clearvar[LootStuckDelay]}
-				DoExpr {clearvar[LootCloseCorpse]}
-				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				BlockE C8E90000
+				BlockE C8E90000 ~~ Lifestone Landblock
 		DO:	DoAll
 				DoExpr {cleargvar[LootFail]}
 				SetOpt {EnableLooting} {True}
@@ -977,27 +960,17 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[Looting,0]}
 				Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
-				SetOpt {EnableLooting} {True}
-				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
-				DoExpr {clearvar[CorpseName]}
-				DoExpr {clearvar[LootItem]}
-				DoExpr {clearvar[Loot]}
-				DoExpr {clearvar[CorpseDetect]}
-				DoExpr {clearvar[LootCount]}
-				DoExpr {clearvar[CloseCorpseTimer]}
-				DoExpr {clearvar[SourceNotFound]}
-				DoExpr {clearvar[LootStuckDelay]}
-				DoExpr {clearvar[LootCloseCorpse]}
-				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
 				SetState {DeathRecall}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	Always
 		DO:	DoAll
 				EmbedNav nav12 {[none]}
@@ -1219,36 +1192,27 @@ STATE: {MoveToHallway} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	~~ IF:	All
-			~~ Expr {vtgetsetting[EnableCombat]==1}
-			~~ Expr {getgvar[NoClear]==1}
-		~~ DO:	DoAll
-				~~ DoExpr {setvar[ClearReturn,vtgetmetastate[]]}
-				~~ SetState {NoClear}
-	~~ IF:	All
-			~~ Expr {vtgetsetting[EnableCombat]==0}
-			~~ Expr {getgvar[NoClear]==2}
-		~~ DO:	DoAll
-				~~ DoExpr {setvar[ClearReturn,vtgetmetastate[]]}
-				~~ SetState {Clear}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
@@ -1368,24 +1332,28 @@ STATE: {PathOfRage} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Expr {getgvar[Pillar]==4}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			Expr {getgvar[NoClear]==1}
@@ -1420,10 +1388,6 @@ STATE: {PathOfRage} ~~ {
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setpvar[ClearMobs,PathOfRage]}
 				SetWatchdog 5 30 {ClearMobs}
-	IF:	Expr {getgvar[Pillar]==4}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			SecsInStateGE 1
@@ -1536,24 +1500,28 @@ STATE: {PathOfTorment} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Expr {getgvar[Pillar]==4}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			Expr {getgvar[NoClear]==1}
@@ -1587,10 +1555,6 @@ STATE: {PathOfTorment} ~~ {
 				SetOpt {UseDispelItems} {True}
 				DoExpr {setpvar[ClearMobs,PathOfTorment]}
 				SetWatchdog 5 30 {ClearMobs}
-	IF:	Expr {getgvar[Pillar]==4}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			SecsInStateGE 2
@@ -1666,24 +1630,28 @@ STATE: {PlatformOfRage} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Expr {getgvar[Pillar]==4}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			Expr {getgvar[NoClear]==1}
@@ -1722,10 +1690,6 @@ STATE: {PlatformOfRage} ~~ {
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setpvar[ClearMobs,PlatformOfRage]}
 				SetWatchdog 5 30 {ClearMobs}
-	IF:	Expr {getgvar[Pillar]==4}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			SecsInStateGE 1
@@ -1818,24 +1782,28 @@ STATE: {PlatformOfTorment} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Expr {getgvar[Pillar]==4}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			Expr {getgvar[NoClear]==1}
@@ -1885,10 +1853,6 @@ STATE: {PlatformOfTorment} ~~ {
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setpvar[ClearMobs,PlatformOfTorment]}
 				SetWatchdog 5 30 {ClearMobs}
-	IF:	Expr {getgvar[Pillar]==4}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			SecsInStateGE 1
@@ -1988,24 +1952,27 @@ STATE: {PlatformPicker} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			Expr {getgvar[NoClear]==1}
@@ -2079,24 +2046,27 @@ STATE: {TalkToCurator} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
 			All
@@ -2158,24 +2128,27 @@ STATE: {ToCatacombsOfTorment} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			Expr {getgvar[NoClear]==1}
@@ -2291,24 +2264,28 @@ STATE: {ToGroundPillarOne} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Expr {getgvar[Pillar]==4}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			Expr {getgvar[NoClear]==1}
@@ -2341,10 +2318,6 @@ STATE: {ToGroundPillarOne} ~~ {
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setpvar[ClearMobs,ToGroundPillarOne]}
 				SetWatchdog 5 30 {ClearMobs}
-	IF:	Expr {getgvar[Pillar]==4}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			SecsInStateGE 1
@@ -2434,24 +2407,27 @@ STATE: {ToGroundPillarTwo} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			Expr {getgvar[NoClear]==1}
@@ -2535,24 +2511,27 @@ STATE: {ToPlatform} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 900
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+~~ Remove Me
+	IF:	All~~ Remove Me
+			Expr {getpvar[Leader]==1}~~ Remove Me
+			SecsInStateGE 3 ~~ Remove Me
+			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
+		DO: DoAll~~ Remove Me
+				Chat {/f !ManDown}~~ Remove Me
+				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
+				SetState {DeathRecall}~~ Remove Me
+~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
 			Expr {getgvar[NoClear]==1}
@@ -2704,6 +2683,8 @@ STATE: {ToRynthid} ~~ {
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}
 				DoExpr {setpvar[StateName,ToPlatform]}
+				DoExpr {setpvar[ReturnMetaProfile,RynthidWeaponPublic]}
+				DoExpr {setpvar[Profile,KillTasksPublic]}
 				Chat {/vt meta load KillTasksPublic}
 	IF:	Always
 		DO:	SetOpt {EnableCombat} {False}
@@ -2734,6 +2715,34 @@ STATE: {TurnIn} ~~ {
 				CellE 30320014
 				CellE 00000000
 			Expr {getitemcountininventorybyname[Shard of the Curator of Torment's Mask]<1}
+		DO:	DoExpr {setpvar[RWTurnIn,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[RWTurnIn]==1}
+			Not Expr {testgvar[RWTurnIn]}
+		DO:	DoAll
+				DoExpr {setgvar[RWTurnIn,listcreate[]]}
+				SetState {TurnIn}
+	IF:	All
+			Expr {getpvar[RWTurnIn]==1}
+			Expr {testgvar[RWTurnIn]}
+			Not Expr {listcontains[getgvar[RWTurnIn],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[RWTurnIn],getcharstringprop[1]]}
+				SetState {TurnIn}
+	IF:	All
+			Expr {getpvar[RWTurnIn]==1}
+			Expr {testgvar[RWTurnIn]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[RWTurnIn],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[RWTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[RWTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[RWTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[RWTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[RWTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[RWTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[RWTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[RWTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[RWTurnIn],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Finished]}
 				DoExpr {setpvar[CheckSync,Finished]}

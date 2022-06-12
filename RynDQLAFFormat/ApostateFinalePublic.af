@@ -51,39 +51,63 @@ STATE: {ClearMobs} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	SecsInStateGE 180
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
 				SetOpt {SummonPets} {True}
+				SetOpt {EnableNav} {True}
 				SetOpt {EnableCombat} {True}
 	IF:	All
-			Expr {getpvar[Leader]==1}
+			Any
+				Expr {getpvar[ClearMobs]==`FirstDungeon`}
+				Expr {getpvar[ClearMobs]==`ToFirstDungeon`}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
 				ChatMatch {!ManDown}
 				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				SecsInStateGE 180
+				Any
+					BlockE C8E90000
+		DO:	DoAll
+				Chat {/f !ManDown}
+				SetState {DeathRecallNonShard}
+	IF:	All
+			Any
+				Not Expr {getpvar[ClearMobs]==`FirstDungeon`}
+				Not Expr {getpvar[ClearMobs]==`ToFirstDungeon`}
+			Any
+				Death
+				ChatMatch {^Your fellow .* has died!$}
+				ChatMatch {!ManDown}
+				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				SecsInStateGE 180
+				Any
+					BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	NoMobsInDist 10
 		DO:	DoAll
 				SetOpt {SummonPets} {False}
 				SetOpt {EnableCombat} {False}
 				ChatExpr {\/vt setmetastate +getpvar[ClearMobs]}
+~~ }
+STATE: {DeathRecallNonShard} ~~ {
+	IF:	All
+			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
+			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
+		DO:	DoAll
+				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
+				DoExpr {clearvar[capturegroup_tellquest]}
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
+	IF: Expr {getgvar[Zstuck]==1}
+		DO: DoAll
+				DoExpr {setpvar[Profile,QuestCheckPublic]}
+				DoExpr {setpvar[StateName,Default]}
+				Chat {/vt meta load QuestCheckPublic}
+	IF: Always
+		DO: SetState {ToGK}
 ~~ }
 STATE: {DeathRecall} ~~ {
 	IF:	All
@@ -116,9 +140,15 @@ STATE: {DeathRecall} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[StateName,DeathRecall]}
 				DoExpr {clearvar[PitStop]}
+				DoExpr {cleargvar[ApostateFinaleShardOne]}
+				DoExpr {cleargvar[ApostateFinaleShardTwo]}
+				DoExpr {cleargvar[ApostateFinaleShardThree]}
+				DoExpr {clearpvar[ApostateFinaleShardOne]}
+				DoExpr {clearpvar[ApostateFinaleShardTwo]}
+				DoExpr {clearpvar[ApostateFinaleShardThree]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				DoExpr {clearvar[StateTimer]}
-				SetOpt {NavCloseStopRange} {0.00625}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {EnableCombat} {False}
 				SetOpt {EnableNav} {False}
 				EmbedNav nav0 {[none]}
@@ -135,6 +165,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	CellE 8B03018F
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
+				DoExpr {clearvar[CombatStuck]}
 				EmbedNav nav1 {[DelayShardOne]}
 	IF:	All
 			NavEmpty
@@ -328,6 +359,11 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[Stuck]==1}
 				Expr {testpvar[BrokenShard]==1}
 				Expr {testpvar[Step]==1}
+				Expr {testpvar[ApostateFinaleFlag]==1}
+				Expr {testpvar[ApostateFinaleTurnIn]==1}
+				Expr {testpvar[ApostateFinaleShardOne]==1}
+				Expr {testpvar[ApostateFinaleShardTwo]==1}
+				Expr {testpvar[ApostateFinaleShardThree]==1}
 				Expr {testpvar[Shard]==1}
 				Expr {testpvar[LootDungeon]==1}
 				Expr {testpvar[ClearMobs]==1}
@@ -343,6 +379,11 @@ STATE: {Finished} ~~ {
 				Expr {testgvar[Checking]==1}
 				Expr {testgvar[GoNowTwo]==1}
 				Expr {testgvar[ApostateFinale]==1}
+				Expr {testgvar[ApostateFinaleTurnIn]==1}
+				Expr {testgvar[ApostateFinaleFlag]==1}
+				Expr {testgvar[ApostateFinaleShardOne]==1}
+				Expr {testgvar[ApostateFinaleShardTwo]==1}
+				Expr {testgvar[ApostateFinaleShardThree]==1}
 				Expr {testgvar[getcharstringprop[1]+getworldname[]]==1}
 		DO:	DoAll
 				DoExpr {clearpvar[Profile]}
@@ -351,6 +392,11 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[BrokenShard]}
 				DoExpr {clearpvar[Step]}
+				DoExpr {clearpvar[ApostateFinaleShardOne]}
+				DoExpr {clearpvar[ApostateFinaleShardTwo]}
+				DoExpr {clearpvar[ApostateFinaleShardThree]}
+				DoExpr {clearpvar[ApostateFinaleTurnIn]}
+				DoExpr {clearpvar[ApostateFinaleFlag]}
 				DoExpr {clearpvar[Shard]}
 				DoExpr {clearpvar[LootDungeon]}
 				DoExpr {clearpvar[ClearMobs]}
@@ -366,6 +412,11 @@ STATE: {Finished} ~~ {
 				DoExpr {cleargvar[Checking]}
 				DoExpr {cleargvar[GoNowTwo]}
 				DoExpr {cleargvar[ApostateFinale]}
+				DoExpr {cleargvar[ApostateFinaleTurnIn]}
+				DoExpr {cleargvar[ApostateFinaleFlag]}
+				DoExpr {cleargvar[ApostateFinaleShardOne]}
+				DoExpr {cleargvar[ApostateFinaleShardTwo]}
+				DoExpr {cleargvar[ApostateFinaleShardThree]}
 				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
 				SetState {Finished}
 	IF:	All
@@ -374,6 +425,11 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[Stuck]==0}
 			Expr {testpvar[BrokenShard]==0}
 			Expr {testpvar[Step]==0}
+			Expr {testpvar[ApostateFinaleShardOne]==0}
+			Expr {testpvar[ApostateFinaleShardTwo]==0}
+			Expr {testpvar[ApostateFinaleShardThree]==0}
+			Expr {testpvar[ApostateFinaleFlag]==0}
+			Expr {testpvar[ApostateFinaleTurnIn]==0}
 			Expr {testpvar[Shard]==0}
 			Expr {testpvar[LootDungeon]==0}
 			Expr {testpvar[ClearMobs]==0}
@@ -389,6 +445,11 @@ STATE: {Finished} ~~ {
 			Expr {testgvar[Checking]==0}
 			Expr {testgvar[GoNowTwo]==0}
 			Expr {testgvar[ApostateFinale]==0}
+			Expr {testgvar[ApostateFinaleTurnIn]==0}
+			Expr {testgvar[ApostateFinaleFlag]==0}
+			Expr {testgvar[ApostateFinaleShardOne]==0}
+			Expr {testgvar[ApostateFinaleShardTwo]==0}
+			Expr {testgvar[ApostateFinaleShardThree]==0}
 			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
@@ -408,36 +469,24 @@ STATE: {FirstDungeon} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
+			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
+			Any
+				BlockE C8E90000
+		DO:	DoAll
+				Chat {/f !ManDown}
+				SetState {DeathRecallNonShard}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,FirstDungeon]}
 				SetWatchdog 5 30 {ClearMobs}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
-		DO:	SetState {Watchdog}
 	IF:	Always
-		DO:	DoExpr {setpvar[LootDungeon,1]}
+		DO:	DoAll
+				DoExpr {setpvar[Stuck,DeathRecallNonShard]}
+				DoExpr {setpvar[LootDungeon,1]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Not Expr {testgvar[QuestComplete]}
@@ -514,22 +563,50 @@ STATE: {Flag} ~~ {
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	CellE 21700031
 		DO:	EmbedNav nav6 {[none]}
-	IF:	All
-			CellE 21700029
-			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Emissary of Asheron]]==7}
-			SecsInStateGE 2
-		DO:	DoAll
-				DoExpr {actiontryuseitem[wobjectfindnearestbynameandobjectclass[37,Emissary of Asheron]]}
-				SetState {Flag}
 	IF:	Any
 			ChatMatch {^Emissary of Asheron tells you, "Find the force or entity responsible, end it. Return to me with proof, and I'll reward you."}
 			ChatMatch {^Emissary of Asheron tells you, "Any questions?"}
 			ChatMatch {^Emissary of Asheron tells you, "We also managed to locate a new portal in the deep cave the Simulacra have delved near to the Iron Blade fortifications, and believe that may be a good place to seek out what is needed to find the masked portals within the Iron Blade tunnels."}
+		DO:	DoExpr {setpvar[ApostateFinaleFlag,1]}
+	IF:	All
+			Expr {getpvar[ApostateFinaleFlag]==1}
+			Not Expr {testgvar[ApostateFinaleFlag]}
+		DO:	DoAll
+				DoExpr {setgvar[ApostateFinaleFlag,listcreate[]]}
+				SetState {Flag}
+	IF:	All
+			Expr {getpvar[ApostateFinaleFlag]==1}
+			Expr {testgvar[ApostateFinaleFlag]}
+			Not Expr {listcontains[getgvar[ApostateFinaleFlag],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[ApostateFinaleFlag],getcharstringprop[1]]}
+				SetState {Flag}
+	IF:	All
+			Expr {getpvar[ApostateFinaleFlag]==1}
+			Expr {testgvar[ApostateFinaleFlag]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameEight]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setpvar[Step,2]}
 				DoExpr {setpvar[StateName,ToGK]}
 				DoExpr {setpvar[CheckSync,ToGKFlag]}
 				Chat {/vt meta load CheckPublic} ~~ ToGKFlag
+	IF:	All
+			CellE 21700029
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Emissary of Asheron]]==7}
+			Expr {getpvar[ApostateFinaleFlag]==0}
+			SecsInStateGE 2
+		DO:	DoAll
+				DoExpr {actiontryuseitem[wobjectfindnearestbynameandobjectclass[37,Emissary of Asheron]]}
+				SetState {Flag}
 ~~ }
 STATE: {GetShardThree} ~~ {
 	IF:	All
@@ -545,34 +622,20 @@ STATE: {GetShardThree} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,GetShardThree]}
 				SetWatchdog 5 30 {ClearMobs}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
-		DO:	SetState {Watchdog}
 	IF:	Always
 		DO:	DoExpr {setpvar[LootDungeon,3]}
 	IF:	All
@@ -649,34 +712,20 @@ STATE: {GetShardTwo} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,GetShardTwo]}
 				SetWatchdog 5 30 {ClearMobs}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
-		DO:	SetState {Watchdog}
 	IF:	Always
 		DO:	DoExpr {setpvar[LootDungeon,2]}
 	IF:	All
@@ -757,36 +806,21 @@ STATE: {Heart} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Any	
 				BlockE C8E90000
 				CellE 21760036
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-				CellE 21760036
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,Heart]}
 				SetWatchdog 5 30 {ClearMobs}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
-		DO:	SetState {Watchdog}
 	IF:	CellE 8B030169
 		DO:	SetOpt {EnableCombat} {True}
 	IF:	Always
@@ -834,26 +868,16 @@ STATE: {HeartJump} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	All
 			Not Expr {testvar[JumpTimer]}
 			NoMobsInDist 15
@@ -975,37 +999,13 @@ STATE: {Loot} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
-				SetOpt {EnableLooting} {True}
-				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
-				DoExpr {clearvar[CorpseName]}
-				DoExpr {clearvar[LootItem]}
-				DoExpr {clearvar[Loot]}
-				DoExpr {clearvar[CorpseDetect]}
-				DoExpr {clearvar[LootCount]}
-				DoExpr {clearvar[CloseCorpseTimer]}
-				DoExpr {clearvar[SourceNotFound]}
-				DoExpr {clearvar[LootStuckDelay]}
-				DoExpr {clearvar[LootCloseCorpse]}
-				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				BlockE C8E90000
+				BlockE C8E90000 ~~ Lifestone Landblock
 		DO:	DoAll
 				DoExpr {cleargvar[LootFail]}
 				SetOpt {EnableLooting} {True}
@@ -1024,26 +1024,6 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[Looting,0]}
 				Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
-				SetOpt {EnableLooting} {True}
-				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
-				DoExpr {clearvar[CorpseName]}
-				DoExpr {clearvar[LootItem]}
-				DoExpr {clearvar[Loot]}
-				DoExpr {clearvar[CorpseDetect]}
-				DoExpr {clearvar[LootCount]}
-				DoExpr {clearvar[CloseCorpseTimer]}
-				DoExpr {clearvar[SourceNotFound]}
-				DoExpr {clearvar[LootStuckDelay]}
-				DoExpr {clearvar[LootCloseCorpse]}
-				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
 				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
@@ -1256,9 +1236,13 @@ STATE: {PickStep} ~~ {
 	IF:	Expr {getpvar[Step]==1}
 		DO:	SetState {Flag}
 	IF:	Expr {getpvar[Step]==2}
-		DO:	SetState {ToFirstDungeon}
+		DO:	DoAll
+				DoExpr {setpvar[Stuck,DeathRecallNonShard]}
+				SetState {ToFirstDungeon}
 	IF:	Expr {getpvar[Step]==3}
-		DO:	SetState {ToShards}
+		DO:	DoAll
+				DoExpr {setpvar[Stuck,DeathRecall]}
+				SetState {ToShards}
 	IF:	Expr {getpvar[Step]==4}
 		DO:	SetState {TurnIn}
 ~~ }
@@ -1277,25 +1261,31 @@ STATE: {Shard} ~~ {
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
-			Expr {getpvar[Leader]==1}
+			Expr {getpvar[Shard]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
 				ChatMatch {!ManDown}
 				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				Any
+					BlockE C8E90000
+		DO:	DoAll
+				Chat {/f !ManDown}
+				SetState {DeathRecallNonShard}
+	IF:	All
+			Expr {getpvar[Shard]>1}
+			Any
+				Death
+				ChatMatch {^Your fellow .* has died!$}
+				ChatMatch {!ManDown}
+				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				Any
+					BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
+	IF: Expr {getpvar[Shard]==1}
+		DO: DoExpr {setpvar[Stuck,DeathRecallNonShard]}
 	IF:	All
 			Expr {getpvar[Shard]==0}
 			IntoPortal
@@ -1383,19 +1373,19 @@ STATE: {ToFirstDungeon} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				SetState {DeathRecallNonShard}
 	IF:	Always
 		DO:	DoAll
+				DoExpr {setpvar[Stuck,DeathRecallNonShard]}
 				DoExpr {setpvar[ClearMobs,ToFirstDungeon]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	Any
@@ -1410,7 +1400,7 @@ STATE: {ToFirstDungeon} ~~ {
 			NavEmpty
 			CellE 8B03018F
 		DO:	DoAll
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, DeathRecallNonShard]}
 				DoExpr {setpvar[StateName,FirstDungeon]}
 				DoExpr {setpvar[CheckSync,FirstDungeon]}
 				Chat {/vt meta load CheckPublic} ~~ FirstDungeon
@@ -1450,6 +1440,7 @@ STATE: {ToGK} ~~ {
 		DO:	DoAll
 				DoExpr {cleargvar[QuestComplete]}
 				SetOpt {EnableCombat} {False}
+				SetOpt {EnableNav} {True}
 				EmbedNav nav20 {[none]}
 	IF:	Not CellE 21700031
 		DO:	DoAll
@@ -1490,7 +1481,7 @@ STATE: {ToShards} ~~ {
 				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
-				SetState {ToGK}
+				SetState {DeathRecallNonShard}
 	IF:	Any
 			SecsInStateGE 900
 			Death
@@ -1498,6 +1489,7 @@ STATE: {ToShards} ~~ {
 		DO:	SetState {ToGK}
 	IF:	Always
 		DO:	DoAll
+				DoExpr {setpvar[Stuck,DeathRecallNonShard]}
 				DoExpr {setpvar[ClearMobs,ToShards]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	All
@@ -1552,18 +1544,90 @@ STATE: {ToShards} ~~ {
 			CellE 217201C8
 			Expr {getpvar[Shard]==3}
 			NavEmpty
+		DO:	DoExpr {setpvar[ApostateFinaleShardThree,1]}
+	IF:	All
+			Expr {getpvar[ApostateFinaleShardThree]==1}
+			CellE 217201C8
+			Expr {getpvar[Shard]==3}
+			Not Expr {testgvar[ApostateFinaleShardThree]}
+		DO:	DoAll
+				DoExpr {setgvar[ApostateFinaleShardThree,listcreate[]]}
+				SetState {ToShards}
+	IF:	All
+			Expr {getpvar[ApostateFinaleShardThree]==1}
+			CellE 217201C8
+			Expr {getpvar[Shard]==3}
+			Expr {testgvar[ApostateFinaleShardThree]}
+			Not Expr {listcontains[getgvar[ApostateFinaleShardThree],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[ApostateFinaleShardThree],getcharstringprop[1]]}
+				SetState {ToShards}
+	IF:	All
+			Expr {getpvar[ApostateFinaleShardThree]==1}
+			CellE 217201C8
+			Expr {getpvar[Shard]==3}
+			Expr {testgvar[ApostateFinaleShardThree]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameEight]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,Shard]}
-				DoExpr {setpvar[CheckSync,ShardOne]}
-				Chat {/vt meta load CheckPublic} ~~ ShardOne
+				DoExpr {setpvar[CheckSync,ShardThree]}
+				Chat {/vt meta load CheckPublic} ~~ ShardThree
 	IF:	All
 			NavEmpty
 			Any
 				CellE 2172011B
 				CellE 2172011D
 				CellE 21720119
+		DO:	DoExpr {setpvar[ApostateFinaleShardTwo,1]}
+	IF:	All
+			Expr {getpvar[ApostateFinaleShardTwo]==1}
+			Any
+				CellE 2172011B
+				CellE 2172011D
+				CellE 21720119
+			Not Expr {testgvar[ApostateFinaleShardTwo]}
+		DO:	DoAll
+				DoExpr {setgvar[ApostateFinaleShardTwo,listcreate[]]}
+				SetState {ToShards}
+	IF:	All
+			Expr {getpvar[ApostateFinaleShardTwo]==1}
+			Any
+				CellE 2172011B
+				CellE 2172011D
+				CellE 21720119
+			Expr {testgvar[ApostateFinaleShardTwo]}
+			Not Expr {listcontains[getgvar[ApostateFinaleShardTwo],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[ApostateFinaleShardTwo],getcharstringprop[1]]}
+				SetState {ToShards}
+	IF:	All
+			Expr {getpvar[ApostateFinaleShardTwo]==1}
+			Any
+				CellE 2172011B
+				CellE 2172011D
+				CellE 21720119
+			Expr {testgvar[ApostateFinaleShardTwo]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameEight]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {EnableCombat} {True}
@@ -1573,12 +1637,42 @@ STATE: {ToShards} ~~ {
 	IF:	All
 			CellE 21720250
 			NavEmpty
+		DO:	DoExpr {setpvar[ApostateFinaleShardOne,1]}
+	IF:	All
+			Expr {getpvar[ApostateFinaleShardOne]==1}
+			CellE 21720250
+			Not Expr {testgvar[ApostateFinaleShardOne]}
+		DO:	DoAll
+				DoExpr {setgvar[ApostateFinaleShardOne,listcreate[]]}
+				SetState {ToShards}
+	IF:	All
+			Expr {getpvar[ApostateFinaleShardOne]==1}
+			CellE 21720250
+			Expr {testgvar[ApostateFinaleShardOne]}
+			Not Expr {listcontains[getgvar[ApostateFinaleShardOne],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[ApostateFinaleShardOne],getcharstringprop[1]]}
+				SetState {ToShards}
+	IF:	All
+			Expr {getpvar[ApostateFinaleShardOne]==1}
+			CellE 21720250
+			Expr {testgvar[ApostateFinaleShardOne]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameEight]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,Shard]}
-				DoExpr {setpvar[CheckSync,ShardThree]}
-				Chat {/vt meta load CheckPublic} ~~ ShardThree
+				DoExpr {setpvar[CheckSync,ShardOne]}
+				Chat {/vt meta load CheckPublic} ~~ ShardOne
 ~~ }
 STATE: {TurnIn} ~~ {
 	IF:	All
@@ -1607,6 +1701,35 @@ STATE: {TurnIn} ~~ {
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Shard of the Apostate Grand Director's Broken Mask]]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Apostate Grand Director's Mask]]==7}
+		DO:	DoExpr {setpvar[ApostateFinaleTurnIn,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[ApostateFinaleTurnIn]==1}
+			Not Expr {testgvar[ApostateFinaleTurnIn]}
+		DO:	DoAll
+				DoExpr {setgvar[ApostateFinaleTurnIn,listcreate[]]}
+				SetState {TurnIn}
+	IF:	All
+			Expr {getpvar[ApostateFinaleTurnIn]==1}
+			Expr {testgvar[ApostateFinaleTurnIn]}
+			Not Expr {listcontains[getgvar[ApostateFinaleTurnIn],getcharstringprop[1]]}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sparkling Apostate Shard]]==7}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[ApostateFinaleTurnIn],getcharstringprop[1]]}
+				SetState {TurnIn}
+	IF:	All
+			Expr {getpvar[ApostateFinaleTurnIn]==1}
+			Expr {testgvar[ApostateFinaleTurnIn]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Finished]}
 				DoExpr {setpvar[CheckSync,Finished]}
@@ -1636,9 +1759,10 @@ STATE: {Watchdog} ~~ {
 			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
-				DoExpr {clearvar[StateTimer]}
 				SetState {DeathRecall}
 ~~ }
 STATE: {Zstuck} ~~ {

@@ -62,14 +62,17 @@ STATE: {DeathRecall} ~~ {
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
+	IF:	BlockE 00070000
+		DO: SetState {ToTN}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[StateName,DeathRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
-				DoExpr {cleargvar[DoorOpen]}
+				DoExpr {cleargvar[DoorOpenMouf]}
 				DoExpr {cleargvar[Go]}
 				SetOpt {NavCloseStopRange} {0.00625}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {EnableCombat} {False}
 				SetOpt {EnableNav} {False}
 				EmbedNav nav0 {[none]}
@@ -80,6 +83,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	CellE 38F7001B
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
+				DoExpr {clearvar[CombatStuck]}
 				EmbedNav nav1 {[DeathDelay]}
 	IF:	All
 			NavEmpty
@@ -173,26 +177,16 @@ STATE: {FightBoss} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	CellE 584D010F
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
@@ -256,6 +250,9 @@ STATE: {Finished} ~~ {
 				Expr {testgvar[Checking]==1}
 				Expr {testgvar[GoNowTwo]==1}
 				Expr {testgvar[Mouf]==1}
+				Expr {testgvar[MoufTurnIn]==1}
+				Expr {testgvar[DoorOpenMouf]==1}
+				Expr {testgvar[DoorOpenSecDoor]==1}
 				Expr {testgvar[getcharstringprop[1]+getworldname[]]==1}
 				Expr {testpvar[Run]==1}
 				Expr {testpvar[MoufDone]==1}
@@ -263,6 +260,7 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[StateName]==1}
 				Expr {testpvar[Profile]==1}
 				Expr {testpvar[Stuck]==1}
+				Expr {testpvar[MoufTurnIn]==1}
 				Expr {testpvar[Meta\ +getpvar[Profile]]==1}
 				Expr {testpvar[QuestCompletedSkip]==1}
 		DO:	DoAll
@@ -277,6 +275,9 @@ STATE: {Finished} ~~ {
 				DoExpr {cleargvar[Checking]}
 				DoExpr {cleargvar[GoNowTwo]}
 				DoExpr {cleargvar[Mouf]}
+				DoExpr {cleargvar[MoufTurnIn]}
+				DoExpr {cleargvar[DoorOpenMouf]}
+				DoExpr {cleargvar[DoorOpenSecDoor]}
 				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
 				DoExpr {clearpvar[Run]}
 				DoExpr {clearpvar[MoufDone]}
@@ -284,6 +285,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[Stuck]}
+				DoExpr {clearpvar[MoufTurnIn]}
 				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[Meta\ +getpvar[Profile]]}
 				DoExpr {clearpvar[QuestCompletedSkip]}
@@ -300,6 +302,9 @@ STATE: {Finished} ~~ {
 			Expr {testgvar[Checking]==0}
 			Expr {testgvar[GoNowTwo]==0}
 			Expr {testgvar[Mouf]==0}
+			Expr {testgvar[MoufTurnIn]==0}
+			Expr {testgvar[DoorOpenMouf]==0}
+			Expr {testgvar[DoorOpenSecDoor]==0}
 			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
 			Expr {testpvar[Run]==0}
 			Expr {testpvar[MoufDone]==0}
@@ -307,6 +312,7 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[StateName]==0}
 			Expr {testpvar[Profile]==0}
 			Expr {testpvar[Stuck]==0}
+			Expr {testpvar[MoufTurnIn]==0}
 			Expr {testpvar[Meta\ +getpvar[Profile]]==0}
 			Expr {testpvar[QuestCompletedSkip]==0}
 		DO:	Chat {/vt meta load QuestCheckPublic}
@@ -325,26 +331,16 @@ STATE: {FrigidDoorOne} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Always
 		DO:	SetWatchdog 5 90 {WatchDog}
 	IF:	Any
@@ -394,26 +390,16 @@ STATE: {FrigidDoorTwo} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Always
 		DO:	SetWatchdog 5 90 {WatchDog}
 	IF:	Expr {getpvar[FellowCount]>=2}
@@ -433,6 +419,7 @@ STATE: {FrigidDoorTwo} ~~ {
 			Any
 				CellE 584D0232
 				CellE 584D0231
+				CellE 584D0230
 			Not MobsInDist_Name 1 10 {Wall of Ice}
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
@@ -444,6 +431,7 @@ STATE: {FrigidDoorTwo} ~~ {
 			Any
 				CellE 584D0232
 				CellE 584D0231
+				CellE 584D0230
 			Not MobsInDist_Name 1 10 {Wall of Ice}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,FrigidGate]}
@@ -464,26 +452,16 @@ STATE: {FrigidGate} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Always
 		DO:	SetWatchdog 5 90 {WatchDog}
 	IF:	Expr {getpvar[FellowCount]>=2}
@@ -491,8 +469,9 @@ STATE: {FrigidGate} ~~ {
 	IF:	Expr {getpvar[FellowCount]<2}
 		DO:	SetOpt {EnableCombat} {False}
 	IF:	Any
-			CellE 584D0231
 			CellE 584D0232
+			CellE 584D0231
+			CellE 584D0230
 		DO:	EmbedNav nav5 {[none]}
 	IF:	All
 			NavEmpty
@@ -516,12 +495,22 @@ STATE: {LeverDoor} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Any
+				BlockE C8E90000
+		DO:	DoAll
+				Chat {/f !ManDown}
+				SetState {DeathRecall}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[46292]]==7}
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[46292]],getplayercoordinates[]]<10}
 			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[46292]]==1}
 		DO:	DoAll
-				DoExpr {setgvar[DoorOpen,1]}
+				DoExpr {setgvar[DoorOpenMouf,1]}
 				EmbedNav nav6 {[none]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[46292]]==7}
@@ -529,7 +518,7 @@ STATE: {LeverDoor} ~~ {
 			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[46292]]==0}
 			Expr {getpvar[Leader]==1}
 		DO:	DoAll
-				DoExpr {setgvar[DoorOpen,0]}
+				DoExpr {setgvar[DoorOpenMouf,0]}
 				SetState {UseLever}
 	IF:	CellE 584D010F
 		DO:	DoAll
@@ -552,37 +541,13 @@ STATE: {Loot} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
-				SetOpt {EnableLooting} {True}
-				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
-				DoExpr {clearvar[CorpseName]}
-				DoExpr {clearvar[LootItem]}
-				DoExpr {clearvar[Loot]}
-				DoExpr {clearvar[CorpseDetect]}
-				DoExpr {clearvar[LootCount]}
-				DoExpr {clearvar[CloseCorpseTimer]}
-				DoExpr {clearvar[SourceNotFound]}
-				DoExpr {clearvar[LootStuckDelay]}
-				DoExpr {clearvar[LootCloseCorpse]}
-				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				BlockE C8E90000
+				BlockE C8E90000 ~~ Lifestone Landblock
 		DO:	DoAll
 				DoExpr {cleargvar[LootFail]}
 				SetOpt {EnableLooting} {True}
@@ -601,26 +566,6 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[Looting,0]}
 				Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
-				SetOpt {EnableLooting} {True}
-				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
-				DoExpr {clearvar[CorpseName]}
-				DoExpr {clearvar[LootItem]}
-				DoExpr {clearvar[Loot]}
-				DoExpr {clearvar[CorpseDetect]}
-				DoExpr {clearvar[LootCount]}
-				DoExpr {clearvar[CloseCorpseTimer]}
-				DoExpr {clearvar[SourceNotFound]}
-				DoExpr {clearvar[LootStuckDelay]}
-				DoExpr {clearvar[LootCloseCorpse]}
-				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
 				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
@@ -843,26 +788,16 @@ STATE: {SecDoor} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Any
 			CellE 584D012C
 			CellE 584D0126
@@ -874,11 +809,15 @@ STATE: {SecDoor} ~~ {
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Tiny's Head`],wobjectfindnearestbynameandobjectclass[37,Security Station]]}
 				SetState {SecDoor}
-	IF:	All
-			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
-			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5}
-			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==1}
-		DO:	EmbedNav nav8 {[none]}
+	IF:	Any
+			Expr {getgvar[DoorOpenSecDoor]==1}
+			All
+				Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
+				Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5}
+				Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==1}
+		DO:	DoAll
+				DoExpr {setgvar[DoorOpenSecDoor,1]}
+				EmbedNav nav8 {[none]}
 ~~ }
 STATE: {SyncBuff} ~~{
 	IF: Not Expr {testpvar[BuffingStartAll]}
@@ -934,26 +873,16 @@ STATE: {TinyHead} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
 				Chat {/vt opt set EnableCombat False}
@@ -986,25 +915,6 @@ STATE: {ToFiuns} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Always
 		DO:	SetWatchdog 5 45 {ToTN}
 	IF:	BlockE 00070000
@@ -1184,6 +1094,34 @@ STATE: {TurnInNote} ~~ {
 	IF:	Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Letter from Mouf and Uber P`]]==7}
 		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Letter from Mouf and Uber P`],wobjectfindnearestbynameandobjectclass[37,Mr. P]]}
 	IF:	Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Letter from Mouf and Uber P`]]==1}
+		DO:	DoExpr {setpvar[MoufTurnIn,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[MoufTurnIn]==1}
+			Not Expr {testgvar[MoufTurnIn]}
+		DO:	DoAll
+				DoExpr {setgvar[MoufTurnIn,listcreate[]]}
+				SetState {TurnInNote}
+	IF:	All
+			Expr {getpvar[MoufTurnIn]==1}
+			Expr {testgvar[MoufTurnIn]}
+			Not Expr {listcontains[getgvar[MoufTurnIn],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[MoufTurnIn],getcharstringprop[1]]}
+				SetState {TurnInNote}
+	IF:	All
+			Expr {getpvar[MoufTurnIn]==1}
+			Expr {testgvar[MoufTurnIn]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[MoufTurnIn],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[MoufTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[MoufTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[MoufTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[MoufTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[MoufTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[MoufTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[MoufTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[MoufTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[MoufTurnIn],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Finished]}
 				DoExpr {setpvar[CheckSync,Finished]}
@@ -1251,49 +1189,39 @@ STATE: {UseLever} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF: All
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[46292]]==7}
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[46292]],getplayercoordinates[]]<70}
 			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[46292]]==1}
-		DO: DoExpr {setgvar[DoorOpen,1]}
+		DO: DoExpr {setgvar[DoorOpenMouf,1]}
 	IF: All
-			Expr {getgvar[DoorOpen]==0}
+			Expr {getgvar[DoorOpenMouf]==0}
 			Any
 				CellE 584D0130
 				CellE 584D0131
 		DO: DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[46293]]}
 	IF: All
-			Expr {getgvar[DoorOpen]==0}
+			Expr {getgvar[DoorOpenMouf]==0}
 			SecsInStateGE 3
 			Any
 				CellE 584D0130
 				CellE 584D0131
 		DO: SetState {UseLever}
 	IF:	All
-			Expr {getgvar[DoorOpen]==0}
+			Expr {getgvar[DoorOpenMouf]==0}
 			CellE 584D0114
 		DO:	EmbedNav nav17 {[none]}
-	IF:	Expr {getgvar[DoorOpen]==1}
+	IF:	Expr {getgvar[DoorOpenMouf]==1}
 		DO:	EmbedNav nav18 {[none]} ~~ Split Route after lever use
 	IF:	All
 			CellE 584D0114
@@ -1322,26 +1250,6 @@ STATE: {UseMouf} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Not Expr {testgvar[QuestComplete]}

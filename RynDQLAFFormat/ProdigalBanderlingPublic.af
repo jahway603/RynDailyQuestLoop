@@ -91,7 +91,7 @@ STATE: {CheckSummonTwo} ~~ {
 				DoExpr {setpvar[StateName,ToWinterborn]}
 				DoExpr {setpvar[CheckSync,ToWinterbornCheckSummon]}
 				DoExpr {clearvar[CombatStuck]}
-				Chat {/vt meta load CheckPublic} ~~ ToWinterbornCheckSummon
+				Chat {/vt meta load CheckPublic}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbyobjectclass[14]]==7}
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbyobjectclass[14]],getplayercoordinates[]]<10}
@@ -123,42 +123,59 @@ STATE: {ChiefTurnin} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=120}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+	
+	IF: Any
+			ChatMatch {^Chief Taraash tells you, "Hmmm... Winterborn sent you. I smell him on you."}
+			ChatMatch {^Chief Taraash raises his hands, and a soft glow infuses}
+			ChatMatch {^Chief Taraash tells you, "Hurry, I need those artifacts."}
+		DO:	DoExpr {setpvar[ChiefTalkFlag,1]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Expr {getpvar[ChiefTalkFlag]==1}
+			Not Expr {testgvar[ChiefTalkFlag]}
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF:	Any
-			SecsInStateGE 900
-			Death
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				DoExpr {setgvar[ChiefTalkFlag,listcreate[]]}
+				SetState {ChiefTurnin}
 	IF:	All
+			Expr {getpvar[ChiefTalkFlag]==1}
+			Expr {testgvar[ChiefTalkFlag]}
+			Not Expr {listcontains[getgvar[ChiefTalkFlag],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[ChiefTalkFlag],getcharstringprop[1]]}
+				SetState {ChiefTurnin}
+	IF:	All
+			Expr {getpvar[ChiefTalkFlag]==1}
+			Expr {testgvar[ChiefTalkFlag]}
 			Any
-				ChatMatch {^Chief Taraash tells you, "Hmmm... Winterborn sent you. I smell him on you."}
-				ChatMatch {^Chief Taraash raises his hands, and a soft glow infuses}
-				ChatMatch {^Chief Taraash tells you, "Hurry, I need those artifacts."}
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[ChiefTalkFlag],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[ChiefTalkFlag],getpvar[LeaderName]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[ChiefTalkFlag],getpvar[LeaderName]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[ChiefTalkFlag],getpvar[LeaderName]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[ChiefTalkFlag],getpvar[LeaderName]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[ChiefTalkFlag],getpvar[LeaderName]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[ChiefTalkFlag],getpvar[LeaderName]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[ChiefTalkFlag],getpvar[LeaderName]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameSeven]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[ChiefTalkFlag],getpvar[LeaderName]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameSeven]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameEight]]&&listcontains[getgvar[ChiefTalkFlag],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[ChiefTalk,1]}
 				DoExpr {setpvar[StateName,ToDungeon]}
 				DoExpr {setpvar[CheckSync,ToDungeon]}
-				Chat {/vt meta load CheckPublic} ~~ ToDungeon
-	IF:	SecsInStateGE 2
+				Chat {/vt meta load CheckPublic}
+	IF:	All
+			Expr {getpvar[ChiefTalkFlag]==0}
+			SecsInStateGE 2
 		DO:	DoAll
 				DoExpr {actiontryuseitem[wobjectfindnearestbynameandobjectclass[37,Chief Taraash]]]}
 				SetState {ChiefTurnin}
@@ -184,34 +201,21 @@ STATE: {ClearMobs} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	SecsInStateGE 180
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
 				SetOpt {SummonPets} {True}
 				SetOpt {EnableCombat} {True}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 180
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
 				SetOpt {SummonPets} {True}
@@ -248,12 +252,15 @@ STATE: {DeathRecall} ~~ {
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
+	IF:	BlockE 00070000
+		DO:	SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[StateName,DeathRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {EnableCombat} {False}
 				SetOpt {EnableNav} {False}
 				EmbedNav nav0 {[none]}
@@ -325,7 +332,7 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {Recharge-Helper-HitP} {50}
 				DoExpr {setpvar[StateName,ToWinterborn]}
 				DoExpr {setpvar[CheckSync,Death]}
-				Chat {/vt meta load CheckPublic} ~~ Death
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {Default} ~~ {
 	IF:	All
@@ -431,29 +438,16 @@ STATE: {FightBoss} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
+			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -465,7 +459,7 @@ STATE: {FightBoss} ~~ {
 	IF:	All
 			Expr {getpvar[QuestCompletedSkip]==0}
 			Not Expr {testvar[LootCurrent]}
-		DO: DoExpr {setvar[LootCurrent,getinventorycountbytemplatetype[87338]+1]}
+		DO:	DoExpr {setvar[LootCurrent,getinventorycountbytemplatetype[87338]+1]}
 	IF:	All
 			Expr {getpvar[QuestCompletedSkip]==0}
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Harraag]]==7}
@@ -519,7 +513,7 @@ STATE: {FightBoss} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,DeathRecall]}
 				DoExpr {setpvar[CheckSync,DeathRecall]}
-				Chat {/vt meta load CheckPublic} ~~ DeathRecall
+				Chat {/vt meta load CheckPublic}
 	IF:	CellE 00600423
 		DO:	EmbedNav nav5 {[none]}
 ~~ }
@@ -533,6 +527,9 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[Stuck]==1}
 				Expr {testpvar[Ulgrim]==1}
 				Expr {testpvar[Step]==1}
+				Expr {testpvar[WinterbornFlag]==1}
+				Expr {testpvar[WinterbornTurnIn]==1}
+				Expr {testpvar[ChiefTalkFlag]==1}
 				Expr {testpvar[TurnIn]==1}
 				Expr {testpvar[Meta\ +getpvar[Profile]]==1}
 				Expr {testpvar[ClearMobs]==1}
@@ -549,6 +546,7 @@ STATE: {Finished} ~~ {
 				Expr {testgvar[GoNowClear]==1}
 				Expr {testgvar[Checking]==1}
 				Expr {testgvar[GoNowTwo]==1}
+				Expr {testgvar[ChiefTalkFlag]==1}
 				Expr {testgvar[ProdigalBanderling]==1}
 				Expr {testgvar[getcharstringprop[1]+getworldname[]]==1}
 		DO:	DoAll
@@ -559,6 +557,9 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[Ulgrim]}
 				DoExpr {clearpvar[Step]}
+				DoExpr {clearpvar[WinterbornFlag]}
+				DoExpr {clearpvar[WinterbornTurnIn]}
+				DoExpr {clearpvar[ChiefTalkFlag]}
 				DoExpr {clearpvar[TurnIn]}
 				DoExpr {clearpvar[Meta\ +getpvar[Profile]]}
 				DoExpr {clearpvar[ClearMobs]}
@@ -575,7 +576,10 @@ STATE: {Finished} ~~ {
 				DoExpr {cleargvar[GoNowClear]}
 				DoExpr {cleargvar[Checking]}
 				DoExpr {cleargvar[GoNowTwo]}
+				DoExpr {cleargvar[ChiefTalkFlag]}
 				DoExpr {cleargvar[ProdigalBanderling]}
+				DoExpr {cleargvar[WinterbornTurnIn]}
+				DoExpr {cleargvar[WinterbornFlag]}
 				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
 				SetState {Finished}
 	IF:	All
@@ -585,6 +589,9 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[Stuck]==0}
 			Expr {testpvar[Ulgrim]==0}
 			Expr {testpvar[Step]==0}
+			Expr {testpvar[WinterbornFlag]==0}
+			Expr {testpvar[WinterbornTurnIn]==0}
+			Expr {testpvar[ChiefTalkFlag]==0}
 			Expr {testpvar[TurnIn]==0}
 			Expr {testpvar[Meta\ +getpvar[Profile]]==0}
 			Expr {testpvar[ClearMobs]==0}
@@ -601,6 +608,9 @@ STATE: {Finished} ~~ {
 			Expr {testgvar[GoNowClear]==0}
 			Expr {testgvar[Checking]==0}
 			Expr {testgvar[GoNowTwo]==0}
+			Expr {testgvar[ChiefTalkFlag]==0}
+			Expr {testgvar[WinterbornFlag]==0}
+			Expr {testgvar[WinterbornTurnIn]==0}
 			Expr {testgvar[ProdigalBanderling]==0}
 			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
 		DO:	DoAll
@@ -621,32 +631,17 @@ STATE: {HarraagHideout} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				Expr {getfellowshipcount[]<getpvar[FellowCount]}
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
-			Expr {getfellowshipcount[]<getpvar[FellowCount]}
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			Expr {getfellowshipcount[]<getpvar[FellowCount]}
+			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=180}
+			Expr {getfellowshipcount[]<getpvar[FellowCount]}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=180}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -655,7 +650,7 @@ STATE: {HarraagHideout} ~~ {
 				DoExpr {setpvar[ClearMobs,HarraagHideout]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	CellE 006004C1
-		DO:	EmbedNav nav6 {HarraagHideout.nav}
+		DO:	EmbedNav nav6 {HaaragHideout.nav}
 	IF:	All
 			Expr {getvar[PitStop]==0}
 			CellE 0060011E
@@ -665,7 +660,7 @@ STATE: {HarraagHideout} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {setpvar[StateName,HarraagHideout]}
 				DoExpr {setpvar[CheckSync,HarraagHideoutPitStopOne]}
-				Chat {/vt meta load CheckPublic} ~~ HarraagHideoutPitStopOne
+				Chat {/vt meta load CheckPublic}
 	IF:	All
 			Expr {getvar[PitStop]==1}
 			CellE 0060011E
@@ -691,35 +686,11 @@ STATE: {Loot} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
-				SetOpt {EnableLooting} {True}
-				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
-				DoExpr {clearvar[CorpseName]}
-				DoExpr {clearvar[LootItem]}
-				DoExpr {clearvar[Loot]}
-				DoExpr {clearvar[CorpseDetect]}
-				DoExpr {clearvar[LootCount]}
-				DoExpr {clearvar[CloseCorpseTimer]}
-				DoExpr {clearvar[SourceNotFound]}
-				DoExpr {clearvar[LootStuckDelay]}
-				DoExpr {clearvar[LootCloseCorpse]}
-				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
@@ -740,26 +711,6 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[Looting,0]}
 				Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
-				SetOpt {EnableLooting} {True}
-				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
-				DoExpr {clearvar[CorpseName]}
-				DoExpr {clearvar[LootItem]}
-				DoExpr {clearvar[Loot]}
-				DoExpr {clearvar[CorpseDetect]}
-				DoExpr {clearvar[LootCount]}
-				DoExpr {clearvar[CloseCorpseTimer]}
-				DoExpr {clearvar[SourceNotFound]}
-				DoExpr {clearvar[LootStuckDelay]}
-				DoExpr {clearvar[LootCloseCorpse]}
-				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
 				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
@@ -905,10 +856,10 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootStuckDelay]}
 				DoExpr {setgvar[Looting,0]}
 				SetState {LootStuckDelay}
-	IF: All
+	IF:	All
 			Expr {listcount[getgvar[FailDelayCounter]]==listcount[getgvar[LootingCounter]]}
 			SecsInStateGE 30
-		DO: DoAll
+		DO:	DoAll
 				DoExpr {setgvar[Looting,0]}
 				SetState {Loot}
 ~~ }
@@ -1007,8 +958,8 @@ STATE: {Mp} ~~ {
 				CellE 016C0147
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Summon]}
-				DoExpr {setpvar[CheckSync,Summon]} 
-				Chat {/vt meta load CheckPublic} ~~ Summon
+				DoExpr {setpvar[CheckSync,Summon]}
+				Chat {/vt meta load CheckPublic}
 	IF:	All
 			NavEmpty
 			Expr {getcharstringprop[1]!=getpvar[ProdigalBanderlingSummon]}
@@ -1021,7 +972,7 @@ STATE: {Mp} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[StateName,SummonW]}
 				DoExpr {setpvar[CheckSync,Summon]}
-				Chat {/vt meta load CheckPublic} ~~ Summon
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {RunToAB} ~~ {
 	IF:	All
@@ -1138,15 +1089,15 @@ STATE: {SummonW} ~~ {
 			SecsInStateGE 1
 		DO:	SetState {CheckSummon}
 ~~ }
-STATE: {SyncBuff} ~~{
-	IF: Not Expr {testpvar[BuffingStartAll]}
-		DO: DoAll
+STATE: {SyncBuff} ~~ {
+	IF:	Not Expr {testpvar[BuffingStartAll]}
+		DO:	DoAll
 				DoExpr {setpvar[BuffingStartAll,1]}
 				Chat {/vt forcebuff}
-	IF: All
+	IF:	All
 			NeedToBuff
 			Expr {vtgetsetting[EnableBuffing]!=True}
-		DO: SetOpt {EnableBuffing} {True}
+		DO:	SetOpt {EnableBuffing} {True}
 	IF:	All
 			Not Expr {testgvar[SyncBuffComplete]}
 			Not NeedToBuff
@@ -1172,12 +1123,12 @@ STATE: {SyncBuff} ~~{
 				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]}
 				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]}
 				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}		
-		DO: DoAll
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}
+		DO:	DoAll
 				DoExpr {cleargvar[Buffing]}
 				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
-~~}
+~~ }
 STATE: {ToAB} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
@@ -1197,6 +1148,8 @@ STATE: {ToAB} ~~ {
 			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1240,7 +1193,7 @@ STATE: {ToAB} ~~ {
 				DoExpr {setpvar[StateName,ToWinterborn]}
 				DoExpr {setpvar[CheckSync,ToWinterborn]}
 				DoExpr {clearpvar[Recall]}
-				Chat {/vt meta load CheckPublic} ~~ ToWinterborn
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {ToChief} ~~ {
 	IF:	All
@@ -1256,29 +1209,13 @@ STATE: {ToChief} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
+			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=180}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1302,7 +1239,7 @@ STATE: {ToChief} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,ChiefTurnin]}
 				DoExpr {setpvar[CheckSync,ChiefTurnin]}
-				Chat {/vt meta load CheckPublic} ~~ ChiefTurnin
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {ToDungeon} ~~ {
 	IF:	All
@@ -1318,28 +1255,13 @@ STATE: {ToDungeon} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=150}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
 				BlockE C8E90000
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1350,7 +1272,7 @@ STATE: {ToDungeon} ~~ {
 	IF:	Always
 		DO:	DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	CellE 19340002
-		DO:	EmbedNav nav17 {Junkdelete.nav}
+		DO:	EmbedNav nav17 {junk.nav}
 	IF:	CellE 006004C1
 		DO:	EmbedNav nav18 {Clear}
 	IF:	All
@@ -1360,7 +1282,7 @@ STATE: {ToDungeon} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,HarraagHideout]}
 				DoExpr {setpvar[CheckSync,HarraagHideout]}
-				Chat {/vt meta load CheckPublic} ~~ HarraagHideout
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {ToMP} ~~ {
 	IF:	All
@@ -1460,33 +1382,21 @@ STATE: {ToWinterborn} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=60}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=60}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoExpr {setpvar[Stuck,DeathRecall]}
 	IF:	CellE 1134001D
@@ -1523,29 +1433,16 @@ STATE: {WinterbornTurnin} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
+			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=180}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=180}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1553,32 +1450,96 @@ STATE: {WinterbornTurnin} ~~ {
 			Expr {getpvar[ChiefTalk]==1}
 			Expr {getpvar[TurnIn]==0}
 		DO:	SetState {ToChief}
-	IF:	All
-			Any
-				ChatMatch {Guard Winterborn tells you, "Recently, there have been}
-				ChatMatch {Guard Winterborn tells you, "There are a small group of amicable Banderlings}
-				ChatMatch {Guard Winterborn tells you, "Were you able to locate the Banderlings at }
-		DO:	DoAll
-				DoExpr {setpvar[StateName,ToChief]}
-				DoExpr {setpvar[CheckSync,ToChief]}
-				Chat {/vt meta load CheckPublic} ~~ ToChief
-	IF:	All
+	IF: All
+			Expr {getpvar[TurnIn]==1}
 			Any
 				ChatMatch {^You give Guard Winterborn Shard of Harraag's Dagger}
 				ChatMatch {^Guard Winterborn murmurs something while passing a hand over the shard.}
 				ChatMatch {^You've earned}
+		DO:	DoExpr {setpvar[WinterbornTurnIn,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[TurnIn]==1}
+			Expr {getpvar[WinterbornTurnIn]==1}
+			Not Expr {testgvar[WinterbornTurnIn]}
+		DO:	DoAll
+				DoExpr {setgvar[WinterbornTurnIn,listcreate[]]}
+				SetState {WinterbornTurnin}
+	IF:	All
+			Expr {getpvar[WinterbornTurnIn]==1}
+			Expr {getpvar[TurnIn]==1}
+			Expr {testgvar[WinterbornTurnIn]}
+			Not Expr {listcontains[getgvar[WinterbornTurnIn],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[WinterbornTurnIn],getcharstringprop[1]]}
+				SetState {WinterbornTurnin}
+	IF:	All
+			Expr {getpvar[WinterbornTurnIn]==1}
+			Expr {getpvar[TurnIn]==1}
+			Expr {testgvar[WinterbornTurnIn]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[WinterbornTurnIn],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[WinterbornTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[WinterbornTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[WinterbornTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[WinterbornTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[WinterbornTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[WinterbornTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[WinterbornTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[WinterbornTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[WinterbornTurnIn],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,Finished]}
 				DoExpr {setpvar[CheckSync,Finished]}
-				Chat {/vt meta load CheckPublic} ~~ Finished
+				Chat {/vt meta load CheckPublic}	
 	IF:	All
 			Expr {getpvar[TurnIn]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Shard of Harraag's Dagger]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Shard of Harraag's Dagger],wobjectfindnearestbynameandobjectclass[37,Guard Winterborn]]]}
 				SetState {WinterbornTurnin}
-	IF:	SecsInStateGE 2
+	IF: All
+			Expr {getpvar[TurnIn]==0}
+			Any
+				ChatMatch {Guard Winterborn tells you, "Recently, there have been}
+				ChatMatch {Guard Winterborn tells you, "There are a small group of amicable Banderlings}
+				ChatMatch {Guard Winterborn tells you, "Were you able to locate the Banderlings at}
+		DO:	DoExpr {setpvar[WinterbornFlag,1]}
+	IF:	All
+			Expr {getpvar[TurnIn]==0}
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[WinterbornFlag]==1}
+			Not Expr {testgvar[WinterbornFlag]}
+		DO:	DoAll
+				DoExpr {setgvar[WinterbornFlag,listcreate[]]}
+				SetState {WinterbornTurnin}
+	IF:	All
+			Expr {getpvar[TurnIn]==0}
+			Expr {getpvar[WinterbornFlag]==1}
+			Expr {testgvar[WinterbornFlag]}
+			Not Expr {listcontains[getgvar[WinterbornFlag],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[WinterbornFlag],getcharstringprop[1]]}
+				SetState {WinterbornTurnin}
+	IF:	All
+			Expr {getpvar[TurnIn]==0}
+			Expr {getpvar[WinterbornFlag]==1}
+			Expr {testgvar[WinterbornFlag]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[WinterbornFlag],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[WinterbornFlag],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[WinterbornFlag],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[WinterbornFlag],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[WinterbornFlag],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[WinterbornFlag],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[WinterbornFlag],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[WinterbornFlag],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameSeven]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[WinterbornFlag],getpvar[LeaderName]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameSeven]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameEight]]&&listcontains[getgvar[WinterbornFlag],getpvar[FellowNameNine]]}
+		DO:	DoAll
+				DoExpr {setpvar[StateName,ToChief]}
+				DoExpr {setpvar[CheckSync,ToChief]}
+				Chat {/vt meta load CheckPublic}
+	IF:	Expr {getpvar[WinterbornFlag]==0}
 		DO:	DoAll
 				DoExpr {actiontryuseitem[wobjectfindnearestbynameandobjectclass[37,Guard Winterborn]]]}
 				SetState {WinterbornTurnin}
@@ -1634,97 +1595,165 @@ NAV: nav5 once ~~ {
 	pnt -101.523380597432 -25.160586681962 -0.0499791701634725
 ~~ }
 NAV: nav6 once ~~ {
-	pnt -101.490824667613 -25.4982029279073 2.08333134651184E-05
-	pnt -101.491269079844 -25.4840341567993 2.08333134651184E-05
-	pnt -101.491900634766 -25.4641116142273 2.08333134651184E-05
-	pnt -101.489662710826 -25.3777779420217 -0.0499791701634725
-	pnt -101.492958704631 -25.3552468458811 -0.0499791701634725
-	pnt -101.534503936768 -25.3563111464183 -0.0499791701634725
-	pnt -101.532224814097 -25.4165650526683 -0.0499791701634725
-	pnt -101.531804116567 -25.4767640749613 -0.0499791701634725
-	pnt -101.53495276769 -25.560179233551 -0.0499791701634725
-	pnt -101.529869778951 -25.5907249450684 -0.0499791701634725
-	pnt -101.511777496338 -25.5877823511759 -0.0499791701634725
-	pnt -101.415434964498 -25.6014488538106 -0.0499791701634725
-	pnt -101.390312258403 -25.6164799054464 -0.0499791701634725
-	pnt -101.330918757121 -25.6685229301453 -0.0499791701634725
-	pnt -101.326728248596 -25.6862844467163 -0.0499791701634725
-	pnt -101.324550628662 -25.7060983657837 -0.0499791701634725
-	pnt -101.330364863078 -25.7314846674601 -0.0499791701634725
-	pnt -101.371502304077 -25.7389115015666 -0.0499791701634725
-	pnt -101.366420427958 -25.777476755778 -0.0499791701634725
-	pnt -101.302275657654 -25.7730028788249 -0.0507813890775045
-	pnt -101.240201568604 -25.7769014994303 -0.0749791701634725
-	pnt -101.244952329 -25.7295187632243 -0.0749791701634725
-	pnt -101.324479293823 -25.7306761423747 -0.0749791701634725
-	pnt -101.324293835958 -25.6075995445251 -0.0749791701634725
-	pnt -101.344139925639 -25.605398050944 -0.0749791701634725
-	pnt -101.425008710225 -25.6072965621948 -0.0999791701634725
-	pnt -101.451819133759 -25.6066709836324 -0.0999791701634725
-	pnt -101.452099355062 -25.6510289827983 -0.0999791701634725
-	pnt -101.373954900106 -25.6485611279806 -0.0999791701634725
-	pnt -101.273896408081 -25.6505509376526 -0.0999791701634725
-	pnt -101.19471022288 -25.641571966807 -0.124979170163473
-	pnt -101.200101979574 -25.6064428965251 -0.124979170163473
-	pnt -101.245786730448 -25.6015435536702 -0.124979170163473
-	pnt -101.237537066142 -25.521479956309 -0.124979170163473
-	pnt -101.240463066101 -25.4391427675883 -0.124979170163473
-	pnt -101.194936815898 -25.435219891866 -0.124979170163473
-	pnt -101.202247683207 -25.3965925852458 -0.124979170163473
-	pnt -101.245996411641 -25.3953880469004 -0.124979170163473
-	pnt -101.246689097087 -25.3458220799764 -0.124979170163473
-	pnt -101.241439946493 -25.2734200398127 -0.124979170163473
-	pnt -101.192097091675 -25.290101035436 -0.124979170163473
-	pnt -101.195413335164 -25.3621457417806 -0.124979170163473
-	pnt -101.154240608215 -25.3642889499664 -0.124979170163473
-	pnt -101.160390472412 -25.4417488416036 -0.124979170163473
-	pnt -101.109596443176 -25.4532558123271 -0.124979170163473
-	pnt -101.123967806498 -25.4882022539775 -0.124979170163473
-	pnt -101.19807993571 -25.4816967964172 -0.0999791701634725
-	pnt -101.243397712708 -25.4851186434428 -0.0999791701634725
-	pnt -101.249863179525 -25.5245241483053 -0.0999791701634725
-	pnt -101.285174560547 -25.5234564463298 -0.0999791701634725
-	pnt -101.287897872925 -25.5664038022359 -0.0999791701634725
-	pnt -101.276636123657 -25.610422706604 -0.113400411605835
-	pnt -101.282387479146 -25.7320687611898 -0.174979162216187
-	pnt -101.36338189443 -25.7327644348145 -0.174979162216187
-	pnt -101.366358629862 -25.6486576398214 -0.174979162216187
-	pnt -101.321306419373 -25.6465113639832 -0.174979162216187
-	pnt -101.315517234802 -25.6044588724772 -0.174979162216187
-	pnt -101.279119046529 -25.6023348808289 -0.174979162216187
-	pnt -101.281671651204 -25.5568747838338 -0.174979162216187
-	pnt -101.28375377655 -25.5207908948263 -0.174979162216187
-	pnt -101.408327992757 -25.5228398640951 -0.174979162216187
-	pnt -101.411016464233 -25.5694999694824 -0.174979162216187
-	pnt -101.456126817067 -25.5569224993388 -0.174979162216187
-	pnt -101.451692708333 -25.4838370323181 -0.174979162216187
-	pnt -101.364333534241 -25.4811451276143 -0.174979162216187
-	pnt -101.365999348958 -25.3672463099162 -0.174979162216187
-	pnt -101.368728574117 -25.3342525164286 -0.176595274607341
-	pnt -101.366309547424 -25.2725566387177 -0.199979162216187
-	pnt -101.354290962219 -25.2719502925873 -0.199979162216187
-	pnt -101.335138829549 -25.2709840536118 -0.199979162216187
-	pnt -101.322018241882 -25.276447836558 -0.199979162216187
-	pnt -101.319871266683 -25.2944165706635 -0.199979162216187
-	pnt -101.325545628866 -25.3480503241221 -0.224979162216187
-	pnt -101.326274490356 -25.3549211184184 -0.224979162216187
-	pnt -101.326989301046 -25.3616593043009 -0.224979162216187
-	pnt -101.34442469279 -25.3636072635651 -0.224979162216187
-	pnt -101.366674868266 -25.3558461825053 -0.224979162216187
-	pnt -101.36663386027 -25.3465450286865 -0.224979162216187
-	pnt -101.366320737203 -25.329091835022 -0.22969168027242
-	pnt -101.365862147013 -25.3035271644592 -0.245030482610067
-	pnt -101.365342839559 -25.2745919307073 -0.249979162216187
-	pnt -101.344388834635 -25.2736475229263 -0.249979162216187
-	pnt -101.324424107869 -25.2741083780924 -0.249979162216187
-	pnt -101.326514561971 -25.2882513682048 -0.249979162216187
-	pnt -101.329510116577 -25.3236426035563 -0.249979162216187
-	pnt -101.327947425842 -25.3576278686523 -0.249979162216187
-	pnt -101.325359090169 -25.3837750752767 -0.249979162216187
-	pnt -101.33003692627 -25.3982672214508 -0.249979162216187
-	pnt -101.344259262085 -25.3996247450511 -0.249979162216187
-	pnt -101.365673128764 -25.4010736465454 -0.249979162216187
-	pnt -101.372522036235 -25.4001612504323 -0.249979162216187
+	pnt -101.492804813385 -25.4888465563456 2.08333134651184E-05
+	chk -101.492804813385 -25.4888465563456 2.08333134651184E-05
+	pnt -101.491241645813 -25.4695303916931 2.08333134651184E-05
+	chk -101.491241645813 -25.4695303916931 2.08333134651184E-05
+	pnt -101.49067290624 -25.373382806778 -0.0499791701634725
+	pnt -101.49650481542 -25.3576369762421 -0.0499791701634725
+	pnt -101.51535247167 -25.3546236197154 -0.0499791701634725
+	pnt -101.534038384755 -25.3618429978689 -0.0499791701634725
+	pnt -101.536899979909 -25.3765296777089 -0.0499791701634725
+	pnt -101.533573246002 -25.482842985789 -0.0499791701634725
+	chk -101.533573246002 -25.482842985789 -0.0499791701634725
+	pnt -101.53330895106 -25.5577203432719 -0.0499791701634725
+	chk -101.53330895106 -25.5577203432719 -0.0499791701634725
+	pnt -101.532615375519 -25.5786313692729 -0.0499791701634725
+	chk -101.532615375519 -25.5786313692729 -0.0499791701634725
+	pnt -101.479245503743 -25.5860232035319 -0.0499791701634725
+	pnt -101.441845703125 -25.5952043533325 -0.0499791701634725
+	pnt -101.413145637512 -25.6099793434143 -0.0499791701634725
+	pnt -101.385389391581 -25.6374240557353 -0.0499791701634725
+	pnt -101.357282829285 -25.6654400507609 -0.0499791701634725
+	pnt -101.316672643026 -25.6668638547262 -0.0499791701634725
+	pnt -101.289450200399 -25.6631287574768 -0.0499791701634725
+	pnt -101.265680058797 -25.6306582768758 -0.0499791701634725
+	pnt -101.230832608541 -25.59322570165 -0.0499791701634725
+	pnt -101.206223424276 -25.566591389974 -0.0499791701634725
+	chk -101.206223424276 -25.566591389974 -0.0499791701634725
+	pnt -101.185861333211 -25.5661434173584 -0.0499791701634725
+	chk -101.185861333211 -25.5661434173584 -0.0499791701634725
+	pnt -101.162166786194 -25.5656221389771 -0.0499791701634725
+	pnt -101.152792167664 -25.5769165356954 -0.0499791701634725
+	pnt -101.157589975993 -25.6393792152405 -0.0749791701634725
+	pnt -101.163696416219 -25.6497486114502 -0.0749791701634725
+	pnt -101.199076016744 -25.65010693868 -0.0749791701634725
+	pnt -101.273706881205 -25.6523794492086 -0.0749791701634725
+	pnt -101.283899752299 -25.6459827105204 -0.0749791701634725
+	pnt -101.287550290426 -25.6345995585124 -0.0749791701634725
+	pnt -101.284116617839 -25.5704103151957 -0.0749791701634725
+	pnt -101.270294761658 -25.5636945088704 -0.0749791701634725
+	pnt -101.242960039775 -25.5656942685445 -0.0749791701634725
+	pnt -101.24022064209 -25.5257414182027 -0.0749791701634725
+	chk -101.24022064209 -25.5257414182027 -0.0749791701634725
+	pnt -101.241027069092 -25.4847237269084 -0.0749791701634725
+	chk -101.241027069092 -25.4847237269084 -0.0749791701634725
+	pnt -101.273217900594 -25.4834582010905 -0.0749791701634725
+	pnt -101.285927136739 -25.475851949056 -0.0749791701634725
+	pnt -101.283230272929 -25.4058817863464 -0.0749791701634725
+	pnt -101.273527844747 -25.394658501943 -0.0749791701634725
+	pnt -101.244281705221 -25.399282169342 -0.0749791701634725
+	pnt -101.239871342977 -25.3880856672923 -0.0749791701634725
+	pnt -101.240578651428 -25.3595273653666 -0.0749791701634725
+	pnt -101.253493626912 -25.3524081865946 -0.0749791701634725
+	pnt -101.316983413696 -25.357589785258 -0.0749791701634725
+	chk -101.316783459981 -25.3575889905294 -0.0749791701634725
+	pnt -101.336039288839 -25.3576652685801 -0.0749791701634725
+	chk -101.336039288839 -25.3576652685801 -0.0749791701634725
+	pnt -101.340261522929 -25.3239162921906 -0.0749791701634725
+	pnt -101.311606407166 -25.3109733104706 -0.0749791701634725
+	pnt -101.299537913005 -25.3118958473206 -0.0749791701634725
+	pnt -101.288239479065 -25.3173396110535 -0.0749791701634725
+	chk -101.288239479065 -25.3173396110535 -0.0749791701634725
+	pnt -101.27344977061 -25.318145608902 -0.0749791701634725
+	chk -101.27344977061 -25.318145608902 -0.0749791701634725
+	pnt -101.210811869303 -25.3152901808421 -0.0999791701634725
+	pnt -101.198219362895 -25.323088089625 -0.0999791701634725
+	pnt -101.194920349121 -25.3380970319112 -0.0999791701634725
+	pnt -101.196550496419 -25.3957936127981 -0.0999791701634725
+	pnt -101.206616210937 -25.4027143319448 -0.0999791701634725
+	pnt -101.227536900838 -25.4024253209432 -0.0999791701634725
+	pnt -101.242785580953 -25.3938192367554 -0.0999791701634725
+	pnt -101.243329938253 -25.361471303304 -0.0999791701634725
+	pnt -101.255768203735 -25.3535186608632 -0.0999791701634725
+	pnt -101.356982549032 -25.3617298444112 -0.0999791701634725
+	pnt -101.370972951253 -25.3502610047658 -0.0999791701634725
+	pnt -101.372007115682 -25.3376641273499 -0.0999791701634725
+	pnt -101.367027664185 -25.2749089956284 -0.0999791701634725
+	chk -101.367027664185 -25.2749089956284 -0.0999791701634725
+	pnt -101.409769121806 -25.2764733711878 -0.0999791701634725
+	chk -101.409769121806 -25.2764733711878 -0.0999791701634725
+	pnt -101.41115099589 -25.3870133241018 -0.0999791701634725
+	pnt -101.399906285604 -25.4038992087046 -0.0999791701634725
+	pnt -101.342793019613 -25.4044335365295 -0.0999791701634725
+	pnt -101.287871805827 -25.4010333855947 -0.0999791701634725
+	pnt -101.279379717509 -25.4131686846415 -0.0999791701634725
+	pnt -101.281472269694 -25.4365077972412 -0.0999791701634725
+	pnt -101.290377362569 -25.445584710439 -0.0999791701634725
+	pnt -101.311761283875 -25.4430991172791 -0.0999791701634725
+	pnt -101.40547765096 -25.4428776741028 -0.0999791701634725
+	pnt -101.412162780762 -25.456094900767 -0.0999791701634725
+	pnt -101.409059715271 -25.4795110066732 -0.0999791701634725
+	pnt -101.395137087504 -25.4861219724019 -0.0999791701634725
+	pnt -101.331293106079 -25.4822265307109 -0.0999791701634725
+	pnt -101.319727770487 -25.491638247172 -0.0999791701634725
+	pnt -101.326219113668 -25.5217531204224 -0.0999791701634725
+	pnt -101.323562685649 -25.5652974128723 -0.0999791701634725
+	pnt -101.309095128377 -25.568471844991 -0.0999791701634725
+	chk -101.309095128377 -25.568471844991 -0.0999791701634725
+	pnt -101.284371566772 -25.566428343455 -0.0999791701634725
+	chk -101.284371566772 -25.566428343455 -0.0999791701634725
+	pnt -101.28384736379 -25.5840098381042 -0.0999791701634725
+	pnt -101.280820655823 -25.6855354944865 -0.15846807161967
+	pnt -101.279637718201 -25.7252109527588 -0.174979162216187
+	pnt -101.291186141968 -25.7384519577026 -0.174979162216187
+	pnt -101.312718772888 -25.7385230382284 -0.174979162216187
+	pnt -101.35894540151 -25.7339128494263 -0.174979162216187
+	pnt -101.371114603678 -25.7213977813721 -0.174979162216187
+	pnt -101.367631848653 -25.6759320894877 -0.174979162216187
+	pnt -101.365386009216 -25.647319984436 -0.174979162216187
+	pnt -101.366135088603 -25.6123380343119 -0.174979162216187
+	pnt -101.350380261739 -25.6038900693258 -0.174979162216187
+	pnt -101.321155929565 -25.6074830055237 -0.174979162216187
+	chk -101.321155929565 -25.6074830055237 -0.174979162216187
+	pnt -101.288207817078 -25.6101857185364 -0.174979162216187
+	chk -101.288128407796 -25.6101922353109 -0.174979162216187
+	pnt -101.282925542196 -25.6056458791097 -0.174979162216187
+	pnt -101.282539049784 -25.5675479571025 -0.174979162216187
+	chk -101.282539049784 -25.5675479571025 -0.174979162216187
+	pnt -101.283229382833 -25.5246777534485 -0.174979162216187
+	chk -101.283229382833 -25.5246777534485 -0.174979162216187
+	pnt -101.351016108195 -25.526543712616 -0.174979162216187
+	pnt -101.407296180725 -25.5280929247538 -0.174979162216187
+	pnt -101.415162277222 -25.5411382675171 -0.174979162216187
+	pnt -101.408830897013 -25.5632138888041 -0.174979162216187
+	pnt -101.421066474915 -25.5715610186259 -0.174979162216187
+	pnt -101.44132903417 -25.5695010185242 -0.174979162216187
+	pnt -101.452244758606 -25.5557082811991 -0.174979162216187
+	pnt -101.452591959635 -25.4918573061625 -0.174979162216187
+	pnt -101.441097068787 -25.4790262540181 -0.174979162216187
+	pnt -101.407940928141 -25.4803012212118 -0.174979162216187
+	pnt -101.368306922913 -25.4826712926229 -0.174979162216187
+	pnt -101.360785675049 -25.4692309697469 -0.174979162216187
+	pnt -101.366718610128 -25.4384846051534 -0.174979162216187
+	pnt -101.366453679403 -25.3976884682973 -0.174979162216187
+	chk -101.366453679403 -25.3976884682973 -0.174979162216187
+	pnt -101.366101264954 -25.3433880488078 -0.174979162216187
+	chk -101.366101264954 -25.3433880488078 -0.174979162216187
+	pnt -101.365987141927 -25.3257989406586 -0.181667407353719
+	chk -101.365987141927 -25.3257989406586 -0.181667407353719
+	pnt -101.365693537394 -25.2806087255478 -0.199979162216187
+	pnt -101.354251670837 -25.2706490914027 -0.199979162216187
+	pnt -101.333456865946 -25.2729601939519 -0.199979162216187
+	pnt -101.322960662842 -25.2840010007222 -0.199979162216187
+	pnt -101.322981262207 -25.3452302614848 -0.224979162216187
+	pnt -101.33118019104 -25.3583591302236 -0.224979162216187
+	pnt -101.342227109273 -25.3631319204966 -0.224979162216187
+	pnt -101.359361712138 -25.3597979863485 -0.224979162216187
+	pnt -101.368123435974 -25.3478978157043 -0.224979162216187
+	pnt -101.36667544047 -25.3352918306986 -0.225971682866414
+	pnt -101.368187522888 -25.2819769303004 -0.249979162216187
+	pnt -101.360225995382 -25.272815211614 -0.249979162216187
+	pnt -101.343306223551 -25.2685225804647 -0.249979162216187
+	pnt -101.329402987162 -25.2739360968272 -0.249979162216187
+	pnt -101.320925394694 -25.2824588855108 -0.249979162216187
+	pnt -101.321156692505 -25.3226151307424 -0.249979162216187
+	pnt -101.328250376383 -25.3997259616852 -0.249979162216187
+	pnt -101.334346453349 -25.403080034256 -0.249979162216187
+	pnt -101.361257616679 -25.4007822672526 -0.249979162216187
+	chk -101.361257616679 -25.4007822672526 -0.249979162216187
+	pnt -101.369470087687 -25.4001348495483 -0.249979162216187
+	pau -101.369470087687 -25.4001348495483 -0.249979162216187 1000
 ~~ }
 NAV: nav7 once ~~ {
 	ptl -101.456829166412 -25.5163374900818 2.08333134651184E-05 -101.390404192607 -25.4001091639201 -0.250262498855591 14 {Harraag's Lair}
@@ -2143,13 +2172,15 @@ NAV: nav17 once ~~ {
 	pnt -80.2584000110626 -60.0949217796326 0.282507801055908
 	pnt -80.2294386943181 -60.1727090040843 0.291687520345052
 	pnt -80.2190883954366 -60.1862655480703 0.291687520345052
-	pnt -80.2098794619242 -60.1925558249156 0.292204856872559
-	pnt -80.1976493199666 -60.200910949707 0.285697809855143
-	pnt -80.1809419949849 -60.2123246828715 0.270020834604899
-	pnt -80.1708953857422 -60.2191881100337 0.270020834604899
-	pnt -80.1632525444031 -60.2244093974431 0.270020834604899
-	ptl -81.9659525553385 -60.1500208218892 2.25685245823115E-05 -80.1445425033569 -60.2372574965159 0.269737511873245 37 {Harraag's Hideout}
-	pau -20.2039451440175 69.5613545735677 0.307039133707682 5000
+	chk -80.2179403463999 -60.1875818093618 0.291687520345052
+	pnt -80.2121817747752 -60.191943025589 0.292205079396566
+	pnt -80.2082275867462 -60.1941515604655 0.292204634348551
+	chk -80.2082275867462 -60.1941515604655 0.292204634348551
+	pnt -80.1989347457886 -60.2010929266612 0.28645232518514
+	pnt -80.178481054306 -60.2163396835327 0.270020834604899
+	pnt -80.1598420302073 -60.2302419265111 0.270020834604899
+	pau -80.1598420302073 -60.2302419265111 0.270020834604899 1000
+	ptl -80.1598420302073 -60.2302419265111 0.270020834604899 -80.1445425033569 -60.2372574965159 0.269737511873245 37 {Harraag's Hideout}
 ~~ }
 NAV: nav18 once ~~ {
 	pau 96.5192172686259 -77.3924765904744 -0.406645806630452 9000

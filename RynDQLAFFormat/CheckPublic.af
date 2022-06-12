@@ -492,6 +492,7 @@ STATE: {Fellow} ~~ {
 		DO:	Chat {/ub fellow create x}
 	IF:	All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
+			Expr {getfellowshipstatus[]}
 			Any
 				Expr {getpvar[FellowCount]>=2&&getobjectinternaltype[wobjectfindnearestbynameandobjectclass[24,getpvar[FellowNameTwo]]]==7}
 				Expr {getpvar[FellowCount]>=3&&getobjectinternaltype[wobjectfindnearestbynameandobjectclass[24,getpvar[FellowNameThree]]]==7}
@@ -592,6 +593,7 @@ STATE: {GoNow} ~~ {
 				DoExpr {cleargvar[getpvar[Profile]+Finished]}
 				DoExpr {cleargvar[getpvar[CheckSync]ListSet]}
 				DoExpr {clearvar[GoNowStuck]}
+				DoExpr {clearvar[GoNowStuck+getworldname[]]}
 				DoExpr {clearvar[check]}
 				DoExpr {cleargvar[GoNow+getworldname[]]}
 				DoExpr {ifthen[getvar[Combat]==On,`vtsetsetting[EnableCombat,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[0]]`]}
@@ -635,6 +637,7 @@ STATE: {Stuck} ~~ {
 				DoExpr {listremove[getgvar[GoNowClear+getworldname[]],getcharstringprop[1]]}
 				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
 				DoExpr {clearvar[GoNowStuck]}
+				DoExpr {clearvar[GoNowStuck+getworldname[]]}
 				DoExpr {clearvar[check]}
 				DoExpr {cleargvar[GoNow+getworldname[]]}
 				DoExpr {clearvar[Stuck]}

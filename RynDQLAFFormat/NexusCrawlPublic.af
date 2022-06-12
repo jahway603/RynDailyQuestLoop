@@ -95,7 +95,7 @@ STATE: {CheckSummonTwo} ~~ {
 				DoExpr {setpvar[StateName,ToNexus]}
 				DoExpr {setpvar[CheckSync,ToNexus]}
 				DoExpr {clearvar[CombatStuck]}
-				Chat {/vt meta load CheckPublic} ~~ ToNexus
+				Chat {/vt meta load CheckPublic}
 	IF:	All
 			Any
 				Expr {getobjectinternaltype[wobjectfindnearestbyobjectclass[14]]==1}
@@ -217,7 +217,7 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[StateName,OldNexus]}
 				DoExpr {setpvar[CheckSync,OldNexus]}
-				Chat {/vt meta load CheckPublic} ~~ OldNexus
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {Default} ~~ {
 	IF:	All
@@ -294,6 +294,8 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[StateName]==1}
 				Expr {testpvar[Profile]==1}
 				Expr {testpvar[Stuck]==1}
+				Expr {testpvar[NexusAethTurnIn]==1}
+				Expr {testpvar[NexusTurnIn]==1}
 				Expr {testpvar[Step]==1}
 				Expr {testpvar[Meta\ +getpvar[Profile]]==1}
 				Expr {testpvar[QuestCompletedSkip]==1}
@@ -310,11 +312,15 @@ STATE: {Finished} ~~ {
 				Expr {testgvar[Checking]==1}
 				Expr {testgvar[GoNowTwo]==1}
 				Expr {testgvar[NexusCrawl]==1}
+				Expr {testgvar[NexusAethTurnIn]==1}
+				Expr {testgvar[NexusTurnIn]==1}
 				Expr {testgvar[getcharstringprop[1]+getworldname[]]==1}
 		DO:	DoAll
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[Stuck]}
+				DoExpr {clearpvar[NexusAethTurnIn]}
+				DoExpr {clearpvar[NexusTurnIn]}
 				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[Step]}
 				DoExpr {clearpvar[Meta\ +getpvar[Profile]]}
@@ -332,6 +338,8 @@ STATE: {Finished} ~~ {
 				DoExpr {cleargvar[Checking]}
 				DoExpr {cleargvar[GoNowTwo]}
 				DoExpr {cleargvar[NexusCrawl]}
+				DoExpr {cleargvar[NexusAethTurnIn]}
+				DoExpr {cleargvar[NexusTurnIn]}
 				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
 				SetState {Finished}
 	IF:	Always
@@ -340,6 +348,8 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[StateName]==0}
 			Expr {testpvar[Profile]==0}
 			Expr {testpvar[Stuck]==0}
+			Expr {testpvar[NexusAethTurnIn]==0}
+			Expr {testpvar[NexusTurnIn]==0}
 			Expr {testpvar[Step]==0}
 			Expr {testpvar[Meta\ +getpvar[Profile]]==0}
 			Expr {testpvar[QuestCompletedSkip]==0}
@@ -356,6 +366,8 @@ STATE: {Finished} ~~ {
 			Expr {testgvar[Checking]==0}
 			Expr {testgvar[GoNowTwo]==0}
 			Expr {testgvar[NexusCrawl]==0}
+			Expr {testgvar[NexusAethTurnIn]==0}
+			Expr {testgvar[NexusTurnIn]==0}
 			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
 		DO:	Chat {/vt meta load QuestCheckPublic}
 ~~ }
@@ -432,7 +444,7 @@ STATE: {LeverDoor} ~~ {
 				DoExpr {clearvar[Lever]}
 				DoExpr {setpvar[StateName,NexusTwo]}
 				DoExpr {setpvar[CheckSync,NexusTwo]}
-				Chat {/vt meta load CheckPublic} ~~ NexusTwo
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {Loot} ~~ {
 	IF:	All
@@ -661,10 +673,10 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootStuckDelay]}
 				DoExpr {setgvar[Looting,0]}
 				SetState {LootStuckDelay}
-	IF: All
+	IF:	All
 			Expr {listcount[getgvar[FailDelayCounter]]==listcount[getgvar[LootingCounter]]}
 			SecsInStateGE 30
-		DO: DoAll
+		DO:	DoAll
 				DoExpr {setgvar[Looting,0]}
 				SetState {Loot}
 ~~ }
@@ -764,7 +776,7 @@ STATE: {Mp} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Summon]}
 				DoExpr {setpvar[CheckSync,Summon]}
-				Chat {/vt meta load CheckPublic} ~~ Summon
+				Chat {/vt meta load CheckPublic}
 	IF:	All
 			NavEmpty
 			Expr {getcharstringprop[1]!=getpvar[NexusCrawlSummon]}
@@ -777,7 +789,7 @@ STATE: {Mp} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[StateName,SummonW]}
 				DoExpr {setpvar[CheckSync,Summon]}
-				Chat {/vt meta load CheckPublic} ~~ Summon
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {Ned} ~~ {
 	IF:	All
@@ -793,12 +805,6 @@ STATE: {Ned} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	Always
-		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbynameandobjectclass[37,Ned the Clever]]}
-	IF:	All
-			SecsInStateGE 3
-			Expr {getpvar[Finished]==0}
-		DO:	SetState {Ned}
 	IF:	All
 			Expr {getpvar[RouteToggleNexusCrawl]==`SummonPortal`}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Aetheric Resonator]]==7}
@@ -811,18 +817,47 @@ STATE: {Ned} ~~ {
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Aetheric Resonator]]==7}
 			Expr {getpvar[Step]==1}
 		DO:	SetState {ToTN}
+	IF:	Expr {getpvar[NexusTurnIn]==0}
+		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbynameandobjectclass[37,Ned the Clever]]}
+	IF:	All
+			SecsInStateGE 3
+			Expr {getpvar[Finished]==0}
+		DO:	SetState {Ned}
 	IF:	Any
 			ChatMatch {^Ned the Clever tells you, "Please return to me later I may need your assistance."}
 			ChatMatch {^Ned the Clever tells you, "Congratulations! I've already been able to see, through my instruments, that you have successfully infiltrated the Apostate Nexus and placed my resonator in their deposit of purified Aetherium. This is exactly what I needed to keep track of the Apostates' activities for the Arcanum. The realm is grateful. Allow me to reward you..."}
-		DO:	DoExpr {setpvar[Finished,1]}
+		DO:	DoExpr {setpvar[NexusTurnIn,1]}
 	IF:	All
-			Expr {getpvar[Finished]==1}
-			Expr {getobjectinternaltype[wobjectfindininventorybyname[Apostate Master's Broken Mask]]==1}
-			SecsInStateGE 6
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[NexusTurnIn]==1}
+			Not Expr {testgvar[NexusTurnIn]}
+		DO:	DoAll
+				DoExpr {setgvar[NexusTurnIn,listcreate[]]}
+				SetState {Ned}
+	IF:	All
+			Expr {getpvar[NexusTurnIn]==1}
+			Expr {testgvar[NexusTurnIn]}
+			Not Expr {listcontains[getgvar[NexusTurnIn],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[NexusTurnIn],getcharstringprop[1]]}
+				SetState {Ned}
+	IF:	All
+			Expr {getpvar[NexusTurnIn]==1}
+			Expr {testgvar[NexusTurnIn]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[NexusTurnIn],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[NexusTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[NexusTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[NexusTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[NexusTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[NexusTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[NexusTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[NexusTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[NexusTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[NexusTurnIn],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Finished]}
 				DoExpr {setpvar[CheckSync,Finished]}
-				Chat {/vt meta load CheckPublic} ~~ Finished
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {Nexus} ~~ {
 	IF:	All
@@ -883,11 +918,11 @@ STATE: {Nexus} ~~ {
 		DO:	EmbedNav nav7 {NexusDungeonPt1.nav}
 	IF:	All
 			Expr {getpvar[FellowCount]<2}
-			CellE 7F0201C4
+			CellE 7F0201B7
 		DO:	SetOpt {EnableCombat} {False}
 	IF:	All
 			Expr {getpvar[FellowCount]>=2}
-			CellE 7F0201C4
+			CellE 7F0201B7
 		DO:	SetOpt {EnableCombat} {True}
 	IF:	All
 			NavEmpty
@@ -899,7 +934,7 @@ STATE: {Nexus} ~~ {
 				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,LeverDoor]}
 				DoExpr {setpvar[CheckSync,LeverDoor]}
-				Chat {/vt meta load CheckPublic} ~~ LeverDoor
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {NexusDoor} ~~ {
 	IF:	All
@@ -982,7 +1017,7 @@ STATE: {NexusDoor} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,NexusThree]}
 				DoExpr {setpvar[CheckSync,NexusThree]}
-				Chat {/vt meta load CheckPublic} ~~NexusThreeLeader
+				Chat {/vt meta load CheckPublic}
 	IF:	All
 			Expr {getpvar[Leader]==0}
 			NavEmpty
@@ -993,7 +1028,7 @@ STATE: {NexusDoor} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,NexusThree]}
 				DoExpr {setpvar[CheckSync,NexusThree]}
-				Chat {/vt meta load CheckPublic} ~~ NexusThreeMinions
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {NexusThree} ~~ {
 	IF:	All
@@ -1049,16 +1084,44 @@ STATE: {NexusThree} ~~ {
 			CellE 7F02019B
 			CellE 7F02019C
 		DO:	EmbedNav nav9 {[none]}
-	IF:	Any
+	IF: Any
 			ChatMatch {^You give Apostate Aetherium Deposit Aetheric Resonator.}
 			ChatMatch {^You carefully place the Aetheric Resonator on the deposit, and there is a brief, harmonic chime, as if to let you know that your task is done.}
 			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Aetheric Resonator`]]==1}
+		DO:	DoExpr {setpvar[NexusAethTurnIn,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[NexusAethTurnIn]==1}
+			Not Expr {testgvar[NexusAethTurnIn]}
+		DO:	DoAll
+				DoExpr {setgvar[NexusAethTurnIn,listcreate[]]}
+				SetState {NexusThree}
+	IF:	All
+			Expr {getpvar[NexusAethTurnIn]==1}
+			Expr {testgvar[NexusAethTurnIn]}
+			Not Expr {listcontains[getgvar[NexusAethTurnIn],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[NexusAethTurnIn],getcharstringprop[1]]}
+				SetState {NexusThree}
+	IF:	All
+			Expr {getpvar[NexusAethTurnIn]==1}
+			Expr {testgvar[NexusAethTurnIn]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[NexusAethTurnIn],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[NexusAethTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[NexusAethTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[NexusAethTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[NexusAethTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[NexusAethTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[NexusAethTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[NexusAethTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[NexusAethTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[NexusAethTurnIn],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,ToTN]}
 				DoExpr {setpvar[CheckSync,ToTN]}
-				Chat {/vt meta load CheckPublic} ~~ ToTN
+				Chat {/vt meta load CheckPublic}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbyobjectclass[37]]==7}
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbyobjectclass[37]],getplayercoordinates[]]<5}
@@ -1196,7 +1259,7 @@ STATE: {NexusTwo} ~~ {
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[StateName,NexusDoor]}
 				DoExpr {setpvar[CheckSync,NexusDoor]}
-				Chat {/vt meta load CheckPublic} ~~ NexusDoorLeader
+				Chat {/vt meta load CheckPublic}
 	IF:	All
 			NavEmpty
 			Expr {getpvar[Leader]==0}
@@ -1207,7 +1270,7 @@ STATE: {NexusTwo} ~~ {
 				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,NexusDoor]}
 				DoExpr {setpvar[CheckSync,NexusDoor]}
-				Chat {/vt meta load CheckPublic} ~~ NexusDoorMinions
+				Chat {/vt meta load CheckPublic}
 	IF:	All
 			NoMobsInDist 15
 			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
@@ -1223,7 +1286,7 @@ STATE: {NexusTwo} ~~ {
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[StateName,NexusDoor]}
 				DoExpr {setpvar[CheckSync,NexusDoorAfter]}
-				Chat {/vt meta load CheckPublic} ~~ NexusDoorAfter
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {OldNexus} ~~ {
 	IF:	All
@@ -1307,7 +1370,7 @@ STATE: {OldNexus} ~~ {
 				DoExpr {actiontryuseitem[wobjectfindnearestbynameandobjectclass[37,Apostate Nexus Gateway]]}
 				SetState {OldNexus}
 	IF:	BlockE 7F020000
-		DO:	EmbedNav nav15 {[Delay]}
+		DO:	EmbedNav nav15 {[none]}
 	IF:	All
 			NavEmpty
 			BlockE 7F020000
@@ -1315,7 +1378,7 @@ STATE: {OldNexus} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,Nexus]}
 				DoExpr {setpvar[CheckSync,Nexus]}
-				Chat {/vt meta load CheckPublic} ~~ Nexus
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {RunToAB} ~~ {
 	IF:	All
@@ -1423,15 +1486,15 @@ STATE: {SummonW} ~~ {
 			SecsInStateGE 1
 		DO:	SetState {CheckSummon}
 ~~ }
-STATE: {SyncBuff} ~~{
-	IF: Not Expr {testpvar[BuffingStartAll]}
-		DO: DoAll
+STATE: {SyncBuff} ~~ {
+	IF:	Not Expr {testpvar[BuffingStartAll]}
+		DO:	DoAll
 				DoExpr {setpvar[BuffingStartAll,1]}
 				Chat {/vt forcebuff}
-	IF: All
+	IF:	All
 			NeedToBuff
 			Expr {vtgetsetting[EnableBuffing]!=True}
-		DO: SetOpt {EnableBuffing} {True}
+		DO:	SetOpt {EnableBuffing} {True}
 	IF:	All
 			Not Expr {testgvar[SyncBuffComplete]}
 			Not NeedToBuff
@@ -1457,12 +1520,12 @@ STATE: {SyncBuff} ~~{
 				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]}
 				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]}
 				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}		
-		DO: DoAll
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}
+		DO:	DoAll
 				DoExpr {cleargvar[Buffing]}
 				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
-~~}
+~~ }
 STATE: {ToLethe} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
@@ -1569,7 +1632,7 @@ STATE: {ToNexus} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[StateName,OldNexus]}
 				DoExpr {setpvar[CheckSync,OldNexus]}
-				Chat {/vt meta load CheckPublic} ~~ OldNexus
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {ToTN} ~~ {
 	IF:	All
@@ -1714,9 +1777,11 @@ NAV: nav3 once ~~ {
 	pnt 0.0469471295674642 -101.225173441569 0.0250208338101705
 ~~ }
 NAV: nav4 once ~~ {
-	pnt 0.0469471295674642 -101.225173441569 0.0250208338101705
-	pnt 0.0845999717712402 -101.224943478902 0.0250208338101705
-	pnt 0.114168771107992 -101.224113210042 0.0250208338101705
+	pnt 0.0377495765686035 -101.225161234538 0.0250208338101705
+	chk 0.0377495765686035 -101.225161234538 0.0250208338101705
+	pnt 0.0680056571960449 -101.226072247823 0.0250208338101705
+	chk 0.0680056571960449 -101.226072247823 0.0250208338101705
+	pnt 0.11678139368693 -101.225492986043 0.0250208338101705
 ~~ }
 NAV: nav5 once ~~ {
 ~~ }
@@ -1868,9 +1933,11 @@ NAV: nav7 once ~~ {
 	chk 0.0393944104512533 -101.226410611471 0.0250208338101705
 ~~ }
 NAV: nav8 once ~~ {
-	pnt -0.308893616994222 -100.741853618622 0.0250208338101705
-	pnt -0.309171144167582 -100.718871847788 0.0250208338101705
-	pnt -0.311429552237193 -100.699506314596 0.0250208338101705
+	pnt -0.307842965920766 -100.752067915599 0.0250208338101705
+	chk -0.307842965920766 -100.752067915599 0.0250208338101705
+	pnt -0.308235796292623 -100.728805478414 0.0250208338101705
+	chk -0.308235796292623 -100.728805478414 0.0250208338101705
+	pnt -0.308994829654694 -100.69581193924 0.0250208338101705
 ~~ }
 NAV: nav9 once ~~ {
 	pnt -0.312277698516846 -100.690425046285 0.0250208338101705
@@ -1960,39 +2027,80 @@ NAV: nav12 once ~~ {
 	pnt -0.308623667558034 -100.744230810801 0.0250208338101705
 ~~ }
 NAV: nav13 once ~~ {
-	pnt -100.982103602091 -90.1914560317993 0.100020829836528
-	pnt -100.983521095912 -90.1776908874512 0.100020829836528
-	pnt -100.985294342041 -90.1483914693197 0.100020829836528
-	pnt -100.983533970515 -90.1137377421061 0.100020829836528
-	pnt -100.982701412837 -90.0866853713989 0.100020829836528
-	pau -100.984580930074 -89.7532221476237 0.100020829836528 2000
-	jmp -100.984580930074 -89.7532221476237 0.100020829836528 0 {False} 500.00003
-	pau -100.984580930074 -89.7532221476237 0.100020829836528 3000
-	pnt -100.985408099492 -90.0407128016154 0.100020829836528
-	pnt -100.985408099492 -90.0407128016154 0.100020829836528
-	pnt -100.984048287074 -90.0171924591064 0.100020829836528
-	pnt -100.984124914805 -90.0103654225667 0.100020829836528
-	pnt -100.984262816111 -89.9957748413086 0.100020829836528
-	pnt -100.983794180552 -89.9673027038574 0.100020829836528
-	pnt -100.981688435872 -89.9404488245646 0.100020829836528
-	pnt -100.985497919718 -89.9411285400391 0.100020829836528
-	pnt -101.003825378418 -89.9415915171305 0.100020829836528
-	pnt -101.027471383413 -89.9426844914754 0.100020829836528
-	pnt -101.024441194534 -89.901003964742 0.100020829836528
-	pnt -100.98133336703 -89.9018674850464 0.100020829836528
-	pnt -100.981275002162 -89.8567478815715 0.100020829836528
-	pnt -101.025073639552 -89.8573024749756 0.100020829836528
-	pnt -101.02566696008 -89.8175717671712 0.100020829836528
-	pnt -100.981567049026 -89.8182348251343 0.100020829836528
-	pnt -100.982705354691 -89.7644828796387 0.100020829836528
-	pnt -100.983434438705 -89.7532080332438 0.100020829836528
+	pnt -100.982858959834 -90.1668080647787 0.100020829836528
+	pnt -100.982842636108 -90.1358447392782 0.100020829836528
+	chk -100.982842636108 -90.1358447392782 0.100020829836528
+	pnt -100.982826312383 -90.1186899185181 0.100020829836528
+	chk -100.982826312383 -90.1186899185181 0.100020829836528
+	pnt -100.983247502645 -90.0902672449748 0.100020829836528
+	chk -100.983247502645 -90.0902672449748 0.100020829836528
+	pnt -100.98226869901 -90.0865118026733 0.100020829836528
+	pau -100.982616869609 -89.7532651265462 0.100020829836528 1000
+	jmp -100.982616869609 -89.7532651265462 0.100020829836528 0 {False} 500.00003
+	pau -100.982616869609 -89.7532651265462 0.100020829836528 3000
+	pnt -100.982443809509 -90.030534807841 0.100020829836528
+	chk -100.982443809509 -90.030534807841 0.100020829836528
+	pnt -100.982491636276 -90.0094350179036 0.100020829836528
+	chk -100.982491636276 -90.0094350179036 0.100020829836528
+	pnt -100.983122809728 -89.9956278483073 0.100020829836528
+	chk -100.983122809728 -89.9956278483073 0.100020829836528
+	pnt -100.981953525543 -89.941046778361 0.100020829836528
+	pnt -100.998547887802 -89.9406489690145 0.100020829836528
+	chk -100.998547887802 -89.9406489690145 0.100020829836528
+	pnt -101.012920649846 -89.9403021494548 0.100020829836528
+	chk -101.012920649846 -89.9403021494548 0.100020829836528
+	pnt -101.025345953306 -89.9413133621216 0.100020829836528
+	pnt -101.024586423238 -89.9270825068156 0.100020829836528
+	chk -101.024586423238 -89.9270825068156 0.100020829836528
+	pnt -101.023820296923 -89.912726020813 0.100020829836528
+	chk -101.023820296923 -89.912726020813 0.100020829836528
+	pnt -101.024270590146 -89.9008653004964 0.100020829836528
+	pnt -101.010610373815 -89.9009852091471 0.100020829836528
+	chk -101.010610373815 -89.9009852091471 0.100020829836528
+	pnt -100.996233860652 -89.9010934193929 0.100020829836528
+	chk -100.996233860652 -89.9010934193929 0.100020829836528
+	pnt -100.982985782623 -89.9012007395426 0.100020829836528
+	pnt -100.982565371195 -89.8863353093465 0.100020829836528
+	chk -100.982565371195 -89.8863353093465 0.100020829836528
+	pnt -100.982113949458 -89.8703296025594 0.100020829836528
+	chk -100.982113949458 -89.8703296025594 0.100020829836528
+	pnt -100.981760088603 -89.8579233805338 0.100020829836528
+	pnt -100.997025680542 -89.858137957255 0.100020829836528
+	chk -100.997025680542 -89.858137957255 0.100020829836528
+	pnt -101.011185407639 -89.8574254989624 0.100020829836528
+	chk -101.011185407639 -89.8574254989624 0.100020829836528
+	pnt -101.025292619069 -89.8582103093465 0.100020829836528
+	pnt -101.024228493373 -89.8433900197347 0.100020829836528
+	chk -101.024228493373 -89.8433900197347 0.100020829836528
+	pnt -101.023858602842 -89.8303841908773 0.100020829836528
+	chk -101.023858602842 -89.8303841908773 0.100020829836528
+	pnt -101.024523456891 -89.8173473358154 0.100020829836528
+	pnt -101.010328753789 -89.8169207890828 0.100020829836528
+	chk -101.010328753789 -89.8169207890828 0.100020829836528
+	pnt -100.99873585701 -89.8173011779785 0.100020829836528
+	chk -100.99873585701 -89.8173011779785 0.100020829836528
+	pnt -100.98291460673 -89.8176582972209 0.100020829836528
+	pnt -100.982687250773 -89.8032831192017 0.100020829836528
+	chk -100.982687250773 -89.8032831192017 0.100020829836528
+	pnt -100.98246811231 -89.7894634246826 0.100020829836528
+	chk -100.98246811231 -89.7894634246826 0.100020829836528
+	pnt -100.982788578669 -89.7569705327352 0.100020829836528
+	chk -100.982788578669 -89.7569705327352 0.100020829836528
+	pnt -100.982616869609 -89.7532651265462 0.100020829836528
+	pau -100.982616869609 -89.7532651265462 0.100020829836528 1000
 ~~ }
 NAV: nav14 once ~~ {
 	pau -100.984452851613 -89.753359413147 0.100020829836528 1000
 	jmp -100.984452851613 -89.753359413147 0.100020829836528 0 {True} 10.00003
 ~~ }
 NAV: nav15 once ~~ {
-	pau 95.4564075469971 2.29782328605652 0.24168750445048 5000
+	pnt -0.0583333333333333 -102.475 0.0750208298365275
+	pnt -0.0583333333333333 -102.475 0.0750208298365275
+	pnt -0.0583333333333333 -102.475 0.0750208298365275
+	pau -0.0583333333333333 -102.475 0.0750208298365275 9000
+	pnt -0.0583333333333333 -102.475 0.0750208298365275
+	pnt -0.0583333333333333 -102.475 0.0750208298365275
+	pnt -0.0583333333333333 -102.475 0.0750208298365275
 ~~ }
 NAV: nav16 once ~~ {
 	pnt -101.662684504191 -96.6754641215007 2.08333134651184E-05

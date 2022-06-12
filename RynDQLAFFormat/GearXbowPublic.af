@@ -46,8 +46,8 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
-		DO: DoAll
+	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
@@ -62,21 +62,24 @@ STATE: {DeathRecall} ~~ {
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
+	IF:	BlockE 00070000
+		DO:	SetState {ToTN}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[StateName,DeathRecall]}
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {EnableCombat} {False}
 				EmbedNav nav0 {[none]}
 	IF:	Not BlockE 38F70000
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[2645]} ~~ SpellId 2645 is "Portal Recall".
 				SetState {DeathRecall}
-	IF: BlockE 38F70000
-		DO: DoAll
+	IF:	BlockE 38F70000
+		DO:	DoAll
 				SetOpt {EnableNav} {True}
-				EmbedNav DeathDelay {[DeathDelay]}
+				EmbedNav nav1 {[DeathDelay]}
 	IF:	All
 			NavEmpty
 			BlockE 38F70000
@@ -86,10 +89,10 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[StateName,ToFrozenCave]}
 				DoExpr {setpvar[CheckSync,ToFrozenCave]}
-				Chat {/vt meta load CheckPublic} ~~ ToFrozenCave
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {Default} ~~ {
-	IF: All
+	IF:	All
 			Expr {getpvar[Profile]==GearXbowPublic}
 			Expr {getpvar[StateName]!=Default}
 			Not NeedToBuff
@@ -141,8 +144,8 @@ STATE: {Default} ~~ {
 				DoExpr {setgvar[Buffing,1]}
 				DoExpr {setpvar[StateName,vtgetmetastate[]]}
 				SetState {SyncBuff}
-	IF: Expr {getgvar[Buffing]==1}
-		DO: DoAll
+	IF:	Expr {getgvar[Buffing]==1}
+		DO:	DoAll
 				DoExpr {setpvar[StateName,vtgetmetastate[]]}
 				SetState {SyncBuff}
 	IF:	All
@@ -152,15 +155,196 @@ STATE: {Default} ~~ {
 				DoExpr {setpvar[StateName,ToTN]}
 				SetState {ToTN}
 ~~ }
-STATE: {SyncBuff} ~~{
-	IF: Not Expr {testpvar[BuffingStartAll]}
-		DO: DoAll
+STATE: {Finished} ~~ {
+	IF:	All
+			Expr {testpvar[Profile]==0}
+			Expr {testpvar[StateName]==0}
+			Expr {testpvar[Stuck]==0}
+			Expr {testpvar[EnableDeath]==0}
+			Expr {testgvar[GoNow+getworldname[]]==0}
+			Expr {testgvar[DefaultPass]==0}
+			Expr {testgvar[GoNowClear]==0}
+			Expr {testgvar[Checking]==0}
+			Expr {testgvar[GoNowTwo]==0}
+			Expr {testgvar[GearXbow]==0}
+			Expr {testgvar[QuestComplete]==0}
+			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
+		DO:	Chat {/vt meta load QuestCheckPublic}
+	IF:	All
+			SecsInStateGE 5
+			Any
+				Expr {testpvar[Profile]==1}
+				Expr {testpvar[StateName]==1}
+				Expr {testpvar[Stuck]==1}
+				Expr {testpvar[EnableDeath]==1}
+				Expr {testgvar[GoNow+getworldname[]]==1}
+				Expr {testgvar[DefaultPass]==1}
+				Expr {testgvar[GoNowClear]==1}
+				Expr {testgvar[Checking]==1}
+				Expr {testgvar[GoNowTwo]==1}
+				Expr {testgvar[GearXbow]==1}
+				Expr {testgvar[QuestComplete]==1}
+				Expr {testgvar[getcharstringprop[1]+getworldname[]]==1}
+		DO:	DoAll
+				DoExpr {clearpvar[Profile]}
+				DoExpr {clearpvar[StateName]}
+				DoExpr {clearpvar[Stuck]}
+				DoExpr {clearpvar[EnableDeath]}
+				DoExpr {clearpvar[BuffingStartAll]}
+				DoExpr {cleargvar[GoNow+getworldname[]]}
+				DoExpr {cleargvar[DefaultPass]}
+				DoExpr {cleargvar[GoNowClear]}
+				DoExpr {cleargvar[Checking]}
+				DoExpr {cleargvar[GoNowTwo]}
+				DoExpr {cleargvar[GearXbow]}
+				DoExpr {cleargvar[QuestComplete]}
+				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
+				SetState {Finished}
+~~ }
+STATE: {KillWalls} ~~ {
+	IF:	All
+			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
+			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
+		DO:	DoAll
+				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
+				DoExpr {clearvar[capturegroup_tellquest]}
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	DoAll
+				DoExpr {setpvar[Profile,QuestCheckPublic]}
+				DoExpr {setpvar[StateName,Default]}
+				Chat {/vt meta load QuestCheckPublic}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=720}
+			Any
+				BlockE C8E90000
+		DO:	DoAll
+				Chat {/f !ManDown}
+				SetState {DeathRecall}
+	IF:	Not Expr {testvar[StateTimer]}
+		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
+	IF:	Expr {getpvar[AdminSkip]==0}
+		DO:	SetOpt {EnableCombat} {True}
+	IF:	All
+			Expr {vtgetsetting[EnableNav]==1}
+			MobsInDist_Name 1 10 {Wall of Ice}
+			Expr {getpvar[AdminSkip]==0}
+		DO:	DoAll
+				SetOpt {EnableNav} {False}
+				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0608]]`,`vtsetsetting[AttackDistance,cstr[0.0608]]`]}
+				SetState {KillWalls}
+	IF:	All
+			Expr {vtgetsetting[EnableNav]==1}
+			MobsInDist_Name 1 10 {Wall of Ice}
+			Expr {getpvar[AdminSkip]==1}
+		DO:	DoAll
+				SetOpt {EnableNav} {False}
+				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0608]]`,`vtsetsetting[AttackDistance,cstr[0.0608]]`]}
+				SetState {KillWalls}
+	IF:	All
+			Expr {vtgetsetting[EnableNav]==0}
+			Not MobsInDist_Name 1 10 {Wall of Ice}
+			Expr {getpvar[AdminSkip]==0}
+		DO:	DoAll
+				SetOpt {EnableNav} {True}
+				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0608]]`]}
+				SetState {KillWalls}
+	IF:	All
+			Expr {vtgetsetting[EnableNav]==0}
+			Not MobsInDist_Name 1 10 {Wall of Ice}
+			Expr {getpvar[AdminSkip]==1}
+		DO:	DoAll
+				SetOpt {EnableNav} {True}
+				SetOpt {EnableCombat} {False}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0608]]`]}
+				SetState {KillWalls}
+	IF:	Any
+			CellE 33F4037B
+			CellE 33F4037C
+		DO:	EmbedNav nav2 {[none]}
+	IF:	All
+			NavEmpty
+			Any
+				CellE 33F40102
+				CellE 33F40103
+				CellE 33F40104
+				CellE 33F40105
+				CellE 33F40106
+		DO:	DoAll
+				DoExpr {clearvar[StateTimer]}
+				DoExpr {setpvar[StateName,TurnIn]}
+				DoExpr {setpvar[CheckSync,TurnIn]}
+				Chat {/vt meta load CheckPublic}
+	IF:	All
+			Expr {getvar[PitStop]==0}
+			NavEmpty
+			Any
+				CellE 33F40129
+				CellE 33F40130
+				CellE 33F40128
+				CellE 33F40131
+		DO:	DoAll
+				SetOpt {EnableNav} {False}
+				SetOpt {EnableCombat} {True}
+				DoExpr {setvar[PitStop,1]}
+				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[StateName,KillWalls]}
+				DoExpr {setpvar[CheckSync,KillWallsOne]}
+				Chat {/vt meta load CheckPublic}
+	IF:	All
+			Expr {getvar[PitStop]==1}
+			Any
+				CellE 33F40129
+				CellE 33F40130
+				CellE 33F40128
+				CellE 33F40131
+			NoMobsInDist 7
+		DO:	DoAll
+				SetOpt {EnableNav} {True}
+				SetOpt {EnableCombat} {True}
+				EmbedNav nav3 {junk.nav}
+~~ }
+STATE: {PackCleanUp} ~~ {
+	IF:	All
+			Not CellE 00AF0118
+		DO:	DoAll
+				DoExpr {actiontrycastbyid[4213]} ~~ SpellId 4213 is "Colosseum Recall".
+				SetState {PackCleanUp}
+	IF:	CellE 00AF0118
+		DO:	DoAll
+				DoExpr {setpvar[Profile,GearXbowPublic]}
+				DoExpr {setpvar[StateName,PackCleanUpB]}
+				Chat {/vt meta load HandinPublic}
+	IF:	SecsInStateGE 2
+		DO:	SetState {PackCleanUp}
+~~ }
+STATE: {PackCleanUpB} ~~ {
+	IF:	CellE 00AF0118
+		DO:	DoAll
+				DoExpr {setpvar[Profile,GearXbowPublic]}
+				DoExpr {setpvar[StateName,Finished]}
+				DoExpr {setpvar[CheckSync,Finished]}
+				Chat {/vt meta load CheckPublic}
+~~ }
+STATE: {SyncBuff} ~~ {
+	IF:	Not Expr {testpvar[BuffingStartAll]}
+		DO:	DoAll
 				DoExpr {setpvar[BuffingStartAll,1]}
 				Chat {/vt forcebuff}
-	IF: All
+	IF:	All
 			NeedToBuff
 			Expr {vtgetsetting[EnableBuffing]!=True}
-		DO: SetOpt {EnableBuffing} {True}
+		DO:	SetOpt {EnableBuffing} {True}
 	IF:	All
 			Not Expr {testgvar[SyncBuffComplete]}
 			Not NeedToBuff
@@ -186,199 +370,11 @@ STATE: {SyncBuff} ~~{
 				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]}
 				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]}
 				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}		
-		DO: DoAll
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}
+		DO:	DoAll
 				DoExpr {cleargvar[Buffing]}
 				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
-~~}
-STATE: {PackCleanUp} ~~ {
-	IF:	All
-			Not CellE 00AF0118
-		DO:	DoAll
-				DoExpr {actiontrycastbyid[4213]} ~~ SpellId 4213 is "Colosseum Recall".
-				SetState {PackCleanUp}
-	IF:	CellE 00AF0118
-		DO:	DoAll
-				DoExpr {setpvar[Profile,GearXbowPublic]}
-				DoExpr {setpvar[StateName,PackCleanUpB]}
-				Chat {/vt meta load HandinPublic}
-	IF:	SecsInStateGE 2
-		DO:	SetState {PackCleanUp}
-~~ }
-STATE: {PackCleanUpB} ~~ {
-	IF:	CellE 00AF0118
-		DO:	DoAll
-				DoExpr {setpvar[Profile,GearXbowPublic]}
-				DoExpr {setpvar[StateName,Finished]}
-				DoExpr {setpvar[CheckSync,Finished]}
-				Chat {/vt meta load CheckPublic} ~~ Finished
-~~ }
-STATE: {Finished} ~~ {
-	IF:	All
-			Expr {testpvar[Profile]==0}
-			Expr {testpvar[StateName]==0}
-			Expr {testpvar[Stuck]==0}
-			Expr {testgvar[GoNow+getworldname[]]==0}
-			Expr {testgvar[DefaultPass]==0}
-			Expr {testgvar[GoNowClear]==0}
-			Expr {testgvar[Checking]==0}
-			Expr {testgvar[GoNowTwo]==0}
-			Expr {testgvar[GearXbow]==0}
-			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
-		DO:	Chat {/vt meta load QuestCheckPublic}
-	IF: All
-			SecsInStateGE 5
-			Any
-				Expr {testpvar[Profile]==1}
-				Expr {testpvar[StateName]==1}
-				Expr {testpvar[Stuck]==1}
-				Expr {testgvar[GoNow+getworldname[]]==1}
-				Expr {testgvar[DefaultPass]==1}
-				Expr {testgvar[GoNowClear]==1}
-				Expr {testgvar[Checking]==1}
-				Expr {testgvar[GoNowTwo]==1}
-				Expr {testgvar[GearXbow]==1}
-				Expr {testgvar[getcharstringprop[1]+getworldname[]]==1}
-		DO: DoAll
-				DoExpr {clearpvar[Profile]}
-				DoExpr {clearpvar[StateName]}
-				DoExpr {clearpvar[Stuck]}
-				DoExpr {clearpvar[BuffingStartAll]}
-				DoExpr {cleargvar[GoNow+getworldname[]]}
-				DoExpr {cleargvar[DefaultPass]}
-				DoExpr {cleargvar[GoNowClear]}
-				DoExpr {cleargvar[Checking]}
-				DoExpr {cleargvar[GoNowTwo]}
-				DoExpr {cleargvar[GearXbow]}
-				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
-				SetState {Finished}
-~~ }
-STATE: {KillWalls} ~~ {
-	IF:	All
-			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
-			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
-		DO:	DoAll
-				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
-				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
-		DO: DoAll
-				DoExpr {setpvar[Profile,QuestCheckPublic]}
-				DoExpr {setpvar[StateName,Default]}
-				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
-	IF:	Not Expr {testvar[StateTimer]}
-		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=720}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF: Expr {getpvar[AdminSkip]==0}
-		DO: SetOpt {EnableCombat} {True}
-	IF: All
-			Expr {vtgetsetting[EnableNav]==1}
-			MobsInDist_Name 1 10 {Wall of Ice}
-			Expr {getpvar[AdminSkip]==0}
-		DO: DoAll
-				SetOpt {EnableNav} {False}
-				SetOpt {EnableCombat} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0608]]`,`vtsetsetting[AttackDistance,cstr[0.0608]]`]}
-				SetState {KillWalls}
-	IF: All
-			Expr {vtgetsetting[EnableNav]==1}
-			MobsInDist_Name 1 10 {Wall of Ice}
-			Expr {getpvar[AdminSkip]==1}
-		DO: DoAll
-				SetOpt {EnableNav} {False}
-				SetOpt {EnableCombat} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0608]]`,`vtsetsetting[AttackDistance,cstr[0.0608]]`]}
-				SetState {KillWalls}
-	IF: All
-			Expr {vtgetsetting[EnableNav]==0}
-			Not MobsInDist_Name 1 10 {Wall of Ice}
-			Expr {getpvar[AdminSkip]==0}
-		DO: DoAll
-				SetOpt {EnableNav} {True}
-				SetOpt {EnableCombat} {True}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0608]]`]}
-				SetState {KillWalls}
-	IF: All
-			Expr {vtgetsetting[EnableNav]==0}
-			Not MobsInDist_Name 1 10 {Wall of Ice}
-			Expr {getpvar[AdminSkip]==1}
-		DO: DoAll
-				SetOpt {EnableNav} {True}
-				SetOpt {EnableCombat} {False}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0608]]`]}
-				SetState {KillWalls}
-	IF:	Any
-			CellE 33F4037B
-			CellE 33F4037C
-		DO:	EmbedNav nav1 {KillwallsPt1.nav}
-	IF:	All
-			NavEmpty
-			Any
-				CellE 33F40102
-				CellE 33F40103
-				CellE 33F40104
-				CellE 33F40105
-				CellE 33F40106
-		DO:	DoAll
-				DoExpr {clearvar[StateTimer]}
-				DoExpr {setpvar[StateName,TurnIn]}
-				DoExpr {setpvar[CheckSync,TurnIn]}
-				Chat {/vt meta load CheckPublic} ~~ TurnIn
-	IF:	All
-			Expr {getvar[PitStop]==0}
-			NavEmpty
-			Any
-				CellE 33F40129
-				CellE 33F40130
-				CellE 33F40128
-				CellE 33F40131
-		DO:	DoAll
-				SetOpt {EnableNav} {False}
-				SetOpt {EnableCombat} {True}
-				DoExpr {setvar[PitStop,1]}
-				DoExpr {setpvar[Stuck, DeathRecall]}
-				DoExpr {setpvar[StateName,KillWalls]}
-				DoExpr {setpvar[CheckSync,KillWallsOne]}
-				Chat {/vt meta load CheckPublic} ~~ KillWallsOne
-	IF:	All
-			Expr {getvar[PitStop]==1}
-			Any
-				CellE 33F40129
-				CellE 33F40130
-				CellE 33F40128
-				CellE 33F40131
-			NoMobsInDist 7
-		DO:	DoAll
-				SetOpt {EnableNav} {True}
-				SetOpt {EnableCombat} {True}
-				EmbedNav nav2 {KillwallsPt2.nav}
 ~~ }
 STATE: {ToFrozenCave} ~~ {
 	IF:	All
@@ -389,45 +385,36 @@ STATE: {ToFrozenCave} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
-		DO: DoAll
+	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
-			Expr {getpvar[Leader]==1}
+			Expr {getpvar[EnableDeath]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
 				ChatMatch {!ManDown}
 				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				All
+					Expr {testvar[StateTimer]}
+					Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
+				Any
+					BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Always
 		DO:	SetWatchdog 5 45 {Watchdog}
 	IF:	BlockE 00070000
-		DO:	EmbedNav nav3 {[none]}
+		DO:	EmbedNav nav4 {[none]}
 	IF:	BlockE 38F70000
-		DO:	EmbedNav nav4 {FiunsToGxbowJump.nav}
+		DO:	DoAll
+				DoExpr {setpvar[EnableDeath,1]}
+				EmbedNav nav5 {FiunsToGxbowJump.nav}
 	IF:	Any
 			CellE 34F70029
 			CellE 34F70031
@@ -445,7 +432,7 @@ STATE: {ToFrozenCave} ~~ {
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {setpvar[StateName,KillWalls]}
 				DoExpr {setpvar[CheckSync,KillWallsTwo]}
-				Chat {/vt meta load CheckPublic} ~~ KillwallsTwo
+				Chat {/vt meta load CheckPublic}
 	IF:	BlockE C8E90000
 		DO:	SetState {ToTN}
 ~~ }
@@ -458,8 +445,8 @@ STATE: {ToTN} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
-		DO: DoAll
+	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
@@ -485,7 +472,7 @@ STATE: {ToTN} ~~ {
 	IF:	BlockE F6820000
 		DO:	DoAll
 				DoExpr {setvar[Recall,1]}
-				EmbedNav nav5 {[none]}
+				EmbedNav nav6 {[none]}
 	IF:	CellE 00070145
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}
@@ -513,25 +500,18 @@ STATE: {TurnIn} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
-		DO: DoAll
+	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
 			Expr {getvar[TurnIn]==0}
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[87260]]==7}
-		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[87260]]}
-	IF:	Not Expr {testvar[StateTimer]}
-		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
+			SecsInStateGE 2
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF:	SecsInStateGE 4
-		DO:	SetState {TurnIn}
+				DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[87260]]}
+				SetState {TurnIn}
 	IF:	Any
 			ChatMatch {^Ordas Myr tells you, "Please, tell me, when is it? I was frozen, solid."}
 			ChatMatch {^Ordas Myr tells you, "Many years ago I lost track of time. We Gearknights normally keep perfect time."}
@@ -578,7 +558,7 @@ STATE: {TurnIn} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,PackCleanUp]}
 				DoExpr {setpvar[CheckSync,PackCleanUp]}
-				Chat {/vt meta load CheckPublic} ~~ PackCleanUp
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {Watchdog} ~~ {
 	IF:	All
@@ -589,8 +569,8 @@ STATE: {Watchdog} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
-		DO: DoAll
+	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
@@ -609,195 +589,226 @@ STATE: {Watchdog} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				SetState {DeathRecall}
 ~~ }
-
 STATE: {Zstuck} ~~ {
-	IF: Always
-		DO: DoAll
+	IF:	Always
+		DO:	DoAll
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 ~~ }
+
 ~~========================= ONLY NAVS APPEAR BELOW THIS LINE =========================~~
 
 NAV: nav0 circular ~~ {
 ~~ }
 NAV: nav1 once ~~ {
-	pnt -60.4686098734538 93.706400235494 -0.213312498728434
-	pnt -60.4610363642375 93.7167764981588 -0.213312498728434
-	pnt -60.454830233256 93.7191055933634 -0.213312498728434
-	pnt -60.4173707326253 93.7224439620972 -0.213312498728434
-	pnt -60.4156606038411 93.7286319732666 -0.213312498728434
-	pnt -60.4160652160645 93.7613567988078 -0.213312498728434
-	pnt -60.4199535369873 93.7838692347209 -0.213312498728434
-	pnt -60.4412930170695 93.8024377187093 -0.213312498728434
-	pnt -60.4470016479492 93.8067965189616 -0.213312498728434
-	pnt -60.4601056416829 93.8182622273763 -0.213312498728434
-	pnt -60.4622399012248 93.8197818120321 -0.213312498728434
-	pnt -60.4553389231364 93.8266479492188 -0.213312498728434
-	pnt -60.4365549723307 93.8431452433268 -0.213312498728434
-	pnt -60.4216102600098 93.8562704722087 -0.213312498728434
-	pnt -60.4059084574382 93.8700606028239 -0.213312498728434
-	pnt -60.3934005737305 93.8876686096191 -0.213312498728434
-	pnt -60.38215675354 93.8996953328451 -0.213312498728434
-	pnt -60.3706429799398 93.9093095143636 -0.216615835825602
-	pnt -60.3702646891276 93.9230262120565 -0.224845854441325
-	pnt -60.3702646891276 93.9400293986003 -0.235047753651937
-	pnt -60.3682622909546 93.9550177256266 -0.238312498728434
-	pnt -60.3572812398275 93.9617348988851 -0.238312498728434
-	pnt -60.3408156077067 93.9819288889567 -0.238312498728434
-	pnt -60.3314184188843 93.9887666702271 -0.238312498728434
-	pnt -60.3341678619385 93.9906302134196 -0.238312498728434
-	pnt -60.3496133168538 93.9989223480225 -0.238312498728434
-	pnt -60.3561828613281 94.0039688746134 -0.239189831415812
-	pnt -60.373713684082 94.0061252593994 -0.249708334604899
-	pnt -60.3853920618693 94.0086882909139 -0.25671534538269
-	pnt -60.3935076395671 94.0088018417358 -0.261584711074829
-	pnt -60.4107372283936 94.0085953394572 -0.263312498728434
-	pnt -60.4130773544312 94.0079816182454 -0.263312498728434
-	pnt -60.4377106984456 94.0076616923014 -0.263312498728434
-	pnt -60.4509246190389 93.9979944229126 -0.263312498728434
-	pnt -60.4521987915039 93.9958967208862 -0.263312498728434
-	pnt -60.4616956710815 93.9802937825521 -0.263312498728434
-	pnt -60.4695827484131 93.9622109095256 -0.263312498728434
-	pnt -60.4709604899089 93.9188035329183 -0.282376511891683
-	pnt -60.4689977010091 93.8988784790039 -0.28831246693929
-	pnt -60.4886709213257 93.8642016092936 -0.28831246693929
-	pnt -60.4935431798299 93.8501484553019 -0.28831246693929
-	pnt -60.4925975163778 93.8091185887655 -0.28831246693929
-	pnt -60.4902764002482 93.799890200297 -0.28831246693929
-	pnt -60.4698816935221 93.7978123982747 -0.294755395253499
-	pnt -60.4501101175944 93.7952275594076 -0.3095840771993
-	pnt -60.4320592244466 93.7920834859212 -0.31331246693929
-	pnt -60.4136703491211 93.7790253957113 -0.31331246693929
-	pnt -60.4006319681803 93.7697668075562 -0.31331246693929
-	pnt -60.3859162648519 93.7593170166016 -0.31331246693929
-	pnt -60.3738948822022 93.7502776463827 -0.31331246693929
-	pnt -60.3746171315511 93.728675142924 -0.31772502263387
-	pnt -60.37531153361 93.708367284139 -0.329909706115723
-	pnt -60.3758581797282 93.6923869768778 -0.33831246693929
-	pnt -60.3795313517253 93.6875524202983 -0.33831246693929
-	pnt -60.3891868591309 93.6768234570821 -0.33831246693929
-	pnt -60.4043989817301 93.663245010376 -0.33831246693929
-	pnt -60.4189032236735 93.6529887517293 -0.33831246693929
-	pnt -60.432088915507 93.6320892651876 -0.33831246693929
-	pnt -60.441979598999 93.6400997797648 -0.33831246693929
-	pnt -60.4563726425171 93.6537165959676 -0.33831246693929
-	pnt -60.4646022796631 93.660250822703 -0.33831246693929
-	pnt -60.4932791392008 93.6719475428263 -0.33831246693929
-	pnt -60.4993859608968 93.6595347086589 -0.33831246693929
-	pnt -60.4988068898519 93.6369536399841 -0.33831246693929
-	pnt -60.4986451466878 93.6294020334879 -0.33831246693929
-	pnt -60.5006721496582 93.5750800450643 -0.33831246693929
-	pnt -60.5026792526245 93.5233384768168 -0.33831246693929
-	pnt -60.5179178873698 93.5088080088297 -0.33831246693929
-	pnt -60.530807240804 93.4971820195516 -0.33831246693929
-	pnt -60.5781113306681 93.4527683258057 -0.33831246693929
-	pnt -60.5832548141479 93.4479032039642 -0.337657515207926
-	pnt -60.5972082773844 93.4123241424561 -0.337657515207926
-	pnt -60.6023789723714 93.390468343099 -0.33831246693929
-	pnt -60.6174320220947 93.3718304157257 -0.33831246693929
-	pnt -60.6344542185466 93.3562810103099 -0.33831246693929
-	pnt -60.672826385498 93.3174808661143 -0.33831246693929
-	pnt -60.6902060190837 93.3014159361521 -0.33831246693929
-	pnt -60.7032742182414 93.298653737704 -0.33831246693929
-	pnt -60.7237564086914 93.2981987873713 -0.33831246693929
-	pnt -60.74112256368 93.2978130817413 -0.345153649648031
-	pnt -60.7588104248047 93.2974202076594 -0.355766359965007
-	pnt -60.7736391067505 93.2987716197968 -0.36331246693929
-	pnt -60.7928581237793 93.3071995576223 -0.36331246693929
-	pnt -60.7965951283773 93.3227618455887 -0.36331246693929
-	pnt -60.7951799074809 93.3431190252304 -0.36331246693929
-	pnt -60.7951236089071 93.3448353687922 -0.36331246693929
-	pnt -60.7891616185506 93.3597899278005 -0.36331246693929
-	pnt -60.7807689666748 93.3756856282552 -0.36331246693929
-	pnt -60.7672318776449 93.3863322575887 -0.36331246693929
-	pnt -60.7516820907593 93.3987380345663 -0.36331246693929
-	pnt -60.7428816159566 93.4103390216827 -0.36331246693929
-	pnt -60.7341277440389 93.4210630734762 -0.36331246693929
-	pnt -60.7186615626017 93.4261103947957 -0.369283167521159
-	pnt -60.7014783859253 93.4272701263428 -0.379593054453532
-	pnt -60.6847672780355 93.42404033343 -0.38831246693929
-	pnt -60.6834656397502 93.4229201952616 -0.38831246693929
-	pnt -60.6704493840535 93.4029932339986 -0.38831246693929
-	pnt -60.6468677520752 93.3805078983307 -0.38831246693929
-	pnt -60.6254286766052 93.3816019535065 -0.38831246693929
-	pnt -60.6254286766052 93.3816019535065 -0.38831246693929
-	pnt -60.608863512675 93.3828680833181 -0.38831246693929
-	pnt -60.5966997782389 93.3869823773702 -0.38831246693929
-	pnt -60.5830577850342 93.4080327351888 -0.38831246693929
-	pnt -60.5653195063273 93.4238091786703 -0.38831246693929
-	pnt -60.5653155008952 93.4236759503682 -0.38831246693929
-	pnt -60.551969909668 93.4431681315104 -0.38831246693929
-	pnt -60.5414520263672 93.4676726023356 -0.38831246693929
-	pnt -60.5267478942871 93.4943984031677 -0.38831246693929
-	pnt -60.5158283233643 93.5226047515869 -0.38831246693929
-	pnt -60.5070560455322 93.553036181132 -0.38831246693929
-	pnt -60.5001556396484 93.5728685061137 -0.38831246693929
-	pnt -60.4870628356934 93.5939748128255 -0.38831246693929
-	pnt -60.4743264516195 93.6145069758097 -0.38831246693929
-	pnt -60.4620320638021 93.6343268076579 -0.38831246693929
-	pnt -60.4536626815796 93.6467118581136 -0.38831246693929
-	pnt -60.4558211644491 93.6541409810384 -0.38831246693929
-	pnt -60.4651319503784 93.6732458750407 -0.38831246693929
-	pnt -60.478658803304 93.6755932172139 -0.38831246693929
-	pnt -60.5115255991618 93.6721170425415 -0.407395458221436
-	pnt -60.5382554372152 93.6764533042908 -0.41331246693929
-	pnt -60.5646333058675 93.6719642003377 -0.413354142506917
-	pnt -60.5899784088135 93.6738377253214 -0.413354142506917
-	pnt -60.6026746114095 93.6748067220052 -0.413354142506917
-	pnt -60.615177154541 93.675469493866 -0.41331246693929
-	pnt -60.6410508473714 93.6729115168254 -0.41331246693929
-	pnt -60.6833656311035 93.6743164698283 -0.41331246693929
-	pnt -60.6993925094605 93.6760562578837 -0.41331246693929
-	pnt -60.7001556396484 93.6700286865234 -0.41331246693929
-	pnt -60.7110094070435 93.6385945002238 -0.41331246693929
-	pnt -60.7127674738566 93.6029091517131 -0.41331246693929
-	pnt -60.7106281280518 93.5820898691813 -0.41331246693929
-	pnt -60.7173730214437 93.5525288263957 -0.41331246693929
-	pnt -60.7208994229635 93.5419927914937 -0.41331246693929
-	pnt -60.7274116516113 93.5432310740153 -0.41331246693929
-	pnt -60.7493272781372 93.5494386672974 -0.41331246693929
-	pnt -60.7524388313293 93.5551661809286 -0.41331246693929
-	pnt -60.7487456003825 93.5787678400675 -0.41331246693929
-	pnt -60.7493983586629 93.6168391545614 -0.41331246693929
-	pnt -60.7505077997843 93.6466673533122 -0.41331246693929
-	pnt -60.7503828684489 93.66957432429 -0.41331246693929
-	pnt -60.7705271402995 93.6739598592122 -0.413158353169759
-	pnt -60.7815567016602 93.676370716095 -0.413158353169759
-	pnt -60.8155317942301 93.6817655245463 -0.41331246693929
-	pnt -60.8151255607605 93.6807639757792 -0.41331246693929
-	pnt -60.8185688654582 93.6497944513957 -0.415053685506185
-	pnt -60.8166591644287 93.6031600952148 -0.43831246693929
-	pnt -60.8211439768473 93.5757810592651 -0.43831246693929
-	pnt -60.8260484059652 93.549542872111 -0.43831246693929
-	pnt -60.8297992706299 93.5294759114583 -0.43831246693929
-	pnt -60.8351538976034 93.526788965861 -0.43831246693929
-	pnt -60.8735011418661 93.527325630188 -0.449580796559652
-	pnt -60.8998946666718 93.5276948610942 -0.46541690826416
+	pnt -56.7708333333333 95.875 -0.000395833204189936
+	pnt -56.7708333333333 95.875 -0.000395833204189936
+	pnt -56.7708333333333 95.875 -0.000395833204189936
+	pau 96.5192172686259 -77.3924765904744 -0.406645806630452 9000
+	pnt -56.7708333333333 95.875 -0.000395833204189936
+	pnt -56.7708333333333 95.875 -0.000395833204189936
+	pnt -56.7708333333333 95.875 -0.000395833204189936
 ~~ }
 NAV: nav2 once ~~ {
-	pnt -60.900715970993 93.5281273523967 -0.465909671783447
-	pnt -60.9270123640696 93.5302063941956 -0.481687513987223
-	pnt -60.9445376714071 93.5300515174866 -0.492202695210775
-	pnt -60.9759067853292 93.5299780527751 -0.511024157206217
-	pnt -60.9913729985555 93.5309993108114 -0.520303885142008
-	pnt -61.0063490231832 93.5302071889242 -0.52928949991862
-	pnt -61.0212163925171 93.53215675354 -0.538209978739421
-	pnt -61.0366938591003 93.5321375528971 -0.538312530517578
-	pnt -61.0505123615265 93.5307413736979 -0.538312530517578
-	pnt -61.0624042669932 93.5295398712158 -0.538312530517578
-	pnt -61.07526512146 93.5301375071208 -0.538312530517578
-	pnt -61.0879325310389 93.5317735036214 -0.538312530517578
-	pnt -61.1029293775558 93.5320803960164 -0.538312530517578
-	pnt -61.1178891817729 93.532386525472 -0.538312530517578
-	pnt -61.1321862141291 93.5326789855957 -0.538312530517578
-	pnt -61.142518132925 93.5328902562459 -0.538312530517578
-	pnt -61.156880213817 93.533184115092 -0.538312530517578
-	pnt -61.1691141843796 93.5327332178752 -0.538312530517578
-	pnt -61.1741289794445 93.5319711367289 -0.538312530517578
-	pnt -61.1883008917173 93.5289910634359 -0.538312530517578
-	pnt -61.1955668926239 93.5293506622315 -0.538312530517578
+	pnt -60.4164572397868 93.7263995488485 -0.213312498728434
+	chk -60.4164572397868 93.7263995488485 -0.213312498728434
+	pnt -60.4162394205729 93.747171719869 -0.213312498728434
+	chk -60.4162394205729 93.747171719869 -0.213312498728434
+	pnt -60.4142473220825 93.7724839846293 -0.213312498728434
+	pnt -60.4175966262817 93.783007367452 -0.213312498728434
+	pnt -60.461519241333 93.8226441701253 -0.213312498728434
+	chk -60.461519241333 93.8226441701253 -0.213312498728434
+	pnt -60.4512668609619 93.8267492294312 -0.213312498728434
+	chk -60.4512668609619 93.8267492294312 -0.213312498728434
+	pnt -60.4219955444336 93.8539450327555 -0.213312498728434
+	pnt -60.3742390950521 93.9013874689738 -0.213312498728434
+	pnt -60.3750054041545 93.9083757400513 -0.216055568059285
+	pnt -60.3761903762817 93.947106107076 -0.238312498728434
+	pnt -60.3306963602702 93.9866910934448 -0.238312498728434
+	pnt -60.3384856541951 93.9948849995931 -0.238312498728434
+	pnt -60.3503111521403 94.0073124567668 -0.238312498728434
+	pnt -60.3640730539958 94.0094134012858 -0.243923950195312
+	pnt -60.3972471237183 94.0085161844889 -0.263312498728434
+	chk -60.3972471237183 94.0085161844889 -0.263312498728434
+	pnt -60.4096256256104 94.0081827799479 -0.263312498728434
+	chk -60.4096256256104 94.0081827799479 -0.263312498728434
+	pnt -60.4184439341227 94.0079502105713 -0.263312498728434
+	pnt -60.4267068227132 94.0077332814535 -0.263312498728434
+	chk -60.4267068227132 94.0077332814535 -0.263312498728434
+	pnt -60.4428019841512 94.0062276204427 -0.263312498728434
+	chk -60.4428019841512 94.0062276204427 -0.263312498728434
+	pnt -60.4544134775798 93.9936002731323 -0.263312498728434
+	chk -60.4544134775798 93.9936002731323 -0.263312498728434
+	pnt -60.4647193272909 93.9765387217204 -0.263312498728434
+	chk -60.4647193272909 93.9765387217204 -0.263312498728434
+	pnt -60.4598480860392 93.949574025472 -0.263312498728434
+	pnt -60.4608950297038 93.9317549387614 -0.272662957509359
+	pnt -60.4636702855428 93.9003605524699 -0.28831246693929
+	pnt -60.4808796564738 93.882173983256 -0.287991682688395
+	pnt -60.4963180541992 93.8652734120687 -0.28831246693929
+	pnt -60.4973297754924 93.8403254191081 -0.28831246693929
+	pnt -60.4958580652873 93.8006111145019 -0.28831246693929
+	pnt -60.4831687927246 93.7956133524577 -0.28831246693929
+	pnt -60.4349536895752 93.7931482950846 -0.31331246693929
+	pnt -60.4132010777791 93.7777992248535 -0.31331246693929
+	pnt -60.3953687667847 93.7688929239909 -0.31331246693929
+	chk -60.3953687667847 93.7688929239909 -0.31331246693929
+	pnt -60.3770933151245 93.7549881617228 -0.31331246693929
+	pnt -60.3750979105631 93.7423580169678 -0.31331246693929
+	chk -60.3750979105631 93.7423580169678 -0.31331246693929
+	pnt -60.374995358785 93.7272667249044 -0.318570073445638
+	chk -60.374995358785 93.7272667249044 -0.318570073445638
+	pnt -60.3747554779053 93.6967023849487 -0.33690865834554
+	pnt -60.3767920176188 93.6898920694987 -0.33831246693929
+	chk -60.3767920176188 93.6898920694987 -0.33831246693929
+	pnt -60.4037001291911 93.6672386805216 -0.33831246693929
+	pnt -60.4182881673177 93.6528531710307 -0.33831246693929
+	pnt -60.4252009073893 93.6318047205607 -0.33831246693929
+	pnt -60.4367970784505 93.6320622126261 -0.33831246693929
+	pnt -60.4483493169149 93.6404075304667 -0.33831246693929
+	pnt -60.4550467809041 93.6493851979574 -0.33831246693929
+	chk -60.4550467809041 93.6493851979574 -0.33831246693929
+	pnt -60.46007715861 93.6598367373149 -0.33831246693929
+	chk -60.46007715861 93.6598367373149 -0.33831246693929
+	pnt -60.4715048472087 93.661824353536 -0.33831246693929
+	pnt -60.5004193623861 93.6612796465556 -0.33831246693929
+	chk -60.5004193623861 93.6612796465556 -0.33831246693929
+	pnt -60.5009347279867 93.6441327730815 -0.33831246693929
+	chk -60.5009347279867 93.6441327730815 -0.33831246693929
+	pnt -60.5022526423136 93.5950695991516 -0.33831246693929
+	pnt -60.5006322224935 93.5341406822205 -0.33831246693929
+	pnt -60.502196375529 93.5232084592183 -0.33831246693929
+	chk -60.502196375529 93.5232084592183 -0.33831246693929
+	pnt -60.5374859491984 93.4916390419006 -0.33831246693929
+	pnt -60.5789503733317 93.4502568244934 -0.33831246693929
+	chk -60.5789503733317 93.4502568244934 -0.33831246693929
+	pnt -60.5905376434326 93.4376070817312 -0.337657515207926
+	chk -60.5905376434326 93.4376070817312 -0.337657515207926
+	pnt -60.6092498143514 93.4063501040141 -0.337824598948161
+	pnt -60.6318477312724 93.3688550790151 -0.33831246693929
+	chk -60.6318477312724 93.3688550790151 -0.33831246693929
+	pnt -60.6389624913534 93.3467663129171 -0.33831246693929
+	chk -60.6389624913534 93.3467663129171 -0.33831246693929
+	pnt -60.6467829386393 93.3289946079254 -0.33831246693929
+	pnt -60.665238348643 93.3143253763517 -0.33831246693929
+	pnt -60.6788363774617 93.299357954661 -0.33831246693929
+	chk -60.6788594245911 93.2993563453356 -0.33831246693929
+	pnt -60.7231905301412 93.2986783027649 -0.33831246693929
+	chk -60.7231905301412 93.2986783027649 -0.33831246693929
+	pnt -60.7397721290588 93.2994386831919 -0.344343376159668
+	chk -60.7397721290588 93.2994386831919 -0.344343376159668
+	pnt -60.7658807118734 93.2984340747198 -0.360008525848389
+	pnt -60.7797603289286 93.2990699330966 -0.36331246693929
+	pnt -60.7908724784851 93.3070758899053 -0.36331246693929
+	pnt -60.7905377070109 93.3216243584951 -0.36331246693929
+	chk -60.7905377070109 93.3216243584951 -0.36331246693929
+	pnt -60.79024254481 93.3332197507223 -0.36331246693929
+	chk -60.79024254481 93.3332197507223 -0.36331246693929
+	pnt -60.7900275230408 93.3414827823639 -0.36331246693929
+	pnt -60.7925994873047 93.3498128414154 -0.36331246693929
+	chk -60.7925994873047 93.3498128414154 -0.36331246693929
+	pnt -60.7910929997762 93.3653156280518 -0.36331246693929
+	chk -60.7910929997762 93.3653156280518 -0.36331246693929
+	pnt -60.7673118591309 93.3873041470845 -0.36331246693929
+	pnt -60.7311530749003 93.422656138738 -0.36331246693929
+	pnt -60.7243317921956 93.4243574778239 -0.365881029764811
+	pnt -60.6954674720764 93.4234463532766 -0.383199628194173
+	chk -60.6954674720764 93.4234463532766 -0.383199628194173
+	pnt -60.6826859792074 93.4227328936259 -0.38831246693929
+	chk -60.6826859792074 93.4227328936259 -0.38831246693929
+	pnt -60.6802160898844 93.4128103733063 -0.38831246693929
+	chk -60.6802160898844 93.4128103733063 -0.38831246693929
+	pnt -60.6612303733826 93.3958248933156 -0.38831246693929
+	pnt -60.6451347668966 93.381421717008 -0.38831246693929
+	chk -60.6451347668966 93.381421717008 -0.38831246693929
+	pnt -60.6341833114624 93.3813034296036 -0.38831246693929
+	chk -60.6341833114624 93.3813034296036 -0.38831246693929
+	pnt -60.6271532058716 93.381257502238 -0.38831246693929
+	pnt -60.616113726298 93.3802630186081 -0.38831246693929
+	chk -60.616113726298 93.3802630186081 -0.38831246693929
+	pnt -60.6023541768392 93.3815687497457 -0.38831246693929
+	chk -60.6023541768392 93.3815687497457 -0.38831246693929
+	pnt -60.5920251210531 93.39070576032 -0.38831246693929
+	pnt -60.5870097478231 93.3972761313121 -0.38831246693929
+	chk -60.5870097478231 93.3972761313121 -0.38831246693929
+	pnt -60.5782960255941 93.4087114175161 -0.38831246693929
+	chk -60.5782960255941 93.4087114175161 -0.38831246693929
+	pnt -60.5607016245524 93.4276631037394 -0.38831246693929
+	pnt -60.5488921483358 93.4409936745962 -0.38831246693929
+	pnt -60.5450874964396 93.4714499950409 -0.38831246693929
+	pnt -60.5221785227458 93.5140188217163 -0.38831246693929
+	chk -60.5221785227458 93.5140188217163 -0.38831246693929
+	pnt -60.5104305267334 93.5215595881144 -0.38831246693929
+	chk -60.5104305267334 93.5215595881144 -0.38831246693929
+	pnt -60.5104141235352 93.5481585184733 -0.38831246693929
+	chk -60.5104141235352 93.5481585184733 -0.38831246693929
+	pnt -60.5033926010132 93.5725697199504 -0.38831246693929
+	pnt -60.4921203613281 93.5923457145691 -0.38831246693929
+	pnt -60.4641581217448 93.6183957735697 -0.38831246693929
+	pnt -60.4568707148234 93.6475035667419 -0.38831246693929
+	chk -60.4568707148234 93.6475035667419 -0.38831246693929
+	pnt -60.458026822408 93.6594397862752 -0.38831246693929
+	chk -60.458026822408 93.6594397862752 -0.38831246693929
+	pnt -60.4603392918905 93.6660787582397 -0.38831246693929
+	pnt -60.4652460098267 93.6727307955424 -0.38831246693929
+	pnt -60.4758265813192 93.6774838447571 -0.38831246693929
+	pnt -60.513288752238 93.6750228563944 -0.408453337351481
+	chk -60.513288752238 93.6750228563944 -0.408453337351481
+	pnt -60.5305805842082 93.6751814206441 -0.41331246693929
+	chk -60.5305805842082 93.6751814206441 -0.41331246693929
+	pnt -60.5458759943644 93.6753410975138 -0.41331246693929
+	pnt -60.5684871673584 93.6732782681783 -0.413354142506917
+	pnt -60.5911860783895 93.6737666130066 -0.413354142506917
+	chk -60.5911860783895 93.6737666130066 -0.413354142506917
+	pnt -60.616112391154 93.6743012428284 -0.41331246693929
+	pnt -60.6414688428243 93.6748448053996 -0.41331246693929
+	chk -60.6414688428243 93.6748448053996 -0.41331246693929
+	pnt -60.6558422406514 93.6751600583394 -0.41331246693929
+	chk -60.6558422406514 93.6751600583394 -0.41331246693929
+	pnt -60.6815943082174 93.6754201571147 -0.41331246693929
+	pnt -60.707678381602 93.6732352574666 -0.41331246693929
+	pnt -60.712779935201 93.6603562355042 -0.41331246693929
+	pnt -60.7123770078023 93.6162727038066 -0.41331246693929
+	pnt -60.7071186701457 93.5669477144877 -0.41331246693929
+	pnt -60.7110021273295 93.5468623797099 -0.41331246693929
+	pnt -60.7245320320129 93.5433043162028 -0.41331246693929
+	pnt -60.7409058888753 93.5473455429077 -0.41331246693929
+	pnt -60.750831413269 93.5526783307393 -0.41331246693929
+	pnt -60.7537959416707 93.5610172271729 -0.41331246693929
+	pnt -60.746880308787 93.6039867719014 -0.41331246693929
+	pnt -60.7460965156555 93.6544514020284 -0.41331246693929
+	pnt -60.7564453442891 93.6716286977132 -0.41331246693929
+	chk -60.7564453442891 93.6716286977132 -0.41331246693929
+	pnt -60.7743987719218 93.6777584711711 -0.413158353169759
+	chk -60.7743987719218 93.6777584711711 -0.413158353169759
+	pnt -60.7827437082926 93.6759712219238 -0.41331246693929
+	pnt -60.8027003288269 93.672679233551 -0.41331246693929
+	chk -60.8027003288269 93.672679233551 -0.41331246693929
+	pnt -60.8095825831095 93.663809076945 -0.41331246693929
+	pnt -60.8023836453756 93.6455194155375 -0.417618687947591
+	pnt -60.79324537913 93.6140410423279 -0.436505730946859
+	pnt -60.7916470527649 93.5911140759786 -0.437968317667643
+	pnt -60.799694442749 93.5661284446716 -0.43831246693929
+	pnt -60.8138437906901 93.542407989502 -0.43831246693929
+	pnt -60.8339299837748 93.5311443646749 -0.43831246693929
+	pnt -60.852853012085 93.5274651209513 -0.43831246693929
+	pnt -60.8755749702454 93.5279443105062 -0.450825087229411
+	pnt -60.8978404998779 93.5329009373983 -0.464184379577637
+	pnt -60.9151325384776 93.5330430348714 -0.474559624989827
 ~~ }
 NAV: nav3 once ~~ {
+	pnt -60.9330778598785 93.5309459050496 -0.485326830546061
+	pnt -60.9736644585927 93.5304139455159 -0.509678777058919
+	pnt -61.0144174098969 93.531017780304 -0.534130605061849
+	chk -61.0144174098969 93.531017780304 -0.534130605061849
+	pnt -61.0652278105418 93.5266857465108 -0.538312530517578
+	chk -61.0652278105418 93.5266857465108 -0.538312530517578
+	pnt -61.1010968804359 93.5302426656087 -0.538312530517578
+	pnt -61.1470605845253 93.532143052419 -0.538312530517578
+	pnt -61.1747266689936 93.5313377698263 -0.538312530517578
+	pnt -61.2012590289116 93.5302731196086 -0.538312530517578
+~~ }
+NAV: nav4 once ~~ {
 	pnt -101.658333333333 -96.6833333333333 2.08333134651184E-05
 	pnt -101.659346167246 -96.7142985343933 2.08333134651184E-05
 	pnt -101.65579029719 -96.761073589325 2.08333134651184E-05
@@ -811,7 +822,7 @@ NAV: nav3 once ~~ {
 	ptl -101.659527778625 -96.6838372866313 2.08333134651184E-05 -101.725833336512 -97.0584083557129 -0.000262499845121056 14 {Fiun Outpost}
 	pau -101.659527778625 -96.6838372866313 2.08333134651184E-05 5000
 ~~ }
-NAV: nav4 once ~~ {
+NAV: nav5 once ~~ {
 	pnt -56.7668204943339 95.8685781319936 -0.000395833452542623
 	pnt -56.8239533424377 95.8172868092855 0.00274693270524343
 	pnt -56.8994449297587 95.8123883565267 0.0031551368534565
@@ -914,19 +925,9 @@ NAV: nav4 once ~~ {
 	pnt -60.4567537943522 93.7042346000671 -0.0666725238164266
 	jmp -56.7703074773153 95.8741584936778 -0.000395833452542623 0 {True} 25.00003
 ~~ }
-NAV: nav5 once ~~ {
+NAV: nav6 once ~~ {
 	pnt 95.457065709432 2.25771420796712 0.24168750445048
 	pnt 95.4591753005981 2.29052712122599 0.24168750445048
 	ptl 95.4598964691162 2.29199097951253 0.24168750445048 95.4555708567301 2.31398749351501 0.242491692304611 14 {Portal to Town Network}
 	pau 95.4598964691162 2.29199097951253 0.24168750445048 5000
 ~~ }
-NAV: DeathDelay once ~~ {
-	pnt -56.7708333333333 95.875 -0.000395833204189936
-	pnt -56.7708333333333 95.875 -0.000395833204189936
-	pnt -56.7708333333333 95.875 -0.000395833204189936
-	pau 96.5192172686259 -77.3924765904744 -0.406645806630452 9000
-	pnt -56.7708333333333 95.875 -0.000395833204189936
-	pnt -56.7708333333333 95.875 -0.000395833204189936
-	pnt -56.7708333333333 95.875 -0.000395833204189936
-~~ }
-~~~ Meta Created By Kaitro of Leafcull/Frostfell/Coldeve

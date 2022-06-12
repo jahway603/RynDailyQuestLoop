@@ -324,6 +324,12 @@ STATE: {ColoGarbage} ~~ {
 				SetState {ColoGarbage}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Torn Parchment]]==7}
+		DO:	DoAll
+				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Torn Parchment],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
+				SetState {ColoGarbage}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Translated Orders for Zrikux]]==7}
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Translated Orders for Zrikux],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
@@ -448,6 +454,13 @@ STATE: {ColoGarbage} ~~ {
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Treasury Key],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
 				SetState {ColoGarbage}
+	
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[The Story of the Lost Sisters]]==7}
+		DO:	DoAll
+				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[The Story of the Lost Sisters],wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]}
+				SetState {ColoGarbage}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Garbage Barrel]]==7}
@@ -462,6 +475,7 @@ STATE: {ColoGarbage} ~~ {
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Adventurer's Token]]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Gear Crossbow]]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==1}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Torn Parchment]]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Helm of the Abyssal Totem]]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Colosseum Master's Robe]]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Translated Message Shard]]==1}

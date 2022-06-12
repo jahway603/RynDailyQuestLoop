@@ -186,7 +186,7 @@ STATE: {CheckQuests} ~~ {
 		DO:	Chat {/f LiberationOfUziz}
 	IF:	All
 			Expr {getcharintprop[25]>=180}
-			Expr {getqueststatus[countphainorsamuletwait]==1}
+			Expr {getqueststatus[graverobbercompleted_0213]==1}
 		DO:	DoExpr {setgvar[Quest,CP]}
 	IF:	Expr {getgvar[Quest]==CP}
 		DO:	Chat {/f CountPhainor}

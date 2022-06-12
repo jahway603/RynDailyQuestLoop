@@ -51,21 +51,15 @@ STATE: {Abyssal} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			BlockE C8E90000
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {ToDarkIsle}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,Abyssal]}
@@ -187,34 +181,21 @@ STATE: {ClearMobs} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	SecsInStateGE 180
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
 				SetOpt {SummonPets} {True}
 				SetOpt {EnableCombat} {True}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 180
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	NoMobsInDist 10
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
@@ -229,20 +210,14 @@ STATE: {ClearTorch} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {ToDarkIsle}
 	IF:	Always
 		DO:	DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	All
@@ -254,7 +229,7 @@ STATE: {ClearTorch} ~~ {
 	IF:	All
 			Expr {getpvar[FellowCount]>=2}
 			SecsInStateGE 4
-			NoMobsInDist 10
+			Not MobsInDist_Name 3 15 {}
 			CellE C7EB0005
 		DO:	EmbedNav nav2 {[none]}
 	IF:	All
@@ -290,12 +265,15 @@ STATE: {DeathRecall} ~~ {
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
+	IF:	BlockE 00070000
+		DO: SetState {ToTN}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[StateName,DeathRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {EnableCombat} {False}
 				SetOpt {EnableNav} {False}
 				DoExpr {setpvar[Step,0]}
@@ -307,6 +285,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	BlockE C8E90000
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
+				DoExpr {clearvar[CombatStuck]}
 				EmbedNav nav4 {[DeathDelay]}
 	IF:	All
 			NavEmpty
@@ -432,6 +411,7 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[Profile]==1}
 				Expr {testpvar[StateName]==1}
 				Expr {testpvar[Step]==1}
+				Expr {testpvar[SplittingGraelTurnIn]==1}
 				Expr {testpvar[Stuck]==1}
 				Expr {testpvar[Ulgrim]==1}
 				Expr {testpvar[Recall]==1}
@@ -442,11 +422,13 @@ STATE: {Finished} ~~ {
 				Expr {testgvar[Checking]==1}
 				Expr {testgvar[GoNowTwo]==1}
 				Expr {testgvar[SplittingGrael]==1}
+				Expr {testgvar[SplittingGraelTurnIn]==1}
 				Expr {testgvar[getcharstringprop[1]+getworldname[]]==1}
 		DO:	DoAll
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Step]}
+				DoExpr {clearpvar[SplittingGraelTurnIn]}
 				DoExpr {clearpvar[Stuck]}
 				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[Ulgrim]}
@@ -458,6 +440,7 @@ STATE: {Finished} ~~ {
 				DoExpr {cleargvar[Checking]}
 				DoExpr {cleargvar[GoNowTwo]}
 				DoExpr {cleargvar[SplittingGrael]}
+				DoExpr {cleargvar[SplittingGraelTurnIn]}
 				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
 				SetState {Finished}
 	IF:	Always
@@ -466,6 +449,7 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[Profile]==0}
 			Expr {testpvar[StateName]==0}
 			Expr {testpvar[Step]==0}
+			Expr {testpvar[SplittingGraelTurnIn]==0}
 			Expr {testpvar[Stuck]==0}
 			Expr {testpvar[Ulgrim]==0}
 			Expr {testpvar[Recall]==0}
@@ -476,6 +460,7 @@ STATE: {Finished} ~~ {
 			Expr {testgvar[Checking]==0}
 			Expr {testgvar[GoNowTwo]==0}
 			Expr {testgvar[SplittingGrael]==0}
+			Expr {testgvar[SplittingGraelTurnIn]==0}
 			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
 		DO:	Chat {/vt meta load QuestCheckPublic}
 ~~ }
@@ -500,12 +485,42 @@ STATE: {HoshTurnIn} ~~ {
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Shard of the Abyssal Totem]]==1}
 			SecsInStateGE 3
+		DO:	DoExpr {setpvar[SplittingGraelTurnIn,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[SplittingGraelTurnIn]==1}
+			Not Expr {testgvar[SplittingGraelTurnIn]}
+		DO:	DoAll
+				DoExpr {setgvar[SplittingGraelTurnIn,listcreate[]]}
+				SetState {HoshTurnIn}
+	IF:	All
+			Expr {getpvar[SplittingGraelTurnIn]==1}
+			Expr {testgvar[SplittingGraelTurnIn]}
+			Not Expr {listcontains[getgvar[SplittingGraelTurnIn],getcharstringprop[1]]}
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[Shard of the Abyssal Totem]]==1}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[SplittingGraelTurnIn],getcharstringprop[1]]}
+				SetState {HoshTurnIn}
+	IF:	All
+			Expr {getpvar[SplittingGraelTurnIn]==1}
+			Expr {testgvar[SplittingGraelTurnIn]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[SplittingGraelTurnIn],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Finished]}
 				DoExpr {setpvar[CheckSync,Finished]}
 				Chat {/vt meta load CheckPublic} ~~ Finished
 ~~ }
 STATE: {Mp} ~~ {
+
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -581,6 +596,10 @@ STATE: {Pickup} ~~ {
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Shard of the Abyssal Totem]]==1}
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[33883]]==7}
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[33883]]}
+	IF: Any
+			ChatMatch {^You have solved this quest too recently!}
+			ChatMatch {^You may complete this quest again in}
+		DO: DoExpr {setpvar[QuestCompletedSkip,1]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Not Expr {testgvar[QuestComplete]}
@@ -692,19 +711,15 @@ STATE: {Pickup} ~~ {
 				DoExpr {setvar[Pickup,getvar[Pickup]+1]}
 	IF:	Expr {getvar[Pickup]==5}
 		DO:	EmbedNav nav6 {[none]}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			BlockE C8E90000
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {ToDarkIsle}
 	IF:	Expr {getvar[Pickup]>4}
 		DO:	DoExpr {clearvar[Pickup]}
 	IF:	MobsInDist_Name 1 25 {Abyssal Totem}
@@ -726,21 +741,15 @@ STATE: {Pillar} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			BlockE C8E90000
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {ToDarkIsle}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
@@ -1120,20 +1129,14 @@ STATE: {ToTorch} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {ToDarkIsle}
 	IF:	Always
 		DO:	SetWatchdog 5 45 {Watchdog}
 	IF:	All

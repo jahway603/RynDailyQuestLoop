@@ -53,31 +53,21 @@ STATE: {Bridge} ~~ {
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	ChatMatch {!Keys}
 		DO:	DoExpr {setpvar[Keys,1]}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	All
 			Any
 				CellE 7E030720
@@ -172,12 +162,15 @@ STATE: {DeathRecall} ~~ {
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
+	IF:	BlockE 00070000
+		DO: SetState {ToTN}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[StateName,DeathRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {cleargvar[JumpComplete]}
 				DoExpr {cleargvar[Alive]}
 				DoExpr {cleargvar[Go]}
@@ -192,6 +185,7 @@ STATE: {DeathRecall} ~~ {
 	IF: BlockE 74EA0000
 		DO: DoAll
 				SetOpt {EnableNav} {True}
+				DoExpr {clearvar[CombatStuck]}
 				EmbedNav DeathDelay {[DeathDelay]}
 	IF:	All
 			NavEmpty
@@ -287,21 +281,13 @@ STATE: {DeewainFight} ~~ {
 				SetOpt {EnableCombat} {True}
 				SetOpt {EnableNav} {False}
 				SetOpt {SummonPets} {True}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
-			BlockE C8E90000
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -493,20 +479,13 @@ STATE: {Defenders} ~~ {
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	ChatMatch {!Keys}
 		DO:	DoExpr {setpvar[Keys,1]}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -583,20 +562,13 @@ STATE: {DefendersWait} ~~ {
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	ChatMatch {!Keys}
 		DO:	DoExpr {setpvar[Keys,1]}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -627,20 +599,13 @@ STATE: {FallingRocks} ~~ {
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	ChatMatch {!Keys}
 		DO:	DoExpr {setpvar[Keys,1]}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -677,6 +642,8 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[Profile]==1}
 				Expr {testpvar[StateName]==1}
 				Expr {testpvar[Stuck]==1}
+				Expr {testpvar[DeewainTurnIn]==1}
+				Expr {testpvar[EnableDeath]==1}
 				Expr {testpvar[Keys]==1}
 				Expr {testgvar[DefenderCheck]==1}
 				Expr {testgvar[Alive]==1}
@@ -689,11 +656,14 @@ STATE: {Finished} ~~ {
 				Expr {testgvar[GoNowTwo]==1}
 				Expr {testgvar[JumpComplete]==1}
 				Expr {testgvar[Deewain]==1}
+				Expr {testgvar[DeewainTurnIn]==1}
 				Expr {testgvar[getcharstringprop[1]+getworldname[]]==1}
 		DO: DoAll
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Stuck]}
+				DoExpr {clearpvar[DeewainTurnIn]}
+				DoExpr {clearpvar[EnableDeath]}
 				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[Keys]}
 				DoExpr {cleargvar[DefenderCheck]}
@@ -708,11 +678,14 @@ STATE: {Finished} ~~ {
 				DoExpr {cleargvar[GoNowTwo]}
 				DoExpr {cleargvar[JumpComplete]}
 				DoExpr {cleargvar[Deewain]}
+				DoExpr {cleargvar[DeewainTurnIn]}
 				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
 	IF:	All
 			Expr {testpvar[Profile]==0}
 			Expr {testpvar[StateName]==0}
 			Expr {testpvar[Stuck]==0}
+			Expr {testpvar[DeewainTurnIn]==0}
+			Expr {testpvar[EnableDeath]==0}
 			Expr {testpvar[Keys]==0}
 			Expr {testgvar[DefenderCheck]==0}
 			Expr {testgvar[Alive]==0}
@@ -724,6 +697,7 @@ STATE: {Finished} ~~ {
 			Expr {testgvar[Checking]==0}
 			Expr {testgvar[GoNowTwo]==0}
 			Expr {testgvar[Deewain]==0}
+			Expr {testgvar[DeewainTurnIn]==0}
 			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
 		DO:	DoAll
 				ChatExpr {\/vt settings loadchar DQLProfile}
@@ -745,20 +719,13 @@ STATE: {JumpPlatform} ~~ {
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	ChatMatch {!Keys}
 		DO:	DoExpr {setpvar[Keys,1]}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -883,20 +850,13 @@ STATE: {Maze} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -979,31 +939,8 @@ STATE: {PortalMaze} ~~ {
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	ChatMatch {!Keys}
 		DO:	DoExpr {setpvar[Keys,1]}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF:	Any
-			Death
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	IntoPortal
 		DO:	EmbedNav nav999 {Clear}
 	IF:	Any
@@ -1069,19 +1006,14 @@ STATE: {ToDarkCavern} ~~ {
 	IF:	ChatMatch {!Keys}
 		DO:	DoExpr {setpvar[Keys,1]}
 	IF:	All
-			Expr {getpvar[Leader]==1}
+			Expr {getpvar[EnableDeath]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
 				ChatMatch {!ManDown}
 				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF:	Any
-			Death
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				Any
+					BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1096,7 +1028,9 @@ STATE: {ToDarkCavern} ~~ {
 	IF:	BlockE F5590000
 		DO:	EmbedNav nav26 {DeewainToSnowy.nav} ~~ Tou-Tou SettlementPortals
 	IF:	BlockE 74EA0000
-		DO:	EmbedNav nav27 {Junk.nav}
+		DO:	DoAll
+				DoExpr {setpvar[EnableDeath,1]}
+				EmbedNav nav27 {Junk.nav}
 	IF:	All
 			NavEmpty
 			Expr {getvar[PitStop]==0}
@@ -1274,6 +1208,34 @@ STATE: {TurnIn} ~~ {
 	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Energy Infused Rock]]==7}
 		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Energy Infused Rock],wobjectfindnearestbynameandobjectclass[37,Fayza]]}
 	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Energy Infused Rock]]==1}
+		DO:	DoExpr {setpvar[DeewainTurnIn,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[DeewainTurnIn]==1}
+			Not Expr {testgvar[DeewainTurnIn]}
+		DO:	DoAll
+				DoExpr {setgvar[DeewainTurnIn,listcreate[]]}
+				SetState {TurnIn}
+	IF:	All
+			Expr {getpvar[DeewainTurnIn]==1}
+			Expr {testgvar[DeewainTurnIn]}
+			Not Expr {listcontains[getgvar[DeewainTurnIn],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[DeewainTurnIn],getcharstringprop[1]]}
+				SetState {TurnIn}
+	IF:	All
+			Expr {getpvar[DeewainTurnIn]==1}
+			Expr {testgvar[DeewainTurnIn]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[DeewainTurnIn],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[DeewainTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[DeewainTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[DeewainTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[DeewainTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[DeewainTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[DeewainTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[DeewainTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[DeewainTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[DeewainTurnIn],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Finished]}
 				DoExpr {setpvar[CheckSync,Finished]}
@@ -1295,26 +1257,16 @@ STATE: {WaitClear} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death	
-			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
-		DO:	Chat {/f !ManDown}
-	IF: Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO: SetState {DeathRecall}
 	IF:	Any
 			All
 				SecsInStateGE 1
@@ -1360,25 +1312,16 @@ STATE: {DeewainJumpPuzzle} ~~ {
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
-			Expr {getpvar[Leader]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
 				ChatMatch {!ManDown}
 				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				Any
+					BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death	
-			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
-		DO:	Chat {/f !ManDown}
-	IF: Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO: SetState {DeathRecall}
 	IF: NavEmpty
 		DO: DoAll
 				DoExpr {$k=0.55;$m=1+$k*(543*sqrt[588]/(getcharskill_buffed[24]*sqrt[getcharskill_buffed[22]])-1)} ~~ kludgey initial adjustment of list numbers for different Run and Jump skills
@@ -1408,25 +1351,16 @@ STATE: {AddNavPoint} ~~ {
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
-			Expr {getpvar[Leader]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
 				ChatMatch {!ManDown}
 				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				Any
+					BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death	
-			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
-		DO:	Chat {/f !ManDown}
-	IF: Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO: SetState {DeathRecall}
 	~~ Compute next point from which to jump; add it to nav route; ... move there
 	IF: Always
 		DO: DoAll
@@ -1460,25 +1394,16 @@ STATE: {DoJump} ~~ {
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
-			Expr {getpvar[Leader]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
 				ChatMatch {!ManDown}
 				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				Any
+					BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death	
-			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
-		DO:	Chat {/f !ManDown}
-	IF: Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO: SetState {DeathRecall}
 	~~ do a jump
 	IF: NavEmpty
 		DO: DoAll
@@ -1510,25 +1435,16 @@ STATE: {InFlight} ~~ { This and InFlightB cycle to collect more jump-arc points 
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
-			Expr {getpvar[Leader]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
 				ChatMatch {!ManDown}
 				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				Any
+					BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death	
-			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
-		DO:	Chat {/f !ManDown}
-	IF: Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO: SetState {DeathRecall}
 	~~ moving
 	IF: Expr {$pos=getplayercoordinates[];$dx=coordinategetwe[$pos]-coordinategetwe[$ppos];$dy=coordinategetns[$pos]-coordinategetns[$ppos];$dz=coordinategetz[$pos]-coordinategetz[$ppos];$dx*$dx+$dy*$dy+$dz*$dz>0}
 		DO: DoAll
@@ -1556,25 +1472,16 @@ STATE: {InFlightB} ~~ { This and InFlight cycle to collect more jump-arc points 
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
-			Expr {getpvar[Leader]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
 				ChatMatch {!ManDown}
 				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				Any
+					BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death	
-			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
-		DO:	Chat {/f !ManDown}
-	IF: Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO: SetState {DeathRecall}
 	~~ moving
 	IF: Expr {$pos=getplayercoordinates[];$dx=coordinategetwe[$pos]-coordinategetwe[$ppos];$dy=coordinategetns[$pos]-coordinategetns[$ppos];$dz=coordinategetz[$pos]-coordinategetz[$ppos];$dx*$dx+$dy*$dy+$dz*$dz>0}
 		DO: DoAll
@@ -1605,25 +1512,16 @@ STATE: {ToPortalMaze} ~~ {
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
-			Expr {getpvar[Leader]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
 				ChatMatch {!ManDown}
 				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				Any
+					BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death	
-			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
-		DO:	Chat {/f !ManDown}
-	IF: Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO: SetState {DeathRecall}
 	IF:	Expr {coordinategetz[getplayercoordinates[]]#0.1000}
 		DO:	DoAll
 				SetOpt {NavCloseStopRange} {0.00625}
@@ -1649,6 +1547,17 @@ STATE: {PortalMazeTransition} ~~ {
 		DO:	DoAll
 				DoExpr {listadd[getgvar[JumpComplete],getcharstringprop[1]]}
 				SetState {PortalMazeTransition}
+	IF:	All
+			Any
+				Death
+				ChatMatch {^Your fellow .* has died!$}
+				ChatMatch {!ManDown}
+				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				Any
+					BlockE C8E90000
+		DO:	DoAll
+				Chat {/f !ManDown}
+				SetState {DeathRecall}
 	IF: All
 			Expr {testgvar[JumpComplete]}
 			Any
@@ -1681,25 +1590,16 @@ STATE: {LandJump} ~~ {
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
-			Expr {getpvar[Leader]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
 				ChatMatch {!ManDown}
 				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				Any
+					BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death	
-			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
-		DO:	Chat {/f !ManDown}
-	IF: Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO: SetState {DeathRecall}
 	~~ if at top (done; continue)        TODO: what if J{0} is shorter than the recovery?
 	IF: Expr {$pos=getplayercoordinates[];coordinategetns[$pos]>0-100.52916666666} ~~ N/S coordinate of edge of top ledge
 		DO: DoAll ~~ TODO: continue with nav'ing through portal sequence...
@@ -1744,25 +1644,16 @@ STATE: {ResetJumps} ~~ {
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
-			Expr {getpvar[Leader]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
 				ChatMatch {!ManDown}
 				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				Any
+					BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death	
-			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
-		DO:	Chat {/f !ManDown}
-	IF: Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO: SetState {DeathRecall}
 	IF: Always
 		DO: DoAll
 				DoExpr {$TOP=listfilter[$ARC,`coordinategetz[$1]>$J{{$j}}{{$i}}{{2}}`];$hi=(listcount[$TOP]>0)}
@@ -1802,25 +1693,16 @@ STATE: {UpdateJumpPowerMultiplier} ~~ {
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
-			Expr {getpvar[Leader]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
 				ChatMatch {!ManDown}
 				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				Any
+					BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death	
-			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
-		DO:	Chat {/f !ManDown}
-	IF: Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO: SetState {DeathRecall}
 	IF: Expr {coordinategetz[$pos]-$J{{1}}{{0}}{{2}}>$zeps}
 		DO: ChatExpr {`/ub jumpsx`}
 	~~ can't decrease to 0 power

@@ -62,12 +62,15 @@ STATE: {DeathRecall} ~~ {
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
+	IF:	BlockE 00070000
+		DO:	SetState {ToTN}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[StateName,DeathRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {clearvar[LootStep]}
 				SetOpt {EnableCombat} {False}
 				SetOpt {EnableNav} {False}
@@ -88,7 +91,7 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[StateName,ToResearchFac]}
 				DoExpr {setpvar[CheckSync,Death]}
-				Chat {/vt meta load CheckPublic} ~~ Death
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {Default} ~~ {
 	IF:	All
@@ -174,28 +177,20 @@ STATE: {Dravann} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Always
-		DO:	DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.1875]]`,`vtsetsetting[AttackDistance,cstr[0.1875]]`]}
+		DO:	DoAll
+				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.1875]]`,`vtsetsetting[AttackDistance,cstr[0.1875]]`]}
 	IF:	CellE 5655010B
 		DO:	DoAll
 				DoExpr {setpvar[StateName,StuckDravann]}
@@ -239,7 +234,7 @@ STATE: {Dravann} ~~ {
 				DoExpr {setpvar[Step,1]}
 				DoExpr {setpvar[StateName,PortalRecall]}
 				DoExpr {setpvar[CheckSync,PortalRecall]}
-				Chat {/vt meta load CheckPublic} ~~ PortalRecall
+				Chat {/vt meta load CheckPublic}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Essence of Dravann]]==1}
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Dravann]]==7}
@@ -264,6 +259,7 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[Profile]==1}
 				Expr {testpvar[Stuck]==1}
 				Expr {testpvar[Step]==1}
+				Expr {testpvar[VRTurnIn]==1}
 				Expr {testpvar[QuestCompletedSkip]==1}
 				Expr {testpvar[PrisonerLoot]==1}
 				Expr {testpvar[FailDelayCounter]==1}
@@ -275,6 +271,7 @@ STATE: {Finished} ~~ {
 				Expr {testgvar[DefaultPass]==1}
 				Expr {testgvar[GoNowClear]==1}
 				Expr {testgvar[Checking]==1}
+				Expr {testgvar[VRTurnIn]==1}
 				Expr {testgvar[GoNowTwo]==1}
 				Expr {testgvar[VirindiRescue]==1}
 				Expr {testgvar[getcharstringprop[1]+getworldname[]]==1}
@@ -284,6 +281,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[Stuck]}
 				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[Step]}
+				DoExpr {clearpvar[VRTurnIn]}
 				DoExpr {clearpvar[QuestCompletedSkip]}
 				DoExpr {clearpvar[PrisonerLoot]}
 				DoExpr {cleargvar[FailDelayCounter]}
@@ -296,6 +294,7 @@ STATE: {Finished} ~~ {
 				DoExpr {cleargvar[GoNowClear]}
 				DoExpr {cleargvar[Checking]}
 				DoExpr {cleargvar[GoNowTwo]}
+				DoExpr {cleargvar[VRTurnIn]}
 				DoExpr {cleargvar[VirindiRescue]}
 				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
 				SetState {Finished}
@@ -304,6 +303,7 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[Profile]==0}
 			Expr {testpvar[Stuck]==0}
 			Expr {testpvar[Step]==0}
+			Expr {testpvar[VRTurnIn]==0}
 			Expr {testpvar[QuestCompletedSkip]==0}
 			Expr {testpvar[PrisonerLoot]==0}
 			Expr {testpvar[FailDelayCounter]==0}
@@ -316,6 +316,7 @@ STATE: {Finished} ~~ {
 			Expr {testgvar[GoNowClear]==0}
 			Expr {testgvar[Checking]==0}
 			Expr {testgvar[GoNowTwo]==0}
+			Expr {testgvar[VRTurnIn]==0}
 			Expr {testgvar[VirindiRescue]==0}
 			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
 		DO:	Chat {/vt meta load QuestCheckPublic}
@@ -334,34 +335,21 @@ STATE: {KeeperDoor} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
+			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
-	IF:	Not Expr {testvar[StateTimer]}
-		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=240}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=240}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+	IF:	Not Expr {testvar[StateTimer]}
+		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Virindi Research Center Key`]]==7}
 			CellE 5655018F
@@ -381,7 +369,9 @@ STATE: {KeeperDoor} ~~ {
 		DO:	DoExpr {setgvar[Go,1]}
 	IF:	Expr {getgvar[Go]==1}
 		DO:	EmbedNav nav3 {[none]}
-	IF:	CellE 56550174
+	IF:	Any
+			CellE 56550174
+			CellE 56550190
 		DO:	DoAll
 				DoExpr {cleargvar[Go]}
 				DoExpr {clearvar[StateTimer]}
@@ -406,35 +396,11 @@ STATE: {Loot} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
-				SetOpt {EnableLooting} {True}
-				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
-				DoExpr {clearvar[CorpseName]}
-				DoExpr {clearvar[LootItem]}
-				DoExpr {clearvar[Loot]}
-				DoExpr {clearvar[CorpseDetect]}
-				DoExpr {clearvar[LootCount]}
-				DoExpr {clearvar[CloseCorpseTimer]}
-				DoExpr {clearvar[SourceNotFound]}
-				DoExpr {clearvar[LootStuckDelay]}
-				DoExpr {clearvar[LootCloseCorpse]}
-				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
@@ -455,26 +421,6 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[Looting,0]}
 				Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
-				SetOpt {EnableLooting} {True}
-				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
-				DoExpr {clearvar[CorpseName]}
-				DoExpr {clearvar[LootItem]}
-				DoExpr {clearvar[Loot]}
-				DoExpr {clearvar[CorpseDetect]}
-				DoExpr {clearvar[LootCount]}
-				DoExpr {clearvar[CloseCorpseTimer]}
-				DoExpr {clearvar[SourceNotFound]}
-				DoExpr {clearvar[LootStuckDelay]}
-				DoExpr {clearvar[LootCloseCorpse]}
-				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
 				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
@@ -619,10 +565,10 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootStuckDelay]}
 				DoExpr {setgvar[Looting,0]}
 				SetState {LootStuckDelay}
-	IF: All
+	IF:	All
 			Expr {listcount[getgvar[FailDelayCounter]]==listcount[getgvar[LootingCounter]]}
 			SecsInStateGE 30
-		DO: DoAll
+		DO:	DoAll
 				DoExpr {setgvar[Looting,0]}
 				SetState {Loot}
 ~~ }
@@ -697,48 +643,17 @@ STATE: {Omarah} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
+			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
-	IF:	SecsInStateGE 180
+			SecsInStateGE 180
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			ChatMatch {^The Virindi motions you towards it.}
-			ChatMatch {^Omarah tells you, "Greetings fellow Derethian. You look brave enough to complete a task to free the ones like me - ones that have escaped the oppressing control of the Quiddity."}
-			ChatMatch {^Omarah tells you, "Rarely our kind will show signs of individual thought, signs that we have become enlightened and free from the grip of the single-minded."}
-			ChatMatch {^Omarah tells you, "See the crater to the south? A strange portal appeared recently and I can feel the call of my brethren from within. I can feel their identity being ripped away from them."}
-			ChatMatch {^Omarah tells you, "I was drawn to the portal by the voices but I saw one of the Reaver of Dreams' minions guarding the entrance, so I hid here before they discovered me and dragged me into their facility. I am too little to attempt a rescue - the Virindi within are far too powerful for me to handle by myself."}
-			ChatMatch {^Omarah tells you, "I do not know what the Reaver of Dreams is doing in there, but it can't be good and we must put a stop to this evil."}
-			ChatMatch {^Omarah tells you, "Free any of the enlightened within and slay the one in charge. This will not stop the Reaver, no, but it will show that we will not crumble to their will."}
-			ChatMatch {^Omarah tells you, "Return to me when you have put an end to their experiments and I will reward you."}
-			ChatMatch {^Omarah tells you, "Have you freed the}
-		DO:	SetState {PortalRecall}
-	IF:	All
-			BlockE 49B60000
-			SecsInStateGE 1
-			Expr {getpvar[Step]==0}
-			NavEmpty
-		DO:	DoAll
-				DoExpr {actiontryuseitem[wobjectfindnearestbynameandobjectclass[37,Omarah]]}
 	IF:	BlockE 49B70000
 		DO:	EmbedNav nav5 {[none]}
 	IF:	All
@@ -748,14 +663,42 @@ STATE: {Omarah} ~~ {
 		DO:	DoAll
 				DoExpr {actiontrygiveitem[wobjectfindininventorybynamerx[`Essence of Dravann`],wobjectfindnearestbynameandobjectclass[37,Omarah]]]}
 				SetState {Omarah}
-	IF:	All
+	IF: All
 			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Essence of Dravann`]]==1}
 			BlockE 49B60000
 			Expr {getpvar[Step]==1}
+		DO:	DoExpr {setpvar[VRTurnIn,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[VRTurnIn]==1}
+			Not Expr {testgvar[VRTurnIn]}
+		DO:	DoAll
+				DoExpr {setgvar[VRTurnIn,listcreate[]]}
+				SetState {Omarah}
+	IF:	All
+			Expr {getpvar[VRTurnIn]==1}
+			Expr {testgvar[VRTurnIn]}
+			Not Expr {listcontains[getgvar[VRTurnIn],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[VRTurnIn],getcharstringprop[1]]}
+				SetState {Omarah}
+	IF:	All
+			Expr {getpvar[VRTurnIn]==1}
+			Expr {testgvar[VRTurnIn]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[VRTurnIn],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[VRTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[VRTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[VRTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[VRTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[VRTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[VRTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[VRTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[VRTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[VRTurnIn],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Finished]}
 				DoExpr {setpvar[CheckSync,QuestFinished]}
-				Chat {/vt meta load CheckPublic} ~~ QuestFinished
+				Chat {/vt meta load CheckPublic}
 	IF:	All
 			BlockE 49B60000
 			SecsInStateGE 6
@@ -785,26 +728,6 @@ STATE: {PortalRecall} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	All
@@ -844,34 +767,21 @@ STATE: {PrisonerOne} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
+			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
-	IF:	Not Expr {testvar[StateTimer]}
-		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+	IF:	Not Expr {testvar[StateTimer]}
+		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Virindi Jailor]]==7}
 			Expr {getpvar[PrisonerLoot]==1}
@@ -879,7 +789,7 @@ STATE: {PrisonerOne} ~~ {
 			CellE 5655039C
 			Expr {getpvar[Leader]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45898]]==1}
-			NoMobsInDist 15
+			Not MobsInDist_Name 3 15 {}
 		DO:	DoAll
 				DoExpr {setvar[LootStep,1]}
 				DoExpr {setvar[CorpseName,Corpse of Virindi Jailor]}
@@ -912,12 +822,6 @@ STATE: {PrisonerOne} ~~ {
 			Expr {getpvar[Leader]==0}
 			Expr {getgvar[Go]==1}
 		DO:	EmbedNav nav7 {[none]}
-	IF:	All
-			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
-			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==1}
-			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5}
-			Expr {getpvar[Leader]==1}
-		DO:	DoExpr {setgvar[Go,1]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Expr {getgvar[Go]==1}
@@ -954,40 +858,28 @@ STATE: {PrisonerThree} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Virindi Jailor]]==7}
 			Expr {getpvar[PrisonerLoot]==1}
 			Expr {getvar[LootStep]==2}
 			CellE 56550296
 			Expr {getpvar[Leader]==1}
-			NoMobsInDist 15
+			Not MobsInDist_Name 3 15 {}
 		DO:	DoAll
 				DoExpr {setvar[LootStep,3]}
 				DoExpr {setvar[CorpseName,Corpse of Virindi Jailor]}
@@ -1060,41 +952,28 @@ STATE: {PrisonerTwo} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
+			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
-	IF:	Not Expr {testvar[StateTimer]}
-		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+	IF:	Not Expr {testvar[StateTimer]}
+		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Virindi Jailor]]==7}
 			Expr {getpvar[PrisonerLoot]==1}
 			Expr {getvar[LootStep]==1}
 			CellE 56550392
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45900]]==1}
-			NoMobsInDist 15
+			Not MobsInDist_Name 3 15 {}
 			Expr {getpvar[Leader]==1}
 		DO:	DoAll
 				DoExpr {setvar[LootStep,2]}
@@ -1172,34 +1051,21 @@ STATE: {ResearchFac} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
+			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
-	IF:	Not Expr {testvar[StateTimer]}
-		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+	IF:	Not Expr {testvar[StateTimer]}
+		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Expr {getpvar[FellowCount]<2}
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
@@ -1225,7 +1091,7 @@ STATE: {ResearchFac} ~~ {
 				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,PrisonerOne]}
 				DoExpr {setpvar[CheckSync,PrisonerOne]}
-				Chat {/vt meta load CheckPublic} ~~ PrisonerOne
+				Chat {/vt meta load CheckPublic}
 	IF:	CellE 5655039E
 		DO:	EmbedNav nav16 {VrescuePt2.nav}
 	IF:	All
@@ -1241,7 +1107,7 @@ STATE: {ResearchFac} ~~ {
 				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,PrisonerTwo]}
 				DoExpr {setpvar[CheckSync,PrisonerTwo]}
-				Chat {/vt meta load CheckPublic} ~~ PrisonerTwo
+				Chat {/vt meta load CheckPublic}
 	IF:	CellE 565503A0
 		DO:	EmbedNav nav17 {VrescuePt3.nav}
 	IF:	All
@@ -1257,7 +1123,7 @@ STATE: {ResearchFac} ~~ {
 				SetOpt {EnableCombat} {True}
 				DoExpr {setpvar[StateName,PrisonerThree]}
 				DoExpr {setpvar[CheckSync,PrisonerThree]}
-				Chat {/vt meta load CheckPublic} ~~ PrisonerThree
+				Chat {/vt meta load CheckPublic}
 	IF:	CellE 565502A8
 		DO:	EmbedNav nav18 {VrescuePt4.nav}
 	IF:	All
@@ -1312,7 +1178,7 @@ STATE: {ResearchFac} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,ToKeeperDoor]}
 				DoExpr {setpvar[CheckSync,ToKeeperDoor]}
-				Chat {/vt meta load CheckPublic} ~~ ToKeeperDoor
+				Chat {/vt meta load CheckPublic}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Virindi Research Center Key`]]==7}
 			Expr {getpvar[Leader]==1}
@@ -1330,7 +1196,7 @@ STATE: {ResearchFac} ~~ {
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {setpvar[StateName,ToKeeperDoor]}
 				DoExpr {setpvar[CheckSync,ToKeeperDoor]}
-				Chat {/vt meta load CheckPublic} ~~ ToKeeperDoor
+				Chat {/vt meta load CheckPublic}
 	IF:	All
 			CellE 5655018F
 			NavEmpty
@@ -1339,15 +1205,17 @@ STATE: {ResearchFac} ~~ {
 				DoExpr {setpvar[StateName,KeeperDoor]}
 				DoExpr {setpvar[CheckSync,KeeperDoor]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
-				Chat {/vt meta load CheckPublic} ~~ KeeperDoor
-	IF:	CellE 56550174
+				Chat {/vt meta load CheckPublic}
+	IF:	Any
+			CellE 56550174
+			CellE 56550190
 		DO:	EmbedNav nav19 {[none]}
 	IF:	CellE 5655010B
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,Dravann]}
 				DoExpr {setpvar[CheckSync,Dravann]}
-				Chat {/vt meta load CheckPublic} ~~ Dravann
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {StuckDravann} ~~ {
 	IF:	All
@@ -1363,25 +1231,21 @@ STATE: {StuckDravann} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=240}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=240}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Always
 		DO:	EmbedNav nav20 {[none]}
 	IF:	CellE 5655010B
@@ -1389,15 +1253,15 @@ STATE: {StuckDravann} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				SetState {Dravann}
 ~~ }
-STATE: {SyncBuff} ~~{
-	IF: Not Expr {testpvar[BuffingStartAll]}
-		DO: DoAll
+STATE: {SyncBuff} ~~ {
+	IF:	Not Expr {testpvar[BuffingStartAll]}
+		DO:	DoAll
 				DoExpr {setpvar[BuffingStartAll,1]}
 				Chat {/vt forcebuff}
-	IF: All
+	IF:	All
 			NeedToBuff
 			Expr {vtgetsetting[EnableBuffing]!=True}
-		DO: SetOpt {EnableBuffing} {True}
+		DO:	SetOpt {EnableBuffing} {True}
 	IF:	All
 			Not Expr {testgvar[SyncBuffComplete]}
 			Not NeedToBuff
@@ -1423,12 +1287,12 @@ STATE: {SyncBuff} ~~{
 				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]}
 				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]}
 				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}		
-		DO: DoAll
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}
+		DO:	DoAll
 				DoExpr {cleargvar[Buffing]}
 				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
-~~}
+~~ }
 STATE: {ToKeeperDoor} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
@@ -1443,34 +1307,21 @@ STATE: {ToKeeperDoor} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
 			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
+			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
-	IF:	Not Expr {testvar[StateTimer]}
-		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=240}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=240}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+	IF:	Not Expr {testvar[StateTimer]}
+		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
@@ -1506,26 +1357,6 @@ STATE: {ToPlateau} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
@@ -1557,36 +1388,23 @@ STATE: {ToResearchFac} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=180}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Always
 		DO:	DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=180}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	BlockE 49B70000
 		DO:	EmbedNav nav23 {[none]}
 	IF:	BlockE 56550000
@@ -1598,7 +1416,7 @@ STATE: {ToResearchFac} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,ResearchFac]}
 				DoExpr {setpvar[CheckSync,ToResearchFac]}
-				Chat {/vt meta load CheckPublic} ~~ ToResearchFac
+				Chat {/vt meta load CheckPublic}
 ~~ }
 STATE: {ToTN} ~~ {
 	IF:	All
@@ -1614,26 +1432,6 @@ STATE: {ToTN} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ManDown}
-	IF:	Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	SetState {DeathRecall}
 	IF:	Always
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	Any
@@ -1693,94 +1491,110 @@ NAV: nav1 once ~~ {
 	pnt -43.1333850224813 44.532936501503 0.994493993123372
 ~~ }
 NAV: nav2 once ~~ {
-	pnt -33.0239453633626 -34.1180273691813 -0.0749791701634725
-	pnt -33.0242624123891 -34.1025276184082 -0.0749791701634725
-	pnt -33.0235044558843 -34.0584227164586 -0.0749791701634725
-	pnt -33.022917731603 -34.0252317905426 -0.0749791701634725
-	pnt -33.0281093915304 -33.9933435678482 -0.0749791701634725
-	pnt -33.0273998419444 -33.9623154083888 -0.0749791701634725
-	pnt -33.0280439694723 -33.9611119449139 -0.0749791701634725
+	pnt -33.0245589494705 -34.1010840892792 -0.0749791701634725
+	chk -33.0245589494705 -34.1010840892792 -0.0749791701634725
+	pnt -33.0237374544144 -34.076878786087 -0.0749791701634725
+	chk -33.0237374544144 -34.076878786087 -0.0749791701634725
+	pnt -33.024322104454 -34.0458000659943 -0.0749791701634725
+	chk -33.024322104454 -34.0458000659943 -0.0749791701634725
+	pnt -33.0270530541738 -33.9568798104922 -0.0749791701634725
+	chk -33.0289506276449 -33.9622318396966 -0.0749791701634725
 ~~ }
 NAV: nav3 once ~~ {
-	pnt -32.8635701179504 -34.1164750734965 2.08333134651184E-05
-	pnt -32.8707452774048 -34.1167981147766 2.08333134651184E-05
-	pnt -32.8967556317647 -34.1158531506856 2.08333134651184E-05
-	pnt -32.9185485521952 -34.116939051946 2.08333134651184E-05
+	pnt -32.8604253133138 -34.1162037690481 2.08333134651184E-05
+	chk -32.8604253133138 -34.1162037690481 2.08333134651184E-05
+	pnt -32.880365562439 -34.1154512405395 2.08333134651184E-05
+	chk -32.880365562439 -34.1154512405395 2.08333134651184E-05
 ~~ }
 NAV: nav4 once ~~ {
 ~~ }
 NAV: nav5 once ~~ {
-	pnt -43.132329750061 44.5372119267782 0.994225629170736
-	pnt -43.1340972264608 44.5091579556465 0.996416219075521
-	pnt -43.1358636856079 44.4813697973887 0.998584683736165
-	pnt -43.1402025858561 44.4071707407633 1.0000207901001
-	pnt -43.1439338684082 44.3413571675618 1.0000207901001
-	pnt -43.1708586374919 44.2829778035482 1.0000207901001
-	pnt -43.2248281478882 44.2638250350952 1.0000207901001
-	pnt -43.2491443634033 44.2206000010173 1.0000207901001
-	pnt -43.2388216018677 44.2146886825562 1.0000207901001
-	pnt -43.2189335187276 44.2133601506551 1.0000207901001
-	pnt -43.2187003771464 44.2139426549276 1.0000207901001
-	pnt -43.2010345776876 44.2145706176758 1.0000207901001
-	pnt -43.1970990498861 44.2017552057902 1.0000207901001
-	pnt -43.1967446962992 44.1978734970093 1.0000207901001
-	pnt -43.1978353500366 44.1874282836914 1.0000207901001
-	pnt -43.1981059392293 44.1860903422038 1.0000207901001
-	pnt -43.2046937306722 44.1868275960286 1.0000207901001
-	pnt -43.2089129447937 44.1887360254924 1.0000207901001
-	pnt -43.2080517450968 44.1793764750163 1.0000207901001
-	pnt -43.2082627932231 44.1749266306559 1.0000207901001
-	pnt -43.1855180740356 44.1753499984741 0.984413464864095
-	pnt -43.1838092168172 44.1898932774862 0.983233324686686
-	pnt -43.1921905199687 44.2016847610474 0.983233324686686
-	pnt -43.1939748446147 44.2049162546794 0.983233324686686
+	pnt -43.1397096951803 44.4919267654419 0.997384452819824
+	pnt -43.1583194096883 44.3757092793783 0.999327532450358
+	pnt -43.1682010332743 44.3134273529053 1.0000207901001
+	pnt -43.2056093215942 44.277797571818 1.0000207901001
+	pnt -43.2535758972168 44.2337841669718 1.0000207901001
+	chk -43.2535758972168 44.2337841669718 1.0000207901001
+	pnt -43.2489906311035 44.2178307851156 1.0000207901001
+	pnt -43.2302318890889 44.2129754384359 1.0000207901001
+	pnt -43.2170051574707 44.2134232203166 1.0000207901001
+	chk -43.2170051574707 44.2134232203166 1.0000207901001
+	pnt -43.2054126103719 44.21381371816 1.0000207901001
+	chk -43.2054126103719 44.21381371816 1.0000207901001
+	pnt -43.2029785792033 44.2072182337443 1.0000207901001
+	pnt -43.1998983065287 44.2008986155192 1.0000207901001
+	pnt -43.1968042055766 44.1985753377279 1.0000207901001
+	chk -43.1968042055766 44.1985753377279 1.0000207901001
+	pnt -43.1965219179789 44.1889015833537 1.0000207901001
+	chk -43.1965219179789 44.1889015833537 1.0000207901001
+	pnt -43.2035521825155 44.1889061609904 1.0000207901001
+	pnt -43.2091329574585 44.187513923645 1.0000207901001
+	chk -43.2091329574585 44.187513923645 1.0000207901001
+	pnt -43.2089464823405 44.1764719327291 1.0000207901001
+	chk -43.2089464823405 44.1764719327291 1.0000207901001
+	pnt -43.2019547462463 44.1757368723551 0.99756285349528
+	chk -43.2019547462463 44.1757368723551 0.99756285349528
+	pnt -43.1947780291239 44.1757034619649 0.991821479797363
+	pnt -43.1826268513997 44.1756536801656 0.983233324686686
+	chk -43.1826268513997 44.1756536801656 0.983233324686686
+	pnt -43.1824459711711 44.18716284434 0.983233324686686
+	chk -43.1824459711711 44.18716284434 0.983233324686686
+	pnt -43.1944593747457 44.199408976237 0.983233324686686
+	chk -43.1944593747457 44.199408976237 0.983233324686686
 ~~ }
 NAV: nav6 once ~~ {
 	pnt -31.944621404012 -34.9170426686605 2.08333134651184E-05
 ~~ }
 NAV: nav7 once ~~ {
-	pnt -31.9451675415039 -34.9143909454346 2.08333134651184E-05
-	pnt -31.9433619181315 -34.9196983973185 2.08333134651184E-05
-	pnt -31.9419253031413 -34.9421091079712 2.08333134651184E-05
+	pnt -31.9417053222656 -34.9212154388428 2.08333134651184E-05
+	chk -31.9417053222656 -34.9212154388428 2.08333134651184E-05
+	pnt -31.941179784139 -34.9422882715861 2.08333134651184E-05
+	chk -31.941179784139 -34.9422882715861 2.08333134651184E-05
 ~~ }
 NAV: nav8 once ~~ {
-	pnt -31.9451675415039 -34.9143909454346 2.08333134651184E-05
-	pnt -31.9433619181315 -34.9196983973185 2.08333134651184E-05
-	pnt -31.9419253031413 -34.9421091079712 2.08333134651184E-05
-	tlk -31.9425219217936 -34.942319615682 2.08333134651184E-05 -31.9415458679199 -34.9507833480835 0.000120833268738352 37 {Virindi Captive}
-	pau -31.9425219217936 -34.942319615682 2.08333134651184E-05 1000
-	cht -31.9425219217936 -34.942319615682 2.08333134651184E-05 {/f !Going}
+	pnt -31.9421867370605 -34.9173704147339 2.08333134651184E-05
+	chk -31.9421867370605 -34.9173704147339 2.08333134651184E-05
+	pnt -31.9414115905762 -34.9423785527547 2.08333134651184E-05
+	chk -31.9414115905762 -34.9423785527547 2.08333134651184E-05
+	tlk -31.9414115905762 -34.9423785527547 2.08333134651184E-05 -31.9415458679199 -34.9507833480835 0.000120833268738352 37 {Virindi Captive}
+	pau -31.9414115905762 -34.9423785527547 2.08333134651184E-05 1000
+	cht -31.9414115905762 -34.9423785527547 2.08333134651184E-05 {/f !Going}
 ~~ }
 NAV: nav9 once ~~ {
 	pnt -32.5490381876628 -34.4513984362284 2.08333134651184E-05
 ~~ }
 NAV: nav10 once ~~ {
-	pnt -32.5673611323039 -34.452613290151 2.08333134651184E-05
-	pnt -32.5579842885335 -34.4525825182597 2.08333134651184E-05
-	pnt -32.5513339996338 -34.4521874427795 2.08333134651184E-05
-	pnt -32.5490413665772 -34.4510822931925 2.08333134651184E-05
-	pnt -32.5341507593791 -34.4504414558411 2.08333134651184E-05
+	pnt -32.555232111613 -34.4508251190186 2.08333134651184E-05
+	chk -32.555232111613 -34.4508251190186 2.08333134651184E-05
+	pnt -32.5341767628988 -34.4503485997518 2.08333134651184E-05
+	chk -32.5341767628988 -34.4503485997518 2.08333134651184E-05
 ~~ }
 NAV: nav11 once ~~ {
-	pnt -32.5489378611247 -34.4510526021322 2.08333134651184E-05
-	pnt -32.5341329574585 -34.4496564229329 2.08333134651184E-05
-	tlk -32.5489378611247 -34.4510526021322 2.08333134651184E-05 -32.525204149882 -34.4501041730245 0.000120833268738352 37 {Virindi Captive}
-	cht -32.5489378611247 -34.4510526021322 2.08333134651184E-05 {/f !Going}
+	pnt -32.5535911560059 -34.4506655375163 2.08333134651184E-05
+	chk -32.5535911560059 -34.4506655375163 2.08333134651184E-05
+	pnt -32.5340689341227 -34.4513057390849 2.08333134651184E-05
+	chk -32.5340689341227 -34.4513057390849 2.08333134651184E-05
+	pau -32.5340689341227 -34.4513057390849 2.08333134651184E-05 1000
+	tlk -32.5340689341227 -34.4513057390849 2.08333134651184E-05 -32.525204149882 -34.4501041730245 0.000120833268738352 37 {Virindi Captive}
+	cht -32.5340689341227 -34.4513057390849 2.08333134651184E-05 {/f !Going}
 ~~ }
 NAV: nav12 once ~~ {
 	pnt -31.9321809132894 -34.3675214767456 2.08333134651184E-05
 ~~ }
 NAV: nav13 once ~~ {
-	pnt -31.9417502085368 -34.3698097864787 2.08333134651184E-05
-	pnt -31.9228022257487 -34.3667952537537 2.08333134651184E-05
-	pnt -31.9083323160807 -34.36353114446 2.08333134651184E-05
+	pnt -31.9321938832601 -34.3672643661499 2.08333134651184E-05
+	chk -31.9321938832601 -34.3672643661499 2.08333134651184E-05
+	pnt -31.9090073903402 -34.3675792694092 2.08333134651184E-05
+	chk -31.9090073903402 -34.3675792694092 2.08333134651184E-05
 ~~ }
 NAV: nav14 once ~~ {
-	pnt -31.9417502085368 -34.3698097864787 2.08333134651184E-05
-	pnt -31.9228022257487 -34.3667952537537 2.08333134651184E-05
-	pnt -31.9083323160807 -34.36353114446 2.08333134651184E-05
-	tlk -31.9083323160807 -34.36353114446 2.08333134651184E-05 -31.9001541137695 -34.3667916615804 0.000120833268738352 37 {Virindi Captive}
-	cht -31.9419253031413 -34.9421091079712 2.08333134651184E-05 {/f !Going}
+	pnt -31.9296171824137 -34.3676702181498 2.08333134651184E-05
+	chk -31.9296171824137 -34.3676702181498 2.08333134651184E-05
+	pnt -31.9087795257568 -34.3663807868958 2.08333134651184E-05
+	chk -31.9087795257568 -34.3663807868958 2.08333134651184E-05
+	pau -31.9087795257568 -34.3663807868958 2.08333134651184E-05 1000
+	tlk -31.9087795257568 -34.3663807868958 2.08333134651184E-05 -31.9001541137695 -34.3667916615804 0.000120833268738352 37 {Virindi Captive}
+	cht -31.9087795257568 -34.3663807868958 2.08333134651184E-05 {/f !Going}
 ~~ }
 NAV: nav15 once ~~ {
 	pnt -32.2749615351359 -35.0454419453939 2.08333134651184E-05
@@ -2016,41 +1830,40 @@ NAV: nav18 once ~~ {
 	pnt -32.8156517982483 -33.9369863609473 2.08333134651184E-05
 ~~ }
 NAV: nav19 once ~~ {
-	pnt -32.8987522761027 -34.1167285124461 2.08333134651184E-05
-	pnt -32.9064782778422 -34.1171279589335 2.08333134651184E-05
-	pnt -32.9209185918172 -34.1167840003967 2.08333134651184E-05
-	pnt -32.9397383371989 -34.1163357416789 2.08333134651184E-05
-	pnt -32.9527897834778 -34.1160248438517 2.08333134651184E-05
-	pnt -32.9640075047811 -34.1157576243083 2.08333134651184E-05
-	pnt -32.9795504570007 -34.1153873443604 2.08333134651184E-05
-	pnt -33.005043888092 -34.1159990310669 2.08333134651184E-05
-	jmp -33.0244370142619 -34.1181814511617 -0.0749791701634725 270 {True} 250.00003
-	pau -33.0244370142619 -34.1181814511617 -0.0749791701634725 3000
-	pnt -33.0244370142619 -34.1181814511617 -0.0749791701634725
+	pnt -32.9075100739797 -34.1165542761485 2.08333134651184E-05
+	pnt -32.959619808197 -34.1156657059987 2.08333134651184E-05
+	pnt -32.98232533137 -34.1161297162374 2.08333134651184E-05
+	chk -32.98232533137 -34.1161297162374 2.08333134651184E-05
+	pnt -33.0003065903982 -34.1165033181508 2.08333134651184E-05
+	chk -33.0003065903982 -34.1165033181508 2.08333134651184E-05
+	jmp -33.0243237415949 -34.1164099216461 -0.0749791701634725 270 {False} 250.00003
+	pnt -33.0243237415949 -34.1164099216461 -0.0749791701634725
+	chk -33.0243237415949 -34.1164099216461 -0.0749791701634725
 ~~ }
 NAV: nav20 once ~~ {
-	pnt -33.0251913865407 -33.9708101054033 -0.0749791701634725
-	pnt -33.0253265539805 -34.0016401847204 -0.0749791701634725
-	pnt -33.0254576206207 -34.0315261205037 -0.0749791701634725
-	pnt -33.0256063143412 -34.0654135068258 -0.0749791701634725
-	pnt -33.0257572253545 -34.0998240947723 -0.0749791701634725
-	pnt -33.0258495330811 -34.1208731651306 -0.0749791701634725
+	pnt -33.0235967556636 -33.997583715121 -0.0749791701634725
+	pnt -33.0259510914485 -34.0463690916697 -0.0749791701634725
+	chk -33.0259510914485 -34.0463690916697 -0.0749791701634725
+	pnt -33.0260673602422 -34.0746701717377 -0.0749791701634725
+	chk -33.0260673602422 -34.0746701717377 -0.0749791701634725
+	pnt -33.0263114531835 -34.1001964092255 -0.0749791701634725
+	chk -33.0263114531835 -34.1001964092255 -0.0749791701634725
+	pnt -33.0254105011622 -34.1201084295909 -0.0749791701634725
+	chk -33.0254105011622 -34.1201084295909 -0.0749791701634725
 ~~ }
 NAV: nav21 once ~~ {
-	pnt -32.8142772674561 -33.9653467655182 2.08333134651184E-05
-	pnt -32.8155711491903 -33.9332616647085 2.08333134651184E-05
-	pnt -32.8151570638021 -33.9383204976718 2.08333134651184E-05
-	pnt -32.8158011118571 -33.9635440011819 2.08333134651184E-05
-	pnt -32.8163675308228 -33.9857204039892 2.08333134651184E-05
-	pnt -32.8168603261312 -34.0050182064374 2.08333134651184E-05
-	pnt -32.817197004954 -34.0181990385056 2.08333134651184E-05
-	pnt -32.8176792144775 -34.0370817184448 2.08333134651184E-05
-	pnt -32.8181533495585 -34.0556459665298 2.08333134651184E-05
-	pnt -32.8152239481608 -34.0794260660807 2.08333134651184E-05
-	pnt -32.8269099553426 -34.0759627739588 2.08333134651184E-05
-	pnt -32.8477876027425 -34.0759884198507 2.08333134651184E-05
-	pnt -32.8629271825155 -34.0847588857015 2.08333134651184E-05
-	pnt -32.8609554926554 -34.1162012736003 2.08333134651184E-05
+	pnt -32.8178321202596 -33.9882436871529 2.08333134651184E-05
+	pnt -32.8178540547689 -34.0055249293645 2.08333134651184E-05
+	chk -32.8178540547689 -34.0055249293645 2.08333134651184E-05
+	pnt -32.8171001434326 -34.0165635228157 2.08333134651184E-05
+	chk -32.8171001434326 -34.0165635228157 2.08333134651184E-05
+	pnt -32.8175325711568 -34.047042743365 2.08333134651184E-05
+	pnt -32.8174938837687 -34.0749855279922 2.08333134651184E-05
+	chk -32.8174938837687 -34.0749855279922 2.08333134651184E-05
+	pnt -32.8595994631449 -34.0758109092712 2.08333134651184E-05
+	chk -32.8595994631449 -34.0758109092712 2.08333134651184E-05
+	pnt -32.8599438349406 -34.1161641915639 2.08333134651184E-05
+	chk -32.8599438349406 -34.1161641915639 2.08333134651184E-05
 ~~ }
 NAV: nav22 once ~~ {
 	pnt -101.658261553446 -96.6834964116414 2.08333134651184E-05

@@ -50,42 +50,28 @@ STATE: {ClearMobs} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	SecsInStateGE 180
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
 				SetOpt {SummonPets} {True}
 				SetOpt {EnableCombat} {True}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Expr {getgvar[EoDAbort]==1}
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 180
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death	
-			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
-		DO:	Chat {/f !ManDown}
-	IF: Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO: SetState {DeathRecall}
 	IF: Any
 			All
 				Expr {getpvar[Leader]==1}
 				Expr {getpvar[EoDAbortSkip]==1}
 			ChatMatch {!Abort}
 		DO: DoExpr {setgvar[EoDAbort,1]}
-	IF: Expr {getgvar[EoDAbort]==1}
-		DO: SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
 				SetOpt {EnableNav} {False}
@@ -135,6 +121,7 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {clearvar[PortalTimer]}
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {clearvar[ClearMobs]}
 				EmbedNav nav0 {[none]}
 				SetOpt {EnableCombat} {False}
@@ -165,6 +152,7 @@ STATE: {DeathRecall} ~~ {
 			CellE 3032001C
 		DO: DoAll
 				SetOpt {EnableNav} {True}
+				DoExpr {clearvar[CombatStuck]}
 				EmbedNav DeathDelay {[DeathDelay]}
 	IF:	All
 			NavEmpty
@@ -187,7 +175,7 @@ STATE: {Default} ~~ {
 				ChatExpr {\/vt setmetastate +getpvar[StateName]}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[Profile, EndOfDaysPublic]}
+				DoExpr {setpvar[Profile,EndOfDaysPublic]}
 				DoExpr {setpvar[StateName, Default]}
 				DoExpr {setpvar[Stuck, ToRynthid]}
 	IF:	Any
@@ -223,14 +211,6 @@ STATE: {Default} ~~ {
 				SetOpt {Recharge-Helper-HitP} {50}
 	IF:	SecsInStateGE 180
 		DO:	Chat {/ub quit}
-	IF: Any
-			All
-				Expr {getpvar[Leader]==1}
-				Expr {getpvar[EoDAbortSkip]==1}
-			ChatMatch {!Abort}
-		DO: DoExpr {setgvar[EoDAbort,1]}
-	IF: Expr {getgvar[EoDAbort]==1}
-		DO: SetState {DeathRecall}
 	IF:	Any
 			All
 				Expr {getcharskill_buffed[32]>=391}
@@ -308,22 +288,18 @@ STATE: {Dungeon} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 600
+			Expr {getgvar[EoDAbort]==1}
 			Death
+			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 600
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=1300}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -351,8 +327,6 @@ STATE: {Dungeon} ~~ {
 				Expr {getpvar[EoDAbortSkip]==1}
 			ChatMatch {!Abort}
 		DO: DoExpr {setgvar[EoDAbort,1]}
-	IF: Expr {getgvar[EoDAbort]==1}
-		DO: SetState {DeathRecall}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			ChatMatch {!PortalStuck}
@@ -367,12 +341,6 @@ STATE: {Dungeon} ~~ {
 				SetState {PortalStuck}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=1300}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	All
 			NoMobsInDist 15
 			Expr {getvar[Safe]==1}
@@ -575,33 +543,21 @@ STATE: {FightBoss} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			Death	
-			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			All
+				Expr {testvar[StateTimer]}
+				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[StateTimer]}
-			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.25]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 	IF:	All
@@ -611,7 +567,7 @@ STATE: {FightBoss} ~~ {
 	IF:	All
 			Expr {getitemcountininventorybyname[Crimson Scarab]<getvar[LootCurrent]}
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Bah'Ktar]]==7}
-			NoMobsInDist 15
+			NoMobsInDist 60
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setvar[CorpseName,Corpse of Bah'Ktar]}
@@ -656,6 +612,7 @@ STATE: {FightBoss} ~~ {
 					Expr {getitemcountininventorybyname[Crimson Scarab]==getvar[LootCurrent]}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
+				DoExpr {setpvar[TurnIn,1]}
 				DoExpr {setpvar[StateName,ToRynthid]}
 				DoExpr {setpvar[CheckSync,ToRynthid]}
 				Chat {/vt meta load CheckPublic} ~~ ToRynthid
@@ -675,6 +632,9 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[Profile]==1}
 				Expr {testpvar[StateName]==1}
 				Expr {testpvar[Stuck]==1}
+				Expr {testpvar[TurnIn]==1}
+				Expr {testpvar[EODTurnIn]==1}
+				Expr {testpvar[ReturnProfile]==1}
 				Expr {testpvar[ClearMobs]==1}
 				Expr {testpvar[EoDAbortCounter]==1}
 				Expr {testpvar[EoDAbortSkip]==1}
@@ -690,11 +650,15 @@ STATE: {Finished} ~~ {
 				Expr {testgvar[Checking]==1}
 				Expr {testgvar[GoNowTwo]==1}
 				Expr {testgvar[EndOfDays]==1}
+				Expr {testgvar[EODTurnIn]==1}
 				Expr {testgvar[getcharstringprop[1]+getworldname[]]==1}
 		DO: DoAll
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Stuck]}
+				DoExpr {clearpvar[TurnIn]}
+				DoExpr {clearpvar[EODTurnIn]}
+				DoExpr {clearpvar[ReturnProfile]}
 				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[ClearMobs]}
 				DoExpr {clearpvar[EoDAbortCounter]}
@@ -711,6 +675,7 @@ STATE: {Finished} ~~ {
 				DoExpr {cleargvar[Checking]}
 				DoExpr {cleargvar[GoNowTwo]}
 				DoExpr {cleargvar[EndOfDays]}
+				DoExpr {cleargvar[EODTurnIn]}
 				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
 				SetState {Finished}
 	IF:	Always
@@ -719,6 +684,9 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[Profile]==0}
 			Expr {testpvar[StateName]==0}
 			Expr {testpvar[Stuck]==0}
+			Expr {testpvar[TurnIn]==0}
+			Expr {testpvar[EODTurnIn]==0}
+			Expr {testpvar[ReturnProfile]==0}
 			Expr {testpvar[ClearMobs]==0}
 			Expr {testpvar[EoDAbortCounter]==0}
 			Expr {testpvar[EoDAbortSkip]==0}
@@ -734,6 +702,7 @@ STATE: {Finished} ~~ {
 			Expr {testgvar[Checking]==0}
 			Expr {testgvar[GoNowTwo]==0}
 			Expr {testgvar[EndOfDays]==0}
+			Expr {testgvar[EODTurnIn]==0}
 			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
 		DO:	Chat {/vt meta load QuestCheckPublic}
 ~~ }
@@ -751,35 +720,11 @@ STATE: {Loot} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
-				SetOpt {EnableLooting} {True}
-				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
-				DoExpr {clearvar[CorpseName]}
-				DoExpr {clearvar[LootItem]}
-				DoExpr {clearvar[Loot]}
-				DoExpr {clearvar[CorpseDetect]}
-				DoExpr {clearvar[LootCount]}
-				DoExpr {clearvar[CloseCorpseTimer]}
-				DoExpr {clearvar[SourceNotFound]}
-				DoExpr {clearvar[LootStuckDelay]}
-				DoExpr {clearvar[LootCloseCorpse]}
-				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			Death	
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
 				BlockE C8E90000 ~~ Lifestone Landblock
 		DO:	DoAll
@@ -800,26 +745,6 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[Looting,0]}
 				Chat {/f !ManDown}
-	IF: Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO: DoAll
-				DoExpr {cleargvar[LootFail]}
-				SetOpt {EnableLooting} {True}
-				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
-				DoExpr {clearvar[CorpseName]}
-				DoExpr {clearvar[LootItem]}
-				DoExpr {clearvar[Loot]}
-				DoExpr {clearvar[CorpseDetect]}
-				DoExpr {clearvar[LootCount]}
-				DoExpr {clearvar[CloseCorpseTimer]}
-				DoExpr {clearvar[SourceNotFound]}
-				DoExpr {clearvar[LootStuckDelay]}
-				DoExpr {clearvar[LootCloseCorpse]}
-				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
 				SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
@@ -1045,34 +970,23 @@ STATE: {PortalCheck} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Expr {getgvar[EoDAbort]==1}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death	
-			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
-		DO:	Chat {/f !ManDown}
-	IF: Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO: SetState {DeathRecall}
 	IF: Any
 			All
 				Expr {getpvar[Leader]==1}
 				Expr {getpvar[EoDAbortSkip]==1}
 			ChatMatch {!Abort}
 		DO: DoExpr {setgvar[EoDAbort,1]}
-	IF: Expr {getgvar[EoDAbort]==1}
-		DO: SetState {DeathRecall}
 	IF:	Always
 		DO:	SetOpt {EnableCombat} {False}
 	IF:	All
@@ -1103,25 +1017,18 @@ STATE: {PortalStuck} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Any
-			SecsInStateGE 600
+			Expr {getgvar[EoDAbort]==1}
 			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			SecsInStateGE 600
+			Any
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	
 	IF: Expr {getpvar[Leader]==1}
 		DO: DoExpr {setgvar[PortalStuck,1]}	
 	IF: All
@@ -1137,8 +1044,6 @@ STATE: {PortalStuck} ~~ {
 				Expr {getpvar[EoDAbortSkip]==1}
 			ChatMatch {!Abort}
 		DO: DoExpr {setgvar[EoDAbort,1]}
-	IF: Expr {getgvar[EoDAbort]==1}
-		DO: SetState {DeathRecall}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {clearvar[Room]}
@@ -1193,6 +1098,34 @@ STATE: {ToAun} ~~ {
 	IF:	Any
 			ChatMatch {^Aun Ol'tra tells you, "Take these, you have attained great respect from our tribe by your deeds."}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Crimson Scarab]]==1}
+		DO:	DoExpr {setpvar[EODTurnIn,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[EODTurnIn]==1}
+			Not Expr {testgvar[EODTurnIn]}
+		DO:	DoAll
+				DoExpr {setgvar[EODTurnIn,listcreate[]]}
+				SetState {ToAun}
+	IF:	All
+			Expr {getpvar[EODTurnIn]==1}
+			Expr {testgvar[EODTurnIn]}
+			Not Expr {listcontains[getgvar[EODTurnIn],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[EODTurnIn],getcharstringprop[1]]}
+				SetState {ToAun}
+	IF:	All
+			Expr {getpvar[EODTurnIn]==1}
+			Expr {testgvar[EODTurnIn]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[EODTurnIn],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[EODTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[EODTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[EODTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[EODTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[EODTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[EODTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[EODTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[EODTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[EODTurnIn],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Finished]}
 				DoExpr {setpvar[CheckSync,Finished]}
@@ -1212,30 +1145,21 @@ STATE: {ToDungeon} ~~ {
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	Any
-			Death	
-			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
-		DO:	Chat {/f !ManDown}
-	IF: Any
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-		DO: SetState {DeathRecall}
 	IF:	Always
-		DO:	SetWatchdog 5 45 {WatchDog}
-	IF: Always
-		DO: DoExpr {setpvar[StateName,vtgetmetastate[]]}
+		DO:	DoAll
+				DoExpr {setpvar[Profile,EndOfDaysPublic]}
+				SetWatchdog 5 45 {WatchDog}
+				DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	Any
 			CellE 30320014
 			CellE 3032001C
@@ -1251,6 +1175,7 @@ STATE: {ToDungeon} ~~ {
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Profile,EndOfDaysPublic]}
 				DoExpr {setpvar[StateName,ToDungeon]}
 				DoExpr {setpvar[CheckSync,ToDungeonPitStopOne]}
 				Chat {/vt meta load CheckPublic} ~~ ToDungeonPitStopOne
@@ -1269,6 +1194,7 @@ STATE: {ToDungeon} ~~ {
 				SetOpt {EnableCombat} {True}
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {setpvar[StateName,ToDungeon]}
+				DoExpr {setpvar[Profile,EndOfDaysPublic]}
 				DoExpr {setpvar[CheckSync,ToDungeonPitStopTwo]}
 				Chat {/vt meta load CheckPublic} ~~ ToDungeonPitStopTwo
 	IF:	All
@@ -1289,6 +1215,7 @@ STATE: {ToDungeon} ~~ {
 				SetOpt {SummonPets} {True}
 				DoExpr {setvar[PitStop,3]}
 				DoExpr {setpvar[StateName,ToDungeon]}
+				DoExpr {setpvar[Profile,EndOfDaysPublic]}
 				DoExpr {setpvar[CheckSync,ToDungeonPitStopThree]}
 				Chat {/vt meta load CheckPublic} ~~ ToDungeonPitStopThree
 	IF:	All
@@ -1399,22 +1326,29 @@ STATE: {ToRynthid} ~~ {
 				DoExpr {actiontrycastbyid[6150]} ~~ SpellId 6150 is "Rynthid Recall".
 				SetState {ToRynthid}
 	IF:	All
-			Expr {getobjectinternaltype[wobjectfindininventorybyname[Crimson Scarab]]==7}
+			Expr {getpvar[TurnIn]==1}
 			CellE 3032001C
 		DO:	DoAll
 				DoExpr {setpvar[StateName,ToAun]}
+				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[ReturnMetaProfile,EndOfDaysPublic]}
+				DoExpr {setpvar[Profile,KillTasksPublic]}
 				Chat {/vt meta load KillTasksPublic}
 	IF:	All
 			Expr {getpvar[Flag]==0}
 			CellE 3032001C
 		DO:	DoAll
 				DoExpr {setpvar[StateName,ToDungeon]}
+				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[ReturnMetaProfile,EndOfDaysPublic]}
+				DoExpr {setpvar[Profile,KillTasksPublic]}
 				DoExpr {setpvar[Flag,1]}
 				Chat {/vt meta load KillTasksPublic}
 	IF:	All
 			Expr {getpvar[Flag]==1}
 			CellE 3032001C
 		DO:	DoAll
+				DoExpr {setpvar[Stuck, DeathRecall]}
 				DoExpr {setpvar[StateName,ToDungeon]}
 				DoExpr {setpvar[CheckSync,ToDungeon]}
 				Chat {/vt meta load CheckPublic} ~~ ToDungeon
@@ -1436,7 +1370,6 @@ STATE: {WatchDog} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 ~~ }
-
 STATE: {Zstuck} ~~ {
 	IF: Always
 		DO: DoAll
