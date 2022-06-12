@@ -973,7 +973,7 @@ STATE: {ToFrigid} ~~ {
 		DO:	DoAll
 				DoExpr {cleargvar[Go]}
 				DoExpr {setpvar[Stuck, DeathRecall]}
-				SetWatchdog 5 45 {ToTN}
+				SetWatchdog 5 45 {WatchDog}
 	IF:	CellE 3CF5003E
 		DO:	EmbedNav nav13 {[none]}
 	IF:	BlockE 584D0000

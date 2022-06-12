@@ -506,7 +506,9 @@ STATE: {CheckQuests} ~~ {
 			Expr {getisspellknown[2023]==1} ~~ Sanc
 			Any
 				Expr {getqueststatus[tornstripofparchmentpickuptimer]==1}
-				Expr {getqueststatus[lostlorepagecompleted_0712]==1}
+				All
+					Expr {getqueststatus[lostlorepagecompleted_0712]==1}
+					Expr {getqueststatus[tornstripofparchmentpickuptimer]==1}
 		DO:	DoExpr {setgvar[QuestLostLore,getgvar[QuestLostLore]+1]]}
 	IF:	All
 			SecsInStateGE 1

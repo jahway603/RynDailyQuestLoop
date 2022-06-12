@@ -40,10 +40,7 @@ STATE: {ClearListsCheck} ~~ {
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
-		DO: DoAll
-				DoExpr {setpvar[Profile,QuestCheckPublic]}
-				DoExpr {setpvar[StateName,Default]}
-				Chat {/vt meta load QuestCheckPublic}
+		DO: SetState {Zstuck}
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -81,10 +78,7 @@ STATE: {C} ~~ {
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
-		DO: DoAll
-				DoExpr {setpvar[Profile,QuestCheckPublic]}
-				DoExpr {setpvar[StateName,Default]}
-				Chat {/vt meta load QuestCheckPublic}
+		DO: SetState {Zstuck}
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -231,10 +225,7 @@ STATE: {ConfirmProfile} ~~{
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
-		DO: DoAll
-				DoExpr {setpvar[Profile,QuestCheckPublic]}
-				DoExpr {setpvar[StateName,Default]}
-				Chat {/vt meta load QuestCheckPublic}
+		DO: SetState {Zstuck}
 	IF:	Any
 			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!Stuck\"$}
 			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!ManDown\"$}
@@ -379,16 +370,13 @@ STATE: {ConfirmProfile} ~~{
 			SecsInStateGE 600
 			Expr {listcount[getgvar[getpvar[Profile]]]<getpvar[FellowCount]}
 			Expr {getpvar[Profile]!=CMD}
-		DO: SetState {Stuck}
+		DO: DoExpr {setgvar[Zstuck,1]}
 ~~}
 STATE: {DefaultPass}  ~~{
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
-		DO: DoAll
-				DoExpr {setpvar[Profile,QuestCheckPublic]}
-				DoExpr {setpvar[StateName,Default]}
-				Chat {/vt meta load QuestCheckPublic}
+		DO: SetState {Zstuck}
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -446,10 +434,7 @@ STATE: {Fellow} ~~ {
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
-		DO: DoAll
-				DoExpr {setpvar[Profile,QuestCheckPublic]}
-				DoExpr {setpvar[StateName,Default]}
-				Chat {/vt meta load QuestCheckPublic}
+		DO: SetState {Zstuck}
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -542,10 +527,7 @@ STATE: {GoNow} ~~ {
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
-		DO: DoAll
-				DoExpr {setpvar[Profile,QuestCheckPublic]}
-				DoExpr {setpvar[StateName,Default]}
-				Chat {/vt meta load QuestCheckPublic}
+		DO: SetState {Zstuck}
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -622,10 +604,7 @@ STATE: {Stuck} ~~ {
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
-		DO: DoAll
-				DoExpr {setpvar[Profile,QuestCheckPublic]}
-				DoExpr {setpvar[StateName,Default]}
-				Chat {/vt meta load QuestCheckPublic}
+		DO: SetState {Zstuck}
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -653,10 +632,7 @@ STATE: {W} ~~ {
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
 	IF: Expr {getgvar[Zstuck]==1}
-		DO: DoAll
-				DoExpr {setpvar[Profile,QuestCheckPublic]}
-				DoExpr {setpvar[StateName,Default]}
-				Chat {/vt meta load QuestCheckPublic}
+		DO: SetState {Zstuck}
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -689,10 +665,18 @@ STATE: {W} ~~ {
 				SetState {GoNow}
 ~~ }
 STATE: {Zstuck} ~~ {
-	IF: Always
+	IF: Expr {getcharstringprop[1]==getpvar[LeaderName]}
 		DO: DoAll
 				DoExpr {cleargvar[Checking]}
-				DoExpr {setpvar[StateName,DefaultTwo]}
+				DoExpr {setpvar[ZstuckDebug,getpvar[ZstuckDebug]+1]}
+				DoExpr {setpvar[Profile,QuestCheckPublic]}
+				DoExpr {setpvar[StateName,Default]}
+				Chat {/vt meta load QuestCheckPublic}
+	IF: Not Expr {getcharstringprop[1]==getpvar[LeaderName]}
+		DO: DoAll
+				DoExpr {cleargvar[Checking]}
+				DoExpr {setpvar[Profile,QuestCheckPublic]}
+				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 ~~ }
 

@@ -557,6 +557,7 @@ STATE: {LostRuin} ~~ {
 					Expr {getpvar[LostLoreComplete]==1}
 					Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[46350]]==7}
 		DO:	DoAll
+				DoExpr {ifthen[wobjectgetopencontainer[]==1,`actiontryuseitem[wobjectgetopencontainer[]]`,`echo[NoCorpseOpen,15]`]}
 				DoExpr {listadd[getgvar[QuestComplete],getcharstringprop[1]]}
 				SetState {LostRuin}
 	IF:	All
@@ -578,6 +579,7 @@ STATE: {LostRuin} ~~ {
 						Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[46350]]==7}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
+				DoExpr {ifthen[wobjectgetopencontainer[]==1,`actiontryuseitem[wobjectgetopencontainer[]]`,`echo[NoCorpseOpen,15]`]}
 				DoExpr {setpvar[StateName,ToTN]}
 				DoExpr {setpvar[CheckSync,ToTN]}
 				SetOpt {EnableCombat} {True}
@@ -647,11 +649,12 @@ STATE: {LostRuin} ~~ {
 				SetOpt {LootOnlyRareCorpses} {False}
 				DoExpr {clearvar[CloseCorpseTimer]}
 				DoExpr {clearvar[LootFail]}
+				Chat {/vt loot load DQLBlank.utl}
 				DoExpr {setpvar[LostLoreComplete,1]}
 				SetState {LostRuin}
 	IF:	Expr {getobjectinternaltype[wobjectgetopencontainer[]]==7}
 		DO:	DoAll
-				DoExpr {actiontryuseitem[wobjectgetopencontainer[]}
+				DoExpr {ifthen[wobjectgetopencontainer[]==1,`actiontryuseitem[wobjectgetopencontainer[]]`,`echo[NoCorpseOpen,15]`]}
 				SetState {LostRuin}
 ~~ }
 STATE: {LostRuinJump} ~~ {
@@ -859,6 +862,8 @@ STATE: {PickUp} ~~ {
 				ChatMatch {^You have solved this quest too recently!}
 		DO:	DoAll
 				EmbedNav nav12 {[none]}
+				DoExpr {ifthen[wobjectgetopencontainer[]==1,`actiontryuseitem[wobjectgetopencontainer[]]`,`echo[NoCorpseOpen,15]`]}
+				Chat {/vt loot load DQLBlank.utl}
 				SetOpt {BlacklistCorpseOpenAttemptCount} {30}
 				SetOpt {EnableLooting} {False}
 				SetOpt {LootOnlyRareCorpses} {False}
@@ -967,10 +972,6 @@ STATE: {ToHebian} ~~ {
 	IF:	BlockE 00070000
 		DO:	EmbedNav nav16 {[none]}
 	IF:	BlockE E64E0000
-		DO:	EmbedNav nav17 {Clear}
-	IF:	All
-			NavEmpty
-			BlockE E64E0000
 		DO:	DoAll
 				DoExpr {setpvar[StateName,ToTranslator]}
 				SetState {ToTranslator}
@@ -1048,14 +1049,18 @@ STATE: {ToPopkin} ~~ {
 			CellE BB9F0037
 		DO:	EmbedNav nav20 {[none]}
 	IF:	All
+			Expr {getpvar[PopkinComplete]==0}
 			NavEmpty
 			CellE BAA00101
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[The Story of the Lost Sisters]]==7}
 		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybyname[The Story of the Lost Sisters],wobjectfindnearestbytemplatetype[46356]]]}
+	IF: Any
+			Expr {getobjectinternaltype[wobjectfindininventorybyname[The Story of the Lost Sisters]]==1}
+			ChatMatch {^Popkin of the Gate tells you, "Please return to me later. I may need more assistance."}
+		DO: DoExpr {setpvar[PopkinComplete,1]}
 	IF:	All
 			Not Expr {testgvar[PopkinComplete]}
-			Any
-				Expr {getobjectinternaltype[wobjectfindininventorybyname[The Story of the Lost Sisters]]==1}
+			Expr {getpvar[PopkinComplete]==1}
 			Any
 				BlockE 654C0000
 				CellE BAA00101
@@ -1063,7 +1068,7 @@ STATE: {ToPopkin} ~~ {
 				DoExpr {setgvar[PopkinComplete,listcreate[]]}
 				SetState {ToPopkin}
 	IF:	All
-			Expr {getobjectinternaltype[wobjectfindininventorybyname[The Story of the Lost Sisters]]==1}
+			Expr {getpvar[PopkinComplete]==1}
 			Not Expr {listcontains[getgvar[PopkinComplete],getcharstringprop[1]]}
 			Any
 				BlockE 654C0000
@@ -1072,6 +1077,7 @@ STATE: {ToPopkin} ~~ {
 				DoExpr {listadd[getgvar[PopkinComplete],getcharstringprop[1]]}
 				SetState {ToPopkin}
 	IF:	All
+			Expr {getpvar[PopkinComplete]==1}
 			Any
 				BlockE 654C0000
 				CellE BAA00101
