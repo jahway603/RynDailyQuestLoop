@@ -909,6 +909,7 @@ STATE: {UseKraytuss} ~~ {
 	IF:	Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[72806]]==7}
 		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Bone Fragment from Shikken Moriyaki],wobjectfindnearestbynameandobjectclass[37,Kraytuss Nallah]]}
 	IF:	All
+			Expr {getpvar[SBGFlag]==0}
 			Expr {getpvar[SBGTurnIn]==0}
 			CellE 64D50014
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbynameandobjectclass[37,Kraytuss Nallah]]}

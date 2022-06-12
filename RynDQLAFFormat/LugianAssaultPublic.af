@@ -1595,6 +1595,7 @@ STATE: {UseRaksaa} ~~ {
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Scroll for Raksaa]]==7}
 		DO:	DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Sealed Scroll for Raksaa],wobjectfindnearestbynameandobjectclass[37,Raksaa]]}
 	IF:	All
+			Expr {getpvar[LugianAssaultFlag]==0}
 			Expr {getpvar[Step]==0}
 			CellE 3032001C
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Raksaa]]==7}
