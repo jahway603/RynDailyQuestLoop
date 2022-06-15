@@ -45,8 +45,8 @@ STATE: {ClearMobs} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -96,8 +96,8 @@ STATE: {DeathRecall} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -199,10 +199,10 @@ STATE: {Default} ~~ {
 				Expr {getspellexpirationbyname[Aura of Cragstone's Will]<=1800}
 		DO:	DoAll
 				Chat {/vt forcebuff}
-				DoExpr {setgvar[Buffing,1]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing,1]}
 				DoExpr {setpvar[StateName,vtgetmetastate[]]}
 				SetState {SyncBuff}
-	IF: Expr {getgvar[Buffing]==1}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
 		DO: DoAll
 				DoExpr {setpvar[StateName,vtgetmetastate[]]}
 				SetState {SyncBuff}
@@ -223,33 +223,33 @@ STATE: {SyncBuff} ~~{
 			Expr {vtgetsetting[EnableBuffing]!=True}
 		DO: SetOpt {EnableBuffing} {True}
 	IF:	All
-			Not Expr {testgvar[SyncBuffComplete]}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]}
 			Not NeedToBuff
 		DO:	DoAll
-				DoExpr {setgvar[SyncBuffComplete,listcreate[]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete,listcreate[]]}
 				SetState {SyncBuff}
 	IF:	All
-			Expr {testgvar[SyncBuffComplete]}
-			Not Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getcharstringprop[1]]}
 			Not NeedToBuff
 		DO:	DoAll
-				DoExpr {listadd[getgvar[SyncBuffComplete],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getcharstringprop[1]]}
 				SetState {SyncBuff}
 	IF:	All
 			Not NeedToBuff
-			Expr {testgvar[SyncBuffComplete]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]}
 			Any
-				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]}
-				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]}
-				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]}
-				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]}
-				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]}
-				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]}
-				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]}
-				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}		
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameNine]]}		
 		DO: DoAll
-				DoExpr {cleargvar[Buffing]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]}
 				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~}
@@ -261,8 +261,8 @@ STATE: {Dungeon} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -411,8 +411,8 @@ STATE: {Dungeon} ~~ {
 ~~ }
 STATE: {DungeonJump} ~~ {
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -529,8 +529,8 @@ STATE: {FightBoss} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -577,31 +577,31 @@ STATE: {FightBoss} ~~ {
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Expr {getpvar[UseBistElleDone]==1}
-			Not Expr {testgvar[QuestComplete]}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]}
 		DO:	DoAll
-				DoExpr {setgvar[QuestComplete,listcreate[]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete,listcreate[]]}
 				SetState {FightBoss}
 	IF:	All
-			Expr {testgvar[QuestComplete]}
-			Not Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getcharstringprop[1]]}
 			Any
 				Expr {getpvar[QuestCompletedSkip]==1}
 				Expr {getpvar[UseBistElleDone]==1}
 		DO:	DoAll
-				DoExpr {listadd[getgvar[QuestComplete],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getcharstringprop[1]]}
 				SetState {FightBoss}
 	IF:	All
-			Expr {testgvar[QuestComplete]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]}
 			Any
-				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]}
-				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]}
-				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]}
-				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]}
-				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]}
-				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]}
-				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]}
-				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameNine]]}
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameNine]]}
 				All
 					Expr {getpvar[AdminSkip]==1}
 					~~ Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[72785]]==7}
@@ -624,16 +624,16 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[TurnIn]==1}
 				Expr {testpvar[UseBistElleDone]==1}
 				Expr {testpvar[QuestCompletedSkip]==1}
-				Expr {testgvar[QuestComplete]==1}
-				Expr {testgvar[GoNow+getworldname[]]==1}
-				Expr {testgvar[DefaultPass]==1}
-				Expr {testgvar[GoNowClear]==1}
-				Expr {testgvar[Checking]==1}
-				Expr {testgvar[GoNowTwo]==1}
-				Expr {testgvar[RTLFlag]==1}
-				Expr {testgvar[RTLTurnIn]==1}
-				Expr {testgvar[ReleasingTheLight]==1}
-				Expr {testgvar[getcharstringprop[1]+getworldname[]]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Checking]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowTwo]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+ReleasingTheLight]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]==1}
 		DO: DoAll
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[StateName]}
@@ -645,16 +645,16 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[UseBistElleDone]}
 				DoExpr {clearpvar[TurnIn]}
 				DoExpr {clearpvar[QuestCompletedSkip]}
-				DoExpr {cleargvar[QuestComplete]}
-				DoExpr {cleargvar[GoNow+getworldname[]]}
-				DoExpr {cleargvar[DefaultPass]}
-				DoExpr {cleargvar[GoNowClear]}
-				DoExpr {cleargvar[Checking]}
-				DoExpr {cleargvar[GoNowTwo]}
-				DoExpr {cleargvar[RTLFlag]}
-				DoExpr {cleargvar[RTLTurnIn]}
-				DoExpr {cleargvar[ReleasingTheLight]}
-				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Checking]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ReleasingTheLight]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]}
 				SetState {Finished}
 	IF:	All
 			Expr {testpvar[Profile]==0}
@@ -666,16 +666,16 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[UseBistElleDone]==0}
 			Expr {testpvar[TurnIn]==0}
 			Expr {testpvar[QuestCompletedSkip]==0}
-			Expr {testgvar[QuestComplete]==0}
-			Expr {testgvar[GoNow+getworldname[]]==0}
-			Expr {testgvar[DefaultPass]==0}
-			Expr {testgvar[GoNowClear]==0}
-			Expr {testgvar[Checking]==0}
-			Expr {testgvar[GoNowTwo]==0}
-			Expr {testgvar[RTLFlag]==0}
-			Expr {testgvar[RTLTurnIn]==0}
-			Expr {testgvar[ReleasingTheLight]==0}
-			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Checking]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowTwo]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+ReleasingTheLight]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]==0}
 		DO:	Chat {/vt meta load QuestCheckPublic}
 ~~ }
 STATE: {Shahhi} ~~ {
@@ -686,8 +686,8 @@ STATE: {Shahhi} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -713,37 +713,40 @@ STATE: {Shahhi} ~~ {
 			ChatMatch {^Shah-hi tells you, "Thanks again for your assistance}
 			ChatMatch {^You must wait}
 			CellE 654C068A
-		DO:	DoExpr {setpvar[RTLTurnIn,1]}
+		DO:	DoAll
+				DoExpr {setvar[UseNPC,1]}
+				DoExpr {setpvar[RTLTurnIn,1]}
 	IF:	All
 			Expr {getpvar[TurnIn]==1}
 			Expr {getpvar[RTLTurnIn]==1}
-			Not Expr {testgvar[RTLTurnIn]}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn]}
 		DO:	DoAll
-				DoExpr {setgvar[RTLTurnIn,listcreate[]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn,listcreate[]]}
 				SetState {Shahhi}
 	IF:	All
 			Expr {getpvar[RTLTurnIn]==1}
 			Expr {getpvar[TurnIn]==1}
-			Expr {testgvar[RTLTurnIn]}
-			Not Expr {listcontains[getgvar[RTLTurnIn],getcharstringprop[1]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn]}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getcharstringprop[1]]}
 		DO:	DoAll
-				DoExpr {listadd[getgvar[RTLTurnIn],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getcharstringprop[1]]}
 				SetState {Shahhi}
 	IF:	All
 			Expr {getpvar[RTLTurnIn]==1}
 			Expr {getpvar[TurnIn]==1}
-			Expr {testgvar[RTLTurnIn]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn]}
 			Any
-				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[RTLTurnIn],getpvar[LeaderName]]}
-				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameTwo]]}
-				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameThree]]}
-				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameFour]]}
-				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameFive]]}
-				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameSix]]}
-				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameSeven]]}
-				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameEight]]}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[RTLTurnIn],getpvar[FellowNameNine]]}
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn],getpvar[FellowNameNine]]}
 		DO:	DoAll
+				DoExpr {setvar[UseNPC,0]}
 				DoExpr {setpvar[StateName,Finished]}
 				DoExpr {setpvar[CheckSync,Finished]}
 				Chat {/vt meta load CheckPublic} ~~ Finished
@@ -755,42 +758,47 @@ STATE: {Shahhi} ~~ {
 				ChatMatch {^Shah-hi tells you, "Welcome to my excavation site!"}
 				ChatMatch {^Shah-hi tells you, "I wonder if you'd be interested in a little job."}
 				ChatMatch {^Shah-hi tells you, "My mistress, Popkin of the Gate, sent me here to manage this dig site. We've uncovered a very promising Light Falatacot temple, but it's entirely overrun with gromnies. If you'd be willing to go in there and bring back word of anything you find, it'd be greatly appreciated."}
-		DO:	DoExpr {setpvar[RTLFlag,1]}
+		DO:	DoAll
+				DoExpr {setvar[UseNPC,1]}
+				DoExpr {setpvar[RTLFlag,1]}
 	IF:	All
 			Expr {getpvar[RTLFlag]==1}
 			Expr {getpvar[TurnIn]==0}
-			Not Expr {testgvar[RTLFlag]}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag]}
 		DO:	DoAll
-				DoExpr {setgvar[RTLFlag,listcreate[]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag,listcreate[]]}
 				SetState {Shahhi}
 	IF:	All
 			Expr {getpvar[RTLFlag]==1}
 			Expr {getpvar[TurnIn]==0}
-			Expr {testgvar[RTLFlag]}
-			Not Expr {listcontains[getgvar[RTLFlag],getcharstringprop[1]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag]}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getcharstringprop[1]]}
 		DO:	DoAll
-				DoExpr {listadd[getgvar[RTLFlag],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getcharstringprop[1]]}
 				SetState {Shahhi}
 	IF:	All
 			Expr {getpvar[TurnIn]==0}
 			Expr {getpvar[RTLFlag]==1}
-			Expr {testgvar[RTLFlag]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag]}
 			Any
-				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[RTLFlag],getpvar[LeaderName]]}
-				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameTwo]]}
-				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameThree]]}
-				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameFour]]}
-				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameFive]]}
-				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameSix]]}
-				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameSeven]]}
-				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameSeven]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameEight]]}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameSeven]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameEight]]&&listcontains[getgvar[RTLFlag],getpvar[FellowNameNine]]}
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setpvar[EnableDeath,1]}
+				DoExpr {setvar[UseNPC,0]}
 				DoExpr {setpvar[StateName,ToDungeon]}
 				DoExpr {setpvar[CheckSync,ToDungeon]}
 				Chat {/vt meta load CheckPublic} ~~ ToDungeon
-	IF:	SecsInStateGE 2
+	IF:	All
+			Expr {getvar[UseNPC]==0}
+			SecsInStateGE 2
 		DO:	DoAll
 				DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[46806]]}
 				SetState {Shahhi}
@@ -803,8 +811,8 @@ STATE: {ToDungeon} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -848,8 +856,8 @@ STATE: {ToSanc} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -891,8 +899,8 @@ STATE: {ToShahhi} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -955,8 +963,8 @@ STATE: {ToSurfacePortal} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -1016,8 +1024,8 @@ STATE: {UseBistElle} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -1067,8 +1075,8 @@ STATE: {Watchdog} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF: Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}

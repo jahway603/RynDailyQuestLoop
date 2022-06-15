@@ -38,11 +38,11 @@
 ~~ }																					
 
 STATE: {CheckNearby} ~~ {
-	IF:	Expr {getgvar[MeetUp]==`Yes`}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]==`Yes`}
 		DO:	SetState {MeetUp}
 	IF:	Any
 			Expr {getpvar[FellowCount]==1}
-			Expr {getgvar[MeetUp]==`No`}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]==`No`}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Quests]}
@@ -76,7 +76,7 @@ STATE: {CheckNearby} ~~ {
 				All
 					Expr {getpvar[FellowCount]==2&&getobjectinternaltype[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameTwo]+`$`]]==7}
 					Expr {getpvar[FellowCount]==2&&coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameTwo]+`$`]],getplayercoordinates[]]<30}
-		DO:	DoExpr {setgvar[MeetUp,No]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp,No]}
 	IF: All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
@@ -248,11 +248,11 @@ STATE: {CheckNearby} ~~ {
 						All
 							Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameTwo]+`$`]]==7}
 							Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameTwo]+`$`]],getplayercoordinates[]]>30}
-		DO:	DoExpr {setgvar[MeetUp,Yes]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp,Yes]}
 ~~ }
 STATE: {LoadQuest} ~~ {
 	IF: Always
-		DO: DoExpr {cleargvar[QuestCheckPublic]}
+		DO: DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestCheckPublic]}
 	IF: All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			SecsInStateGE 300
@@ -261,172 +261,172 @@ STATE: {LoadQuest} ~~ {
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestMouf}
-		DO:	Chat {/ub bct DailyLoop /vt meta load MoufPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestMouf}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load MoufPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==DR}
-		DO:	Chat {/ub bct DailyLoop /vt meta load DreamReaverPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==DR}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load DreamReaverPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestUnleashTheGearknight}
-		DO:	Chat {/ub bct DailyLoop /vt meta load UnleashTheGearknightPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestUnleashTheGearknight}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load UnleashTheGearknightPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestProdigalBanderling}
-		DO:	Chat {/ub bct DailyLoop /vt meta load ProdigalBanderlingPublic}		
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestProdigalBanderling}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load ProdigalBanderlingPublic}		
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestLostLore}
-		DO:	Chat {/ub bct DailyLoop /vt meta load LostLorePublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestLostLore}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load LostLorePublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestFalatacotDepot}
-		DO:	Chat {/ub bct DailyLoop /vt meta load FalatacotDepotPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestFalatacotDepot}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load FalatacotDepotPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestProdigalTusker}
-		DO:	Chat {/ub bct DailyLoop /vt meta load ProdigalTuskerPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestProdigalTusker}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load ProdigalTuskerPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestIQSQ}
-		DO:	Chat {/ub bct DailyLoop /vt meta load IQSQPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestIQSQ}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load IQSQPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestGrael}
-		DO:	Chat {/ub bct DailyLoop /vt meta load SplittingGraelPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestGrael}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load SplittingGraelPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestVR}
-		DO:	Chat {/ub bct DailyLoop /vt meta load VirindiRescuePublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestVR}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load VirindiRescuePublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestNexus}
-		DO:	Chat {/ub bct DailyLoop /vt meta load NexusCrawlPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestNexus}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load NexusCrawlPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestHermit}
-		DO:	Chat {/ub bct DailyLoop /vt meta load DeathsAllurePublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestHermit}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load DeathsAllurePublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestDR}
-		DO:	Chat {/ub bct DailyLoop /vt meta load DreamReaverPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestDR}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load DreamReaverPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestAF}
-		DO:	Chat {/ub bct DailyLoop /vt meta load ApostateFinalePublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestAF}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load ApostateFinalePublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestPurge}
-		DO:	Chat {/ub bct DailyLoop /vt meta load PurgingTheCorruptionPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestPurge}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load PurgingTheCorruptionPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestGX}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestGX}
 		DO:	DoAll
 				DoExpr {setpvar[IntialCleanUp,0]}
-				Chat {/ub bct DailyLoop /vt meta load GearXbowPublic}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load GearXbowPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestDee}
-		DO:	Chat {/ub bct DailyLoop /vt meta load DeewainsPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestDee}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load DeewainsPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestLugianAssault}
-		DO:	Chat {/ub bct DailyLoop /vt meta load LugianAssaultPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestLugianAssault}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load LugianAssaultPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestReleasingTheLight}
-		DO:	Chat {/ub bct DailyLoop /vt meta load ReleasingTheLightPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestReleasingTheLight}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load ReleasingTheLightPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestSaveKarul}
-		DO:	Chat {/ub bct DailyLoop /vt meta load SaveKarulPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestSaveKarul}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load SaveKarulPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestBSI}
-		DO:	Chat {/ub bct DailyLoop /vt meta load BSIPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestBSI}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load BSIPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestHaltDericost}
-		DO:	Chat {/ub bct DailyLoop /vt meta load HaltDericostPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestHaltDericost}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load HaltDericostPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestGeraineStudy}
-		DO:	Chat {/ub bct DailyLoop /vt meta load GeraineStudyPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestGeraineStudy}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load GeraineStudyPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestLU}
-		DO:	Chat {/ub bct DailyLoop /vt meta load LiberationOfUzizPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestLU}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load LiberationOfUzizPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestCP}
-		DO:	Chat {/ub bct DailyLoop /vt meta load CountPhainorPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestCP}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load CountPhainorPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestSBG}
-		DO:	Chat {/ub bct DailyLoop /vt meta load SerpentBurialGroundsPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestSBG}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load SerpentBurialGroundsPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestEOD}
-		DO:	Chat {/ub bct DailyLoop /vt meta load EndOfDaysPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestEOD}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load EndOfDaysPublic}
 	IF:	All
 			Any	
 				Expr {getpvar[AdminSkip]==1}
 				Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[Quest]==QuestRynthidWeapon}
-		DO:	Chat {/ub bct DailyLoop /vt meta load RynthidWeaponPublic}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestRynthidWeapon}
+		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load RynthidWeaponPublic}
 ~~ }
 STATE: {CheckQuests} ~~ {
 	IF: SecsInStateGE 180
@@ -435,19 +435,19 @@ STATE: {CheckQuests} ~~ {
 			Expr {getcharintprop[25]>=150}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getqueststatus[moufreward]==1}
-		DO:	DoExpr {setgvar[QuestMouf,getgvar[QuestMouf]+1]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestMouf,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestMouf]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestMouf]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestMouf]>=1}
 				All
 					Any
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestMouf]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestMouf]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestMouf]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestMouf]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=180}
@@ -458,7 +458,7 @@ STATE: {CheckQuests} ~~ {
 				Expr {getqueststatus[btmcompleted_0513]==1}
 				Expr {getqueststatus[btmpickup_0513]==1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestDR]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestDR]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=150}
@@ -466,19 +466,19 @@ STATE: {CheckQuests} ~~ {
 			Any
 				Expr {getqueststatus[aetheriumcorefragmentpickuptimer]==1}
 				Expr {getqueststatus[unleashgearknightcomplete0909]==1}
-		DO:	DoExpr {setgvar[QuestUnleashTheGearknight,getgvar[QuestUnleashTheGearknight]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestUnleashTheGearknight,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestUnleashTheGearknight]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestUnleashTheGearknight]==getpvar[FellowCount]}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestUnleashTheGearknight]==getpvar[FellowCount]}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestUnleashTheGearknight]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestUnleashTheGearknight]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestUnleashTheGearknight]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestUnleashTheGearknight]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=150}
@@ -486,19 +486,19 @@ STATE: {CheckQuests} ~~ {
 			Any
 				Expr {getqueststatus[shardofharraagsdaggerpickuptimer]==1}
 				Expr {getqueststatus[aerbaxsprodigalbanderling_wait]==1}
-		DO:	DoExpr {setgvar[QuestProdigalBanderling,getgvar[QuestProdigalBanderling]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalBanderling,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalBanderling]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestProdigalBanderling]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalBanderling]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestProdigalBanderling]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalBanderling]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestProdigalBanderling]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestProdigalBanderling]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=150}
@@ -509,19 +509,19 @@ STATE: {CheckQuests} ~~ {
 				All
 					Expr {getqueststatus[lostlorepagecompleted_0712]==1}
 					Expr {getqueststatus[tornstripofparchmentpickuptimer]==1}
-		DO:	DoExpr {setgvar[QuestLostLore,getgvar[QuestLostLore]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLostLore,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLostLore]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestLostLore]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLostLore]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestLostLore]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLostLore]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestLostLore]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestLostLore]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=150}
@@ -529,19 +529,19 @@ STATE: {CheckQuests} ~~ {
 			Any
 				Expr {getqueststatus[ordersforzrikux_pickup]==1}
 				Expr {getqueststatus[falatacotdepotquest_completed]==1}
-		DO:	DoExpr {setgvar[QuestFalatacotDepot,getgvar[QuestFalatacotDepot]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestFalatacotDepot,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestFalatacotDepot]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestFalatacotDepot]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestFalatacotDepot]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestFalatacotDepot]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestFalatacotDepot]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestFalatacotDepot]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestFalatacotDepot]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=150}
@@ -550,19 +550,19 @@ STATE: {CheckQuests} ~~ {
 				Expr {getpvar[TuskerSecondary]==1}
 				Expr {getisspellknown[5175]==1}
 			Expr {getqueststatus[pickeduptokenprodigaltusker_0807]==1}
-		DO:	DoExpr {setgvar[QuestProdigalTusker,getgvar[QuestProdigalTusker]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalTusker,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalTusker]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestProdigalTusker]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalTusker]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestProdigalTusker]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalTusker]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestProdigalTusker]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestProdigalTusker]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=130}
@@ -571,16 +571,16 @@ STATE: {CheckQuests} ~~ {
 			Expr {testquestflag[quiddityseedquestflag]==1}
 			Expr {getqueststatus[clawofthehopeslayerpickuptimer]==1}
 			Expr {testquestflag[clawofthehopeslayerfirstrun]==1}
-		DO:	DoExpr {setgvar[QuestIQSQ,getgvar[QuestIQSQ]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ]+1]}
 	IF:	Any
-			Expr {getgvar[QuestIQSQ]>=1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ]>=1}
 			All
 				Any	
 					Expr {getpvar[AdminSkip]==1}
 					Expr {getpvar[FellowCount]<2}
-				Expr {getgvar[QuestIQSQ]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestIQSQ]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestIQSQ]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=150}
@@ -590,19 +590,19 @@ STATE: {CheckQuests} ~~ {
 			Any
 				Expr {getqueststatus[splitgraelhighcomplete0806]==1}
 				Expr {getqueststatus[shardoftheabyssaltotempickuptimer]==1}
-		DO:	DoExpr {setgvar[QuestGrael,getgvar[QuestGrael]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGrael,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGrael]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestGrael]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGrael]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestGrael]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGrael]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestGrael]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestGrael]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=150}
@@ -610,55 +610,55 @@ STATE: {CheckQuests} ~~ {
 			Any
 				Expr {getqueststatus[dravannessencepickup]==1}
 				Expr {getqueststatus[virindirescuecompleted0612]==1}
-		DO:	DoExpr {setgvar[QuestVR,getgvar[QuestVR]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestVR,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestVR]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestVR]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestVR]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestVR]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestVR]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestVR]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestVR]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=150}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getqueststatus[nexuscrawlcompleted0509]==1}
-		DO:	DoExpr {setgvar[QuestNexus,getgvar[QuestNexus]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestNexus,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestNexus]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestNexus]==getpvar[FellowCount]}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestNexus]==getpvar[FellowCount]}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestNexus]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestNexus]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestNexus]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestNexus]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=175}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getqueststatus[deathallurecd]==1}
-		DO:	DoExpr {setgvar[QuestHermit,getgvar[QuestHermit]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHermit,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHermit]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestHermit]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHermit]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestHermit]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHermit]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestHermit]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestHermit]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=180}
@@ -667,41 +667,41 @@ STATE: {CheckQuests} ~~ {
 			All
 				Expr {getqueststatus[btmpickup_0513]==1}
 				Expr {getqueststatus[btmcompleted_0513]==1}
-		DO:	DoExpr {setgvar[QuestDR,getgvar[QuestDR]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDR,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDR]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestDR]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDR]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestDR]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDR]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestDR]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestDR]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=150}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getisspellknown[5330]==1} ~~ GK
-			Expr {getgvar[ApostateFinaleGo]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==1}
 			Any
 				Expr {getqueststatus[apostatefinalemaskshardpickup]==1}
 				Expr {getqueststatus[apostatefinalecompleted_0910]==1}
-		DO:	DoExpr {setgvar[QuestAF,getgvar[QuestAF]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestAF,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestAF]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestAF]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestAF]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestAF]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestAF]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestAF]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestAF]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=180}
@@ -713,37 +713,37 @@ STATE: {CheckQuests} ~~ {
 			Any
 				Expr {getqueststatus[jtmkeypickup_0613]==1}
 				Expr {getqueststatus[jtmcompleted_0613]==1}
-		DO:	DoExpr {setgvar[QuestPurge,getgvar[QuestPurge]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestPurge,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestPurge]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestPurge]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestPurge]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestPurge]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestPurge]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestPurge]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestPurge]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=150}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getqueststatus[gearxbowwait]==1}
-		DO:	DoExpr {setgvar[QuestGX,getgvar[QuestGX]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGX,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGX]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestGX]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGX]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestGX]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGX]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestGX]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestGX]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=180}
@@ -751,19 +751,19 @@ STATE: {CheckQuests} ~~ {
 			Any
 				Expr {getqueststatus[deewainrocktrophy0211]==1}
 				Expr {getqueststatus[deewaincompleted0211]==1}
-		DO:	DoExpr {setgvar[QuestDee,getgvar[QuestDee]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDee,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDee]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestDee]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDee]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestDee]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDee]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestDee]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestDee]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=180}
@@ -772,19 +772,19 @@ STATE: {CheckQuests} ~~ {
 			Any
 				Expr {getqueststatus[blessedcavereachedend]==1}
 				Expr {getqueststatus[blessedcavecompleted_0912]==1}
-		DO:	DoExpr {setgvar[QuestReleasingTheLight,getgvar[QuestReleasingTheLight]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestReleasingTheLight]==getpvar[FellowCount]}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]==getpvar[FellowCount]}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestReleasingTheLight]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestReleasingTheLight]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestReleasingTheLight]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=200}
@@ -792,19 +792,19 @@ STATE: {CheckQuests} ~~ {
 			Expr {getpvar[FellowCount]>=4}
 			Expr {getqueststatus[shatteredmasterbloodstoneshardpickedup]==1}
 			Expr {testquestflag[oracleportalentry]==1}
-		DO:	DoExpr {setgvar[QuestBSI,getgvar[QuestBSI]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestBSI,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestBSI]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestBSI]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestBSI]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestBSI]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestBSI]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestBSI]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestBSI]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=200}
@@ -814,19 +814,19 @@ STATE: {CheckQuests} ~~ {
 			Any
 				Expr {getqueststatus[ritualtimecompleted_0411]==1}
 				Expr {getqueststatus[sealedtomepickuptimer]==1}
-		DO:	DoExpr {setgvar[QuestHaltDericost,getgvar[QuestHaltDericost]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHaltDericost,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHaltDericost]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestHaltDericost]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHaltDericost]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestHaltDericost]==getpvar[FellowCount]}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHaltDericost]==getpvar[FellowCount]}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestHaltDericost]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestHaltDericost]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=200}
@@ -835,37 +835,37 @@ STATE: {CheckQuests} ~~ {
 			Any
 				Expr {getqueststatus[gerainestudybookpickup]==1}
 				Expr {getqueststatus[geraineslibrarycompleted0312]==1}
-		DO:	DoExpr {setgvar[QuestGeraineStudy,getgvar[QuestGeraineStudy]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGeraineStudy,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGeraineStudy]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestGeraineStudy]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGeraineStudy]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestGeraineStudy]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGeraineStudy]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestGeraineStudy]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestGeraineStudy]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=180}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getqueststatus[abductedcompleted_0313]==1}
-		DO:	DoExpr {setgvar[QuestLU,getgvar[QuestLU]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLU,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLU]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestLU]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLU]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestLU]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLU]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestLU]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestLU]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=180}
@@ -874,19 +874,19 @@ STATE: {CheckQuests} ~~ {
 				Expr {getisspellknown[4128]==1} ~~ GY
 				Expr {getpvar[SummonPortal]==1}
 			Expr {getqueststatus[graverobbercompleted_0213]==1}
-		DO:	DoExpr {setgvar[QuestCP,getgvar[QuestCP]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestCP,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestCP]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestCP]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestCP]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestCP]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestCP]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestCP]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestCP]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=200}
@@ -895,38 +895,38 @@ STATE: {CheckQuests} ~~ {
 			Any
 				Expr {getqueststatus[serpentburialgroundsbonepickup]==1}
 				Expr {getqueststatus[serpentburialgroundsdone]==1}
-		DO:	DoExpr {setgvar[QuestSBG,getgvar[QuestSBG]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSBG,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSBG]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestSBG]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSBG]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestSBG]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSBG]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestSBG]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestSBG]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=180}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getpvar[FellowCount]>=3}
 			Expr {getqueststatus[deconstructioncompleted_0213]==1}
-		DO:	DoExpr {setgvar[QuestSaveKarul,getgvar[QuestSaveKarul]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSaveKarul,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSaveKarul]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestSaveKarul]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSaveKarul]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestSaveKarul]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSaveKarul]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestSaveKarul]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestSaveKarul]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=180}
@@ -934,19 +934,19 @@ STATE: {CheckQuests} ~~ {
 			Expr {getisspellknown[6150]==1} ~~ Rynthid
 			Expr {getpvar[FellowCount]>=3}
 			Expr {getqueststatus[lugianassaultcompleted_0913]==1}
-		DO:	DoExpr {setgvar[QuestLugianAssault,getgvar[QuestLugianAssault]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLugianAssault,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLugianAssault]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[QuestLugianAssault]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLugianAssault]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestLugianAssault]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLugianAssault]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestLugianAssault]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestLugianAssault]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharintprop[25]>=200}
@@ -956,20 +956,20 @@ STATE: {CheckQuests} ~~ {
 			Any
 				Expr {getqueststatus[crimsonscarabpickup]==1}
 				Expr {getqueststatus[eodcompleted_1013]==1}
-		DO:	DoExpr {setgvar[QuestEOD,getgvar[QuestEOD]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestEOD,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestEOD]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[EoDAbort]==0}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==0}
 			Any
-				Expr {getgvar[QuestEOD]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestEOD]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestEOD]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestEOD]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestEOD]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestEOD]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getpvar[RynthidWeapon]==1}
@@ -977,31 +977,31 @@ STATE: {CheckQuests} ~~ {
 			Expr {getisspellknown[6150]==1} ~~ Rynthid
 			Expr {getpvar[FellowCount]>=4}
 			Expr {getqueststatus[tormentshardpickup]==1}
-		DO:	DoExpr {setgvar[QuestRynthidWeapon,getgvar[QuestRynthidWeapon]+1]]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestRynthidWeapon,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestRynthidWeapon]+1]}
 	IF:	All
 			SecsInStateGE 1
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[MeleeGroupCheck]==0}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==0}
 			Expr {getpvar[RynthidWeapon]==1}
 			Expr {getpvar[FellowCount]>=3}
 			Any
-				Expr {getgvar[QuestRynthidWeapon]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestRynthidWeapon]>=1}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[QuestRynthidWeapon]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestRynthidWeapon]>=1}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,QuestRynthidWeapon]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestRynthidWeapon]}
 				SetState {LoadQuest}
 	IF:	All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Expr {getcharintprop[25]>=150}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getqueststatus[mowenwait]==1}
-			Expr {getgvar[HealingKits]>=4}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+HealingKits]>=4}
 		DO:	DoAll
-				DoExpr {setgvar[Quest,BoBo]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,BoBo]}
 				SetState {LoadQuest}
 	IF:	All
 			SecsInStateGE 10
@@ -1010,7 +1010,7 @@ STATE: {CheckQuests} ~~ {
 					Expr {getqueststatus[aetheriumcorefragmentpickuptimer]==0}
 					Expr {getqueststatus[unleashgearknightcomplete0909]==0}
 				All
-					Not Expr {getgvar[QuestUnleashTheGearknight]==getpvar[FellowCount]}
+					Not Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestUnleashTheGearknight]==getpvar[FellowCount]}
 					Expr {getqueststatus[aetheriumcorefragmentpickuptimer]==1}
 					Expr {getqueststatus[unleashgearknightcomplete0909]==1}
 			Any
@@ -1054,7 +1054,7 @@ STATE: {CheckQuests} ~~ {
 			Any
 				Expr {getqueststatus[nexuscrawlcompleted0509]==0}
 				All
-					Not Expr {getgvar[QuestNexus]==getpvar[FellowCount]}
+					Not Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestNexus]==getpvar[FellowCount]}
 					Expr {getqueststatus[nexuscrawlcompleted0509]==1}
 			Any
 				Expr {getqueststatus[deathallurecd]==0}
@@ -1084,7 +1084,7 @@ STATE: {CheckQuests} ~~ {
 					Expr {getqueststatus[blessedcavereachedend]==0}
 					Expr {getqueststatus[blessedcavecompleted_0912]==0}
 				All
-					Not Expr {getgvar[QuestReleasingTheLight]==getpvar[FellowCount]}
+					Not Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]==getpvar[FellowCount]}
 					Expr {getqueststatus[blessedcavereachedend]==1}
 					Expr {getqueststatus[blessedcavecompleted_0912]==1}
 			Any
@@ -1128,7 +1128,7 @@ STATE: {CheckQuests} ~~ {
 					Expr {getpvar[RynthidWeapon]==1}
 					Expr {getqueststatus[tormentshardpickup]==0}
 			Any
-				Expr {getgvar[EoDAbort]==1}	
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==1}	
 				All
 					Expr {getqueststatus[crimsonscarabpickup]==0}
 					Expr {getqueststatus[eodcompleted_1013]==0}
@@ -1156,31 +1156,31 @@ STATE: {Default} ~~ {
 		DO: Chat {/vt meta load %%DQLOptionsPublic%%}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
-			Expr {testgvar[GKRecall]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall]==0}
 		DO: DoAll
-				DoExpr {setgvar[GKRecall,listcreate[]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall,listcreate[]]}
 				SetState {Default}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
-			Expr {testgvar[ApostateFinaleGo]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==0}
 			Expr {getisspellknown[5330]==1}
-			Expr {listcontains[getgvar[GKRecall],getcharstringprop[1]]==0}
+			Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]==0}
 		DO: DoAll
-				DoExpr {listadd[getgvar[GKRecall],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]}
 				SetState {Default}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
-			Expr {testgvar[MeleeGroup]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]==0}
 		DO: DoAll
-				DoExpr {setgvar[MeleeGroup,listcreate[]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup,listcreate[]]}
 				SetState {Default}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
-			Expr {testgvar[MeleeGroupCheck]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==0}
 			Expr {getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3}
-			Expr {listcontains[getgvar[MeleeGroup],getcharstringprop[1]]==0}
+			Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup],getcharstringprop[1]]==0}
 		DO: DoAll
-				DoExpr {listadd[getgvar[MeleeGroup],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup],getcharstringprop[1]]}
 				SetState {Default}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
@@ -1214,7 +1214,7 @@ STATE: {Default} ~~ {
 					Expr {getcharskill_buffed[32]<=390}
 					Expr {getspellexpirationbyname[Aura of Cragstone's Will]<=1800}
 		DO: DoAll
-				DoExpr {setgvar[BuffSyncAll,1]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+BuffSyncAll,1]}
 				Chat {/vt forcebuff}
 				SetState {SyncBuff}
 	IF: SecsInStateGE 1
@@ -1222,7 +1222,7 @@ STATE: {Default} ~~ {
 ~~}
 STATE: {SyncBuff} ~~{
 	IF: All
-			Expr {getgvar[BuffSyncAll]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+BuffSyncAll]==1}
 			Expr {testpvar[BuffingStartAll]==0}
 		DO: DoAll
 				DoExpr {setpvar[BuffingStartAll,1]}
@@ -1232,32 +1232,32 @@ STATE: {SyncBuff} ~~{
 			Expr {vtgetsetting[EnableBuffing]!=True}
 		DO: SetOpt {EnableBuffing} {True}
 	IF:	All
-			Expr {testgvar[SyncBuffComplete]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]==0}
 			Not NeedToBuff
 		DO:	DoAll
-				DoExpr {setgvar[SyncBuffComplete,listcreate[]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete,listcreate[]]}
 				SetState {SyncBuff}
 	IF:	All
-			Expr {testgvar[SyncBuffComplete]==1}
-			Not Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]==1}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getcharstringprop[1]]}
 			Not NeedToBuff
 		DO:	DoAll
-				DoExpr {listadd[getgvar[SyncBuffComplete],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getcharstringprop[1]]}
 				SetState {SyncBuff}
 	IF:	All
 			Not NeedToBuff
 			Any
-				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]}
-				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]}
-				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]}
-				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]}
-				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]}
-				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]}
-				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]}
-				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}		
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameNine]]}		
 		DO: DoAll
-				DoExpr {cleargvar[Buffing]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]}
 				SetState {NetworkChirpCheck}
 ~~}
 STATE: {NetworkChirpCheck} ~~{
@@ -2109,11 +2109,11 @@ STATE: {DefaultTwo} ~~ {
 	IF:	Expr {getpvar[IntialProfileSetup]==0}
 		DO:	SetState {IntialProfileSetup}
 	IF: All
-			Expr {testgvar[ApostateFinaleGo]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==0}
 			Expr {getisspellknown[5330]==1}
-			Expr {listcontains[getgvar[GKRecall],getcharstringprop[1]]==0}
+			Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]==0}
 		DO: DoAll
-				DoExpr {listadd[getgvar[GKRecall],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]}
 	IF:	Always
 		DO:	DoAll
 				EmbedNav nav0 {[empty]}
@@ -2237,204 +2237,206 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {clearpvar[EoDAbortSkip]}
 	IF: Always
 		DO: DoAll
-				DoExpr {cleargvar[QuestCheckPublic]}
-				DoExpr {cleargvar[SyncBuffComplete]}
-				DoExpr {cleargvar[LumTokens]}
-				DoExpr {cleargvar[IQSQ]}
-				DoExpr {cleargvar[Mouf ]}
-				DoExpr {cleargvar[UnleashTheGearknight]}
-				DoExpr {cleargvar[ProdigalBanderling]}
-				DoExpr {cleargvar[LostLore]}
-				DoExpr {cleargvar[FalatacotDepot]}
-				DoExpr {cleargvar[ProdigalTusker]}
-				DoExpr {cleargvar[SplittingGrael]}
-				DoExpr {cleargvar[VirindiRescue]}
-				DoExpr {cleargvar[NexusCrawl]}
-				DoExpr {cleargvar[DeathsAllure]}
-				DoExpr {cleargvar[DreamReaver]}
-				DoExpr {cleargvar[ApostateFinale]}
-				DoExpr {cleargvar[PurgingTheCorruption]}
-				DoExpr {cleargvar[GearXbow]}
-				DoExpr {cleargvar[Deewains]}
-				DoExpr {cleargvar[LugianAssault]}
-				DoExpr {cleargvar[ReleasingTheLight]}
-				DoExpr {cleargvar[SaveKarul]}
-				DoExpr {cleargvar[BSI]}
-				DoExpr {cleargvar[HaltDericost]}
-				DoExpr {cleargvar[GeraineStudy]}
-				DoExpr {cleargvar[BuffSyncAll]}
-				DoExpr {cleargvar[LiberationOfUziz]}
-				DoExpr {cleargvar[CountPhainor]}
-				DoExpr {cleargvar[SerpentBurialGrounds]}
-				DoExpr {cleargvar[EndOfDays]}
-				DoExpr {cleargvar[GoNowClear+getworldname[]]}
-				DoExpr {cleargvar[GoNowTwo+getworldname[]]}
-				DoExpr {cleargvar[QuestMouf]}
-				DoExpr {cleargvar[QuestUnleashTheGearknight]}
-				DoExpr {cleargvar[QuestProdigalBanderling]}
-				DoExpr {cleargvar[QuestProdigalTusker]}
-				DoExpr {cleargvar[QuestLostLore]}
-				DoExpr {cleargvar[QuestFalatacotDepot]}
-				DoExpr {cleargvar[QuestIQSQ]}
-				DoExpr {cleargvar[QuestGrael]}
-				DoExpr {cleargvar[QuestVR]}
-				DoExpr {cleargvar[QuestNexus]}
-				DoExpr {cleargvar[QuestHermit]}
-				DoExpr {cleargvar[QuestDR]}
-				DoExpr {cleargvar[QuestAF]}
-				DoExpr {cleargvar[QuestPurge]}
-				DoExpr {cleargvar[QuestGX]}
-				DoExpr {cleargvar[QuestDee]}
-				DoExpr {cleargvar[QuestLugianAssault]}
-				DoExpr {cleargvar[QuestReleasingTheLight]}
-				DoExpr {cleargvar[QuestSaveKarul]}
-				DoExpr {cleargvar[QuestBSI]}
-				DoExpr {cleargvar[QuestHaltDericost]}
-				DoExpr {cleargvar[QuestGeraineStudy]}
-				DoExpr {cleargvar[QuestLU]}
-				DoExpr {cleargvar[QuestCP]}
-				DoExpr {cleargvar[QuestSBG]}
-				DoExpr {cleargvar[QuestEOD]}
-				DoExpr {cleargvar[QuestRynthidWeapon]}
-				DoExpr {cleargvar[Keys]}
-				DoExpr {cleargvar[Looting]}
-				DoExpr {cleargvar[Go]}
-				DoExpr {cleargvar[QuestComplete]}
-				DoExpr {cleargvar[LootFail]}
-				DoExpr {cleargvar[Quest]}
-				DoExpr {cleargvar[Solved]}
-				DoExpr {cleargvar[More]}
-				DoExpr {cleargvar[East]}
-				DoExpr {cleargvar[West]}
-				DoExpr {cleargvar[AllDone]}
-				DoExpr {cleargvar[Step]}
-				DoExpr {cleargvar[MulingMore]}
-				DoExpr {cleargvar[LootingCounter]}
-				DoExpr {cleargvar[MeleeGroup]}
-				DoExpr {cleargvar[NetworkChirp+getworldname[]]}
-				DoExpr {cleargvar[MeleeGroupCheck]}
-				DoExpr {cleargvar[PopkinComplete]}
-				DoExpr {cleargvar[BabyOneDone]}
-				DoExpr {cleargvar[BabyTwoDone]}
-				DoExpr {cleargvar[BabyThreeDone]}
-				DoExpr {cleargvar[BabyFourDone]}
-				DoExpr {cleargvar[BabyFiveDone]}
-				DoExpr {cleargvar[BabySixDone]}
-				DoExpr {cleargvar[DeewainBridge]}
-				DoExpr {cleargvar[DeewainBridgeGo]}
-				DoExpr {cleargvar[EdificeDoorOne]}
-				DoExpr {cleargvar[DoorStep]}
-				DoExpr {cleargvar[EdificeDoorTwo]}
-				DoExpr {cleargvar[EdificeDoorThree]}
-				DoExpr {cleargvar[DelegateDoorOpen]}
-				DoExpr {cleargvar[RelogTimerComplete]}
-				DoExpr {cleargvar[KillTasksPublic]}
-				DoExpr {cleargvar[Ryn VII]}
-				DoExpr {cleargvar[Ryn II]}
-				DoExpr {cleargvar[Ryn VI]}
-				DoExpr {cleargvar[Ryn IV]}
-				DoExpr {cleargvar[Ryn]}
-				DoExpr {cleargvar[Ryn VIII]}
-				DoExpr {cleargvar[Ryn IX]}
-				DoExpr {cleargvar[Ryn III]}
-				DoExpr {cleargvar[Ryn V]}
-				DoExpr {cleargvar[LostLorePublic]}
-				DoExpr {cleargvar[RangeDown]}
-				DoExpr {cleargvar[SplittingGraelTurnIn]}
-				DoExpr {cleargvar[ApostateFinaleGo]}
-				DoExpr {cleargvar[DepotFlag]}
-				DoExpr {cleargvar[ToTNKaitroFunland]}
-				DoExpr {cleargvar[LostLorePublicFinished]}
-				DoExpr {cleargvar[ToTorchKaitroFunland]}
-				DoExpr {cleargvar[SplittingGraelPublic]}
-				DoExpr {cleargvar[Death+getworldname[]]}
-				DoExpr {cleargvar[SplittingGraelPublicFinished]}
-				DoExpr {cleargvar[ToTorch]}
-				DoExpr {cleargvar[GoNow+getworldname[]]}
-				DoExpr {cleargvar[DreamReaverTurnIn]}
-				DoExpr {cleargvar[FailDelayCounter]}
-				DoExpr {cleargvar[ApostateFinaleFlag]}
-				DoExpr {cleargvar[ApostateFinaleTurnIn]}
-				DoExpr {cleargvar[ShardThree+getworldname[]]}
-				DoExpr {cleargvar[ApostateFinaleShardOne]}
-				DoExpr {cleargvar[ApostateFinaleShardTwo]}
-				DoExpr {cleargvar[ApostateFinaleShardThree]}
-				DoExpr {cleargvar[B]}
-				DoExpr {cleargvar[RecallDrop+getworldname[]]}
-				DoExpr {cleargvar[DeathsAllurePublic]}
-				DoExpr {cleargvar[Checking]}
-				DoExpr {cleargvar[DefaultPass]}
-				DoExpr {cleargvar[GoNowClear]}
-				DoExpr {cleargvar[GoNowTwo]}
-				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
-				DoExpr {cleargvar[JilnaTurnIn]}
-				DoExpr {cleargvar[Turnin]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestCheckPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LumTokens]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+IQSQ]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Mouf]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+UnleashTheGearknight]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ProdigalBanderling]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLore]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FalatacotDepot]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ProdigalTusker]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SplittingGrael]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+VirindiRescue]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+NexusCrawl]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllure]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DreamReaver]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinale]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+PurgingTheCorruption]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GearXbow]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Deewains]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LugianAssault]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ReleasingTheLight]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SaveKarul]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+BSI]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+HaltDericost]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GeraineStudy]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+BuffSyncAll]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUziz]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SerpentBurialGrounds]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EndOfDays]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestMouf]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestUnleashTheGearknight]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalBanderling]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalTusker]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestLostLore]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestFalatacotDepot]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestGrael]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestVR]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestNexus]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestHermit]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestDR]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestAF]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestPurge]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestGX]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestDee]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestLugianAssault]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestSaveKarul]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestBSI]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestHaltDericost]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestGeraineStudy]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestLU]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestCP]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestSBG]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestEOD]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestRynthidWeapon]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Keys]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Looting]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Go]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Quest]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Solved]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+More]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+East]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+West]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+AllDone]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Step]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MulingMore]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+PopkinComplete]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+BabyOneDone]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+BabyTwoDone]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+BabyThreeDone]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+BabyFourDone]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+BabyFiveDone]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+BabySixDone]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridge]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridgeGo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorOne]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorThree]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DelegateDoorOpen]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RelogTimerComplete]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+KillTasksPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn VII]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn II]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn VI]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn IV]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn VIII]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn IX]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn III]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn V]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLorePublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RangeDown]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SplittingGraelTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DepotFlag]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ToTNKaitroFunland]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLorePublicFinished]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ToTorchKaitroFunland]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SplittingGraelPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Death]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SplittingGraelPublicFinished]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ToTorch]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DreamReaverTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ShardThree]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+B]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RecallDrop]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllurePublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Checking]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+JilnaTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Turnin]}
 				DoExpr {clearallvars[]}
-				DoExpr {cleargvar[DefenderCheck]}
-				DoExpr {cleargvar[Alive]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DefenderCheck]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Alive]}
 				DoExpr {clearvar[PitStop]}
-				DoExpr {cleargvar[JumpComplete]}
-				DoExpr {cleargvar[Deewain]}
-				DoExpr {cleargvar[DeewainTurnIn]}
-				DoExpr {cleargvar[IQSQTurnIn]}
-				DoExpr {cleargvar[GoToAun]}
-				DoExpr {cleargvar[DoorOpenIQSQ]}
-				DoExpr {cleargvar[Pillar]}
-				DoExpr {cleargvar[PillarOneAlive]}
-				DoExpr {cleargvar[RWTurnIn]}
-				DoExpr {cleargvar[RynthidWeapon]}
-				DoExpr {cleargvar[CountDoorOpen]}
-				DoExpr {cleargvar[Mouf]}
-				DoExpr {cleargvar[MoufTurnIn]}
-				DoExpr {cleargvar[DoorOpenMouf]}
-				DoExpr {cleargvar[DoorOpenSecDoor]}
-				DoExpr {cleargvar[NexusAethTurnIn]}
-				DoExpr {cleargvar[NexusTurnIn]}
-				DoExpr {cleargvar[SaveKarulFlag]}
-				DoExpr {cleargvar[SaveKarulTurnIn]}
-				DoExpr {cleargvar[SBGFlag]}
-				DoExpr {cleargvar[SBGTurnIn]}
-				DoExpr {cleargvar[ChiefTalkFlag]}
-				DoExpr {cleargvar[WinterbornTurnIn]}
-				DoExpr {cleargvar[WinterbornFlag]}
-				DoExpr {cleargvar[getcharstringprop[1]]}
-				DoExpr {cleargvar[LostLoreNoteOne]}
-				DoExpr {cleargvar[LostLoreNoteTwo]}
-				DoExpr {cleargvar[BuffingSynced]}
-				DoExpr {cleargvar[DoorOpenUGK]}
-				DoExpr {cleargvar[UGKFlag]}
-				DoExpr {cleargvar[UGKTurnIn]}
-				DoExpr {cleargvar[DepotTurnIn]}
-				DoExpr {cleargvar[VRTurnIn]}
-				DoExpr {cleargvar[RTLFlag]}
-				DoExpr {cleargvar[RTLTurnIn]}
-				DoExpr {cleargvar[HaltDericostTurnIn]}
-				DoExpr {cleargvar[HaltDericostFlag]}
-				DoExpr {cleargvar[Middle]}
-				DoExpr {cleargvar[InsideDungeon]}
-				DoExpr {cleargvar[LugianAssaultTurnIn]}
-				DoExpr {cleargvar[LugianAssaultFlag]}
-				DoExpr {cleargvar[PTCTurnIn]}
-				DoExpr {cleargvar[DoorOpenPTC]}
-				DoExpr {cleargvar[DonovanTurnInDone]}
-				DoExpr {cleargvar[FellowTwoGo]}
-				DoExpr {cleargvar[FellowThreeGo]}
-				DoExpr {cleargvar[FellowFourGo]}
-				DoExpr {cleargvar[FellowFiveGo]}
-				DoExpr {cleargvar[FellowSixGo]}
-				DoExpr {cleargvar[FellowSevenGo]}
-				DoExpr {cleargvar[FellowEightGo]}
-				DoExpr {cleargvar[FellowNineGo]}
-				DoExpr {cleargvar[QuestCompleted]}
-				DoExpr {cleargvar[LiberationOfUzizTurnIn]}
-				DoExpr {cleargvar[EoDAbort]}
-				DoExpr {cleargvar[PortalStuck]}
-				DoExpr {cleargvar[EODTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+JumpComplete]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Deewain]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeewainTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+IQSQTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoToAun]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorOpenIQSQ]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Pillar]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+PillarOneAlive]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RWTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RynthidWeapon]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+CountDoorOpen]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Mouf]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MoufTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorOpenMouf]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorOpenSecDoor]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+NexusAethTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+NexusTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SaveKarulFlag]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SaveKarulTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SBGFlag]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SBGTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ChiefTalkFlag]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+WinterbornTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+WinterbornFlag]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLoreNoteOne]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLoreNoteOneDone]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLoreNoteTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLoreNoteTwoDone]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+BuffingSynced]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorOpenUGK]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+UGKFlag]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+UGKTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DepotTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+VRTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+HaltDericostTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+HaltDericostFlag]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Middle]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+InsideDungeon]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LugianAssaultTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LugianAssaultFlag]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+PTCTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorOpenPTC]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DonovanTurnInDone]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowTwoGo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowThreeGo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowFourGo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowFiveGo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowSixGo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowSevenGo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowEightGo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowNineGo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestCompleted]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+PortalStuck]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EODTurnIn]}
 	IF:	Always
 		DO:	DoExpr {clearallvars[]}
 	IF:	Expr {getfellowshipcount[]<getpvar[FellowCount]}
 		DO:	DoAll
-				DoExpr {cleargvar[Zstuck]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]}
 				SetState {CheckNearby}
 	IF: All
 			ItemCountGE 251 {Prismatic Taper}
@@ -2443,14 +2445,14 @@ STATE: {DefaultTwo} ~~ {
 				Expr {getpvar[FellowCount]<2}
 		DO: DoAll
 				DoExpr {setpvar[Profile, QuestCheckPublic]}
-				DoExpr {cleargvar[Zstuck]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]}
 				DoExpr {setpvar[StateName,Quests]}
 				SetState {Quests}
 	IF: All
 			Expr {getcharskill_traininglevel[37]==3}
 			Expr {getitemcountininventorybyname[Combined Hyssop and Mandrake]<50}
 			Expr {getitemcountininventorybyname[Soft Bandages]<50}
-		DO: DoExpr {setgvar[HealingKits,getgvar[HealingKits]+1]}
+		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+HealingKits,getgvar[getworldname[]+getpvar[GroupIdentifier]+HealingKits]+1]}
 	IF:	All
 			Expr {getfellowshipcount[]==getpvar[FellowCount]}
 			ItemCountLE 250 {Prismatic Taper}
@@ -2465,7 +2467,7 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {setpvar[Profile, QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Quests]}
 				DoExpr {setpvar[CheckSync,QuestsDefaultTwo]}
-				DoExpr {cleargvar[Zstuck]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]}
 				Chat {/vt meta load CheckPublic} ~~ QuestsDefaultTwo
 ~~ }
 STATE: {Finished} ~~ {
@@ -2476,45 +2478,45 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[IntialProfileSetup]}
 				DoExpr {clearpvar[IntialCleanUp]}
 				DoExpr {clearpvar[SyncBuff]}
-				DoExpr {cleargvar[QuestCheckPublic]}
-				DoExpr {cleargvar[ApostateFinaleGo]}
-				DoExpr {cleargvar[LumTokensPublic]}
-				DoExpr {cleargvar[IQSQPublic]}
-				DoExpr {cleargvar[MoufPublic]}
-				DoExpr {cleargvar[UnleashTheGearknightPublic]}
-				DoExpr {cleargvar[ProdigalBanderlingPublic]}
-				DoExpr {cleargvar[LostLorePublic]}
-				DoExpr {cleargvar[FalatacotDepotPublic]}
-				DoExpr {cleargvar[ProdigalTuskerPublic]}
-				DoExpr {cleargvar[SplittingGraelPublic]}
-				DoExpr {cleargvar[VirindiRescuePublic]}
-				DoExpr {cleargvar[NexusCrawlPublic]}
-				DoExpr {cleargvar[DeathsAllurePublic]}
-				DoExpr {cleargvar[DreamReaverPublic]}
-				DoExpr {cleargvar[ApostateFinalePublic]}
-				DoExpr {cleargvar[PurgingTheCorruptionPublic]}
-				DoExpr {cleargvar[GearXbowPublic]}
-				DoExpr {cleargvar[DeewainsPublic]}
-				DoExpr {cleargvar[LugianAssaultPublic]}
-				DoExpr {cleargvar[ReleasingTheLightPublic]}
-				DoExpr {cleargvar[SaveKarulPublic]}
-				DoExpr {cleargvar[BSIPublic]}
-				DoExpr {cleargvar[HaltDericostPublic]}
-				DoExpr {cleargvar[GeraineStudyPublic]}
-				DoExpr {cleargvar[LiberationOfUzizPublic]}
-				DoExpr {cleargvar[CountPhainorPublic]}
-				DoExpr {cleargvar[SerpentBurialGroundsPublic]}
-				DoExpr {cleargvar[EndOfDaysPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestCheckPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LumTokensPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+IQSQPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MoufPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+UnleashTheGearknightPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ProdigalBanderlingPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLorePublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FalatacotDepotPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ProdigalTuskerPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SplittingGraelPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+VirindiRescuePublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+NexusCrawlPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllurePublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DreamReaverPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinalePublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+PurgingTheCorruptionPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GearXbowPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeewainsPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LugianAssaultPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ReleasingTheLightPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SaveKarulPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+BSIPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+HaltDericostPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GeraineStudyPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SerpentBurialGroundsPublic]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EndOfDaysPublic]}
 ~~ }
 STATE: {KeyCheck} ~~ {
 	IF: All
-			Expr {testgvar[GKRecall]}
-			Expr {listcount[getgvar[GKRecall]]==getpvar[FellowCount]}
-		DO: DoExpr {setgvar[ApostateFinaleGo,1]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall]}
+			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall]]==getpvar[FellowCount]}
+		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo,1]}
 	IF: All
-			Expr {testgvar[MeleeGroup]}
-			Expr {listcount[getgvar[MeleeGroup]]==getpvar[FellowCount]}
-		DO: DoExpr {setgvar[MeleeGroupCheck,1]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
+			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]]==getpvar[FellowCount]}
+		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck,1]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Sparkling Key]]==7}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Crackling Key]]==7}
@@ -2584,7 +2586,7 @@ STATE: {MeetUp} ~~ {
 			Expr {getworldname[]==Coldeve}
 			Expr {getvar[MeetUpFail]>8}
 		DO:	DoAll
-				Chat {/ub bct DailyLoop /vt meta load QuestCheckPublic}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load QuestCheckPublic}
 				DoExpr {clearvar[MeetUpFail]}
 ~~ }
 STATE: {PackCleanUp} ~~ {
@@ -2607,14 +2609,14 @@ STATE: {PackCleanUp} ~~ {
 ~~ }
 STATE: {Quests} ~~ {
 	IF: All
-			Expr {testgvar[ApostateFinaleGo]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==0}
 			Expr {getisspellknown[5330]==1}
-			Expr {listcontains[getgvar[GKRecall],getcharstringprop[1]]==0}
+			Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]==0}
 		DO: DoAll
-				DoExpr {listadd[getgvar[GKRecall],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {cleargvar[MeetUp]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]}
 				Chat {/ub myquests}
 	IF: All
 			Expr {getqueststatus[moufreward]==1}
@@ -2624,11 +2626,11 @@ STATE: {Quests} ~~ {
 				Expr {getcharquadprop[6]==1500000}
 				Expr {getcharintprop[390]==5}
 		DO:	DoAll
-				DoExpr {cleargvar[MeetUp]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]}
 				Chat {/f Going to Spend Lum}
-				Chat {/ub bct DailyLoop /ub mexec setpvar[ReturnProfile,QuestCheckPublic]}
-				Chat {/ub bct DailyLoop /ub mexec setpvar[StateName,KeyCheck]}
-				Chat {/ub bct DailyLoop /ub delay 250 /vt meta load LumTokensPublic}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[ReturnProfile,QuestCheckPublic]}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[StateName,KeyCheck]}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub delay 250 /vt meta load LumTokensPublic}
 	IF: All
 			Expr {getcharquadprop[6]>=1010001}
 			Not All
@@ -2640,7 +2642,7 @@ STATE: {Quests} ~~ {
 						Expr {getqueststatus[aetheriumcorefragmentpickuptimer]==0}
 						Expr {getqueststatus[unleashgearknightcomplete0909]==0}
 					All
-						Not Expr {getgvar[QuestUnleashTheGearknight]==getpvar[FellowCount]}
+						Not Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestUnleashTheGearknight]==getpvar[FellowCount]}
 						Expr {getqueststatus[aetheriumcorefragmentpickuptimer]==1}
 						Expr {getqueststatus[unleashgearknightcomplete0909]==1}
 				Any
@@ -2676,7 +2678,7 @@ STATE: {Quests} ~~ {
 				Any
 					Expr {getqueststatus[nexuscrawlcompleted0509]==0}
 					All
-						Not Expr {getgvar[QuestNexus]==getpvar[FellowCount]}
+						Not Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestNexus]==getpvar[FellowCount]}
 						Expr {getqueststatus[nexuscrawlcompleted0509]==1}
 				Any
 					Expr {getqueststatus[deathallurecd]==0}
@@ -2704,7 +2706,7 @@ STATE: {Quests} ~~ {
 						Expr {getqueststatus[blessedcavereachedend]==0}
 						Expr {getqueststatus[blessedcavecompleted_0912]==0}
 					All
-						Not Expr {getgvar[QuestReleasingTheLight]==getpvar[FellowCount]}
+						Not Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]==getpvar[FellowCount]}
 						Expr {getqueststatus[blessedcavereachedend]==1}
 						Expr {getqueststatus[blessedcavecompleted_0912]==1}
 				Any
@@ -2748,10 +2750,10 @@ STATE: {Quests} ~~ {
 						Expr {getpvar[RynthidWeapon]==1}
 						Expr {getqueststatus[tormentshardpickup]==0}
 				Any
-					Expr {getqueststatus[mowenwait]==1&&getgvar[HealingKits]<4}
+					Expr {getqueststatus[mowenwait]==1&&getgvar[getworldname[]+getpvar[GroupIdentifier]+HealingKits]<4}
 					Expr {getqueststatus[mowenwait]==0}
 				Any
-					Expr {getgvar[EoDAbort]==1}	
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==1}	
 					All
 						Expr {getqueststatus[crimsonscarabpickup]==0}
 						Expr {getqueststatus[eodcompleted_1013]==0}
@@ -2760,12 +2762,12 @@ STATE: {Quests} ~~ {
 						Expr {getqueststatus[crimsonscarabpickup]==1}
 						Expr {getqueststatus[eodcompleted_1013]==1}
 		DO:	DoAll
-				DoExpr {cleargvar[MeetUp]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]}
 				Chat {/f Going to Spend Lum}
-				Chat {/ub bct DailyLoop /ub mexec setpvar[ReturnProfile,QuestCheckPublic]}
-				Chat {/ub bct DailyLoop /ub mexec setpvar[StateName,KeyCheck]}
-				Chat {/ub bct DailyLoop /ub mexec setpvar[Finished,1]}
-				Chat {/ub bct DailyLoop /ub delay 250 /vt meta load LumTokensPublic}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[ReturnProfile,QuestCheckPublic]}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[StateName,KeyCheck]}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[Finished,1]}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub delay 250 /vt meta load LumTokensPublic}
 	IF: Any
 			All
 				Expr {isrefreshingquests[]==0}
@@ -2799,7 +2801,7 @@ STATE: {Quests} ~~ {
 					Expr {getobjectinternaltype[wobjectfindininventorybyname[Forging Gloves]]==7}~~ FalatacotDepot
 		DO: DoAll
 				Chat {/ub autocram}
-				DoExpr {cleargvar[MeetUp]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]}
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				SetState {PackCleanUp}
 	IF: All
@@ -2846,7 +2848,7 @@ STATE: {Quests} ~~ {
 					Expr {getobjectinternaltype[wobjectfindininventorybyname[Treasury Key]]==7} ~~ Lugian Assault Wont break
 		DO:	DoAll
 				Chat {/ub autocram}
-				DoExpr {cleargvar[MeetUp]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]}
 				DoExpr {setpvar[ECleanUp,2]}
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				SetState {PackCleanUp}
@@ -2854,7 +2856,7 @@ STATE: {Quests} ~~ {
 			SecsInStateGE 5
 			Expr {isrefreshingquests[]==0}
 		DO:	DoAll
-				DoExpr {cleargvar[MeetUp]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]}
 				DoExpr {setpvar[Profile, QuestCheckPublic]}
 				DoExpr {setpvar[StateName,KeyCheck]}
 				DoExpr {setpvar[CheckSync,KeyCheckQuests]}
@@ -2898,7 +2900,7 @@ STATE: {PackCleanUpCheck} ~~ {
 STATE: {Zstuck} ~~ {
 	IF: Always
 		DO: DoAll
-				DoExpr {cleargvar[Checking]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Checking]}
 				DoExpr {clearpvar[IntialCleanUp]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}

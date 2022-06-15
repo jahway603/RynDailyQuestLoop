@@ -106,27 +106,47 @@ STATE: {%% Options %%} ~~ {
 		DO:	DoExpr {setpvar[RynthidWeapon,1]}
 	IF:	Never
 		DO:	Chat {%%% Edit Fellow Count %%%}
-	IF:	Expr {testpvar[FellowCount]==0}
+	IF:	Any
+			Expr {testpvar[FellowCount]==0}
+			Expr {testpvar[FellowCount]==Number}
 		DO:	DoExpr {setpvar[FellowCount,Number]}
 	IF:	Never
 		DO:	Chat {%%% Edit Names Below %%%}
-	IF:	Expr {testpvar[LeaderName]==0}
+	IF:	Any
+			Expr {testpvar[LeaderName]==0}
+			Expr {testpvar[LeaderName]==CharOne}
 		DO:	DoExpr {setpvar[LeaderName,`CharOne`]}
-	IF:	Expr {testpvar[FellowNameTwo]==0}
+	IF:	Any
+			Expr {testpvar[FellowNameTwo]==0}
+			Expr {testpvar[FellowNameTwo]==CharTwo}
 		DO:	DoExpr {setpvar[FellowNameTwo,`CharTwo`]}
-	IF:	Expr {testpvar[FellowNameThree]==0}
+	IF:	Any
+			Expr {testpvar[FellowNameThree]==0}
+			Expr {testpvar[FellowNameThree]==CharThree}
 		DO:	DoExpr {setpvar[FellowNameThree,`CharThree`]}
-	IF:	Expr {testpvar[FellowNameFour]==0}
+	IF:	Any
+			Expr {testpvar[FellowNameFour]==0}
+			Expr {testpvar[FellowNameFour]==CharFour}
 		DO:	DoExpr {setpvar[FellowNameFour,`CharFour`]}
-	IF:	Expr {testpvar[FellowNameFive]==0}
+	IF:	Any
+			Expr {testpvar[FellowNameFive]==0}
+			Expr {testpvar[FellowNameFive]==CharFive}
 		DO:	DoExpr {setpvar[FellowNameFive,`CharFive`]}
-	IF:	Expr {testpvar[FellowNameSix]==0}
+	IF:	Any
+			Expr {testpvar[FellowNameSix]==0}
+			Expr {testpvar[FellowNameSix]==CharSix}
 		DO:	DoExpr {setpvar[FellowNameSix,`CharSix`]}
-	IF:	Expr {testpvar[FellowNameSeven]==0}
+	IF:	Any
+			Expr {testpvar[FellowNameSeven]==0}
+			Expr {testpvar[FellowNameSeven]==CharSeven}
 		DO:	DoExpr {setpvar[FellowNameSeven,`CharSeven`]}
-	IF:	Expr {testpvar[FellowNameEight]==0}
+	IF:	Any
+			Expr {testpvar[FellowNameEight]==0}
+			Expr {testpvar[FellowNameEight]==CharEight}
 		DO:	DoExpr {setpvar[FellowNameEight,`CharEight`]}
-	IF:	Expr {testpvar[FellowNameNine]==0}
+	IF:	Any
+			Expr {testpvar[FellowNameNine]==0}
+			Expr {testpvar[FellowNameNine]==CharNine}
 		DO:	DoExpr {setpvar[FellowNameNine,`CharNine`]}
 	IF:	Never
 		DO:	Chat {%%% Edit Bot Count %%%}
@@ -216,31 +236,45 @@ STATE: {%% Options %%} ~~ {
 		DO:	Chat {Optional tie to Dark Bobo as secondary to save time on that quest with all characters.}
 	IF:	All
 			Expr {getpvar[SummonPortal]==1}
-			Expr {testpvar[UGKSummon]==0}
+			Any
+				Expr {testpvar[UGKSummon]==0}
+				Expr {testpvar[UGKSummon]==CharOne}
 		DO:	DoExpr {setpvar[UGKSummon,CharOne]}
 	IF:	All
 			Expr {getpvar[SummonPortal]==1}
-			Expr {testpvar[SplittingGraelSummon]==0}
+			Any
+				Expr {testpvar[SplittingGraelSummon]==0}
+				Expr {testpvar[SplittingGraelSummon]==CharTwo}
 		DO:	DoExpr {setpvar[SplittingGraelSummon,CharTwo]}
 	IF:	All
 			Expr {getpvar[SummonPortal]==1}
-			Expr {testpvar[PurgingTheCorruptionSummon]==0}
+			Any
+				Expr {testpvar[PurgingTheCorruptionSummon]==0}
+				Expr {testpvar[PurgingTheCorruptionSummon]==CharThree}
 		DO:	DoExpr {setpvar[PurgingTheCorruptionSummon,CharThree]}
 	IF:	All
 			Expr {getpvar[SummonPortal]==1}
-			Expr {testpvar[ProdigalBanderlingSummon]==0}
+			Any
+				Expr {testpvar[ProdigalBanderlingSummon]==0}
+				Expr {testpvar[ProdigalBanderlingSummon]==CharFour}
 		DO:	DoExpr {setpvar[ProdigalBanderlingSummon,CharFour]}
 	IF:	All
 			Expr {getpvar[SummonPortal]==1}
-			Expr {testpvar[NexusCrawlSummon]==0}
+			Any
+				Expr {testpvar[NexusCrawlSummon]==0}
+				Expr {testpvar[NexusCrawlSummon]==CharFive}
 		DO:	DoExpr {setpvar[NexusCrawlSummon,CharFive]}
 	IF:	All
 			Expr {getpvar[SummonPortal]==1}
-			Expr {testpvar[DeathsAllureSummon]==0}
+			Any
+				Expr {testpvar[DeathsAllureSummon]==0}
+				Expr {testpvar[DeathsAllureSummon]==CharSix}
 		DO:	DoExpr {setpvar[DeathsAllureSummon,CharSix]}
 	IF:	All
 			Expr {getpvar[SummonPortal]==1}
-			Expr {testpvar[CountPhainorSummon]==0}
+			Any
+				Expr {testpvar[CountPhainorSummon]==0}
+				Expr {testpvar[CountPhainorSummon]==CharTwo}
 		DO:	DoExpr {setpvar[CountPhainorSummon,CharTwo]}
 	IF:	Never
 		DO:	Chat {%% Do Not Edit Below Here %%}
@@ -333,7 +367,7 @@ STATE: {%% Options %%} ~~ {
 						Expr {testpvar[QuestKeyWordSplittingGrael]==1}
 						Expr {testpvar[QuestKeyWordUnleashTheGearknight]==1}
 		DO:	DoAll
-				Chat {/ub opt set Networking.Tags add DailyLoop}
+				ChatExpr {\/ub opt set Networking\.Tags add DailyLoop+getworldname[]+getpvar[GroupIdentifier]}
 				DoExpr {setpvar[Options,1]}
 	IF:	All
 			Expr {getpvar[Options]==1}
@@ -513,7 +547,11 @@ STATE: {%% Options %%} ~~ {
 						Expr {getpvar[QuestKeyWordUnleashTheGearknight]==KeyWordUGK}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Default]}
-				CreateView {Start} {<?xml version="1.0"?><view width="150" height="50" title="Start"><control type="layout"><control type="button" name="Start" left="0" top="0" width="149" height="49" text="Start" actionexpr="chatbox[\/ub bct DailyLoop \/vt meta load QuestCheckPublic]" /></control></view>}
+				CreateView {Start} {<?xml version="1.0"?><view width="150" height="50" title="Start"><control type="layout"><control type="button" name="Start" left="0" top="0" width="149" height="49" text="Start" actionexpr="setgvar[Start,1]" /></control></view>}
+	IF: Expr {getgvar[Start]==1}
+		DO:	DoAll
+				DoExpr {setpvar[StateName,Default]}
+				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
 			Expr {getpvar[ReturnProfile]==`QuestCheckPublic`}
 			Expr {getpvar[Options]==1}
@@ -553,6 +591,61 @@ STATE: {Default} ~~ {
 			Expr {getpvar[ReturnProfile]==CMD}
 			Expr {testpvar[Options]==0}
 		DO:	SetState {%% Options %%}
+	IF: Expr {testpvar[Options]==0}
+		DO: DoAll
+				DoExpr {clearpvar[RouteTogglePhainor]}
+				DoExpr {clearpvar[RouteToggleDeathsAllure]}
+				DoExpr {clearpvar[RouteToggleNexusCrawl]}
+				DoExpr {clearpvar[RouteToggleProdigalBanderling]}
+				DoExpr {clearpvar[RouteTogglePurgingTheCorruption]}
+				DoExpr {clearpvar[RouteToggleSplittingGrael]}
+				DoExpr {clearpvar[RouteToggleUGK]}
+				DoExpr {clearpvar[LSRecall]}
+				DoExpr {clearpvar[Grael]}
+				DoExpr {clearpvar[TuskerSecondary]}
+				DoExpr {clearpvar[RynthidWeapon]}
+				DoExpr {clearpvar[FellowCount]}
+				DoExpr {clearpvar[LeaderName]}
+				DoExpr {clearpvar[FellowNameTwo]}
+				DoExpr {clearpvar[FellowNameThree]}
+				DoExpr {clearpvar[FellowNameFour]}
+				DoExpr {clearpvar[FellowNameFive]}
+				DoExpr {clearpvar[FellowNameSix]}
+				DoExpr {clearpvar[FellowNameSeven]}
+				DoExpr {clearpvar[FellowNameEight]}
+				DoExpr {clearpvar[FellowNameNine]}
+				DoExpr {clearpvar[BotCount1]}
+				DoExpr {clearpvar[BotName]}
+				DoExpr {clearpvar[BotNameOne]}
+				DoExpr {clearpvar[BotNameTwo]}
+				DoExpr {clearpvar[BotNameThree]}
+				DoExpr {clearpvar[BotNameFour]}
+				DoExpr {clearpvar[BotNameFive]}
+				DoExpr {clearpvar[BotNameSix]}
+				DoExpr {clearpvar[BotNameSeven]}
+				DoExpr {clearpvar[BotNameEight]}
+				DoExpr {clearpvar[BotNameNine]}
+				DoExpr {clearpvar[BotNameTen]}
+				DoExpr {clearpvar[BotNameEleven]}
+				DoExpr {clearpvar[QuestKeyWordCountPhainor]}
+				DoExpr {clearpvar[QuestKeyWordDeathsAllure]}
+				DoExpr {clearpvar[QuestKeyWordNexusCrawl]}
+				DoExpr {clearpvar[QuestKeyWordProdigalBanderling]}
+				DoExpr {clearpvar[QuestKeyWordPurgingTheCorruption]}
+				DoExpr {clearpvar[QuestKeyWordSplittingGrael]}
+				DoExpr {clearpvar[QuestKeyWordUnleashTheGearknight]}
+				DoExpr {clearpvar[UGKSummon]}
+				DoExpr {clearpvar[SplittingGraelSummon]}
+				DoExpr {clearpvar[PurgingTheCorruptionSummon]}
+				DoExpr {clearpvar[ProdigalBanderlingSummon]}
+				DoExpr {clearpvar[NexusCrawlSummon]}
+				DoExpr {clearpvar[DeathsAllureSummon]}
+				DoExpr {clearpvar[CountPhainorSummon]}
+				DoExpr {clearpvar[UseBot]}
+				DoExpr {clearpvar[SummonPortal]}
+				DoExpr {clearpvar[Run]}
+				DoExpr {clearpvar[StateName]}
+				DoExpr {clearpvar[Profile]}
 	IF:	Expr {testpvar[Options]==0}
 		DO:	DoAll
 				ChatExpr {\/t +getcharstringprop[1]+`,Press the Start Button to begin the daily quest loop.`}

@@ -45,8 +45,8 @@ STATE: {DeathRecall} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -70,13 +70,13 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {clearvar[JumpStuck]}
-				DoExpr {cleargvar[EdificeDoorOne]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorOne]}
 				DoExpr {clearvar[EdificeDoorOne]}
-				DoExpr {cleargvar[EdificeDoorTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorTwo]}
 				DoExpr {clearvar[EdificeDoorTwo]}
-				DoExpr {cleargvar[EdificeDoorThree]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorThree]}
 				DoExpr {clearvar[EdificeDoorThree]}
-				DoExpr {cleargvar[DelegateDoorOpen]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DelegateDoorOpen]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {EnableCombat} {False}
@@ -122,10 +122,10 @@ STATE: {Default} ~~ {
 			Expr {getcharboolprop[44]==1}
 			Expr {getpvar[FellowCount]<2}
 		DO:	DoExpr {setpvar[AdminSkip,1]}
-	IF:	Not Expr {testgvar[FailDelayCounter]}
-		DO:	DoExpr {setgvar[FailDelayCounter,listcreate[]]}
-	IF:	Not Expr {testgvar[LootingCounter]}
-		DO:	DoExpr {setgvar[LootingCounter,listcreate[]]}
+	IF:	Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter,listcreate[]]}
+	IF:	Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter,listcreate[]]}
 	IF:	Always
 		DO:	DoExpr {setpvar[Step,0]}
 	IF:	Always
@@ -157,10 +157,10 @@ STATE: {Default} ~~ {
 				Expr {getspellexpirationbyname[Aura of Cragstone's Will]<=1800}
 		DO:	DoAll
 				Chat {/vt forcebuff}
-				DoExpr {setgvar[Buffing,1]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing,1]}
 				DoExpr {setpvar[StateName,vtgetmetastate[]]}
 				SetState {SyncBuff}
-	IF:	Expr {getgvar[Buffing]==1}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,vtgetmetastate[]]}
 				SetState {SyncBuff}
@@ -179,8 +179,8 @@ STATE: {DoorStep} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -200,24 +200,24 @@ STATE: {DoorStep} ~~ {
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
-	IF:	Expr {getgvar[DoorStep]==1}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]==1}
 		DO:	EmbedNav nav2 {[none]}
-	IF:	Expr {getgvar[DoorStep]==2}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]==2}
 		DO:	EmbedNav nav3 {[none]}
-	IF:	Expr {getgvar[DoorStep]==3}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]==3}
 		DO:	EmbedNav nav4 {[none]}
 	IF:	All
-			Expr {getgvar[DoorStep]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]==1}
 			NavEmpty
 			CellE 586702B3
 		DO:	SetState {EdificeDoorOne}
 	IF:	All
-			Expr {getgvar[DoorStep]==2}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]==2}
 			CellE 58670262
 			NavEmpty
 		DO:	SetState {EdificeDoorTwo}
 	IF:	All
-			Expr {getgvar[DoorStep]==3}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]==3}
 			NavEmpty
 			CellE 58670188
 		DO:	SetState {EdificeDoorThree}
@@ -230,8 +230,8 @@ STATE: {EdificeDoorOne} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -240,17 +240,17 @@ STATE: {EdificeDoorOne} ~~ {
 			Expr {getpvar[Leader]==1}
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744831]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744831]]==0}
-		DO:	DoExpr {cleargvar[DoorStep]}
+		DO:	DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744831]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744831]]==0}
-		DO:	DoExpr {setgvar[EdificeDoorOne,0]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorOne,0]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744831]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744831]]==1}
 		DO:	DoAll
-				DoExpr {setgvar[EdificeDoorOne,1]}
-				DoExpr {setgvar[DoorStep,1]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorOne,1]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep,1]}
 				SetState {EdificeToLeverTwo}
 	IF:	Any
 			Death
@@ -276,8 +276,8 @@ STATE: {EdificeDoorThree} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -286,17 +286,17 @@ STATE: {EdificeDoorThree} ~~ {
 			Expr {getpvar[Leader]==1}
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744829]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744829]]==0}
-		DO:	DoExpr {cleargvar[DoorStep]}
+		DO:	DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744829]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744829]]==0}
-		DO:	DoExpr {setgvar[EdificeDoorThree,0]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorThree,0]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744829]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744829]]==1}
 		DO:	DoAll
-				DoExpr {setgvar[EdificeDoorThree,1]}
-				DoExpr {setgvar[DoorStep,3]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorThree,1]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep,3]}
 				SetState {EdificeToDelegateBoss}
 	IF:	Any
 			Death
@@ -322,8 +322,8 @@ STATE: {EdificeDoorTwo} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -332,17 +332,17 @@ STATE: {EdificeDoorTwo} ~~ {
 			Expr {getpvar[Leader]==1}
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744830]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744830]]==0}
-		DO:	DoExpr {cleargvar[DoorStep]}
+		DO:	DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744830]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744830]]==0}
-		DO:	DoExpr {setgvar[EdificeDoorTwo,0]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorTwo,0]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744830]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744830]]==1}
 		DO:	DoAll
-				DoExpr {setgvar[EdificeDoorTwo,1]}
-				DoExpr {setgvar[DoorStep,2]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorTwo,1]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep,2]}
 				SetState {EdificeToLeverThree}
 	IF:	Any
 			Death
@@ -368,8 +368,8 @@ STATE: {EdificeJump} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -435,8 +435,8 @@ STATE: {EdificeToDelegateBoss} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -473,8 +473,8 @@ STATE: {EdificeToDelegateBoss} ~~ {
 		DO:	DoAll
 				DoExpr {setvar[CorpseName,Corpse of Simulacrum Shifter]}
 				DoExpr {setvar[LootItem,Door Key]}
-				DoExpr {listadd[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listadd[getgvar[LootingCounter],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]}
 				DoExpr {setvar[Return,EdificeToDelegateBoss]}
 				CallState {Loot} {EdificeToDelegateBoss}
 	IF:	All
@@ -591,8 +591,8 @@ STATE: {EdificeToDoorOne} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -639,8 +639,8 @@ STATE: {EdificeToDoorThree} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -687,8 +687,8 @@ STATE: {EdificeToDoorTwo} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -737,13 +737,13 @@ STATE: {EdificeToLeverOne} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
-	IF:	Expr {getgvar[DoorStep]>0}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]>0}
 		DO:	SetState {DoorStep}
 	IF:	Always
 		DO:	SetWatchdog 5 45 {WatchDog}
@@ -787,8 +787,8 @@ STATE: {EdificeToLeverThree} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -849,8 +849,8 @@ STATE: {EdificeToLeverTwo} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -913,24 +913,24 @@ STATE: {EdificeUseLeverOne} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	Any
-			Expr {getgvar[EdificeDoorOne]==0}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorOne]==0}
 			Expr {getpvar[FellowCount]<2}
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[285]]}
 	IF:	Any
-			Expr {getgvar[EdificeDoorOne]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorOne]==1}
 			All
 				SecsInStateGE 4
 				Expr {getpvar[FellowCount]<2}
 		DO:	SetState {EdificeToDoorOne}
 	IF:	All
-			Expr {getgvar[EdificeDoorOne]==0}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorOne]==0}
 			SecsInStateGE 5
 		DO:	SetState {EdificeUseLeverOne}
 	IF:	Any
@@ -952,24 +952,24 @@ STATE: {EdificeUseLeverThree} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	Any
-			Expr {getgvar[EdificeDoorThree]==0}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorThree]==0}
 			Expr {getpvar[FellowCount]<2}
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[285]]}
 	IF:	Any
-			Expr {getgvar[EdificeDoorThree]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorThree]==1}
 			All
 				SecsInStateGE 4
 				Expr {getpvar[FellowCount]<2}
 		DO:	SetState {EdificeToDoorThree}
 	IF:	All
-			Expr {getgvar[EdificeDoorThree]==0}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorThree]==0}
 			SecsInStateGE 5
 		DO:	SetState {EdificeUseLeverThree}
 	IF:	Any
@@ -991,18 +991,18 @@ STATE: {EdificeUseLeverTwo} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	Any
-			Expr {getgvar[EdificeDoorTwo]==0}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorTwo]==0}
 			Expr {getpvar[FellowCount]<2}
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[285]]}
 	IF:	Any
-			Expr {getgvar[EdificeDoorTwo]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorTwo]==1}
 			All
 				SecsInStateGE 4
 				Expr {getpvar[FellowCount]<2}
@@ -1010,7 +1010,7 @@ STATE: {EdificeUseLeverTwo} ~~ {
 	IF:	CellE 58670341
 		DO:	SetState {EdificeToDoorTwo}
 	IF:	All
-			Expr {getgvar[EdificeDoorTwo]==0}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorTwo]==0}
 			SecsInStateGE 8
 		DO:	SetState {EdificeUseLeverTwo}
 	IF:	Any
@@ -1028,9 +1028,9 @@ STATE: {Finished} ~~ {
 	IF:	All
 			SecsInStateGE 15
 			Any
-				Expr {testgvar[FailDelayCounter]==1}
-				Expr {testgvar[Looting]==1}
-				Expr {testgvar[LootFail]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]==1}
 				Expr {testpvar[StateName]==1}
 				Expr {testpvar[Profile]==1}
 				Expr {testpvar[DelegateJumpsDone]==1}
@@ -1039,20 +1039,20 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[Step]==1}
 				Expr {testpvar[Meta\ +getpvar[Profile]]==1}
 				Expr {testpvar[QuestCompletedSkip]==1}
-				Expr {testgvar[GoNow+getworldname[]]==1}
-				Expr {testgvar[DefaultPass]==1}
-				Expr {testgvar[DelegateDoorOpen]==1}
-				Expr {testgvar[GoNowClear]==1}
-				Expr {testgvar[Checking]==1}
-				Expr {testgvar[QuestCompleted]==1}
-				Expr {testgvar[GoNowTwo]==1}
-				Expr {testgvar[LiberationOfUziz]==1}
-				Expr {testgvar[LiberationOfUzizTurnIn]==1}
-				Expr {testgvar[getcharstringprop[1]+getworldname[]]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DelegateDoorOpen]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Checking]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestCompleted]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowTwo]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUziz]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]==1}
 		DO:	DoAll
-				DoExpr {cleargvar[FailDelayCounter]}
-				DoExpr {cleargvar[Looting]}
-				DoExpr {cleargvar[LootFail]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Looting]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[DelegateJumpsDone]}
@@ -1062,16 +1062,16 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[Step]}
 				DoExpr {clearpvar[Meta\ +getpvar[Profile]]}
 				DoExpr {clearpvar[QuestCompletedSkip]}
-				DoExpr {cleargvar[GoNow+getworldname[]]}
-				DoExpr {cleargvar[DefaultPass]}
-				DoExpr {cleargvar[DelegateDoorOpen]}
-				DoExpr {cleargvar[GoNowClear]}
-				DoExpr {cleargvar[Checking]}
-				DoExpr {cleargvar[QuestCompleted]}
-				DoExpr {cleargvar[GoNowTwo]}
-				DoExpr {cleargvar[LiberationOfUziz]}
-				DoExpr {cleargvar[LiberationOfUzizTurnIn]}
-				DoExpr {cleargvar[getcharstringprop[1]+getworldname[]]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DelegateDoorOpen]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Checking]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestCompleted]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUziz]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]}
 				SetState {Finished}
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
@@ -1080,16 +1080,16 @@ STATE: {Finished} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load QuestCheckPublic}
 	IF:	All
-			Expr {testgvar[FailDelayCounter]==0}
-			Expr {testgvar[Looting]==0}
-			Expr {testgvar[LootFail]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]==0}
 			Expr {testpvar[StateName]==0}
 			Expr {testpvar[Profile]==0}
 			Expr {testpvar[DelegateJumpsDone]==0}
@@ -1098,16 +1098,16 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[Step]==0}
 			Expr {testpvar[Meta\ +getpvar[Profile]]==0}
 			Expr {testpvar[QuestCompletedSkip]==0}
-			Expr {testgvar[GoNow+getworldname[]]==0}
-			Expr {testgvar[DefaultPass]==0}
-			Expr {testgvar[DelegateDoorOpen]==0}
-			Expr {testgvar[GoNowClear]==0}
-			Expr {testgvar[Checking]==0}
-			Expr {testgvar[QuestCompleted]==0}
-			Expr {testgvar[GoNowTwo]==0}
-			Expr {testgvar[LiberationOfUziz]==0}
-			Expr {testgvar[LiberationOfUzizTurnIn]==0}
-			Expr {testgvar[getcharstringprop[1]+getworldname[]]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DelegateDoorOpen]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Checking]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestCompleted]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowTwo]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUziz]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]==0}
 		DO:	Chat {/vt meta load QuestCheckPublic}
 ~~ }
 STATE: {FixJump} ~~ {
@@ -1151,8 +1151,8 @@ STATE: {Loot} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -1165,11 +1165,11 @@ STATE: {Loot} ~~ {
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
 				SetOpt {EnableLooting} {True}
 				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]}
 				DoExpr {clearvar[CorpseName]}
 				DoExpr {clearvar[LootItem]}
 				DoExpr {clearvar[Loot]}
@@ -1180,7 +1180,7 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootStuckDelay]}
 				DoExpr {clearvar[LootCloseCorpse]}
 				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Always
@@ -1201,11 +1201,11 @@ STATE: {Loot} ~~ {
 			Expr {getobjectinternaltype[wobjectgetopencontainer[]]==1}
 			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]==getvar[LootCount]}
 		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
 				SetOpt {EnableLooting} {True}
 				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]}
 				DoExpr {clearvar[CorpseName]}
 				DoExpr {clearvar[LootItem]}
 				DoExpr {clearvar[Loot]}
@@ -1216,7 +1216,7 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootStuckDelay]}
 				DoExpr {clearvar[LootCloseCorpse]}
 				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				Return
 	IF:	Any
 			ChatMatch {^You may complete this quest again in}
@@ -1238,16 +1238,16 @@ STATE: {Loot} ~~ {
 			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]==getvar[LootCount]&&getobjectinternaltype[wobjectgetopencontainer[]]==7}
 		DO:	DoAll
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]`]] && listcount[$CorpseDetect] > 0 && (actiontryuseitem[$CorpseDetect{{0}}] || 1)}
-	IF:	Expr {getgvar[LootFail]>listcount[getgvar[FailDelayCounter]]+4}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
 		DO:	DoAll
-				Chat {/ub bct DailyLoop /ub mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`}
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]`]]}
-				DoExpr {cleargvar[LootFail]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
 	IF:	Expr {getvar[SourceNotFound]>9}
 		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
 				DoExpr {clearvar[SourceNotFound]}
-				DoExpr {cleargvar[Looting]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Looting]}
 				DoExpr {actiontryuseitem[wobjectgetopencontainer[]]}
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]`]]}
 				SetState {Loot}
@@ -1258,7 +1258,7 @@ STATE: {Loot} ~~ {
 				DoExpr {actiontryuseitem[wobjectgetopencontainer[]]}
 				SetState {Loot}
 	IF:	All
-			Expr {getgvar[Looting]==0}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==0}
 			Expr {testvar[LootCount]==1}
 			Expr {getvar[CloseCorpseTimer]==0}
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,`^`+getvar[CorpseName]+`.*`]]==7}
@@ -1266,7 +1266,7 @@ STATE: {Loot} ~~ {
 			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]<getvar[LootCount]}
 			SecsInStateGE 4
 		DO:	DoAll
-				DoExpr {setgvar[LootFail,getgvar[LootFail]+1]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail,getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]+1]}
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]`]]}
 				SetState {Loot}
 	IF:	All
@@ -1275,10 +1275,10 @@ STATE: {Loot} ~~ {
 			Expr {getobjectinternaltype[wobjectgetopencontainer[]]==7}
 			Expr {wobjectgetname[wobjectgetopencontainer[]]#getvar[CorpseName]}
 		DO:	DoAll
-				DoExpr {setgvar[Looting,1]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,1]}
 				DoExpr {stopwatchstart[setvar[LootCloseCorpse, stopwatchcreate[]]]}
 	IF:	All
-			Expr {getgvar[Looting]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==1}
 			Expr {getbusystate[]==5}
 		DO:	DoExpr {setvar[LootCorpseCloseTwo,1]}
 	IF:	All
@@ -1295,7 +1295,7 @@ STATE: {Loot} ~~ {
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,`^`+getvar[CorpseName]+`.*`]]==7}
 			Expr {coordinatedistancewithz[getplayercoordinates[], wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[27,`^`+getvar[CorpseName]+`.*`]]]<3}
-			Expr {getgvar[Looting]==0&&getvar[LootCount]>0}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==0&&getvar[LootCount]>0}
 			Expr {getitemcountininventorybyname[getvar[LootItem]]<getvar[LootCount]&&getobjectinternaltype[wobjectgetopencontainer[]]==1}
 		DO:	DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]`]] && listcount[$CorpseDetect] > 0 && (actiontryuseitem[$CorpseDetect{{0}}] || 1)}
 	IF:	All
@@ -1324,13 +1324,13 @@ STATE: {Loot} ~~ {
 				Expr {wobjectgetname[wobjectgetopencontainer[]]#getvar[CorpseName]}
 		DO:	DoAll
 				DoExpr {clearvar[LootStuckDelay]}
-				DoExpr {setgvar[Looting,0]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				SetState {LootStuckDelay}
 	IF:	All
-			Expr {listcount[getgvar[FailDelayCounter]]==listcount[getgvar[LootingCounter]]}
+			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]]}
 			SecsInStateGE 30
 		DO:	DoAll
-				DoExpr {setgvar[Looting,0]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				SetState {Loot}
 ~~ }
 STATE: {LootStuckDelay} ~~ {
@@ -1338,11 +1338,11 @@ STATE: {LootStuckDelay} ~~ {
 			Expr {getobjectinternaltype[wobjectgetopencontainer[]]==1}
 			Expr {getitemcountininventorybyname[getvar[LootItem]]==getvar[LootCount]}
 		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
 				SetOpt {EnableLooting} {True}
 				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]}
 				DoExpr {clearvar[CorpseName]}
 				DoExpr {clearvar[LootItem]}
 				DoExpr {clearvar[Loot]}
@@ -1353,7 +1353,7 @@ STATE: {LootStuckDelay} ~~ {
 				DoExpr {clearvar[LootStuckDelay]}
 				DoExpr {clearvar[LootCloseCorpse]}
 				DoExpr {clearvar[LootCloseCorpseTwo]}
-				DoExpr {setgvar[Looting,0]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				Return
 	IF:	All
 			Expr {getobjectinternaltype[wobjectgetopencontainer[]]==1}
@@ -1365,17 +1365,17 @@ STATE: {LootStuckDelay} ~~ {
 			SecsInStateGE 2
 			Expr {getobjectinternaltype[wobjectgetopencontainer[]]==7}
 		DO:	DoAll
-				ChatExpr {\/ub bct DailyLoop \/vt opt set EnableCombat False}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt opt set EnableCombat False}
 				DoExpr {actiontryuseitem[wobjectgetopencontainer[]]}
 				SetState {LootStuckDelay}
 	IF:	Any
 			Expr {getvar[LootStuckDelayInternalCounter]>19}
 			Expr {listcount[$CorpseDetect]==0}
 		DO:	DoAll
-				DoExpr {cleargvar[LootFail]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
 				SetOpt {EnableLooting} {True}
-				DoExpr {listremove[getgvar[FailDelayCounter],getcharstringprop[1]]}
-				DoExpr {listremove[getgvar[LootingCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]}
 				DoExpr {clearvar[CorpseName]}
 				DoExpr {clearvar[LootItem]}
 				DoExpr {clearvar[Loot]}
@@ -1386,8 +1386,8 @@ STATE: {LootStuckDelay} ~~ {
 				DoExpr {clearvar[LootStuckDelay]}
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {clearvar[LootStuckDelayInternalCounter]}
-				DoExpr {setgvar[Looting,0]}
-				ChatExpr {\/ub bct DailyLoop \/vt opt set EnableCombat True}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt opt set EnableCombat True}
 				DoExpr {vtsetmetastate[getvar[Return]]}
 ~~ }
 STATE: {SyncBuff} ~~ {
@@ -1400,33 +1400,33 @@ STATE: {SyncBuff} ~~ {
 			Expr {vtgetsetting[EnableBuffing]!=True}
 		DO:	SetOpt {EnableBuffing} {True}
 	IF:	All
-			Not Expr {testgvar[SyncBuffComplete]}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]}
 			Not NeedToBuff
 		DO:	DoAll
-				DoExpr {setgvar[SyncBuffComplete,listcreate[]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete,listcreate[]]}
 				SetState {SyncBuff}
 	IF:	All
-			Expr {testgvar[SyncBuffComplete]}
-			Not Expr {listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getcharstringprop[1]]}
 			Not NeedToBuff
 		DO:	DoAll
-				DoExpr {listadd[getgvar[SyncBuffComplete],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getcharstringprop[1]]}
 				SetState {SyncBuff}
 	IF:	All
 			Not NeedToBuff
-			Expr {testgvar[SyncBuffComplete]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]}
 			Any
-				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]}
-				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]}
-				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]}
-				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]}
-				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]}
-				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]}
-				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]}
-				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]}
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameNine]]}
 		DO:	DoAll
-				DoExpr {cleargvar[Buffing]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]}
 				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~ }
@@ -1438,8 +1438,8 @@ STATE: {ToArqas} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -1491,8 +1491,8 @@ STATE: {ToDelegate} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -1600,32 +1600,32 @@ STATE: {ToDelegate} ~~ {
 				EmbedNav nav29 {junk.nav}
 	IF:	All
 			Expr {getpvar[Leader]==1}
-			Not Expr {testgvar[QuestComplete]}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]}
 			CellE 58670106
 			NavEmpty
 		DO:	DoAll
-				DoExpr {setgvar[QuestComplete,listcreate[]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete,listcreate[]]}
 				SetState {ToDelegate}
 	IF:	All
-			Expr {testgvar[QuestComplete]}
-			Not Expr {listcontains[getgvar[QuestComplete],getcharstringprop[1]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getcharstringprop[1]]}
 			CellE 58670106
 			NavEmpty
 		DO:	DoAll
-				DoExpr {listadd[getgvar[QuestComplete],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getcharstringprop[1]]}
 				SetState {ToDelegate}
 	IF:	All
-			Expr {testgvar[QuestComplete]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]}
 			Any
-				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]}
-				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]}
-				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]}
-				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]}
-				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]}
-				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]}
-				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]}
-				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameNine]]}
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameNine]]}
 				Expr {getpvar[AdminSkip]==1}
 		DO:	DoExpr {setpvar[DelegateJumpsDone,1]}
 	IF: Expr {getpvar[DelegateJumpsDone]==1}
@@ -1655,8 +1655,8 @@ STATE: {ToDelegateJump} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -1707,7 +1707,7 @@ STATE: {ToDelegateJump} ~~ {
 		DO:	SetState {ToDelegateJump}
 	IF:	All
 			Any
-				Expr {getgvar[DelegateDoorOpen]==1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DelegateDoorOpen]==1}
 				All
 					Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
 					Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==1}
@@ -1717,7 +1717,7 @@ STATE: {ToDelegateJump} ~~ {
 				CellE 5867013D
 			Expr {testvar[JumpStuck]==0}
 		DO:	DoAll
-				DoExpr {setgvar[DelegateDoorOpen,1]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DelegateDoorOpen,1]}
 				EmbedNav nav31 {[none]}
 				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 	IF:	All
@@ -1761,8 +1761,8 @@ STATE: {ToTN} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -1816,8 +1816,8 @@ STATE: {UseDelegate} ~~ {
 				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>}
-	IF:	Expr {getgvar[Zstuck]==1}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,QuestCheckPublic]}
 				DoExpr {setpvar[StateName,Default]}
@@ -1842,30 +1842,30 @@ STATE: {UseDelegate} ~~ {
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Expr {getpvar[LiberationOfUzizTurnIn]==1}
-			Not Expr {testgvar[LiberationOfUzizTurnIn]}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn]}
 		DO:	DoAll
-				DoExpr {setgvar[LiberationOfUzizTurnIn,listcreate[]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn,listcreate[]]}
 				SetState {UseDelegate}
 	IF:	All
 			Expr {getpvar[LiberationOfUzizTurnIn]==1}
-			Expr {testgvar[LiberationOfUzizTurnIn]}
-			Not Expr {listcontains[getgvar[LiberationOfUzizTurnIn],getcharstringprop[1]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn]}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getcharstringprop[1]]}
 		DO:	DoAll
-				DoExpr {listadd[getgvar[LiberationOfUzizTurnIn],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getcharstringprop[1]]}
 				SetState {UseDelegate}
 	IF:	All
 			Expr {getpvar[LiberationOfUzizTurnIn]==1}
-			Expr {testgvar[LiberationOfUzizTurnIn]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn]}
 			Any
-				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[LeaderName]]}
-				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]}
-				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameThree]]}
-				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameFour]]}
-				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameFive]]}
-				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameSix]]}
-				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameSeven]]}
-				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameEight]]}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[LiberationOfUzizTurnIn],getpvar[FellowNameNine]]}
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Finished]}
 				DoExpr {setpvar[CheckSync,Finished]}

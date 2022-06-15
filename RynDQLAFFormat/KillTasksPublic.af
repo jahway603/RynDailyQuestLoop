@@ -59,9 +59,9 @@ STATE: {Default} ~~ {
 				SetState {Killtask}
 ~~ }
 STATE: {Finished} ~~ {
-	IF:	Expr {testgvar[KillTasks]==1}
-		DO:	DoExpr {cleargvar[KillTasks]}
-	IF:	Expr {testgvar[KillTasks]==0}
+	IF:	Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+KillTasks]==1}
+		DO:	DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+KillTasks]}
+	IF:	Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+KillTasks]==0}
 		DO:	DoAll
 				DoExpr {clearvar[NPC]}
 				SetOpt {EnableCombat} {True}
