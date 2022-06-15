@@ -117,8 +117,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 ClearMobs
 i
 26
@@ -134,7 +134,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -644,8 +644,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 DeathRecallNonShard
 i
 26
@@ -661,7 +661,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -816,8 +816,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 DeathRecall
 i
 26
@@ -833,7 +833,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -1075,7 +1075,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleShardOne]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne]
 i
 7
 TABLE
@@ -1088,7 +1088,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleShardTwo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo]
 i
 7
 TABLE
@@ -1101,7 +1101,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleShardThree]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree]
 i
 7
 TABLE
@@ -2297,7 +2297,7 @@ n
 s
 e
 s
-testgvar[FailDelayCounter]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]
 TABLE
 2
 k
@@ -2308,7 +2308,7 @@ n
 s
 e
 s
-setgvar[FailDelayCounter,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter,listcreate[]]
 s
 Default
 i
@@ -2334,7 +2334,7 @@ n
 s
 e
 s
-testgvar[LootingCounter]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]
 TABLE
 2
 k
@@ -2345,7 +2345,7 @@ n
 s
 e
 s
-setgvar[LootingCounter,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter,listcreate[]]
 s
 Default
 i
@@ -2829,11 +2829,20 @@ n
 s
 e
 s
-setgvar[ApostateFinaleGo,0]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo,0]
 i
+8
+TABLE
 2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop \/vt setmetastate Zstuck]
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt setmetastate Zstuck]
 s
 Default
 i
@@ -2940,7 +2949,7 @@ n
 s
 e
 s
-setgvar[Buffing,1]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing,1]
 i
 7
 TABLE
@@ -2974,7 +2983,7 @@ n
 s
 e
 s
-getgvar[Buffing]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1
 TABLE
 2
 K
@@ -3195,7 +3204,7 @@ n
 s
 e
 s
-testgvar[SyncBuffComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]
 i
 21
 TABLE
@@ -3228,7 +3237,7 @@ n
 s
 e
 s
-setgvar[SyncBuffComplete,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete,listcreate[]]
 i
 1
 s
@@ -3258,7 +3267,7 @@ n
 s
 e
 s
-testgvar[SyncBuffComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]
 i
 21
 TABLE
@@ -3280,7 +3289,7 @@ n
 s
 e
 s
-listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getcharstringprop[1]]
 i
 21
 TABLE
@@ -3313,7 +3322,7 @@ n
 s
 e
 s
-listadd[getgvar[SyncBuffComplete],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getcharstringprop[1]]
 i
 1
 s
@@ -3356,7 +3365,7 @@ n
 s
 e
 s
-testgvar[SyncBuffComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]
 i
 3
 TABLE
@@ -3378,7 +3387,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]
+getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]
 i
 26
 TABLE
@@ -3391,7 +3400,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]
+getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]
 i
 26
 TABLE
@@ -3404,7 +3413,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==3&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]
+getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]
 i
 26
 TABLE
@@ -3417,7 +3426,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==4&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]
+getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]
 i
 26
 TABLE
@@ -3430,7 +3439,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==5&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]
+getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]
 i
 26
 TABLE
@@ -3443,7 +3452,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]
+getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]
 i
 26
 TABLE
@@ -3456,7 +3465,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]
+getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]
 i
 26
 TABLE
@@ -3469,7 +3478,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]
+getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]
 i
 26
 TABLE
@@ -3482,7 +3491,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]
+getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameNine]]
 TABLE
 2
 K
@@ -3502,7 +3511,7 @@ n
 s
 e
 s
-cleargvar[Buffing]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]
 i
 7
 TABLE
@@ -3762,7 +3771,7 @@ n
 s
 e
 s
-testgvar[FailDelayCounter]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]==1
 i
 26
 TABLE
@@ -3775,7 +3784,7 @@ n
 s
 e
 s
-testgvar[QuestComplete]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]==1
 i
 26
 TABLE
@@ -3788,7 +3797,7 @@ n
 s
 e
 s
-testgvar[Looting]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==1
 i
 26
 TABLE
@@ -3801,7 +3810,7 @@ n
 s
 e
 s
-testgvar[LootFail]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]==1
 i
 26
 TABLE
@@ -3814,7 +3823,7 @@ n
 s
 e
 s
-testgvar[GoNow+getworldname[]]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]==1
 i
 26
 TABLE
@@ -3827,7 +3836,7 @@ n
 s
 e
 s
-testgvar[DefaultPass]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]==1
 i
 26
 TABLE
@@ -3840,7 +3849,7 @@ n
 s
 e
 s
-testgvar[GoNowClear]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]==1
 i
 26
 TABLE
@@ -3853,7 +3862,7 @@ n
 s
 e
 s
-testgvar[Checking]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+Checking]==1
 i
 26
 TABLE
@@ -3866,7 +3875,7 @@ n
 s
 e
 s
-testgvar[GoNowTwo]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowTwo]==1
 i
 26
 TABLE
@@ -3879,7 +3888,7 @@ n
 s
 e
 s
-testgvar[ApostateFinale]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinale]==1
 i
 26
 TABLE
@@ -3892,7 +3901,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleTurnIn]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn]==1
 i
 26
 TABLE
@@ -3905,7 +3914,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleFlag]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag]==1
 i
 26
 TABLE
@@ -3918,7 +3927,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardOne]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne]==1
 i
 26
 TABLE
@@ -3931,7 +3940,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardTwo]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo]==1
 i
 26
 TABLE
@@ -3944,7 +3953,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardThree]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree]==1
 i
 26
 TABLE
@@ -3957,7 +3966,7 @@ n
 s
 e
 s
-testgvar[getcharstringprop[1]+getworldname[]]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]==1
 TABLE
 2
 K
@@ -4185,7 +4194,7 @@ n
 s
 e
 s
-cleargvar[FailDelayCounter]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]
 i
 7
 TABLE
@@ -4198,7 +4207,7 @@ n
 s
 e
 s
-cleargvar[QuestComplete]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 i
 7
 TABLE
@@ -4211,7 +4220,7 @@ n
 s
 e
 s
-cleargvar[Looting]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Looting]
 i
 7
 TABLE
@@ -4224,7 +4233,7 @@ n
 s
 e
 s
-cleargvar[LootFail]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]
 i
 7
 TABLE
@@ -4237,7 +4246,7 @@ n
 s
 e
 s
-cleargvar[GoNow+getworldname[]]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]
 i
 7
 TABLE
@@ -4250,7 +4259,7 @@ n
 s
 e
 s
-cleargvar[DefaultPass]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]
 i
 7
 TABLE
@@ -4263,7 +4272,7 @@ n
 s
 e
 s
-cleargvar[GoNowClear]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]
 i
 7
 TABLE
@@ -4276,7 +4285,7 @@ n
 s
 e
 s
-cleargvar[Checking]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Checking]
 i
 7
 TABLE
@@ -4289,7 +4298,7 @@ n
 s
 e
 s
-cleargvar[GoNowTwo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowTwo]
 i
 7
 TABLE
@@ -4302,7 +4311,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinale]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinale]
 i
 7
 TABLE
@@ -4315,7 +4324,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn]
 i
 7
 TABLE
@@ -4328,7 +4337,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleFlag]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag]
 i
 7
 TABLE
@@ -4341,7 +4350,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleShardOne]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne]
 i
 7
 TABLE
@@ -4354,7 +4363,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleShardTwo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo]
 i
 7
 TABLE
@@ -4367,7 +4376,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleShardThree]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree]
 i
 7
 TABLE
@@ -4380,7 +4389,7 @@ n
 s
 e
 s
-cleargvar[getcharstringprop[1]+getworldname[]]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]
 i
 1
 s
@@ -4605,7 +4614,7 @@ n
 s
 e
 s
-testgvar[FailDelayCounter]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]==0
 i
 26
 TABLE
@@ -4618,7 +4627,7 @@ n
 s
 e
 s
-testgvar[QuestComplete]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]==0
 i
 26
 TABLE
@@ -4631,7 +4640,7 @@ n
 s
 e
 s
-testgvar[Looting]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==0
 i
 26
 TABLE
@@ -4644,7 +4653,7 @@ n
 s
 e
 s
-testgvar[LootFail]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]==0
 i
 26
 TABLE
@@ -4657,7 +4666,7 @@ n
 s
 e
 s
-testgvar[GoNow+getworldname[]]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]==0
 i
 26
 TABLE
@@ -4670,7 +4679,7 @@ n
 s
 e
 s
-testgvar[DefaultPass]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]==0
 i
 26
 TABLE
@@ -4683,7 +4692,7 @@ n
 s
 e
 s
-testgvar[GoNowClear]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]==0
 i
 26
 TABLE
@@ -4696,7 +4705,7 @@ n
 s
 e
 s
-testgvar[Checking]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+Checking]==0
 i
 26
 TABLE
@@ -4709,7 +4718,7 @@ n
 s
 e
 s
-testgvar[GoNowTwo]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowTwo]==0
 i
 26
 TABLE
@@ -4722,7 +4731,7 @@ n
 s
 e
 s
-testgvar[ApostateFinale]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinale]==0
 i
 26
 TABLE
@@ -4735,7 +4744,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleTurnIn]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn]==0
 i
 26
 TABLE
@@ -4748,7 +4757,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleFlag]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag]==0
 i
 26
 TABLE
@@ -4761,7 +4770,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardOne]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne]==0
 i
 26
 TABLE
@@ -4774,7 +4783,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardTwo]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo]==0
 i
 26
 TABLE
@@ -4787,7 +4796,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardThree]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree]==0
 i
 26
 TABLE
@@ -4800,7 +4809,7 @@ n
 s
 e
 s
-testgvar[getcharstringprop[1]+getworldname[]]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]==0
 TABLE
 2
 K
@@ -4932,8 +4941,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 FirstDungeon
 i
 26
@@ -4949,7 +4958,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -5181,7 +5190,7 @@ n
 s
 e
 s
-testgvar[QuestComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 TABLE
 2
 K
@@ -5201,7 +5210,7 @@ n
 s
 e
 s
-setgvar[QuestComplete,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete,listcreate[]]
 i
 1
 s
@@ -5231,7 +5240,7 @@ n
 s
 e
 s
-testgvar[QuestComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 i
 21
 TABLE
@@ -5253,7 +5262,7 @@ n
 s
 e
 s
-listcontains[getgvar[QuestComplete],getcharstringprop[1]]
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getcharstringprop[1]]
 i
 3
 TABLE
@@ -5308,7 +5317,7 @@ n
 s
 e
 s
-listadd[getgvar[QuestComplete],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getcharstringprop[1]]
 i
 1
 s
@@ -5338,7 +5347,7 @@ n
 s
 e
 s
-testgvar[QuestComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 i
 3
 TABLE
@@ -5360,7 +5369,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==1&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]
+getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]
 i
 26
 TABLE
@@ -5373,7 +5382,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==2&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]
+getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]
 i
 26
 TABLE
@@ -5386,7 +5395,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==3&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]
+getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]
 i
 26
 TABLE
@@ -5399,7 +5408,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==4&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]
+getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]
 i
 26
 TABLE
@@ -5412,7 +5421,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==5&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]
+getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]
 i
 26
 TABLE
@@ -5425,7 +5434,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==6&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]
+getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]
 i
 26
 TABLE
@@ -5438,7 +5447,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==7&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]
+getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]
 i
 26
 TABLE
@@ -5451,7 +5460,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==8&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]
+getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameEight]]
 i
 26
 TABLE
@@ -5464,7 +5473,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==9&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameNine]]
+getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameNine]]
 i
 2
 TABLE
@@ -6080,7 +6089,7 @@ n
 s
 e
 s
-listadd[getgvar[FailDelayCounter],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -6093,7 +6102,7 @@ n
 s
 e
 s
-listadd[getgvar[LootingCounter],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -6281,8 +6290,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 Flag
 i
 26
@@ -6298,7 +6307,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -6474,7 +6483,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleFlag]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag]
 TABLE
 2
 K
@@ -6494,7 +6503,7 @@ n
 s
 e
 s
-setgvar[ApostateFinaleFlag,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag,listcreate[]]
 i
 1
 s
@@ -6537,7 +6546,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleFlag]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag]
 i
 21
 TABLE
@@ -6559,7 +6568,7 @@ n
 s
 e
 s
-listcontains[getgvar[ApostateFinaleFlag],getcharstringprop[1]]
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getcharstringprop[1]]
 TABLE
 2
 K
@@ -6579,7 +6588,7 @@ n
 s
 e
 s
-listadd[getgvar[ApostateFinaleFlag],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getcharstringprop[1]]
 i
 1
 s
@@ -6622,7 +6631,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleFlag]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag]
 i
 3
 TABLE
@@ -6644,7 +6653,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==1&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]
+getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[LeaderName]]
 i
 26
 TABLE
@@ -6657,7 +6666,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==2&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]
+getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameTwo]]
 i
 26
 TABLE
@@ -6670,7 +6679,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==3&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameThree]]
+getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameThree]]
 i
 26
 TABLE
@@ -6683,7 +6692,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==4&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFour]]
+getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameFour]]
 i
 26
 TABLE
@@ -6696,7 +6705,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==5&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFive]]
+getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameFive]]
 i
 26
 TABLE
@@ -6709,7 +6718,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==6&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameSix]]
+getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameSix]]
 i
 26
 TABLE
@@ -6722,7 +6731,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==7&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameSeven]]
+getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameSeven]]
 i
 26
 TABLE
@@ -6735,7 +6744,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==8&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameEight]]
+getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameEight]]
 i
 26
 TABLE
@@ -6748,7 +6757,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==9&&listcontains[getgvar[ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameEight]]&&listcontains[getgvar[ApostateFinaleFlag],getpvar[FellowNameNine]]
+getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag],getpvar[FellowNameNine]]
 TABLE
 2
 K
@@ -6977,8 +6986,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 GetShardThree
 i
 26
@@ -6994,7 +7003,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -7204,7 +7213,7 @@ n
 s
 e
 s
-testgvar[QuestComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 TABLE
 2
 K
@@ -7224,7 +7233,7 @@ n
 s
 e
 s
-setgvar[QuestComplete,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete,listcreate[]]
 i
 1
 s
@@ -7254,7 +7263,7 @@ n
 s
 e
 s
-testgvar[QuestComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 i
 21
 TABLE
@@ -7276,7 +7285,7 @@ n
 s
 e
 s
-listcontains[getgvar[QuestComplete],getcharstringprop[1]]
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getcharstringprop[1]]
 i
 3
 TABLE
@@ -7331,7 +7340,7 @@ n
 s
 e
 s
-listadd[getgvar[QuestComplete],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getcharstringprop[1]]
 i
 1
 s
@@ -7361,7 +7370,7 @@ n
 s
 e
 s
-testgvar[QuestComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 i
 3
 TABLE
@@ -7383,7 +7392,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==1&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]
+getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]
 i
 26
 TABLE
@@ -7396,7 +7405,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==2&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]
+getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]
 i
 26
 TABLE
@@ -7409,7 +7418,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==3&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]
+getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]
 i
 26
 TABLE
@@ -7422,7 +7431,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==4&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]
+getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]
 i
 26
 TABLE
@@ -7435,7 +7444,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==5&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]
+getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]
 i
 26
 TABLE
@@ -7448,7 +7457,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==6&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]
+getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]
 i
 26
 TABLE
@@ -7461,7 +7470,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==7&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]
+getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]
 i
 26
 TABLE
@@ -7474,7 +7483,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==8&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]
+getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameEight]]
 i
 26
 TABLE
@@ -7487,7 +7496,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==9&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameNine]]
+getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameNine]]
 i
 2
 TABLE
@@ -7983,7 +7992,7 @@ n
 s
 e
 s
-listadd[getgvar[FailDelayCounter],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -7996,7 +8005,7 @@ n
 s
 e
 s
-listadd[getgvar[LootingCounter],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -8184,8 +8193,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 GetShardTwo
 i
 26
@@ -8201,7 +8210,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -8411,7 +8420,7 @@ n
 s
 e
 s
-testgvar[QuestComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 TABLE
 2
 K
@@ -8431,7 +8440,7 @@ n
 s
 e
 s
-setgvar[QuestComplete,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete,listcreate[]]
 i
 1
 s
@@ -8461,7 +8470,7 @@ n
 s
 e
 s
-testgvar[QuestComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 i
 21
 TABLE
@@ -8483,7 +8492,7 @@ n
 s
 e
 s
-listcontains[getgvar[QuestComplete],getcharstringprop[1]]
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getcharstringprop[1]]
 i
 3
 TABLE
@@ -8538,7 +8547,7 @@ n
 s
 e
 s
-listadd[getgvar[QuestComplete],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getcharstringprop[1]]
 i
 1
 s
@@ -8568,7 +8577,7 @@ n
 s
 e
 s
-testgvar[QuestComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 i
 3
 TABLE
@@ -8590,7 +8599,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==1&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]
+getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]
 i
 26
 TABLE
@@ -8603,7 +8612,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==2&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]
+getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]
 i
 26
 TABLE
@@ -8616,7 +8625,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==3&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]
+getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]
 i
 26
 TABLE
@@ -8629,7 +8638,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==4&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]
+getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]
 i
 26
 TABLE
@@ -8642,7 +8651,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==5&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]
+getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]
 i
 26
 TABLE
@@ -8655,7 +8664,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==6&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]
+getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]
 i
 26
 TABLE
@@ -8668,7 +8677,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==7&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]
+getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]
 i
 26
 TABLE
@@ -8681,7 +8690,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==8&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]
+getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameEight]]
 i
 26
 TABLE
@@ -8694,7 +8703,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==9&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameNine]]
+getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameNine]]
 i
 2
 TABLE
@@ -9136,7 +9145,7 @@ n
 s
 e
 s
-listadd[getgvar[FailDelayCounter],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -9149,7 +9158,7 @@ n
 s
 e
 s
-listadd[getgvar[LootingCounter],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -9337,8 +9346,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 Heart
 i
 26
@@ -9354,7 +9363,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -10212,8 +10221,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 HeartJump
 i
 26
@@ -10229,7 +10238,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -10693,7 +10702,7 @@ n
 s
 e
 s
-testgvar[QuestComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 TABLE
 2
 K
@@ -10713,7 +10722,7 @@ n
 s
 e
 s
-setgvar[QuestComplete,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete,listcreate[]]
 i
 1
 s
@@ -10743,7 +10752,7 @@ n
 s
 e
 s
-testgvar[QuestComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 i
 21
 TABLE
@@ -10765,7 +10774,7 @@ n
 s
 e
 s
-listcontains[getgvar[QuestComplete],getcharstringprop[1]]
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getcharstringprop[1]]
 i
 3
 TABLE
@@ -10820,7 +10829,7 @@ n
 s
 e
 s
-listadd[getgvar[QuestComplete],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getcharstringprop[1]]
 i
 1
 s
@@ -10850,7 +10859,7 @@ n
 s
 e
 s
-testgvar[QuestComplete]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 i
 3
 TABLE
@@ -10872,7 +10881,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==1&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]
+getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]
 i
 26
 TABLE
@@ -10885,7 +10894,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==2&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]
+getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]
 i
 26
 TABLE
@@ -10898,7 +10907,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==3&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]
+getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]
 i
 26
 TABLE
@@ -10911,7 +10920,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==4&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]
+getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]
 i
 26
 TABLE
@@ -10924,7 +10933,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==5&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]
+getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]
 i
 26
 TABLE
@@ -10937,7 +10946,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==6&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]
+getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]
 i
 26
 TABLE
@@ -10950,7 +10959,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==7&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]
+getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]
 i
 26
 TABLE
@@ -10963,7 +10972,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==8&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]
+getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameEight]]
 i
 26
 TABLE
@@ -10976,7 +10985,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==9&&listcontains[getgvar[QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[QuestComplete],getpvar[FellowNameNine]]
+getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getpvar[FellowNameNine]]
 i
 2
 TABLE
@@ -11338,7 +11347,7 @@ n
 s
 e
 s
-listadd[getgvar[FailDelayCounter],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -11351,7 +11360,7 @@ n
 s
 e
 s
-listadd[getgvar[LootingCounter],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -11539,8 +11548,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 Loot
 i
 26
@@ -11556,7 +11565,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -11655,7 +11664,7 @@ n
 s
 e
 s
-cleargvar[LootFail]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]
 i
 12
 TABLE
@@ -11702,7 +11711,7 @@ n
 s
 e
 s
-listremove[getgvar[FailDelayCounter],getcharstringprop[1]]
+listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -11715,7 +11724,7 @@ n
 s
 e
 s
-listremove[getgvar[LootingCounter],getcharstringprop[1]]
+listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -11858,7 +11867,7 @@ n
 s
 e
 s
-setgvar[Looting,0]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]
 i
 2
 s
@@ -12076,7 +12085,7 @@ n
 s
 e
 s
-cleargvar[LootFail]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]
 i
 12
 TABLE
@@ -12123,7 +12132,7 @@ n
 s
 e
 s
-listremove[getgvar[FailDelayCounter],getcharstringprop[1]]
+listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -12136,7 +12145,7 @@ n
 s
 e
 s
-listremove[getgvar[LootingCounter],getcharstringprop[1]]
+listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -12279,7 +12288,7 @@ n
 s
 e
 s
-setgvar[Looting,0]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]
 i
 6
 i
@@ -12506,7 +12515,7 @@ n
 s
 e
 s
-getgvar[LootFail]>listcount[getgvar[FailDelayCounter]]+4
+getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4
 TABLE
 2
 K
@@ -12515,9 +12524,18 @@ n
 n
 3
 i
+8
+TABLE
 2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /ub mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`
 i
 7
 TABLE
@@ -12543,7 +12561,7 @@ n
 s
 e
 s
-cleargvar[LootFail]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]
 s
 Loot
 i
@@ -12580,7 +12598,7 @@ n
 s
 e
 s
-cleargvar[LootFail]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]
 i
 7
 TABLE
@@ -12606,7 +12624,7 @@ n
 s
 e
 s
-cleargvar[Looting]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Looting]
 i
 7
 TABLE
@@ -12725,7 +12743,7 @@ n
 s
 e
 s
-getgvar[Looting]==0
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==0
 i
 26
 TABLE
@@ -12814,7 +12832,7 @@ n
 s
 e
 s
-setgvar[LootFail,getgvar[LootFail]+1]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail,getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]+1]
 i
 7
 TABLE
@@ -12916,7 +12934,7 @@ n
 s
 e
 s
-setgvar[Looting,1]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,1]
 i
 7
 TABLE
@@ -12955,7 +12973,7 @@ n
 s
 e
 s
-getgvar[Looting]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==1
 i
 26
 TABLE
@@ -13164,7 +13182,7 @@ n
 s
 e
 s
-getgvar[Looting]==0&&getvar[LootCount]>0
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==0&&getvar[LootCount]>0
 i
 26
 TABLE
@@ -13511,7 +13529,7 @@ n
 s
 e
 s
-setgvar[Looting,0]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]
 i
 1
 s
@@ -13541,7 +13559,7 @@ n
 s
 e
 s
-listcount[getgvar[FailDelayCounter]]==getpvar[FellowCount]
+listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==getpvar[FellowCount]
 i
 6
 i
@@ -13565,7 +13583,7 @@ n
 s
 e
 s
-setgvar[Looting,0]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]
 i
 1
 s
@@ -13628,7 +13646,7 @@ n
 s
 e
 s
-cleargvar[LootFail]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]
 i
 12
 TABLE
@@ -13675,7 +13693,7 @@ n
 s
 e
 s
-listremove[getgvar[FailDelayCounter],getcharstringprop[1]]
+listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -13688,7 +13706,7 @@ n
 s
 e
 s
-listremove[getgvar[LootingCounter],getcharstringprop[1]]
+listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -13831,7 +13849,7 @@ n
 s
 e
 s
-setgvar[Looting,0]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]
 i
 6
 i
@@ -13948,7 +13966,7 @@ n
 s
 e
 s
-\/ub bct DailyLoop \/vt opt set EnableCombat False
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt opt set EnableCombat False
 i
 7
 TABLE
@@ -14024,7 +14042,7 @@ n
 s
 e
 s
-cleargvar[LootFail]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]
 i
 12
 TABLE
@@ -14054,7 +14072,7 @@ n
 s
 e
 s
-listremove[getgvar[FailDelayCounter],getcharstringprop[1]]
+listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -14067,7 +14085,7 @@ n
 s
 e
 s
-listremove[getgvar[LootingCounter],getcharstringprop[1]]
+listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]
 i
 7
 TABLE
@@ -14210,7 +14228,7 @@ n
 s
 e
 s
-setgvar[Looting,0]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]
 i
 8
 TABLE
@@ -14223,7 +14241,7 @@ n
 s
 e
 s
-\/ub bct DailyLoop \/vt opt set EnableCombat True
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt opt set EnableCombat True
 i
 7
 TABLE
@@ -14464,8 +14482,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 Shard
 i
 26
@@ -14481,7 +14499,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -15603,8 +15621,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 ToFirstDungeon
 i
 26
@@ -15620,7 +15638,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -16650,8 +16668,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 ToGK
 i
 26
@@ -16667,7 +16685,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -16864,7 +16882,7 @@ n
 s
 e
 s
-cleargvar[QuestComplete]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 i
 12
 TABLE
@@ -17178,8 +17196,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 ToShards
 i
 26
@@ -17195,7 +17213,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -18777,7 +18795,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardThree]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree]
 TABLE
 2
 K
@@ -18797,7 +18815,7 @@ n
 s
 e
 s
-setgvar[ApostateFinaleShardThree,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree,listcreate[]]
 i
 1
 s
@@ -18857,7 +18875,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardThree]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree]
 i
 21
 TABLE
@@ -18879,7 +18897,7 @@ n
 s
 e
 s
-listcontains[getgvar[ApostateFinaleShardThree],getcharstringprop[1]]
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getcharstringprop[1]]
 TABLE
 2
 K
@@ -18899,7 +18917,7 @@ n
 s
 e
 s
-listadd[getgvar[ApostateFinaleShardThree],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getcharstringprop[1]]
 i
 1
 s
@@ -18959,7 +18977,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardThree]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree]
 i
 3
 TABLE
@@ -18981,7 +18999,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==1&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]
+getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[LeaderName]]
 i
 26
 TABLE
@@ -18994,7 +19012,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==2&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]
+getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameTwo]]
 i
 26
 TABLE
@@ -19007,7 +19025,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==3&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameThree]]
+getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameThree]]
 i
 26
 TABLE
@@ -19020,7 +19038,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==4&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFour]]
+getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameFour]]
 i
 26
 TABLE
@@ -19033,7 +19051,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==5&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFive]]
+getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameFive]]
 i
 26
 TABLE
@@ -19046,7 +19064,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==6&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameSix]]
+getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameSix]]
 i
 26
 TABLE
@@ -19059,7 +19077,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==7&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameSeven]]
+getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameSeven]]
 i
 26
 TABLE
@@ -19072,7 +19090,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==8&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameEight]]
+getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameEight]]
 i
 26
 TABLE
@@ -19085,7 +19103,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==9&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameEight]]&&listcontains[getgvar[ApostateFinaleShardThree],getpvar[FellowNameNine]]
+getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameNine]]
 TABLE
 2
 K
@@ -19270,7 +19288,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardTwo]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo]
 TABLE
 2
 K
@@ -19290,7 +19308,7 @@ n
 s
 e
 s
-setgvar[ApostateFinaleShardTwo,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo,listcreate[]]
 i
 1
 s
@@ -19354,7 +19372,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardTwo]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo]
 i
 21
 TABLE
@@ -19376,7 +19394,7 @@ n
 s
 e
 s
-listcontains[getgvar[ApostateFinaleShardTwo],getcharstringprop[1]]
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getcharstringprop[1]]
 TABLE
 2
 K
@@ -19396,7 +19414,7 @@ n
 s
 e
 s
-listadd[getgvar[ApostateFinaleShardTwo],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getcharstringprop[1]]
 i
 1
 s
@@ -19460,7 +19478,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardTwo]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo]
 i
 3
 TABLE
@@ -19482,7 +19500,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==1&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]
+getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[LeaderName]]
 i
 26
 TABLE
@@ -19495,7 +19513,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==2&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]
+getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameTwo]]
 i
 26
 TABLE
@@ -19508,7 +19526,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==3&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameThree]]
+getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameThree]]
 i
 26
 TABLE
@@ -19521,7 +19539,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==4&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFour]]
+getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameFour]]
 i
 26
 TABLE
@@ -19534,7 +19552,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==5&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFive]]
+getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameFive]]
 i
 26
 TABLE
@@ -19547,7 +19565,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==6&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameSix]]
+getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameSix]]
 i
 26
 TABLE
@@ -19560,7 +19578,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==7&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameSeven]]
+getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameSeven]]
 i
 26
 TABLE
@@ -19573,7 +19591,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==8&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameEight]]
+getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameEight]]
 i
 26
 TABLE
@@ -19586,7 +19604,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==9&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameEight]]&&listcontains[getgvar[ApostateFinaleShardTwo],getpvar[FellowNameNine]]
+getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameNine]]
 TABLE
 2
 K
@@ -19737,7 +19755,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardOne]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne]
 TABLE
 2
 K
@@ -19757,7 +19775,7 @@ n
 s
 e
 s
-setgvar[ApostateFinaleShardOne,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne,listcreate[]]
 i
 1
 s
@@ -19804,7 +19822,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardOne]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne]
 i
 21
 TABLE
@@ -19826,7 +19844,7 @@ n
 s
 e
 s
-listcontains[getgvar[ApostateFinaleShardOne],getcharstringprop[1]]
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getcharstringprop[1]]
 TABLE
 2
 K
@@ -19846,7 +19864,7 @@ n
 s
 e
 s
-listadd[getgvar[ApostateFinaleShardOne],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getcharstringprop[1]]
 i
 1
 s
@@ -19893,7 +19911,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleShardOne]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne]
 i
 3
 TABLE
@@ -19915,7 +19933,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==1&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]
+getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[LeaderName]]
 i
 26
 TABLE
@@ -19928,7 +19946,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==2&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]
+getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameTwo]]
 i
 26
 TABLE
@@ -19941,7 +19959,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==3&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameThree]]
+getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameThree]]
 i
 26
 TABLE
@@ -19954,7 +19972,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==4&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFour]]
+getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameFour]]
 i
 26
 TABLE
@@ -19967,7 +19985,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==5&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFive]]
+getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameFive]]
 i
 26
 TABLE
@@ -19980,7 +19998,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==6&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameSix]]
+getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameSix]]
 i
 26
 TABLE
@@ -19993,7 +20011,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==7&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameSeven]]
+getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameSeven]]
 i
 26
 TABLE
@@ -20006,7 +20024,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==8&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameEight]]
+getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameEight]]
 i
 26
 TABLE
@@ -20019,7 +20037,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==9&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameEight]]&&listcontains[getgvar[ApostateFinaleShardOne],getpvar[FellowNameNine]]
+getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameNine]]
 TABLE
 2
 K
@@ -20194,8 +20212,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 TurnIn
 i
 26
@@ -20211,7 +20229,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K
@@ -20485,7 +20503,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleTurnIn]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn]
 TABLE
 2
 K
@@ -20505,7 +20523,7 @@ n
 s
 e
 s
-setgvar[ApostateFinaleTurnIn,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn,listcreate[]]
 i
 1
 s
@@ -20548,7 +20566,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleTurnIn]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn]
 i
 21
 TABLE
@@ -20570,7 +20588,7 @@ n
 s
 e
 s
-listcontains[getgvar[ApostateFinaleTurnIn],getcharstringprop[1]]
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getcharstringprop[1]]
 i
 26
 TABLE
@@ -20603,7 +20621,7 @@ n
 s
 e
 s
-listadd[getgvar[ApostateFinaleTurnIn],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getcharstringprop[1]]
 i
 1
 s
@@ -20646,7 +20664,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleTurnIn]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn]
 i
 3
 TABLE
@@ -20668,7 +20686,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==1&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]
+getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[LeaderName]]
 i
 26
 TABLE
@@ -20681,7 +20699,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==2&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]
+getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameTwo]]
 i
 26
 TABLE
@@ -20694,7 +20712,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==3&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameThree]]
+getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameThree]]
 i
 26
 TABLE
@@ -20707,7 +20725,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==4&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFour]]
+getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameFour]]
 i
 26
 TABLE
@@ -20720,7 +20738,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==5&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFive]]
+getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameFive]]
 i
 26
 TABLE
@@ -20733,7 +20751,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==6&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameSix]]
+getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameSix]]
 i
 26
 TABLE
@@ -20746,7 +20764,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==7&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameSeven]]
+getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameSeven]]
 i
 26
 TABLE
@@ -20759,7 +20777,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==8&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameEight]]
+getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameEight]]
 i
 26
 TABLE
@@ -20772,7 +20790,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==9&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[ApostateFinaleTurnIn],getpvar[FellowNameNine]]
+getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getpvar[FellowNameNine]]
 TABLE
 2
 K
@@ -20917,8 +20935,8 @@ STUCK
 s
 x
 ba
-229
-<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[Zstuck,1]" /></control></view>s
+269
+<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /></control></view>s
 Watchdog
 i
 26
@@ -20934,7 +20952,7 @@ n
 s
 e
 s
-getgvar[Zstuck]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 TABLE
 2
 K

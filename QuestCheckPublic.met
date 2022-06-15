@@ -26,7 +26,7 @@ n
 s
 e
 s
-getgvar[MeetUp]==`Yes`
+getgvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]==`Yes`
 s
 MeetUp
 s
@@ -67,7 +67,7 @@ n
 s
 e
 s
-getgvar[MeetUp]==`No`
+getgvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]==`No`
 TABLE
 2
 K
@@ -447,7 +447,7 @@ n
 s
 e
 s
-setgvar[MeetUp,No]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp,No]
 s
 CheckNearby
 i
@@ -2469,7 +2469,7 @@ n
 s
 e
 s
-setgvar[MeetUp,Yes]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp,Yes]
 s
 CheckNearby
 i
@@ -2488,7 +2488,7 @@ n
 s
 e
 s
-cleargvar[QuestCheckPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestCheckPublic]
 s
 LoadQuest
 i
@@ -2535,7 +2535,7 @@ LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -2590,15 +2590,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestMouf
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestMouf
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load MoufPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load MoufPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -2653,15 +2662,24 @@ n
 s
 e
 s
-getgvar[Quest]==DR
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==DR
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load DreamReaverPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load DreamReaverPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -2716,15 +2734,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestUnleashTheGearknight
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestUnleashTheGearknight
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load UnleashTheGearknightPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load UnleashTheGearknightPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -2779,15 +2806,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestProdigalBanderling
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestProdigalBanderling
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load ProdigalBanderlingPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load ProdigalBanderlingPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -2842,15 +2878,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestLostLore
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestLostLore
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load LostLorePublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load LostLorePublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -2905,15 +2950,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestFalatacotDepot
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestFalatacotDepot
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load FalatacotDepotPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load FalatacotDepotPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -2968,15 +3022,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestProdigalTusker
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestProdigalTusker
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load ProdigalTuskerPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load ProdigalTuskerPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3031,15 +3094,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestIQSQ
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestIQSQ
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load IQSQPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load IQSQPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3094,15 +3166,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestGrael
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestGrael
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load SplittingGraelPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load SplittingGraelPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3157,15 +3238,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestVR
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestVR
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load VirindiRescuePublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load VirindiRescuePublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3220,15 +3310,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestNexus
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestNexus
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load NexusCrawlPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load NexusCrawlPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3283,15 +3382,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestHermit
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestHermit
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load DeathsAllurePublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load DeathsAllurePublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3346,15 +3454,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestDR
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestDR
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load DreamReaverPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load DreamReaverPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3409,15 +3526,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestAF
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestAF
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load ApostateFinalePublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load ApostateFinalePublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3472,9 +3598,18 @@ n
 s
 e
 s
-getgvar[Quest]==QuestPurge
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestPurge
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load PurgingTheCorruptionPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load PurgingTheCorruptionPublic
 s
 LoadQuest
 i
@@ -3535,7 +3670,7 @@ n
 s
 e
 s
-getgvar[Quest]==QuestGX
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestGX
 TABLE
 2
 K
@@ -3557,15 +3692,24 @@ e
 s
 setpvar[IntialCleanUp,0]
 i
+8
+TABLE
 2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load GearXbowPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load GearXbowPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3620,15 +3764,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestDee
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestDee
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load DeewainsPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load DeewainsPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3683,15 +3836,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestLugianAssault
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestLugianAssault
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load LugianAssaultPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load LugianAssaultPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3746,15 +3908,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestReleasingTheLight
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestReleasingTheLight
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load ReleasingTheLightPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load ReleasingTheLightPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3809,15 +3980,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestSaveKarul
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestSaveKarul
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load SaveKarulPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load SaveKarulPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3872,15 +4052,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestBSI
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestBSI
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load BSIPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load BSIPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3935,15 +4124,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestHaltDericost
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestHaltDericost
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load HaltDericostPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load HaltDericostPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -3998,15 +4196,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestGeraineStudy
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestGeraineStudy
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load GeraineStudyPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load GeraineStudyPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -4061,15 +4268,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestLU
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestLU
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load LiberationOfUzizPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load LiberationOfUzizPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -4124,15 +4340,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestCP
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestCP
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load CountPhainorPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load CountPhainorPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -4187,15 +4412,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestSBG
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestSBG
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load SerpentBurialGroundsPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load SerpentBurialGroundsPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -4250,15 +4484,24 @@ n
 s
 e
 s
-getgvar[Quest]==QuestEOD
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestEOD
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load EndOfDaysPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load EndOfDaysPublic
 s
 LoadQuest
 i
 2
 i
-2
+8
 TABLE
 2
 K
@@ -4313,9 +4556,18 @@ n
 s
 e
 s
-getgvar[Quest]==QuestRynthidWeapon
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestRynthidWeapon
+TABLE
+2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load RynthidWeaponPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load RynthidWeaponPublic
 s
 LoadQuest
 i
@@ -4388,7 +4640,7 @@ n
 s
 e
 s
-setgvar[QuestMouf,getgvar[QuestMouf]+1]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestMouf,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestMouf]+1]
 s
 CheckQuests
 i
@@ -4440,7 +4692,7 @@ n
 s
 e
 s
-getgvar[QuestMouf]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestMouf]>=1
 i
 2
 TABLE
@@ -4497,7 +4749,7 @@ n
 s
 e
 s
-getgvar[QuestMouf]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestMouf]>=1
 TABLE
 2
 K
@@ -4517,7 +4769,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestMouf]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestMouf]
 i
 1
 s
@@ -4641,7 +4893,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestDR]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestDR]
 i
 1
 s
@@ -4730,7 +4982,7 @@ n
 s
 e
 s
-setgvar[QuestUnleashTheGearknight,getgvar[QuestUnleashTheGearknight]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestUnleashTheGearknight,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestUnleashTheGearknight]+1]
 s
 CheckQuests
 i
@@ -4782,7 +5034,7 @@ n
 s
 e
 s
-getgvar[QuestUnleashTheGearknight]==getpvar[FellowCount]
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestUnleashTheGearknight]==getpvar[FellowCount]
 i
 2
 TABLE
@@ -4839,7 +5091,7 @@ n
 s
 e
 s
-getgvar[QuestUnleashTheGearknight]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestUnleashTheGearknight]>=1
 TABLE
 2
 K
@@ -4859,7 +5111,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestUnleashTheGearknight]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestUnleashTheGearknight]
 i
 1
 s
@@ -4948,7 +5200,7 @@ n
 s
 e
 s
-setgvar[QuestProdigalBanderling,getgvar[QuestProdigalBanderling]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalBanderling,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalBanderling]+1]
 s
 CheckQuests
 i
@@ -5000,7 +5252,7 @@ n
 s
 e
 s
-getgvar[QuestProdigalBanderling]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalBanderling]>=1
 i
 2
 TABLE
@@ -5057,7 +5309,7 @@ n
 s
 e
 s
-getgvar[QuestProdigalBanderling]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalBanderling]>=1
 TABLE
 2
 K
@@ -5077,7 +5329,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestProdigalBanderling]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestProdigalBanderling]
 i
 1
 s
@@ -5201,7 +5453,7 @@ n
 s
 e
 s
-setgvar[QuestLostLore,getgvar[QuestLostLore]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLostLore,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLostLore]+1]
 s
 CheckQuests
 i
@@ -5253,7 +5505,7 @@ n
 s
 e
 s
-getgvar[QuestLostLore]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLostLore]>=1
 i
 2
 TABLE
@@ -5310,7 +5562,7 @@ n
 s
 e
 s
-getgvar[QuestLostLore]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLostLore]>=1
 TABLE
 2
 K
@@ -5330,7 +5582,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestLostLore]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestLostLore]
 i
 1
 s
@@ -5419,7 +5671,7 @@ n
 s
 e
 s
-setgvar[QuestFalatacotDepot,getgvar[QuestFalatacotDepot]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestFalatacotDepot,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestFalatacotDepot]+1]
 s
 CheckQuests
 i
@@ -5471,7 +5723,7 @@ n
 s
 e
 s
-getgvar[QuestFalatacotDepot]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestFalatacotDepot]>=1
 i
 2
 TABLE
@@ -5528,7 +5780,7 @@ n
 s
 e
 s
-getgvar[QuestFalatacotDepot]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestFalatacotDepot]>=1
 TABLE
 2
 K
@@ -5548,7 +5800,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestFalatacotDepot]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestFalatacotDepot]
 i
 1
 s
@@ -5650,7 +5902,7 @@ n
 s
 e
 s
-setgvar[QuestProdigalTusker,getgvar[QuestProdigalTusker]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalTusker,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalTusker]+1]
 s
 CheckQuests
 i
@@ -5702,7 +5954,7 @@ n
 s
 e
 s
-getgvar[QuestProdigalTusker]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalTusker]>=1
 i
 2
 TABLE
@@ -5759,7 +6011,7 @@ n
 s
 e
 s
-getgvar[QuestProdigalTusker]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalTusker]>=1
 TABLE
 2
 K
@@ -5779,7 +6031,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestProdigalTusker]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestProdigalTusker]
 i
 1
 s
@@ -5885,7 +6137,7 @@ n
 s
 e
 s
-setgvar[QuestIQSQ,getgvar[QuestIQSQ]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ]+1]
 s
 CheckQuests
 i
@@ -5911,7 +6163,7 @@ n
 s
 e
 s
-getgvar[QuestIQSQ]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ]>=1
 i
 2
 TABLE
@@ -5968,7 +6220,7 @@ n
 s
 e
 s
-getgvar[QuestIQSQ]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ]>=1
 TABLE
 2
 K
@@ -5988,7 +6240,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestIQSQ]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestIQSQ]
 i
 1
 s
@@ -6103,7 +6355,7 @@ n
 s
 e
 s
-setgvar[QuestGrael,getgvar[QuestGrael]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGrael,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGrael]+1]
 s
 CheckQuests
 i
@@ -6155,7 +6407,7 @@ n
 s
 e
 s
-getgvar[QuestGrael]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGrael]>=1
 i
 2
 TABLE
@@ -6212,7 +6464,7 @@ n
 s
 e
 s
-getgvar[QuestGrael]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGrael]>=1
 TABLE
 2
 K
@@ -6232,7 +6484,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestGrael]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestGrael]
 i
 1
 s
@@ -6321,7 +6573,7 @@ n
 s
 e
 s
-setgvar[QuestVR,getgvar[QuestVR]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestVR,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestVR]+1]
 s
 CheckQuests
 i
@@ -6373,7 +6625,7 @@ n
 s
 e
 s
-getgvar[QuestVR]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestVR]>=1
 i
 2
 TABLE
@@ -6430,7 +6682,7 @@ n
 s
 e
 s
-getgvar[QuestVR]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestVR]>=1
 TABLE
 2
 K
@@ -6450,7 +6702,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestVR]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestVR]
 i
 1
 s
@@ -6517,7 +6769,7 @@ n
 s
 e
 s
-setgvar[QuestNexus,getgvar[QuestNexus]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestNexus,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestNexus]+1]
 s
 CheckQuests
 i
@@ -6569,7 +6821,7 @@ n
 s
 e
 s
-getgvar[QuestNexus]==getpvar[FellowCount]
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestNexus]==getpvar[FellowCount]
 i
 2
 TABLE
@@ -6626,7 +6878,7 @@ n
 s
 e
 s
-getgvar[QuestNexus]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestNexus]>=1
 TABLE
 2
 K
@@ -6646,7 +6898,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestNexus]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestNexus]
 i
 1
 s
@@ -6713,7 +6965,7 @@ n
 s
 e
 s
-setgvar[QuestHermit,getgvar[QuestHermit]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHermit,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHermit]+1]
 s
 CheckQuests
 i
@@ -6765,7 +7017,7 @@ n
 s
 e
 s
-getgvar[QuestHermit]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHermit]>=1
 i
 2
 TABLE
@@ -6822,7 +7074,7 @@ n
 s
 e
 s
-getgvar[QuestHermit]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHermit]>=1
 TABLE
 2
 K
@@ -6842,7 +7094,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestHermit]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestHermit]
 i
 1
 s
@@ -6944,7 +7196,7 @@ n
 s
 e
 s
-setgvar[QuestDR,getgvar[QuestDR]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDR,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDR]+1]
 s
 CheckQuests
 i
@@ -6996,7 +7248,7 @@ n
 s
 e
 s
-getgvar[QuestDR]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDR]>=1
 i
 2
 TABLE
@@ -7053,7 +7305,7 @@ n
 s
 e
 s
-getgvar[QuestDR]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDR]>=1
 TABLE
 2
 K
@@ -7073,7 +7325,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestDR]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestDR]
 i
 1
 s
@@ -7142,7 +7394,7 @@ n
 s
 e
 s
-getgvar[ApostateFinaleGo]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==1
 i
 3
 TABLE
@@ -7188,7 +7440,7 @@ n
 s
 e
 s
-setgvar[QuestAF,getgvar[QuestAF]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestAF,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestAF]+1]
 s
 CheckQuests
 i
@@ -7240,7 +7492,7 @@ n
 s
 e
 s
-getgvar[QuestAF]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestAF]>=1
 i
 2
 TABLE
@@ -7297,7 +7549,7 @@ n
 s
 e
 s
-getgvar[QuestAF]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestAF]>=1
 TABLE
 2
 K
@@ -7317,7 +7569,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestAF]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestAF]
 i
 1
 s
@@ -7454,7 +7706,7 @@ n
 s
 e
 s
-setgvar[QuestPurge,getgvar[QuestPurge]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestPurge,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestPurge]+1]
 s
 CheckQuests
 i
@@ -7506,7 +7758,7 @@ n
 s
 e
 s
-getgvar[QuestPurge]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestPurge]>=1
 i
 2
 TABLE
@@ -7563,7 +7815,7 @@ n
 s
 e
 s
-getgvar[QuestPurge]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestPurge]>=1
 TABLE
 2
 K
@@ -7583,7 +7835,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestPurge]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestPurge]
 i
 1
 s
@@ -7650,7 +7902,7 @@ n
 s
 e
 s
-setgvar[QuestGX,getgvar[QuestGX]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGX,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGX]+1]
 s
 CheckQuests
 i
@@ -7702,7 +7954,7 @@ n
 s
 e
 s
-getgvar[QuestGX]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGX]>=1
 i
 2
 TABLE
@@ -7759,7 +8011,7 @@ n
 s
 e
 s
-getgvar[QuestGX]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGX]>=1
 TABLE
 2
 K
@@ -7779,7 +8031,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestGX]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestGX]
 i
 1
 s
@@ -7868,7 +8120,7 @@ n
 s
 e
 s
-setgvar[QuestDee,getgvar[QuestDee]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDee,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDee]+1]
 s
 CheckQuests
 i
@@ -7920,7 +8172,7 @@ n
 s
 e
 s
-getgvar[QuestDee]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDee]>=1
 i
 2
 TABLE
@@ -7977,7 +8229,7 @@ n
 s
 e
 s
-getgvar[QuestDee]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDee]>=1
 TABLE
 2
 K
@@ -7997,7 +8249,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestDee]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestDee]
 i
 1
 s
@@ -8099,7 +8351,7 @@ n
 s
 e
 s
-setgvar[QuestReleasingTheLight,getgvar[QuestReleasingTheLight]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]+1]
 s
 CheckQuests
 i
@@ -8151,7 +8403,7 @@ n
 s
 e
 s
-getgvar[QuestReleasingTheLight]==getpvar[FellowCount]
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]==getpvar[FellowCount]
 i
 2
 TABLE
@@ -8208,7 +8460,7 @@ n
 s
 e
 s
-getgvar[QuestReleasingTheLight]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]>=1
 TABLE
 2
 K
@@ -8228,7 +8480,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestReleasingTheLight]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestReleasingTheLight]
 i
 1
 s
@@ -8321,7 +8573,7 @@ n
 s
 e
 s
-setgvar[QuestBSI,getgvar[QuestBSI]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestBSI,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestBSI]+1]
 s
 CheckQuests
 i
@@ -8373,7 +8625,7 @@ n
 s
 e
 s
-getgvar[QuestBSI]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestBSI]>=1
 i
 2
 TABLE
@@ -8430,7 +8682,7 @@ n
 s
 e
 s
-getgvar[QuestBSI]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestBSI]>=1
 TABLE
 2
 K
@@ -8450,7 +8702,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestBSI]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestBSI]
 i
 1
 s
@@ -8565,7 +8817,7 @@ n
 s
 e
 s
-setgvar[QuestHaltDericost,getgvar[QuestHaltDericost]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHaltDericost,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHaltDericost]+1]
 s
 CheckQuests
 i
@@ -8617,7 +8869,7 @@ n
 s
 e
 s
-getgvar[QuestHaltDericost]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHaltDericost]>=1
 i
 2
 TABLE
@@ -8674,7 +8926,7 @@ n
 s
 e
 s
-getgvar[QuestHaltDericost]==getpvar[FellowCount]
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHaltDericost]==getpvar[FellowCount]
 TABLE
 2
 K
@@ -8694,7 +8946,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestHaltDericost]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestHaltDericost]
 i
 1
 s
@@ -8796,7 +9048,7 @@ n
 s
 e
 s
-setgvar[QuestGeraineStudy,getgvar[QuestGeraineStudy]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGeraineStudy,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGeraineStudy]+1]
 s
 CheckQuests
 i
@@ -8848,7 +9100,7 @@ n
 s
 e
 s
-getgvar[QuestGeraineStudy]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGeraineStudy]>=1
 i
 2
 TABLE
@@ -8905,7 +9157,7 @@ n
 s
 e
 s
-getgvar[QuestGeraineStudy]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestGeraineStudy]>=1
 TABLE
 2
 K
@@ -8925,7 +9177,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestGeraineStudy]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestGeraineStudy]
 i
 1
 s
@@ -8992,7 +9244,7 @@ n
 s
 e
 s
-setgvar[QuestLU,getgvar[QuestLU]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLU,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLU]+1]
 s
 CheckQuests
 i
@@ -9044,7 +9296,7 @@ n
 s
 e
 s
-getgvar[QuestLU]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLU]>=1
 i
 2
 TABLE
@@ -9101,7 +9353,7 @@ n
 s
 e
 s
-getgvar[QuestLU]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLU]>=1
 TABLE
 2
 K
@@ -9121,7 +9373,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestLU]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestLU]
 i
 1
 s
@@ -9223,7 +9475,7 @@ n
 s
 e
 s
-setgvar[QuestCP,getgvar[QuestCP]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestCP,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestCP]+1]
 s
 CheckQuests
 i
@@ -9275,7 +9527,7 @@ n
 s
 e
 s
-getgvar[QuestCP]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestCP]>=1
 i
 2
 TABLE
@@ -9332,7 +9584,7 @@ n
 s
 e
 s
-getgvar[QuestCP]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestCP]>=1
 TABLE
 2
 K
@@ -9352,7 +9604,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestCP]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestCP]
 i
 1
 s
@@ -9454,7 +9706,7 @@ n
 s
 e
 s
-setgvar[QuestSBG,getgvar[QuestSBG]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSBG,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSBG]+1]
 s
 CheckQuests
 i
@@ -9506,7 +9758,7 @@ n
 s
 e
 s
-getgvar[QuestSBG]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSBG]>=1
 i
 2
 TABLE
@@ -9563,7 +9815,7 @@ n
 s
 e
 s
-getgvar[QuestSBG]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSBG]>=1
 TABLE
 2
 K
@@ -9583,7 +9835,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestSBG]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestSBG]
 i
 1
 s
@@ -9663,7 +9915,7 @@ n
 s
 e
 s
-setgvar[QuestSaveKarul,getgvar[QuestSaveKarul]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSaveKarul,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSaveKarul]+1]
 s
 CheckQuests
 i
@@ -9715,7 +9967,7 @@ n
 s
 e
 s
-getgvar[QuestSaveKarul]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSaveKarul]>=1
 i
 2
 TABLE
@@ -9772,7 +10024,7 @@ n
 s
 e
 s
-getgvar[QuestSaveKarul]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestSaveKarul]>=1
 TABLE
 2
 K
@@ -9792,7 +10044,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestSaveKarul]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestSaveKarul]
 i
 1
 s
@@ -9885,7 +10137,7 @@ n
 s
 e
 s
-setgvar[QuestLugianAssault,getgvar[QuestLugianAssault]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLugianAssault,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLugianAssault]+1]
 s
 CheckQuests
 i
@@ -9937,7 +10189,7 @@ n
 s
 e
 s
-getgvar[QuestLugianAssault]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLugianAssault]>=1
 i
 2
 TABLE
@@ -9994,7 +10246,7 @@ n
 s
 e
 s
-getgvar[QuestLugianAssault]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestLugianAssault]>=1
 TABLE
 2
 K
@@ -10014,7 +10266,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestLugianAssault]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestLugianAssault]
 i
 1
 s
@@ -10129,7 +10381,7 @@ n
 s
 e
 s
-setgvar[QuestEOD,getgvar[QuestEOD]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestEOD,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestEOD]+1]
 s
 CheckQuests
 i
@@ -10172,7 +10424,7 @@ n
 s
 e
 s
-getgvar[EoDAbort]==0
+getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==0
 i
 3
 TABLE
@@ -10194,7 +10446,7 @@ n
 s
 e
 s
-getgvar[QuestEOD]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestEOD]>=1
 i
 2
 TABLE
@@ -10251,7 +10503,7 @@ n
 s
 e
 s
-getgvar[QuestEOD]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestEOD]>=1
 TABLE
 2
 K
@@ -10271,7 +10523,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestEOD]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestEOD]
 i
 1
 s
@@ -10364,7 +10616,7 @@ n
 s
 e
 s
-setgvar[QuestRynthidWeapon,getgvar[QuestRynthidWeapon]+1]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestRynthidWeapon,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestRynthidWeapon]+1]
 s
 CheckQuests
 i
@@ -10407,7 +10659,7 @@ n
 s
 e
 s
-getgvar[MeleeGroupCheck]==0
+getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==0
 i
 26
 TABLE
@@ -10455,7 +10707,7 @@ n
 s
 e
 s
-getgvar[QuestRynthidWeapon]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestRynthidWeapon]>=1
 i
 2
 TABLE
@@ -10512,7 +10764,7 @@ n
 s
 e
 s
-getgvar[QuestRynthidWeapon]>=1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestRynthidWeapon]>=1
 TABLE
 2
 K
@@ -10532,7 +10784,7 @@ n
 s
 e
 s
-setgvar[Quest,QuestRynthidWeapon]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestRynthidWeapon]
 i
 1
 s
@@ -10614,7 +10866,7 @@ n
 s
 e
 s
-getgvar[HealingKits]>=4
+getgvar[getworldname[]+getpvar[GroupIdentifier]+HealingKits]>=4
 TABLE
 2
 K
@@ -10634,7 +10886,7 @@ n
 s
 e
 s
-setgvar[Quest,BoBo]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,BoBo]
 i
 1
 s
@@ -10730,7 +10982,7 @@ n
 s
 e
 s
-getgvar[QuestUnleashTheGearknight]==getpvar[FellowCount]
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestUnleashTheGearknight]==getpvar[FellowCount]
 i
 26
 TABLE
@@ -11248,7 +11500,7 @@ n
 s
 e
 s
-getgvar[QuestNexus]==getpvar[FellowCount]
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestNexus]==getpvar[FellowCount]
 i
 26
 TABLE
@@ -11613,7 +11865,7 @@ n
 s
 e
 s
-getgvar[QuestReleasingTheLight]==getpvar[FellowCount]
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]==getpvar[FellowCount]
 i
 26
 TABLE
@@ -12161,7 +12413,7 @@ n
 s
 e
 s
-getgvar[EoDAbort]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==1
 i
 2
 TABLE
@@ -12436,7 +12688,7 @@ n
 s
 e
 s
-testgvar[GKRecall]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall]==0
 TABLE
 2
 K
@@ -12456,7 +12708,7 @@ n
 s
 e
 s
-setgvar[GKRecall,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall,listcreate[]]
 i
 1
 s
@@ -12499,7 +12751,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleGo]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==0
 i
 26
 TABLE
@@ -12525,7 +12777,7 @@ n
 s
 e
 s
-listcontains[getgvar[GKRecall],getcharstringprop[1]]==0
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]==0
 TABLE
 2
 K
@@ -12545,7 +12797,7 @@ n
 s
 e
 s
-listadd[getgvar[GKRecall],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]
 i
 1
 s
@@ -12588,7 +12840,7 @@ n
 s
 e
 s
-testgvar[MeleeGroup]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]==0
 TABLE
 2
 K
@@ -12608,7 +12860,7 @@ n
 s
 e
 s
-setgvar[MeleeGroup,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup,listcreate[]]
 i
 1
 s
@@ -12651,7 +12903,7 @@ n
 s
 e
 s
-testgvar[MeleeGroupCheck]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==0
 i
 26
 TABLE
@@ -12677,7 +12929,7 @@ n
 s
 e
 s
-listcontains[getgvar[MeleeGroup],getcharstringprop[1]]==0
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup],getcharstringprop[1]]==0
 TABLE
 2
 K
@@ -12697,7 +12949,7 @@ n
 s
 e
 s
-listadd[getgvar[MeleeGroup],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup],getcharstringprop[1]]
 i
 1
 s
@@ -13058,7 +13310,7 @@ n
 s
 e
 s
-setgvar[BuffSyncAll,1]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+BuffSyncAll,1]
 i
 2
 s
@@ -13102,7 +13354,7 @@ n
 s
 e
 s
-getgvar[BuffSyncAll]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+BuffSyncAll]==1
 i
 26
 TABLE
@@ -13210,7 +13462,7 @@ n
 s
 e
 s
-testgvar[SyncBuffComplete]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]==0
 i
 21
 TABLE
@@ -13243,7 +13495,7 @@ n
 s
 e
 s
-setgvar[SyncBuffComplete,listcreate[]]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete,listcreate[]]
 i
 1
 s
@@ -13273,7 +13525,7 @@ n
 s
 e
 s
-testgvar[SyncBuffComplete]==1
+testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]==1
 i
 21
 TABLE
@@ -13295,7 +13547,7 @@ n
 s
 e
 s
-listcontains[getgvar[SyncBuffComplete],getcharstringprop[1]]
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getcharstringprop[1]]
 i
 21
 TABLE
@@ -13328,7 +13580,7 @@ n
 s
 e
 s
-listadd[getgvar[SyncBuffComplete],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getcharstringprop[1]]
 i
 1
 s
@@ -13380,7 +13632,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==1&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]
+getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]
 i
 26
 TABLE
@@ -13393,7 +13645,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==2&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]
+getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]
 i
 26
 TABLE
@@ -13406,7 +13658,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==3&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]
+getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]
 i
 26
 TABLE
@@ -13419,7 +13671,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==4&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]
+getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]
 i
 26
 TABLE
@@ -13432,7 +13684,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==5&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]
+getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]
 i
 26
 TABLE
@@ -13445,7 +13697,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==6&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]
+getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]
 i
 26
 TABLE
@@ -13458,7 +13710,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==7&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]
+getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]
 i
 26
 TABLE
@@ -13471,7 +13723,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==8&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]
+getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]
 i
 26
 TABLE
@@ -13484,7 +13736,7 @@ n
 s
 e
 s
-getpvar[FellowCount]==9&&listcontains[getgvar[SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[SyncBuffComplete],getpvar[FellowNameNine]]
+getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameNine]]
 TABLE
 2
 K
@@ -13504,7 +13756,7 @@ n
 s
 e
 s
-cleargvar[Buffing]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]
 i
 1
 s
@@ -23684,7 +23936,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleGo]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==0
 i
 26
 TABLE
@@ -23710,7 +23962,7 @@ n
 s
 e
 s
-listcontains[getgvar[GKRecall],getcharstringprop[1]]==0
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]==0
 TABLE
 2
 K
@@ -23730,7 +23982,7 @@ n
 s
 e
 s
-listadd[getgvar[GKRecall],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]
 s
 DefaultTwo
 i
@@ -25283,7 +25535,7 @@ K
 V
 n
 n
-193
+195
 i
 7
 TABLE
@@ -25296,7 +25548,7 @@ n
 s
 e
 s
-cleargvar[QuestCheckPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestCheckPublic]
 i
 7
 TABLE
@@ -25309,7 +25561,7 @@ n
 s
 e
 s
-cleargvar[SyncBuffComplete]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]
 i
 7
 TABLE
@@ -25322,7 +25574,7 @@ n
 s
 e
 s
-cleargvar[LumTokens]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LumTokens]
 i
 7
 TABLE
@@ -25335,7 +25587,7 @@ n
 s
 e
 s
-cleargvar[IQSQ]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+IQSQ]
 i
 7
 TABLE
@@ -25348,7 +25600,7 @@ n
 s
 e
 s
-cleargvar[Mouf ]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Mouf]
 i
 7
 TABLE
@@ -25361,7 +25613,7 @@ n
 s
 e
 s
-cleargvar[UnleashTheGearknight]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+UnleashTheGearknight]
 i
 7
 TABLE
@@ -25374,7 +25626,7 @@ n
 s
 e
 s
-cleargvar[ProdigalBanderling]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ProdigalBanderling]
 i
 7
 TABLE
@@ -25387,7 +25639,7 @@ n
 s
 e
 s
-cleargvar[LostLore]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLore]
 i
 7
 TABLE
@@ -25400,7 +25652,7 @@ n
 s
 e
 s
-cleargvar[FalatacotDepot]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+FalatacotDepot]
 i
 7
 TABLE
@@ -25413,7 +25665,7 @@ n
 s
 e
 s
-cleargvar[ProdigalTusker]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ProdigalTusker]
 i
 7
 TABLE
@@ -25426,7 +25678,7 @@ n
 s
 e
 s
-cleargvar[SplittingGrael]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+SplittingGrael]
 i
 7
 TABLE
@@ -25439,7 +25691,7 @@ n
 s
 e
 s
-cleargvar[VirindiRescue]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+VirindiRescue]
 i
 7
 TABLE
@@ -25452,7 +25704,7 @@ n
 s
 e
 s
-cleargvar[NexusCrawl]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+NexusCrawl]
 i
 7
 TABLE
@@ -25465,7 +25717,7 @@ n
 s
 e
 s
-cleargvar[DeathsAllure]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllure]
 i
 7
 TABLE
@@ -25478,7 +25730,7 @@ n
 s
 e
 s
-cleargvar[DreamReaver]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DreamReaver]
 i
 7
 TABLE
@@ -25491,7 +25743,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinale]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinale]
 i
 7
 TABLE
@@ -25504,7 +25756,7 @@ n
 s
 e
 s
-cleargvar[PurgingTheCorruption]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+PurgingTheCorruption]
 i
 7
 TABLE
@@ -25517,7 +25769,7 @@ n
 s
 e
 s
-cleargvar[GearXbow]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+GearXbow]
 i
 7
 TABLE
@@ -25530,7 +25782,7 @@ n
 s
 e
 s
-cleargvar[Deewains]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Deewains]
 i
 7
 TABLE
@@ -25543,7 +25795,7 @@ n
 s
 e
 s
-cleargvar[LugianAssault]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LugianAssault]
 i
 7
 TABLE
@@ -25556,7 +25808,7 @@ n
 s
 e
 s
-cleargvar[ReleasingTheLight]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ReleasingTheLight]
 i
 7
 TABLE
@@ -25569,7 +25821,7 @@ n
 s
 e
 s
-cleargvar[SaveKarul]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+SaveKarul]
 i
 7
 TABLE
@@ -25582,7 +25834,7 @@ n
 s
 e
 s
-cleargvar[BSI]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+BSI]
 i
 7
 TABLE
@@ -25595,7 +25847,7 @@ n
 s
 e
 s
-cleargvar[HaltDericost]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+HaltDericost]
 i
 7
 TABLE
@@ -25608,7 +25860,7 @@ n
 s
 e
 s
-cleargvar[GeraineStudy]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+GeraineStudy]
 i
 7
 TABLE
@@ -25621,7 +25873,7 @@ n
 s
 e
 s
-cleargvar[BuffSyncAll]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+BuffSyncAll]
 i
 7
 TABLE
@@ -25634,7 +25886,7 @@ n
 s
 e
 s
-cleargvar[LiberationOfUziz]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUziz]
 i
 7
 TABLE
@@ -25647,7 +25899,7 @@ n
 s
 e
 s
-cleargvar[CountPhainor]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]
 i
 7
 TABLE
@@ -25660,7 +25912,7 @@ n
 s
 e
 s
-cleargvar[SerpentBurialGrounds]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+SerpentBurialGrounds]
 i
 7
 TABLE
@@ -25673,7 +25925,7 @@ n
 s
 e
 s
-cleargvar[EndOfDays]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+EndOfDays]
 i
 7
 TABLE
@@ -25686,7 +25938,7 @@ n
 s
 e
 s
-cleargvar[GoNowClear+getworldname[]]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]
 i
 7
 TABLE
@@ -25699,7 +25951,7 @@ n
 s
 e
 s
-cleargvar[GoNowTwo+getworldname[]]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowTwo]
 i
 7
 TABLE
@@ -25712,7 +25964,7 @@ n
 s
 e
 s
-cleargvar[QuestMouf]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestMouf]
 i
 7
 TABLE
@@ -25725,7 +25977,7 @@ n
 s
 e
 s
-cleargvar[QuestUnleashTheGearknight]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestUnleashTheGearknight]
 i
 7
 TABLE
@@ -25738,7 +25990,7 @@ n
 s
 e
 s
-cleargvar[QuestProdigalBanderling]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalBanderling]
 i
 7
 TABLE
@@ -25751,7 +26003,7 @@ n
 s
 e
 s
-cleargvar[QuestProdigalTusker]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestProdigalTusker]
 i
 7
 TABLE
@@ -25764,7 +26016,7 @@ n
 s
 e
 s
-cleargvar[QuestLostLore]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestLostLore]
 i
 7
 TABLE
@@ -25777,7 +26029,7 @@ n
 s
 e
 s
-cleargvar[QuestFalatacotDepot]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestFalatacotDepot]
 i
 7
 TABLE
@@ -25790,7 +26042,7 @@ n
 s
 e
 s
-cleargvar[QuestIQSQ]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ]
 i
 7
 TABLE
@@ -25803,7 +26055,7 @@ n
 s
 e
 s
-cleargvar[QuestGrael]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestGrael]
 i
 7
 TABLE
@@ -25816,7 +26068,7 @@ n
 s
 e
 s
-cleargvar[QuestVR]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestVR]
 i
 7
 TABLE
@@ -25829,7 +26081,7 @@ n
 s
 e
 s
-cleargvar[QuestNexus]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestNexus]
 i
 7
 TABLE
@@ -25842,7 +26094,7 @@ n
 s
 e
 s
-cleargvar[QuestHermit]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestHermit]
 i
 7
 TABLE
@@ -25855,7 +26107,7 @@ n
 s
 e
 s
-cleargvar[QuestDR]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestDR]
 i
 7
 TABLE
@@ -25868,7 +26120,7 @@ n
 s
 e
 s
-cleargvar[QuestAF]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestAF]
 i
 7
 TABLE
@@ -25881,7 +26133,7 @@ n
 s
 e
 s
-cleargvar[QuestPurge]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestPurge]
 i
 7
 TABLE
@@ -25894,7 +26146,7 @@ n
 s
 e
 s
-cleargvar[QuestGX]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestGX]
 i
 7
 TABLE
@@ -25907,7 +26159,7 @@ n
 s
 e
 s
-cleargvar[QuestDee]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestDee]
 i
 7
 TABLE
@@ -25920,7 +26172,7 @@ n
 s
 e
 s
-cleargvar[QuestLugianAssault]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestLugianAssault]
 i
 7
 TABLE
@@ -25933,7 +26185,7 @@ n
 s
 e
 s
-cleargvar[QuestReleasingTheLight]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]
 i
 7
 TABLE
@@ -25946,7 +26198,7 @@ n
 s
 e
 s
-cleargvar[QuestSaveKarul]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestSaveKarul]
 i
 7
 TABLE
@@ -25959,7 +26211,7 @@ n
 s
 e
 s
-cleargvar[QuestBSI]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestBSI]
 i
 7
 TABLE
@@ -25972,7 +26224,7 @@ n
 s
 e
 s
-cleargvar[QuestHaltDericost]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestHaltDericost]
 i
 7
 TABLE
@@ -25985,7 +26237,7 @@ n
 s
 e
 s
-cleargvar[QuestGeraineStudy]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestGeraineStudy]
 i
 7
 TABLE
@@ -25998,7 +26250,7 @@ n
 s
 e
 s
-cleargvar[QuestLU]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestLU]
 i
 7
 TABLE
@@ -26011,7 +26263,7 @@ n
 s
 e
 s
-cleargvar[QuestCP]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestCP]
 i
 7
 TABLE
@@ -26024,7 +26276,7 @@ n
 s
 e
 s
-cleargvar[QuestSBG]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestSBG]
 i
 7
 TABLE
@@ -26037,7 +26289,7 @@ n
 s
 e
 s
-cleargvar[QuestEOD]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestEOD]
 i
 7
 TABLE
@@ -26050,7 +26302,7 @@ n
 s
 e
 s
-cleargvar[QuestRynthidWeapon]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestRynthidWeapon]
 i
 7
 TABLE
@@ -26063,7 +26315,7 @@ n
 s
 e
 s
-cleargvar[Keys]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Keys]
 i
 7
 TABLE
@@ -26076,7 +26328,7 @@ n
 s
 e
 s
-cleargvar[Looting]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Looting]
 i
 7
 TABLE
@@ -26089,7 +26341,7 @@ n
 s
 e
 s
-cleargvar[Go]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Go]
 i
 7
 TABLE
@@ -26102,7 +26354,7 @@ n
 s
 e
 s
-cleargvar[QuestComplete]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 i
 7
 TABLE
@@ -26115,7 +26367,7 @@ n
 s
 e
 s
-cleargvar[LootFail]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]
 i
 7
 TABLE
@@ -26128,7 +26380,7 @@ n
 s
 e
 s
-cleargvar[Quest]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Quest]
 i
 7
 TABLE
@@ -26141,7 +26393,7 @@ n
 s
 e
 s
-cleargvar[Solved]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Solved]
 i
 7
 TABLE
@@ -26154,7 +26406,7 @@ n
 s
 e
 s
-cleargvar[More]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+More]
 i
 7
 TABLE
@@ -26167,7 +26419,7 @@ n
 s
 e
 s
-cleargvar[East]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+East]
 i
 7
 TABLE
@@ -26180,7 +26432,7 @@ n
 s
 e
 s
-cleargvar[West]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+West]
 i
 7
 TABLE
@@ -26193,7 +26445,7 @@ n
 s
 e
 s
-cleargvar[AllDone]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+AllDone]
 i
 7
 TABLE
@@ -26206,7 +26458,7 @@ n
 s
 e
 s
-cleargvar[Step]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Step]
 i
 7
 TABLE
@@ -26219,7 +26471,7 @@ n
 s
 e
 s
-cleargvar[MulingMore]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+MulingMore]
 i
 7
 TABLE
@@ -26232,7 +26484,7 @@ n
 s
 e
 s
-cleargvar[LootingCounter]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]
 i
 7
 TABLE
@@ -26245,7 +26497,7 @@ n
 s
 e
 s
-cleargvar[MeleeGroup]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]
 i
 7
 TABLE
@@ -26258,7 +26510,7 @@ n
 s
 e
 s
-cleargvar[NetworkChirp+getworldname[]]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]
 i
 7
 TABLE
@@ -26271,7 +26523,7 @@ n
 s
 e
 s
-cleargvar[MeleeGroupCheck]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]
 i
 7
 TABLE
@@ -26284,7 +26536,7 @@ n
 s
 e
 s
-cleargvar[PopkinComplete]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+PopkinComplete]
 i
 7
 TABLE
@@ -26297,7 +26549,7 @@ n
 s
 e
 s
-cleargvar[BabyOneDone]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+BabyOneDone]
 i
 7
 TABLE
@@ -26310,7 +26562,7 @@ n
 s
 e
 s
-cleargvar[BabyTwoDone]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+BabyTwoDone]
 i
 7
 TABLE
@@ -26323,7 +26575,7 @@ n
 s
 e
 s
-cleargvar[BabyThreeDone]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+BabyThreeDone]
 i
 7
 TABLE
@@ -26336,7 +26588,7 @@ n
 s
 e
 s
-cleargvar[BabyFourDone]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+BabyFourDone]
 i
 7
 TABLE
@@ -26349,7 +26601,7 @@ n
 s
 e
 s
-cleargvar[BabyFiveDone]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+BabyFiveDone]
 i
 7
 TABLE
@@ -26362,7 +26614,7 @@ n
 s
 e
 s
-cleargvar[BabySixDone]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+BabySixDone]
 i
 7
 TABLE
@@ -26375,7 +26627,7 @@ n
 s
 e
 s
-cleargvar[DeewainBridge]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridge]
 i
 7
 TABLE
@@ -26388,7 +26640,7 @@ n
 s
 e
 s
-cleargvar[DeewainBridgeGo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridgeGo]
 i
 7
 TABLE
@@ -26401,7 +26653,7 @@ n
 s
 e
 s
-cleargvar[EdificeDoorOne]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorOne]
 i
 7
 TABLE
@@ -26414,7 +26666,7 @@ n
 s
 e
 s
-cleargvar[DoorStep]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]
 i
 7
 TABLE
@@ -26427,7 +26679,7 @@ n
 s
 e
 s
-cleargvar[EdificeDoorTwo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorTwo]
 i
 7
 TABLE
@@ -26440,7 +26692,7 @@ n
 s
 e
 s
-cleargvar[EdificeDoorThree]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorThree]
 i
 7
 TABLE
@@ -26453,7 +26705,7 @@ n
 s
 e
 s
-cleargvar[DelegateDoorOpen]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DelegateDoorOpen]
 i
 7
 TABLE
@@ -26466,7 +26718,7 @@ n
 s
 e
 s
-cleargvar[RelogTimerComplete]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+RelogTimerComplete]
 i
 7
 TABLE
@@ -26479,7 +26731,7 @@ n
 s
 e
 s
-cleargvar[KillTasksPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+KillTasksPublic]
 i
 7
 TABLE
@@ -26492,7 +26744,7 @@ n
 s
 e
 s
-cleargvar[Ryn VII]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn VII]
 i
 7
 TABLE
@@ -26505,7 +26757,7 @@ n
 s
 e
 s
-cleargvar[Ryn II]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn II]
 i
 7
 TABLE
@@ -26518,7 +26770,7 @@ n
 s
 e
 s
-cleargvar[Ryn VI]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn VI]
 i
 7
 TABLE
@@ -26531,7 +26783,7 @@ n
 s
 e
 s
-cleargvar[Ryn IV]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn IV]
 i
 7
 TABLE
@@ -26544,7 +26796,7 @@ n
 s
 e
 s
-cleargvar[Ryn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn]
 i
 7
 TABLE
@@ -26557,7 +26809,7 @@ n
 s
 e
 s
-cleargvar[Ryn VIII]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn VIII]
 i
 7
 TABLE
@@ -26570,7 +26822,7 @@ n
 s
 e
 s
-cleargvar[Ryn IX]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn IX]
 i
 7
 TABLE
@@ -26583,7 +26835,7 @@ n
 s
 e
 s
-cleargvar[Ryn III]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn III]
 i
 7
 TABLE
@@ -26596,7 +26848,7 @@ n
 s
 e
 s
-cleargvar[Ryn V]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn V]
 i
 7
 TABLE
@@ -26609,7 +26861,7 @@ n
 s
 e
 s
-cleargvar[LostLorePublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLorePublic]
 i
 7
 TABLE
@@ -26622,7 +26874,7 @@ n
 s
 e
 s
-cleargvar[RangeDown]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+RangeDown]
 i
 7
 TABLE
@@ -26635,7 +26887,7 @@ n
 s
 e
 s
-cleargvar[SplittingGraelTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+SplittingGraelTurnIn]
 i
 7
 TABLE
@@ -26648,7 +26900,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleGo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]
 i
 7
 TABLE
@@ -26661,7 +26913,7 @@ n
 s
 e
 s
-cleargvar[DepotFlag]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DepotFlag]
 i
 7
 TABLE
@@ -26674,7 +26926,7 @@ n
 s
 e
 s
-cleargvar[ToTNKaitroFunland]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ToTNKaitroFunland]
 i
 7
 TABLE
@@ -26687,7 +26939,7 @@ n
 s
 e
 s
-cleargvar[LostLorePublicFinished]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLorePublicFinished]
 i
 7
 TABLE
@@ -26700,7 +26952,7 @@ n
 s
 e
 s
-cleargvar[ToTorchKaitroFunland]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ToTorchKaitroFunland]
 i
 7
 TABLE
@@ -26713,7 +26965,7 @@ n
 s
 e
 s
-cleargvar[SplittingGraelPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+SplittingGraelPublic]
 i
 7
 TABLE
@@ -26726,7 +26978,7 @@ n
 s
 e
 s
-cleargvar[Death+getworldname[]]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Death]
 i
 7
 TABLE
@@ -26739,7 +26991,7 @@ n
 s
 e
 s
-cleargvar[SplittingGraelPublicFinished]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+SplittingGraelPublicFinished]
 i
 7
 TABLE
@@ -26752,7 +27004,7 @@ n
 s
 e
 s
-cleargvar[ToTorch]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ToTorch]
 i
 7
 TABLE
@@ -26765,7 +27017,7 @@ n
 s
 e
 s
-cleargvar[GoNow+getworldname[]]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]
 i
 7
 TABLE
@@ -26778,7 +27030,7 @@ n
 s
 e
 s
-cleargvar[DreamReaverTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DreamReaverTurnIn]
 i
 7
 TABLE
@@ -26791,7 +27043,7 @@ n
 s
 e
 s
-cleargvar[FailDelayCounter]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]
 i
 7
 TABLE
@@ -26804,7 +27056,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleFlag]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleFlag]
 i
 7
 TABLE
@@ -26817,7 +27069,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn]
 i
 7
 TABLE
@@ -26830,7 +27082,7 @@ n
 s
 e
 s
-cleargvar[ShardThree+getworldname[]]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ShardThree]
 i
 7
 TABLE
@@ -26843,7 +27095,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleShardOne]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne]
 i
 7
 TABLE
@@ -26856,7 +27108,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleShardTwo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo]
 i
 7
 TABLE
@@ -26869,7 +27121,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleShardThree]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree]
 i
 7
 TABLE
@@ -26882,7 +27134,7 @@ n
 s
 e
 s
-cleargvar[B]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+B]
 i
 7
 TABLE
@@ -26895,7 +27147,7 @@ n
 s
 e
 s
-cleargvar[RecallDrop+getworldname[]]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+RecallDrop]
 i
 7
 TABLE
@@ -26908,7 +27160,7 @@ n
 s
 e
 s
-cleargvar[DeathsAllurePublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllurePublic]
 i
 7
 TABLE
@@ -26921,7 +27173,7 @@ n
 s
 e
 s
-cleargvar[Checking]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Checking]
 i
 7
 TABLE
@@ -26934,7 +27186,7 @@ n
 s
 e
 s
-cleargvar[DefaultPass]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]
 i
 7
 TABLE
@@ -26947,7 +27199,7 @@ n
 s
 e
 s
-cleargvar[GoNowClear]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]
 i
 7
 TABLE
@@ -26960,7 +27212,7 @@ n
 s
 e
 s
-cleargvar[GoNowTwo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowTwo]
 i
 7
 TABLE
@@ -26973,7 +27225,7 @@ n
 s
 e
 s
-cleargvar[getcharstringprop[1]+getworldname[]]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]
 i
 7
 TABLE
@@ -26986,7 +27238,7 @@ n
 s
 e
 s
-cleargvar[JilnaTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+JilnaTurnIn]
 i
 7
 TABLE
@@ -26999,7 +27251,7 @@ n
 s
 e
 s
-cleargvar[Turnin]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Turnin]
 i
 7
 TABLE
@@ -27025,7 +27277,7 @@ n
 s
 e
 s
-cleargvar[DefenderCheck]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DefenderCheck]
 i
 7
 TABLE
@@ -27038,7 +27290,7 @@ n
 s
 e
 s
-cleargvar[Alive]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Alive]
 i
 7
 TABLE
@@ -27064,7 +27316,7 @@ n
 s
 e
 s
-cleargvar[JumpComplete]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+JumpComplete]
 i
 7
 TABLE
@@ -27077,7 +27329,7 @@ n
 s
 e
 s
-cleargvar[Deewain]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Deewain]
 i
 7
 TABLE
@@ -27090,7 +27342,7 @@ n
 s
 e
 s
-cleargvar[DeewainTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeewainTurnIn]
 i
 7
 TABLE
@@ -27103,7 +27355,7 @@ n
 s
 e
 s
-cleargvar[IQSQTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+IQSQTurnIn]
 i
 7
 TABLE
@@ -27116,7 +27368,7 @@ n
 s
 e
 s
-cleargvar[GoToAun]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoToAun]
 i
 7
 TABLE
@@ -27129,7 +27381,7 @@ n
 s
 e
 s
-cleargvar[DoorOpenIQSQ]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorOpenIQSQ]
 i
 7
 TABLE
@@ -27142,7 +27394,7 @@ n
 s
 e
 s
-cleargvar[Pillar]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Pillar]
 i
 7
 TABLE
@@ -27155,7 +27407,7 @@ n
 s
 e
 s
-cleargvar[PillarOneAlive]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+PillarOneAlive]
 i
 7
 TABLE
@@ -27168,7 +27420,7 @@ n
 s
 e
 s
-cleargvar[RWTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+RWTurnIn]
 i
 7
 TABLE
@@ -27181,7 +27433,7 @@ n
 s
 e
 s
-cleargvar[RynthidWeapon]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+RynthidWeapon]
 i
 7
 TABLE
@@ -27194,7 +27446,7 @@ n
 s
 e
 s
-cleargvar[CountDoorOpen]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+CountDoorOpen]
 i
 7
 TABLE
@@ -27207,7 +27459,7 @@ n
 s
 e
 s
-cleargvar[Mouf]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Mouf]
 i
 7
 TABLE
@@ -27220,7 +27472,7 @@ n
 s
 e
 s
-cleargvar[MoufTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+MoufTurnIn]
 i
 7
 TABLE
@@ -27233,7 +27485,7 @@ n
 s
 e
 s
-cleargvar[DoorOpenMouf]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorOpenMouf]
 i
 7
 TABLE
@@ -27246,7 +27498,7 @@ n
 s
 e
 s
-cleargvar[DoorOpenSecDoor]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorOpenSecDoor]
 i
 7
 TABLE
@@ -27259,7 +27511,7 @@ n
 s
 e
 s
-cleargvar[NexusAethTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+NexusAethTurnIn]
 i
 7
 TABLE
@@ -27272,7 +27524,7 @@ n
 s
 e
 s
-cleargvar[NexusTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+NexusTurnIn]
 i
 7
 TABLE
@@ -27285,7 +27537,7 @@ n
 s
 e
 s
-cleargvar[SaveKarulFlag]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+SaveKarulFlag]
 i
 7
 TABLE
@@ -27298,7 +27550,7 @@ n
 s
 e
 s
-cleargvar[SaveKarulTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+SaveKarulTurnIn]
 i
 7
 TABLE
@@ -27311,7 +27563,7 @@ n
 s
 e
 s
-cleargvar[SBGFlag]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+SBGFlag]
 i
 7
 TABLE
@@ -27324,7 +27576,7 @@ n
 s
 e
 s
-cleargvar[SBGTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+SBGTurnIn]
 i
 7
 TABLE
@@ -27337,7 +27589,7 @@ n
 s
 e
 s
-cleargvar[ChiefTalkFlag]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ChiefTalkFlag]
 i
 7
 TABLE
@@ -27350,7 +27602,7 @@ n
 s
 e
 s
-cleargvar[WinterbornTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+WinterbornTurnIn]
 i
 7
 TABLE
@@ -27363,7 +27615,7 @@ n
 s
 e
 s
-cleargvar[WinterbornFlag]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+WinterbornFlag]
 i
 7
 TABLE
@@ -27376,7 +27628,7 @@ n
 s
 e
 s
-cleargvar[getcharstringprop[1]]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]
 i
 7
 TABLE
@@ -27389,7 +27641,7 @@ n
 s
 e
 s
-cleargvar[LostLoreNoteOne]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLoreNoteOne]
 i
 7
 TABLE
@@ -27402,7 +27654,7 @@ n
 s
 e
 s
-cleargvar[LostLoreNoteTwo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLoreNoteOneDone]
 i
 7
 TABLE
@@ -27415,7 +27667,7 @@ n
 s
 e
 s
-cleargvar[BuffingSynced]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLoreNoteTwo]
 i
 7
 TABLE
@@ -27428,7 +27680,7 @@ n
 s
 e
 s
-cleargvar[DoorOpenUGK]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLoreNoteTwoDone]
 i
 7
 TABLE
@@ -27441,7 +27693,7 @@ n
 s
 e
 s
-cleargvar[UGKFlag]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+BuffingSynced]
 i
 7
 TABLE
@@ -27454,7 +27706,7 @@ n
 s
 e
 s
-cleargvar[UGKTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorOpenUGK]
 i
 7
 TABLE
@@ -27467,7 +27719,7 @@ n
 s
 e
 s
-cleargvar[DepotTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+UGKFlag]
 i
 7
 TABLE
@@ -27480,7 +27732,7 @@ n
 s
 e
 s
-cleargvar[VRTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+UGKTurnIn]
 i
 7
 TABLE
@@ -27493,7 +27745,7 @@ n
 s
 e
 s
-cleargvar[RTLFlag]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DepotTurnIn]
 i
 7
 TABLE
@@ -27506,7 +27758,7 @@ n
 s
 e
 s
-cleargvar[RTLTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+VRTurnIn]
 i
 7
 TABLE
@@ -27519,7 +27771,7 @@ n
 s
 e
 s
-cleargvar[HaltDericostTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+RTLFlag]
 i
 7
 TABLE
@@ -27532,7 +27784,7 @@ n
 s
 e
 s
-cleargvar[HaltDericostFlag]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+RTLTurnIn]
 i
 7
 TABLE
@@ -27545,7 +27797,7 @@ n
 s
 e
 s
-cleargvar[Middle]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+HaltDericostTurnIn]
 i
 7
 TABLE
@@ -27558,7 +27810,7 @@ n
 s
 e
 s
-cleargvar[InsideDungeon]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+HaltDericostFlag]
 i
 7
 TABLE
@@ -27571,7 +27823,7 @@ n
 s
 e
 s
-cleargvar[LugianAssaultTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Middle]
 i
 7
 TABLE
@@ -27584,7 +27836,7 @@ n
 s
 e
 s
-cleargvar[LugianAssaultFlag]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+InsideDungeon]
 i
 7
 TABLE
@@ -27597,7 +27849,7 @@ n
 s
 e
 s
-cleargvar[PTCTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LugianAssaultTurnIn]
 i
 7
 TABLE
@@ -27610,7 +27862,7 @@ n
 s
 e
 s
-cleargvar[DoorOpenPTC]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LugianAssaultFlag]
 i
 7
 TABLE
@@ -27623,7 +27875,7 @@ n
 s
 e
 s
-cleargvar[DonovanTurnInDone]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+PTCTurnIn]
 i
 7
 TABLE
@@ -27636,7 +27888,7 @@ n
 s
 e
 s
-cleargvar[FellowTwoGo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorOpenPTC]
 i
 7
 TABLE
@@ -27649,7 +27901,7 @@ n
 s
 e
 s
-cleargvar[FellowThreeGo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DonovanTurnInDone]
 i
 7
 TABLE
@@ -27662,7 +27914,7 @@ n
 s
 e
 s
-cleargvar[FellowFourGo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowTwoGo]
 i
 7
 TABLE
@@ -27675,7 +27927,7 @@ n
 s
 e
 s
-cleargvar[FellowFiveGo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowThreeGo]
 i
 7
 TABLE
@@ -27688,7 +27940,7 @@ n
 s
 e
 s
-cleargvar[FellowSixGo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowFourGo]
 i
 7
 TABLE
@@ -27701,7 +27953,7 @@ n
 s
 e
 s
-cleargvar[FellowSevenGo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowFiveGo]
 i
 7
 TABLE
@@ -27714,7 +27966,7 @@ n
 s
 e
 s
-cleargvar[FellowEightGo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowSixGo]
 i
 7
 TABLE
@@ -27727,7 +27979,7 @@ n
 s
 e
 s
-cleargvar[FellowNineGo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowSevenGo]
 i
 7
 TABLE
@@ -27740,7 +27992,7 @@ n
 s
 e
 s
-cleargvar[QuestCompleted]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowEightGo]
 i
 7
 TABLE
@@ -27753,7 +28005,7 @@ n
 s
 e
 s
-cleargvar[LiberationOfUzizTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowNineGo]
 i
 7
 TABLE
@@ -27766,7 +28018,7 @@ n
 s
 e
 s
-cleargvar[EoDAbort]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestCompleted]
 i
 7
 TABLE
@@ -27779,7 +28031,7 @@ n
 s
 e
 s
-cleargvar[PortalStuck]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizTurnIn]
 i
 7
 TABLE
@@ -27792,7 +28044,33 @@ n
 s
 e
 s
-cleargvar[EODTurnIn]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]
+i
+7
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+PortalStuck]
+i
+7
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+EODTurnIn]
 s
 DefaultTwo
 i
@@ -27848,7 +28126,7 @@ n
 s
 e
 s
-cleargvar[Zstuck]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]
 i
 1
 s
@@ -27950,7 +28228,7 @@ n
 s
 e
 s
-cleargvar[Zstuck]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]
 i
 7
 TABLE
@@ -28030,7 +28308,7 @@ n
 s
 e
 s
-setgvar[HealingKits,getgvar[HealingKits]+1]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+HealingKits,getgvar[getworldname[]+getpvar[GroupIdentifier]+HealingKits]+1]
 s
 DefaultTwo
 i
@@ -28212,7 +28490,7 @@ n
 s
 e
 s
-cleargvar[Zstuck]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]
 i
 2
 s
@@ -28311,7 +28589,7 @@ n
 s
 e
 s
-cleargvar[QuestCheckPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestCheckPublic]
 i
 7
 TABLE
@@ -28324,7 +28602,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinaleGo]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]
 i
 7
 TABLE
@@ -28337,7 +28615,7 @@ n
 s
 e
 s
-cleargvar[LumTokensPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LumTokensPublic]
 i
 7
 TABLE
@@ -28350,7 +28628,7 @@ n
 s
 e
 s
-cleargvar[IQSQPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+IQSQPublic]
 i
 7
 TABLE
@@ -28363,7 +28641,7 @@ n
 s
 e
 s
-cleargvar[MoufPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+MoufPublic]
 i
 7
 TABLE
@@ -28376,7 +28654,7 @@ n
 s
 e
 s
-cleargvar[UnleashTheGearknightPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+UnleashTheGearknightPublic]
 i
 7
 TABLE
@@ -28389,7 +28667,7 @@ n
 s
 e
 s
-cleargvar[ProdigalBanderlingPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ProdigalBanderlingPublic]
 i
 7
 TABLE
@@ -28402,7 +28680,7 @@ n
 s
 e
 s
-cleargvar[LostLorePublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LostLorePublic]
 i
 7
 TABLE
@@ -28415,7 +28693,7 @@ n
 s
 e
 s
-cleargvar[FalatacotDepotPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+FalatacotDepotPublic]
 i
 7
 TABLE
@@ -28428,7 +28706,7 @@ n
 s
 e
 s
-cleargvar[ProdigalTuskerPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ProdigalTuskerPublic]
 i
 7
 TABLE
@@ -28441,7 +28719,7 @@ n
 s
 e
 s
-cleargvar[SplittingGraelPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+SplittingGraelPublic]
 i
 7
 TABLE
@@ -28454,7 +28732,7 @@ n
 s
 e
 s
-cleargvar[VirindiRescuePublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+VirindiRescuePublic]
 i
 7
 TABLE
@@ -28467,7 +28745,7 @@ n
 s
 e
 s
-cleargvar[NexusCrawlPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+NexusCrawlPublic]
 i
 7
 TABLE
@@ -28480,7 +28758,7 @@ n
 s
 e
 s
-cleargvar[DeathsAllurePublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllurePublic]
 i
 7
 TABLE
@@ -28493,7 +28771,7 @@ n
 s
 e
 s
-cleargvar[DreamReaverPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DreamReaverPublic]
 i
 7
 TABLE
@@ -28506,7 +28784,7 @@ n
 s
 e
 s
-cleargvar[ApostateFinalePublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinalePublic]
 i
 7
 TABLE
@@ -28519,7 +28797,7 @@ n
 s
 e
 s
-cleargvar[PurgingTheCorruptionPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+PurgingTheCorruptionPublic]
 i
 7
 TABLE
@@ -28532,7 +28810,7 @@ n
 s
 e
 s
-cleargvar[GearXbowPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+GearXbowPublic]
 i
 7
 TABLE
@@ -28545,7 +28823,7 @@ n
 s
 e
 s
-cleargvar[DeewainsPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeewainsPublic]
 i
 7
 TABLE
@@ -28558,7 +28836,7 @@ n
 s
 e
 s
-cleargvar[LugianAssaultPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LugianAssaultPublic]
 i
 7
 TABLE
@@ -28571,7 +28849,7 @@ n
 s
 e
 s
-cleargvar[ReleasingTheLightPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+ReleasingTheLightPublic]
 i
 7
 TABLE
@@ -28584,7 +28862,7 @@ n
 s
 e
 s
-cleargvar[SaveKarulPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+SaveKarulPublic]
 i
 7
 TABLE
@@ -28597,7 +28875,7 @@ n
 s
 e
 s
-cleargvar[BSIPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+BSIPublic]
 i
 7
 TABLE
@@ -28610,7 +28888,7 @@ n
 s
 e
 s
-cleargvar[HaltDericostPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+HaltDericostPublic]
 i
 7
 TABLE
@@ -28623,7 +28901,7 @@ n
 s
 e
 s
-cleargvar[GeraineStudyPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+GeraineStudyPublic]
 i
 7
 TABLE
@@ -28636,7 +28914,7 @@ n
 s
 e
 s
-cleargvar[LiberationOfUzizPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUzizPublic]
 i
 7
 TABLE
@@ -28649,7 +28927,7 @@ n
 s
 e
 s
-cleargvar[CountPhainorPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorPublic]
 i
 7
 TABLE
@@ -28662,7 +28940,7 @@ n
 s
 e
 s
-cleargvar[SerpentBurialGroundsPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+SerpentBurialGroundsPublic]
 i
 7
 TABLE
@@ -28675,7 +28953,7 @@ n
 s
 e
 s
-cleargvar[EndOfDaysPublic]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+EndOfDaysPublic]
 s
 Finished
 i
@@ -28701,7 +28979,7 @@ n
 s
 e
 s
-testgvar[GKRecall]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall]
 i
 26
 TABLE
@@ -28714,7 +28992,7 @@ n
 s
 e
 s
-listcount[getgvar[GKRecall]]==getpvar[FellowCount]
+listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall]]==getpvar[FellowCount]
 TABLE
 2
 k
@@ -28725,7 +29003,7 @@ n
 s
 e
 s
-setgvar[ApostateFinaleGo,1]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo,1]
 s
 KeyCheck
 i
@@ -28751,7 +29029,7 @@ n
 s
 e
 s
-testgvar[MeleeGroup]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]
 i
 26
 TABLE
@@ -28764,7 +29042,7 @@ n
 s
 e
 s
-listcount[getgvar[MeleeGroup]]==getpvar[FellowCount]
+listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]]==getpvar[FellowCount]
 TABLE
 2
 k
@@ -28775,7 +29053,7 @@ n
 s
 e
 s
-setgvar[MeleeGroupCheck,1]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck,1]
 s
 KeyCheck
 i
@@ -29488,9 +29766,18 @@ n
 n
 2
 i
+8
+TABLE
 2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /vt meta load QuestCheckPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load QuestCheckPublic
 i
 7
 TABLE
@@ -29678,7 +29965,7 @@ n
 s
 e
 s
-testgvar[ApostateFinaleGo]==0
+testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==0
 i
 26
 TABLE
@@ -29704,7 +29991,7 @@ n
 s
 e
 s
-listcontains[getgvar[GKRecall],getcharstringprop[1]]==0
+listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]==0
 TABLE
 2
 K
@@ -29724,7 +30011,7 @@ n
 s
 e
 s
-listadd[getgvar[GKRecall],getcharstringprop[1]]
+listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]
 s
 Quests
 i
@@ -29752,7 +30039,7 @@ n
 s
 e
 s
-cleargvar[MeetUp]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]
 i
 2
 s
@@ -29872,23 +30159,50 @@ n
 s
 e
 s
-cleargvar[MeetUp]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]
 i
 2
 s
 /f Going to Spend Lum
 i
+8
+TABLE
 2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /ub mexec setpvar[ReturnProfile,QuestCheckPublic]
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[ReturnProfile,QuestCheckPublic]
 i
+8
+TABLE
 2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /ub mexec setpvar[StateName,KeyCheck]
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[StateName,KeyCheck]
 i
+8
+TABLE
 2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /ub delay 250 /vt meta load LumTokensPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub delay 250 /vt meta load LumTokensPublic
 s
 Quests
 i
@@ -30042,7 +30356,7 @@ n
 s
 e
 s
-getgvar[QuestUnleashTheGearknight]==getpvar[FellowCount]
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestUnleashTheGearknight]==getpvar[FellowCount]
 i
 26
 TABLE
@@ -30464,7 +30778,7 @@ n
 s
 e
 s
-getgvar[QuestNexus]==getpvar[FellowCount]
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestNexus]==getpvar[FellowCount]
 i
 26
 TABLE
@@ -30807,7 +31121,7 @@ n
 s
 e
 s
-getgvar[QuestReleasingTheLight]==getpvar[FellowCount]
+getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]==getpvar[FellowCount]
 i
 26
 TABLE
@@ -31355,7 +31669,7 @@ n
 s
 e
 s
-getqueststatus[mowenwait]==1&&getgvar[HealingKits]<4
+getqueststatus[mowenwait]==1&&getgvar[getworldname[]+getpvar[GroupIdentifier]+HealingKits]<4
 i
 26
 TABLE
@@ -31390,7 +31704,7 @@ n
 s
 e
 s
-getgvar[EoDAbort]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==1
 i
 2
 TABLE
@@ -31502,27 +31816,63 @@ n
 s
 e
 s
-cleargvar[MeetUp]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]
 i
 2
 s
 /f Going to Spend Lum
 i
+8
+TABLE
 2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /ub mexec setpvar[ReturnProfile,QuestCheckPublic]
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[ReturnProfile,QuestCheckPublic]
 i
+8
+TABLE
 2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /ub mexec setpvar[StateName,KeyCheck]
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[StateName,KeyCheck]
 i
+8
+TABLE
 2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /ub mexec setpvar[Finished,1]
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[Finished,1]
 i
+8
+TABLE
 2
+k
+v
+n
+n
+1
 s
-/ub bct DailyLoop /ub delay 250 /vt meta load LumTokensPublic
+e
+s
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub delay 250 /vt meta load LumTokensPublic
 s
 Quests
 i
@@ -31917,7 +32267,7 @@ n
 s
 e
 s
-cleargvar[MeetUp]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]
 i
 7
 TABLE
@@ -32440,7 +32790,7 @@ n
 s
 e
 s
-cleargvar[MeetUp]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]
 i
 7
 TABLE
@@ -32520,7 +32870,7 @@ n
 s
 e
 s
-cleargvar[MeetUp]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]
 i
 7
 TABLE
@@ -32962,7 +33312,7 @@ n
 s
 e
 s
-cleargvar[Checking]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Checking]
 i
 7
 TABLE

@@ -59,7 +59,7 @@ n
 s
 e
 s
-setgvar[Quest,Mouf]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,Mouf]
 s
 CheckQuests
 i
@@ -76,7 +76,7 @@ n
 s
 e
 s
-getgvar[Quest]==Mouf
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==Mouf
 s
 /f Mouf
 s
@@ -141,7 +141,7 @@ n
 s
 e
 s
-setgvar[Quest,DR]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,DR]
 s
 CheckQuests
 i
@@ -158,7 +158,7 @@ n
 s
 e
 s
-getgvar[Quest]==DR
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==DR
 s
 /f DreamReaver
 s
@@ -210,7 +210,7 @@ n
 s
 e
 s
-setgvar[Quest,UnleashTheGearknight]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,UnleashTheGearknight]
 s
 CheckQuests
 i
@@ -227,7 +227,7 @@ n
 s
 e
 s
-getgvar[Quest]==UnleashTheGearknight
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==UnleashTheGearknight
 s
 /f UnleashTheGearknight
 s
@@ -279,7 +279,7 @@ n
 s
 e
 s
-setgvar[Quest,ProdigalBanderling]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,ProdigalBanderling]
 s
 CheckQuests
 i
@@ -296,7 +296,7 @@ n
 s
 e
 s
-getgvar[Quest]==ProdigalBanderling
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==ProdigalBanderling
 s
 /f ProdigalBanderling
 s
@@ -348,7 +348,7 @@ n
 s
 e
 s
-setgvar[Quest,LostLore]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,LostLore]
 s
 CheckQuests
 i
@@ -365,7 +365,7 @@ n
 s
 e
 s
-getgvar[Quest]==LostLore
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==LostLore
 s
 /f LostLore
 s
@@ -417,7 +417,7 @@ n
 s
 e
 s
-setgvar[Quest,FalatacotDepot]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,FalatacotDepot]
 s
 CheckQuests
 i
@@ -434,7 +434,7 @@ n
 s
 e
 s
-getgvar[Quest]==FalatacotDepot
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==FalatacotDepot
 s
 /f FalatacotDepot
 s
@@ -486,7 +486,7 @@ n
 s
 e
 s
-setgvar[Quest,ProdigalTusker]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,ProdigalTusker]
 s
 CheckQuests
 i
@@ -503,7 +503,7 @@ n
 s
 e
 s
-getgvar[Quest]==ProdigalTusker
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==ProdigalTusker
 s
 /f ProdigalTusker
 s
@@ -555,7 +555,7 @@ n
 s
 e
 s
-setgvar[Quest,IQSQ]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,IQSQ]
 s
 CheckQuests
 i
@@ -572,7 +572,7 @@ n
 s
 e
 s
-getgvar[Quest]==IQSQ
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==IQSQ
 s
 /f IQSQ
 s
@@ -624,7 +624,7 @@ n
 s
 e
 s
-setgvar[Quest,Grael]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,Grael]
 s
 CheckQuests
 i
@@ -641,7 +641,7 @@ n
 s
 e
 s
-getgvar[Quest]==Grael
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==Grael
 s
 /f SplittingGrael
 s
@@ -693,7 +693,7 @@ n
 s
 e
 s
-setgvar[Quest,VR]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,VR]
 s
 CheckQuests
 i
@@ -710,7 +710,7 @@ n
 s
 e
 s
-getgvar[Quest]==VR
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==VR
 s
 /f VirindiRescue
 s
@@ -762,7 +762,7 @@ n
 s
 e
 s
-setgvar[Quest,Nexus]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,Nexus]
 s
 CheckQuests
 i
@@ -779,7 +779,7 @@ n
 s
 e
 s
-getgvar[Quest]==Nexus
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==Nexus
 s
 /f NexusCrawl
 s
@@ -831,7 +831,7 @@ n
 s
 e
 s
-setgvar[Quest,Hermit]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,Hermit]
 s
 CheckQuests
 i
@@ -848,7 +848,7 @@ n
 s
 e
 s
-getgvar[Quest]==Hermit
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==Hermit
 s
 /f DeathsAllure
 s
@@ -900,7 +900,7 @@ n
 s
 e
 s
-setgvar[Quest,DR]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,DR]
 s
 CheckQuests
 i
@@ -917,7 +917,7 @@ n
 s
 e
 s
-getgvar[Quest]==DR
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==DR
 s
 /f DreamReaver
 s
@@ -969,7 +969,7 @@ n
 s
 e
 s
-setgvar[Quest,AF]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,AF]
 s
 CheckQuests
 i
@@ -986,7 +986,7 @@ n
 s
 e
 s
-getgvar[Quest]==AF
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==AF
 s
 /f ApostateFinale
 s
@@ -1038,7 +1038,7 @@ n
 s
 e
 s
-setgvar[Quest,Purge]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,Purge]
 s
 CheckQuests
 i
@@ -1055,7 +1055,7 @@ n
 s
 e
 s
-getgvar[Quest]==Purge
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==Purge
 s
 /f PurgingTheCorruption
 s
@@ -1107,7 +1107,7 @@ n
 s
 e
 s
-setgvar[Quest,GX]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,GX]
 s
 CheckQuests
 i
@@ -1124,7 +1124,7 @@ n
 s
 e
 s
-getgvar[Quest]==GX
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==GX
 s
 /f GearXbow
 s
@@ -1176,7 +1176,7 @@ n
 s
 e
 s
-setgvar[Quest,Dee]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,Dee]
 s
 CheckQuests
 i
@@ -1193,7 +1193,7 @@ n
 s
 e
 s
-getgvar[Quest]==Dee
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==Dee
 s
 /f Deewains
 s
@@ -1245,7 +1245,7 @@ n
 s
 e
 s
-setgvar[Quest,LugianAssault]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,LugianAssault]
 s
 CheckQuests
 i
@@ -1262,7 +1262,7 @@ n
 s
 e
 s
-getgvar[Quest]==LugianAssault
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==LugianAssault
 s
 /f LugianAssault
 s
@@ -1314,7 +1314,7 @@ n
 s
 e
 s
-setgvar[Quest,ReleasingTheLight]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,ReleasingTheLight]
 s
 CheckQuests
 i
@@ -1331,7 +1331,7 @@ n
 s
 e
 s
-getgvar[Quest]==ReleasingTheLight
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==ReleasingTheLight
 s
 /f ReleasingTheLight
 s
@@ -1383,7 +1383,7 @@ n
 s
 e
 s
-setgvar[Quest,SaveKarul]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,SaveKarul]
 s
 CheckQuests
 i
@@ -1400,7 +1400,7 @@ n
 s
 e
 s
-getgvar[Quest]==SaveKarul
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==SaveKarul
 s
 /f SaveKarul
 s
@@ -1452,7 +1452,7 @@ n
 s
 e
 s
-setgvar[Quest,BSI]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,BSI]
 s
 CheckQuests
 i
@@ -1469,7 +1469,7 @@ n
 s
 e
 s
-getgvar[Quest]==BSI
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==BSI
 s
 /f BSI
 s
@@ -1534,7 +1534,7 @@ n
 s
 e
 s
-setgvar[Quest,HaltDericost]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,HaltDericost]
 s
 CheckQuests
 i
@@ -1551,7 +1551,7 @@ n
 s
 e
 s
-getgvar[Quest]==HaltDericost
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==HaltDericost
 s
 /f HaltDericost
 s
@@ -1603,7 +1603,7 @@ n
 s
 e
 s
-setgvar[Quest,GeraineStudy]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,GeraineStudy]
 s
 CheckQuests
 i
@@ -1620,7 +1620,7 @@ n
 s
 e
 s
-getgvar[Quest]==GeraineStudy
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==GeraineStudy
 s
 /f GeraineStudy
 s
@@ -1672,7 +1672,7 @@ n
 s
 e
 s
-setgvar[Quest,LU]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,LU]
 s
 CheckQuests
 i
@@ -1689,7 +1689,7 @@ n
 s
 e
 s
-getgvar[Quest]==LU
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==LU
 s
 /f LiberationOfUziz
 s
@@ -1741,7 +1741,7 @@ n
 s
 e
 s
-setgvar[Quest,CP]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,CP]
 s
 CheckQuests
 i
@@ -1758,7 +1758,7 @@ n
 s
 e
 s
-getgvar[Quest]==CP
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==CP
 s
 /f CountPhainor
 s
@@ -1810,7 +1810,7 @@ n
 s
 e
 s
-setgvar[Quest,SBG]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,SBG]
 s
 CheckQuests
 i
@@ -1827,7 +1827,7 @@ n
 s
 e
 s
-getgvar[Quest]==SBG
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==SBG
 s
 /f SerpentBurialGrounds
 s
@@ -1879,7 +1879,7 @@ n
 s
 e
 s
-setgvar[Quest,EOD]
+setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,EOD]
 s
 CheckQuests
 i
@@ -1905,7 +1905,7 @@ n
 s
 e
 s
-getgvar[EoDAbort]==0
+getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==0
 i
 26
 TABLE
@@ -1918,7 +1918,7 @@ n
 s
 e
 s
-getgvar[Quest]==EOD
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==EOD
 s
 /f EndOfDays
 s
@@ -2046,7 +2046,7 @@ n
 s
 e
 s
-getqueststatus[mowenwait]==1&&getgvar[HealingKits]<4
+getqueststatus[mowenwait]==1&&getgvar[getworldname[]+getpvar[GroupIdentifier]+HealingKits]<4
 i
 26
 TABLE
@@ -2081,7 +2081,7 @@ n
 s
 e
 s
-getgvar[EoDAbort]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==1
 i
 26
 TABLE
@@ -2674,7 +2674,7 @@ n
 s
 e
 s
-cleargvar[Keys]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Keys]
 i
 7
 TABLE
@@ -2687,7 +2687,7 @@ n
 s
 e
 s
-cleargvar[Looting]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Looting]
 i
 7
 TABLE
@@ -2700,7 +2700,7 @@ n
 s
 e
 s
-cleargvar[QuestComplete]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]
 i
 7
 TABLE
@@ -2713,7 +2713,7 @@ n
 s
 e
 s
-cleargvar[LootFail]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]
 i
 7
 TABLE
@@ -2726,7 +2726,7 @@ n
 s
 e
 s
-cleargvar[Quest]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Quest]
 i
 7
 TABLE
@@ -2739,7 +2739,7 @@ n
 s
 e
 s
-cleargvar[Solved]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Solved]
 i
 7
 TABLE
@@ -2752,7 +2752,7 @@ n
 s
 e
 s
-cleargvar[More]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+More]
 i
 7
 TABLE
@@ -2765,7 +2765,7 @@ n
 s
 e
 s
-cleargvar[East]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+East]
 i
 7
 TABLE
@@ -2778,7 +2778,7 @@ n
 s
 e
 s
-cleargvar[West]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+West]
 i
 7
 TABLE
@@ -2791,7 +2791,7 @@ n
 s
 e
 s
-cleargvar[AllDone]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+AllDone]
 i
 7
 TABLE
@@ -2804,7 +2804,7 @@ n
 s
 e
 s
-cleargvar[Step]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Step]
 i
 7
 TABLE
@@ -2817,7 +2817,7 @@ n
 s
 e
 s
-cleargvar[MulingMore]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+MulingMore]
 i
 7
 TABLE
@@ -2830,7 +2830,7 @@ n
 s
 e
 s
-cleargvar[MeetUp]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]
 s
 Default
 i
@@ -3289,7 +3289,7 @@ n
 s
 e
 s
-cleargvar[Checking]
+cleargvar[getworldname[]+getpvar[GroupIdentifier]+Checking]
 i
 7
 TABLE
