@@ -47,12 +47,14 @@ STATE: {SkipQuest} ~~{
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDR,1]" /></control></view>}
 	IF: Always
 		DO: DoAll
-				DoExpr {setpvar[DoQuestDR,0]}
 				DoExpr {setpvar[DoDR,0]}
+				DoExpr {setpvar[DoQuestDR,0]}
+				DoExpr {clearpvar[Death+getpvar[Profile]]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
 	IF:	All
 			Expr {getpvar[DoDR]==0}
 			Expr {getpvar[DoQuestDR]==0}
+			Expr {getpvar[Death+getpvar[Profile]]==0}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,RynDQLQuestCheck]}
@@ -113,6 +115,7 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {clearvar[CombatStuck]}
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[StateName,ToKhay]}
+				DoExpr {ifthen[getpvar[Leader]==1,`setpvar[Death+getpvar[Profile],getpvar[Death+getpvar[Profile]]+1]&&setpvar[StateName,getpvar[StateName]]`,`setpvar[StateName,getpvar[StateName]]`]}
 				DoExpr {setpvar[CheckSync,Death]}
 				Chat {/vt meta load RynDQLCheck}
 	IF:	Always

@@ -582,9 +582,11 @@ STATE: {SkipQuest} ~~{
 	IF: Always
 		DO: DoAll
 				DoExpr {setpvar[DoQuestHermit,0]}
+				DoExpr {clearpvar[Death+getpvar[Profile]]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
 	IF:	All
 			Expr {getpvar[DoQuestHermit]==0}
+			Expr {getpvar[Death+getpvar[Profile]]==0}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,RynDQLQuestCheck]}
@@ -646,6 +648,7 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {clearvar[CombatStuck]}
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[StateName,DeathRoute]}
+				DoExpr {ifthen[getpvar[Leader]==1,`setpvar[Death+getpvar[Profile],getpvar[Death+getpvar[Profile]]+1]&&setpvar[StateName,getpvar[StateName]]`,`setpvar[StateName,getpvar[StateName]]`]}
 				DoExpr {setpvar[CheckSync,Death]}
 				Chat {/vt meta load RynDQLCheck}
 ~~ }

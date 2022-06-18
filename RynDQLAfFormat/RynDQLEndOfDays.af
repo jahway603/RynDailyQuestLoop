@@ -100,9 +100,11 @@ STATE: {SkipQuest} ~~{
 	IF: Always
 		DO: DoAll
 				DoExpr {setpvar[DoQuestEOD,0]}
+				DoExpr {clearpvar[Death+getpvar[Profile]]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
 	IF:	All
 			Expr {getpvar[DoQuestEOD]==0}
+			Expr {getpvar[Death+getpvar[Profile]]==0}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,RynDQLQuestCheck]}
@@ -187,6 +189,7 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {clearvar[CombatStuck]}
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[StateName,ToDungeon]}
+				DoExpr {ifthen[getpvar[Leader]==1,`setpvar[Death+getpvar[Profile],getpvar[Death+getpvar[Profile]]+1]&&setpvar[StateName,getpvar[StateName]]`,`setpvar[StateName,getpvar[StateName]]`]}
 				DoExpr {setpvar[CheckSync,Death]}
 				Chat {/vt meta load RynDQLCheck} ~~ Death
 ~~ }
@@ -380,7 +383,7 @@ STATE: {Dungeon} ~~ {
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
-			NoMobsInDist 15
+			Not MobsInDist_Name 1 15 {}
 			Expr {getvar[Safe]==1}
 			Expr {testvar[PortalTimer]}
 			Expr {stopwatchelapsedseconds[getvar[PortalTimer]]>=15}
@@ -418,7 +421,7 @@ STATE: {Dungeon} ~~ {
 				CellE 595202A4
 				CellE 595202CA
 				CellE 59520281
-			NoMobsInDist 15
+			Not MobsInDist_Name 1 15 {}
 			NavEmpty
 			Expr {getvar[Safe]==0}
 			Expr {getobjectinternaltype[wobjectfindnearestbyobjectclass[14]]==7}
@@ -426,7 +429,7 @@ STATE: {Dungeon} ~~ {
 		DO:	CallState {PortalCheck} {Dungeon}
 	IF:	All
 			Expr {getvar[CombatToggle]==1}
-			Not NoMobsInDist 15
+			MobsInDist_Name 1 15 {}
 			Any
 				CellE 5952024C
 				CellE 595202A4
@@ -438,7 +441,7 @@ STATE: {Dungeon} ~~ {
 				DoExpr {clearvar[PortalTimer]}
 				SetOpt {EnableCombat} {True}
 	IF:	All
-			NoMobsInDist 15
+			Not MobsInDist_Name 1 15 {}
 			Expr {getvar[Safe]==0}
 			Expr {getvar[Room]==0}
 			CellE 59520258
@@ -461,7 +464,7 @@ STATE: {Dungeon} ~~ {
 			Expr {getvar[Safe]==1}
 			Expr {getvar[Room]==1}
 			CellE 5952024C
-			NoMobsInDist 15
+			Not MobsInDist_Name 1 15 {}
 		DO:	DoAll
 				DoExpr {setvar[CombatToggle,1]}
 				SetOpt {EnableCombat} {False}
@@ -481,7 +484,7 @@ STATE: {Dungeon} ~~ {
 			Expr {getvar[Safe]==1}
 			Expr {getvar[Room]==2}
 			CellE 595202A4
-			NoMobsInDist 15
+			Not MobsInDist_Name 1 15 {}
 		DO:	DoAll
 				DoExpr {setvar[CombatToggle,1]}
 				SetOpt {EnableCombat} {False}
@@ -501,7 +504,7 @@ STATE: {Dungeon} ~~ {
 			Expr {getvar[Safe]==1}
 			Expr {getvar[Room]==3} ~~ May Need Checkpoint partway through
 			CellE 595202CA
-			NoMobsInDist 15
+			Not MobsInDist_Name 1 15 {}
 		DO:	DoAll
 				DoExpr {setvar[CombatToggle,1]}
 				SetOpt {EnableCombat} {False}
@@ -521,7 +524,7 @@ STATE: {Dungeon} ~~ {
 			Expr {getvar[Safe]==1}
 			Expr {getvar[Room]==4}
 			CellE 59520281
-			NoMobsInDist 15
+			Not MobsInDist_Name 1 15 {}
 		DO:	DoAll
 				DoExpr {setvar[CombatToggle,1]}
 				SetOpt {EnableCombat} {False}
@@ -540,7 +543,7 @@ STATE: {Dungeon} ~~ {
 	IF:	All
 			CellE 59520204
 			Expr {getvar[Room]==5}
-			NoMobsInDist 15
+			Not MobsInDist_Name 1 15 {}
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbyobjectclass[14]]}
 	IF:	All
 			CellE 59520204
@@ -1216,7 +1219,7 @@ STATE: {ToDungeon} ~~ {
 				DoExpr {setpvar[CheckSync,ToDungeonPitStopOne]}
 				Chat {/vt meta load RynDQLCheck} ~~ ToDungeonPitStopOne
 	IF:	All
-			NoMobsInDist 15
+			Not MobsInDist_Name 1 15 {}
 			Expr {getvar[PitStop]==1}
 			CellE 2F340008
 		DO:	DoAll
@@ -1234,7 +1237,7 @@ STATE: {ToDungeon} ~~ {
 				DoExpr {setpvar[CheckSync,ToDungeonPitStopTwo]}
 				Chat {/vt meta load RynDQLCheck} ~~ ToDungeonPitStopTwo
 	IF:	All
-			NoMobsInDist 15
+			Not MobsInDist_Name 1 15 {}
 			Expr {getvar[PitStop]==2}
 			CellE 2C320022
 		DO:	DoAll
