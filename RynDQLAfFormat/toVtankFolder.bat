@@ -17,7 +17,7 @@ REM Simply rename them to .nav afterward. (Or create a separate batch file to ha
 REM .af-to-.nav-specific conversions.)
 
 REM ==== CHANGE THESE DIRECTORIES TO WHATEVER YOU WANT THEM TO BE. =================
-set metOutDir=C:\MetaF\RynDailyQuestLoop
+set metOutDir=C:\Games\VirindiPlugins\VirindiTank
 set afOutDir=C:\MetaF\RynDailyQuestLoop\RynDQLAfFormat
 REM ================================================================================
 
