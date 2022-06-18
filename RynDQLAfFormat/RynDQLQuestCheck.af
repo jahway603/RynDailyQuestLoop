@@ -1184,8 +1184,8 @@ STATE: {CheckQuests} ~~ {
 				All
 					Expr {getpvar[DoQuestDR]==1}
 					Expr {getpvar[DoDR]==1}
-					All
-						Any
+					Any
+						All
 							Expr {getqueststatus[btmpickup_0513]==0}
 							Expr {getqueststatus[btmcompleted_0513]==0}
 						All
@@ -1209,56 +1209,61 @@ STATE: {CheckQuests} ~~ {
 				Expr {getpvar[DoQuestReleasingTheLight]==0}
 				All
 					Expr {getpvar[DoQuestReleasingTheLight]==1}
-					All
-						Expr {getqueststatus[blessedcavereachedend]==0}
-						Expr {getqueststatus[blessedcavecompleted_0912]==0}
-					All
-						Not Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]==getpvar[FellowCount]}
-						Expr {getqueststatus[blessedcavereachedend]==1}
-						Expr {getqueststatus[blessedcavecompleted_0912]==1}
+					Any
+						All
+							Expr {getqueststatus[blessedcavereachedend]==0}
+							Expr {getqueststatus[blessedcavecompleted_0912]==0}
+						All
+							Not Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]==getpvar[FellowCount]}
+							Expr {getqueststatus[blessedcavereachedend]==1}
+							Expr {getqueststatus[blessedcavecompleted_0912]==1}
 			Any
 				Expr {getpvar[DoQuestGeraineStudy]==0}
 				All
 					Expr {getpvar[DoQuestGeraineStudy]==1}
-					All
-						Expr {getqueststatus[gerainestudybookpickup]==0}
-						Expr {getqueststatus[geraineslibrarycompleted0312]==0}
-					All
-						Not Expr {getpvar[FellowCount]>=3}
-						Expr {getqueststatus[gerainestudybookpickup]==1}
-						Expr {getqueststatus[geraineslibrarycompleted0312]==1}
+					Any
+						All
+							Expr {getqueststatus[gerainestudybookpickup]==0}
+							Expr {getqueststatus[geraineslibrarycompleted0312]==0}
+						All
+							Not Expr {getpvar[FellowCount]>=3}
+							Expr {getqueststatus[gerainestudybookpickup]==1}
+							Expr {getqueststatus[geraineslibrarycompleted0312]==1}
 			All
 				Expr {testquestflag[haltdericostritualquestflag]==1}
 				Any
 					Expr {getpvar[DoQuestHaltDericost]==0}
 					All
 						Expr {getpvar[DoQuestHaltDericost]==1}
-						All
-							Expr {getqueststatus[sealedtomepickuptimer]==0}
-							Expr {getqueststatus[ritualtimecompleted_0411]==0}
-						All
-							Not Expr {getpvar[FellowCount]>=3}
-							Expr {getqueststatus[ritualtimecompleted_0411]==1}
-							Expr {getqueststatus[sealedtomepickuptimer]==1}
+						Any
+							All
+								Expr {getqueststatus[sealedtomepickuptimer]==0}
+								Expr {getqueststatus[ritualtimecompleted_0411]==0}
+							All
+								Not Expr {getpvar[FellowCount]>=3}
+								Expr {getqueststatus[ritualtimecompleted_0411]==1}
+								Expr {getqueststatus[sealedtomepickuptimer]==1}
 			Any
 				Expr {getpvar[DoQuestSaveKarul]==0}
 				All
 					Expr {getpvar[DoQuestSaveKarul]==1}
-					Expr {getqueststatus[deconstructioncompleted_0213]==0}
-					All
-						Not Expr {getpvar[FellowCount]>=3}
-						Expr {getqueststatus[deconstructioncompleted_0213]==1}
+					Any
+						Expr {getqueststatus[deconstructioncompleted_0213]==0}
+						All
+							Not Expr {getpvar[FellowCount]>=3}
+							Expr {getqueststatus[deconstructioncompleted_0213]==1}
 			Any
 				Expr {getpvar[DoQuestSBG]==0}
 				All
 					Expr {getpvar[DoQuestSBG]==1}
-					All
-						Expr {getqueststatus[serpentburialgroundsbonepickup]==0}
-						Expr {getqueststatus[serpentburialgroundsdone]==0}
-					All
-						Not Expr {getpvar[FellowCount]>=3}
-						Expr {getqueststatus[serpentburialgroundsbonepickup]==1}
-						Expr {getqueststatus[serpentburialgroundsdone]==1}
+					Any
+						All
+							Expr {getqueststatus[serpentburialgroundsbonepickup]==0}
+							Expr {getqueststatus[serpentburialgroundsdone]==0}
+						All
+							Not Expr {getpvar[FellowCount]>=3}
+							Expr {getqueststatus[serpentburialgroundsbonepickup]==1}
+							Expr {getqueststatus[serpentburialgroundsdone]==1}
 			Any
 				Expr {getpvar[DoQuestCP]==0}
 				All
@@ -1266,10 +1271,7 @@ STATE: {CheckQuests} ~~ {
 					Expr {getqueststatus[graverobbercompleted_0213]==0}
 			Any
 				Expr {getpvar[DoQuestRynthidWeapon]==0}
-				All
-					Expr {getpvar[DoQuestRynthidWeapon]==1}
-					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==1}
-					Expr {getpvar[RynthidWeapon]==0}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==1}
 				All
 					Expr {getpvar[DoQuestRynthidWeapon]==1}
 					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==0}
@@ -1277,16 +1279,18 @@ STATE: {CheckQuests} ~~ {
 					Expr {getqueststatus[tormentshardpickup]==0}
 			Any
 				Expr {getpvar[DoQuestEOD]==0}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==1}	
 				All
 					Expr {getpvar[DoQuestEOD]==1}
-					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==1}	
-					All
-						Expr {getqueststatus[crimsonscarabpickup]==0}
-						Expr {getqueststatus[eodcompleted_1013]==0}
-					All
-						Not Expr {getpvar[FellowCount]>=3}
-						Expr {getqueststatus[crimsonscarabpickup]==1}
-						Expr {getqueststatus[eodcompleted_1013]==1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==0}	
+					Any
+						All
+							Expr {getqueststatus[crimsonscarabpickup]==0}
+							Expr {getqueststatus[eodcompleted_1013]==0}
+						All
+							Not Expr {getpvar[FellowCount]>=3}
+							Expr {getqueststatus[crimsonscarabpickup]==1}
+							Expr {getqueststatus[eodcompleted_1013]==1}
 		DO:	DoAll
 				DoExpr {clearpvar[ReturnProfile]}
 				Chat {/f All Quests Complete!}
@@ -1319,15 +1323,13 @@ STATE: {Default} ~~ {
 		DO: DoAll
 				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]}
 				SetState {Default}
-	IF: All
-			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
-			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
+	IF: Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
 		DO: DoAll
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup,listcreate[]]}
 				SetState {Default}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
 			Expr {getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3}
 			Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup],getcharstringprop[1]]==0}
 		DO: DoAll
@@ -1348,13 +1350,13 @@ STATE: {Default} ~~ {
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
 			Expr {getpvar[SyncBuff]==0}
-			SecsInStateGE 1
+			SecsInStateGE 2
 		DO: DoAll
 				Chat {/vt forcebuff}
 				DoExpr {setpvar[SyncBuff,1]}
 				SetState {SyncBuff}
 	IF: All
-			SecsInStateGE 1
+			SecsInStateGE 2
 			Any
 				All
 					Expr {getcharskill_buffed[32]>=391}
@@ -1366,7 +1368,7 @@ STATE: {Default} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+BuffSyncAll,1]}
 				Chat {/vt forcebuff}
 				SetState {SyncBuff}
-	IF: SecsInStateGE 1
+	IF: SecsInStateGE 2
 		DO: SetState {SyncBuff}
 ~~}
 STATE: {SyncBuff} ~~{
@@ -2625,7 +2627,6 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Step]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MulingMore]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+PopkinComplete]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+BabyOneDone]}
@@ -2801,6 +2802,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[IntialCleanUp]}
 				DoExpr {clearpvar[SyncBuff]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RynDQLQuestCheck]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RynDQLLumTokens]}
@@ -3225,8 +3227,8 @@ STATE: {Quests} ~~ {
 				All
 					Expr {getpvar[DoQuestDR]==1}
 					Expr {getpvar[DoDR]==1}
-					All
-						Any
+					Any
+						All
 							Expr {getqueststatus[btmpickup_0513]==0}
 							Expr {getqueststatus[btmcompleted_0513]==0}
 						All
@@ -3250,56 +3252,61 @@ STATE: {Quests} ~~ {
 				Expr {getpvar[DoQuestReleasingTheLight]==0}
 				All
 					Expr {getpvar[DoQuestReleasingTheLight]==1}
-					All
-						Expr {getqueststatus[blessedcavereachedend]==0}
-						Expr {getqueststatus[blessedcavecompleted_0912]==0}
-					All
-						Not Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]==getpvar[FellowCount]}
-						Expr {getqueststatus[blessedcavereachedend]==1}
-						Expr {getqueststatus[blessedcavecompleted_0912]==1}
+					Any
+						All
+							Expr {getqueststatus[blessedcavereachedend]==0}
+							Expr {getqueststatus[blessedcavecompleted_0912]==0}
+						All
+							Not Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestReleasingTheLight]==getpvar[FellowCount]}
+							Expr {getqueststatus[blessedcavereachedend]==1}
+							Expr {getqueststatus[blessedcavecompleted_0912]==1}
 			Any
 				Expr {getpvar[DoQuestGeraineStudy]==0}
 				All
 					Expr {getpvar[DoQuestGeraineStudy]==1}
-					All
-						Expr {getqueststatus[gerainestudybookpickup]==0}
-						Expr {getqueststatus[geraineslibrarycompleted0312]==0}
-					All
-						Not Expr {getpvar[FellowCount]>=3}
-						Expr {getqueststatus[gerainestudybookpickup]==1}
-						Expr {getqueststatus[geraineslibrarycompleted0312]==1}
+					Any
+						All
+							Expr {getqueststatus[gerainestudybookpickup]==0}
+							Expr {getqueststatus[geraineslibrarycompleted0312]==0}
+						All
+							Not Expr {getpvar[FellowCount]>=3}
+							Expr {getqueststatus[gerainestudybookpickup]==1}
+							Expr {getqueststatus[geraineslibrarycompleted0312]==1}
 			All
 				Expr {testquestflag[haltdericostritualquestflag]==1}
 				Any
 					Expr {getpvar[DoQuestHaltDericost]==0}
 					All
 						Expr {getpvar[DoQuestHaltDericost]==1}
-						All
-							Expr {getqueststatus[sealedtomepickuptimer]==0}
-							Expr {getqueststatus[ritualtimecompleted_0411]==0}
-						All
-							Not Expr {getpvar[FellowCount]>=3}
-							Expr {getqueststatus[ritualtimecompleted_0411]==1}
-							Expr {getqueststatus[sealedtomepickuptimer]==1}
+						Any
+							All
+								Expr {getqueststatus[sealedtomepickuptimer]==0}
+								Expr {getqueststatus[ritualtimecompleted_0411]==0}
+							All
+								Not Expr {getpvar[FellowCount]>=3}
+								Expr {getqueststatus[ritualtimecompleted_0411]==1}
+								Expr {getqueststatus[sealedtomepickuptimer]==1}
 			Any
 				Expr {getpvar[DoQuestSaveKarul]==0}
 				All
 					Expr {getpvar[DoQuestSaveKarul]==1}
-					Expr {getqueststatus[deconstructioncompleted_0213]==0}
-					All
-						Not Expr {getpvar[FellowCount]>=3}
-						Expr {getqueststatus[deconstructioncompleted_0213]==1}
+					Any
+						Expr {getqueststatus[deconstructioncompleted_0213]==0}
+						All
+							Not Expr {getpvar[FellowCount]>=3}
+							Expr {getqueststatus[deconstructioncompleted_0213]==1}
 			Any
 				Expr {getpvar[DoQuestSBG]==0}
 				All
 					Expr {getpvar[DoQuestSBG]==1}
-					All
-						Expr {getqueststatus[serpentburialgroundsbonepickup]==0}
-						Expr {getqueststatus[serpentburialgroundsdone]==0}
-					All
-						Not Expr {getpvar[FellowCount]>=3}
-						Expr {getqueststatus[serpentburialgroundsbonepickup]==1}
-						Expr {getqueststatus[serpentburialgroundsdone]==1}
+					Any
+						All
+							Expr {getqueststatus[serpentburialgroundsbonepickup]==0}
+							Expr {getqueststatus[serpentburialgroundsdone]==0}
+						All
+							Not Expr {getpvar[FellowCount]>=3}
+							Expr {getqueststatus[serpentburialgroundsbonepickup]==1}
+							Expr {getqueststatus[serpentburialgroundsdone]==1}
 			Any
 				Expr {getpvar[DoQuestCP]==0}
 				All
@@ -3307,10 +3314,7 @@ STATE: {Quests} ~~ {
 					Expr {getqueststatus[graverobbercompleted_0213]==0}
 			Any
 				Expr {getpvar[DoQuestRynthidWeapon]==0}
-				All
-					Expr {getpvar[DoQuestRynthidWeapon]==1}
-					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==1}
-					Expr {getpvar[RynthidWeapon]==0}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==1}
 				All
 					Expr {getpvar[DoQuestRynthidWeapon]==1}
 					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==0}
@@ -3318,16 +3322,18 @@ STATE: {Quests} ~~ {
 					Expr {getqueststatus[tormentshardpickup]==0}
 			Any
 				Expr {getpvar[DoQuestEOD]==0}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==1}	
 				All
 					Expr {getpvar[DoQuestEOD]==1}
-					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==1}	
-					All
-						Expr {getqueststatus[crimsonscarabpickup]==0}
-						Expr {getqueststatus[eodcompleted_1013]==0}
-					All
-						Not Expr {getpvar[FellowCount]>=3}
-						Expr {getqueststatus[crimsonscarabpickup]==1}
-						Expr {getqueststatus[eodcompleted_1013]==1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==0}	
+					Any
+						All
+							Expr {getqueststatus[crimsonscarabpickup]==0}
+							Expr {getqueststatus[eodcompleted_1013]==0}
+						All
+							Not Expr {getpvar[FellowCount]>=3}
+							Expr {getqueststatus[crimsonscarabpickup]==1}
+							Expr {getqueststatus[eodcompleted_1013]==1}
 		DO:	DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]}
 				Chat {/f Going to Spend Lum}

@@ -544,7 +544,7 @@ STATE: {Dungeon} ~~ {
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbyobjectclass[14]]}
 	IF:	All
 			CellE 59520204
-			Expr {getvar[Room]==15}
+			Expr {getvar[Room]==5}
 			SecsInStateGE 3
 		DO:	SetState {Dungeon}
 	IF:	Any
