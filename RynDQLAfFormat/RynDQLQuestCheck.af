@@ -443,6 +443,37 @@ STATE: {CheckQuests} ~~ {
 		DO:	SetState {SyncStuck}
 	IF: SecsInStateGE 180
 		DO: Chat {/vt meta load RynDQLQuestCheckEcho}
+	IF: All
+			Expr {getpvar[DoQuestGrael]==1}
+			Expr {testquestflag[abyssaltotemgatewayflag]==0}
+		DO: DoAll
+				ChatExpr {\/t +getcharstringprop[1]+`,It appears you are not flagged for Splitting Grael, skipping the quest till tomorrow.`}
+				DoExpr {setpvar[DoQuestGrael,0]}
+	IF: All
+			Expr {getpvar[DoQuestBSI]==1}
+			Expr {testquestflag[oracleportalentry]==0}
+		DO: DoAll
+				ChatExpr {\/t +getcharstringprop[1]+`,It appears you are not flagged for Bloodstone Investigation, skipping the quest till tomorrow.`}
+				DoExpr {setpvar[DoQuestBSI,0]}
+	IF: All
+			Expr {getpvar[DoQuestHaltDericost]==1}
+			Expr {testquestflag[haltdericostritualquestflag]==0}
+		DO: DoAll
+				ChatExpr {\/t +getcharstringprop[1]+`,It appears you are not flagged for Halt Dericost, skipping the quest till tomorrow.`}
+				DoExpr {setpvar[DoQuestHaltDericost,0]}
+	IF: All
+			Expr {getpvar[DoQuestIQSQ]==1}
+			Expr {testquestflag[quiddityseedquestflag]==0}
+		DO: DoAll
+				ChatExpr {\/t +getcharstringprop[1]+`,It appears you are not flagged for Ithaenc Quiddity Seed Quest, skipping the quest till tomorrow.`}
+				DoExpr {setpvar[DoQuestIQSQ,0]}
+	
+	IF: All
+			Expr {getpvar[DoQuestAF]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==0}
+		DO: DoAll
+				ChatExpr {\/t +getcharstringprop[1]+`,It appears you do not know GK Recall on all cahracters skipping Apostate Finale, skipping the quest till tomorrow.`}
+				DoExpr {setpvar[DoQuestAF,0]}
 	IF:	All
 			Expr {getcharintprop[25]>=150}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
@@ -1108,6 +1139,9 @@ STATE: {CheckQuests} ~~ {
 				All
 					Expr {getpvar[DoQuestIQSQ]==1}
 					Expr {testquestflag[quiddityseedquestflag]==0}
+				All
+					Expr {getpvar[DoQuestIQSQ]==1}
+					Expr {testquestflag[quiddityseedquestflag]==1}
 					Expr {getqueststatus[clawofthehopeslayerpickuptimer]==0}
 			Any
 				Expr {getpvar[DoQuestGX]==0}
@@ -1142,6 +1176,9 @@ STATE: {CheckQuests} ~~ {
 					Expr {getqueststatus[moufreward]==0}
 			Any
 				Expr {getpvar[DoQuestGrael]==0}
+				All
+					Expr {getpvar[DoQuestGrael]==1}
+					Expr {testquestflag[abyssaltotemgatewayflag]==0}
 				All
 					Expr {getpvar[DoQuestGrael]==1}
 					Expr {getqueststatus[splitgraelhighcomplete0806]==0}
@@ -1196,6 +1233,9 @@ STATE: {CheckQuests} ~~ {
 				Expr {getpvar[DoQuestBSI]==0}
 				All
 					Expr {getpvar[DoQuestBSI]==1}
+					Expr {testquestflag[oracleportalentry]==0}
+				All
+					Expr {getpvar[DoQuestBSI]==1}
 					Expr {getqueststatus[shatteredmasterbloodstoneshardpickedup]==0}
 					Expr {testquestflag[oracleportalentry]==1}
 			Any
@@ -1230,11 +1270,14 @@ STATE: {CheckQuests} ~~ {
 							Expr {getqueststatus[gerainestudybookpickup]==1}
 							Expr {getqueststatus[geraineslibrarycompleted0312]==1}
 			All
-				Expr {testquestflag[haltdericostritualquestflag]==1}
 				Any
 					Expr {getpvar[DoQuestHaltDericost]==0}
 					All
 						Expr {getpvar[DoQuestHaltDericost]==1}
+						Expr {testquestflag[haltdericostritualquestflag]==0}
+					All
+						Expr {getpvar[DoQuestHaltDericost]==1}
+						Expr {testquestflag[haltdericostritualquestflag]==1}
 						Any
 							All
 								Expr {getqueststatus[sealedtomepickuptimer]==0}
@@ -3116,6 +3159,8 @@ STATE: {Quests} ~~ {
 			Not All
 				Expr {getcharquadprop[6]==1500000}
 				Expr {getcharintprop[390]==5}
+			All
+			SecsInStateGE 10
 			Any
 				Expr {getpvar[DoQuestUnleashTheGearknight]==0}
 				All
@@ -3152,6 +3197,9 @@ STATE: {Quests} ~~ {
 				All
 					Expr {getpvar[DoQuestIQSQ]==1}
 					Expr {testquestflag[quiddityseedquestflag]==0}
+				All
+					Expr {getpvar[DoQuestIQSQ]==1}
+					Expr {testquestflag[quiddityseedquestflag]==1}
 					Expr {getqueststatus[clawofthehopeslayerpickuptimer]==0}
 			Any
 				Expr {getpvar[DoQuestGX]==0}
@@ -3186,11 +3234,19 @@ STATE: {Quests} ~~ {
 					Expr {getqueststatus[moufreward]==0}
 			Any
 				Expr {getpvar[DoQuestGrael]==0}
-				Expr {getpvar[Grael]==0}
+				All
+					Expr {getpvar[DoQuestGrael]==1}
+					Expr {testquestflag[abyssaltotemgatewayflag]==0}
 				All
 					Expr {getpvar[DoQuestGrael]==1}
 					Expr {getqueststatus[splitgraelhighcomplete0806]==0}
 					Expr {getqueststatus[shardoftheabyssaltotempickuptimer]==0}
+					Expr {testquestflag[abyssaltotemgatewayflag]==1}
+				All
+					Expr {getpvar[DoQuestGrael]==1}
+					Expr {getpvar[Grael]==0}
+					Expr {getqueststatus[splitgraelhighcomplete0806]==1}
+					Expr {getqueststatus[shardoftheabyssaltotempickuptimer]==1}
 					Expr {testquestflag[abyssaltotemgatewayflag]==1}
 			Any
 				Expr {getpvar[DoQuestVR]==0}
@@ -3235,6 +3291,9 @@ STATE: {Quests} ~~ {
 				Expr {getpvar[DoQuestBSI]==0}
 				All
 					Expr {getpvar[DoQuestBSI]==1}
+					Expr {testquestflag[oracleportalentry]==0}
+				All
+					Expr {getpvar[DoQuestBSI]==1}
 					Expr {getqueststatus[shatteredmasterbloodstoneshardpickedup]==0}
 					Expr {testquestflag[oracleportalentry]==1}
 			Any
@@ -3269,11 +3328,14 @@ STATE: {Quests} ~~ {
 							Expr {getqueststatus[gerainestudybookpickup]==1}
 							Expr {getqueststatus[geraineslibrarycompleted0312]==1}
 			All
-				Expr {testquestflag[haltdericostritualquestflag]==1}
 				Any
 					Expr {getpvar[DoQuestHaltDericost]==0}
 					All
 						Expr {getpvar[DoQuestHaltDericost]==1}
+						Expr {testquestflag[haltdericostritualquestflag]==0}
+					All
+						Expr {getpvar[DoQuestHaltDericost]==1}
+						Expr {testquestflag[haltdericostritualquestflag]==1}
 						Any
 							All
 								Expr {getqueststatus[sealedtomepickuptimer]==0}
