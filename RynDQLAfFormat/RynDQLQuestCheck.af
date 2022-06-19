@@ -596,7 +596,6 @@ STATE: {CheckQuests} ~~ {
 			Expr {getpvar[DoQuestIQSQ]==1}
 			Expr {testquestflag[quiddityseedquestflag]==1}
 			Expr {getqueststatus[clawofthehopeslayerpickuptimer]==1}
-			Expr {testquestflag[clawofthehopeslayerfirstrun]==1}
 		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ]+1]}
 	IF:	All
 			Expr {getpvar[DoQuestIQSQ]==1}
@@ -1108,6 +1107,7 @@ STATE: {CheckQuests} ~~ {
 				Expr {getpvar[DoQuestIQSQ]==0}
 				All
 					Expr {getpvar[DoQuestIQSQ]==1}
+					Expr {testquestflag[quiddityseedquestflag]==0}
 					Expr {getqueststatus[clawofthehopeslayerpickuptimer]==0}
 			Any
 				Expr {getpvar[DoQuestGX]==0}
@@ -3151,6 +3151,7 @@ STATE: {Quests} ~~ {
 				Expr {getpvar[DoQuestIQSQ]==0}
 				All
 					Expr {getpvar[DoQuestIQSQ]==1}
+					Expr {testquestflag[quiddityseedquestflag]==0}
 					Expr {getqueststatus[clawofthehopeslayerpickuptimer]==0}
 			Any
 				Expr {getpvar[DoQuestGX]==0}
