@@ -554,10 +554,10 @@ STATE: {Finished} ~~ {
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RelogTimerComplete]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]}
 				SetState {Finished}
-	IF:	Expr {getvar[Relog]==1}
-		DO:	DoAll
-				DoExpr {setpvar[StateName,RelogTimer]}
-				SetState {Relog}
+	~~ IF:	Expr {getvar[Relog]==1}
+		~~ DO:	DoAll
+				~~ DoExpr {setpvar[StateName,RelogTimer]}
+				~~ SetState {Relog}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]}
@@ -964,7 +964,7 @@ STATE: {Relog} ~~ {
 			Expr {getpvar[StateName]==RelogTimer}
 		DO:	Chat {/ub delay 2000 /ub quit}
 	IF:	Expr {getpvar[StateName]!=RelogTimer}
-		DO:	DoExpr {setpvar[RelogTimer,1]&&vtsetmetastate[Relog]}
+		DO:	DoExpr {setpvar[StateName,RelogTimer]&&vtsetmetastate[Relog]}
 ~~ }
 STATE: {RelogTimer} ~~ {
 	IF:	Any

@@ -1176,11 +1176,14 @@ STATE: {CheckQuests} ~~ {
 					Expr {getqueststatus[moufreward]==0}
 			Any
 				Expr {getpvar[DoQuestGrael]==0}
+				Expr {getpvar[Grael]==0}
 				All
 					Expr {getpvar[DoQuestGrael]==1}
+					Expr {getpvar[Grael]==1}
 					Expr {testquestflag[abyssaltotemgatewayflag]==0}
 				All
 					Expr {getpvar[DoQuestGrael]==1}
+					Expr {getpvar[Grael]==1}
 					Expr {getqueststatus[splitgraelhighcomplete0806]==0}
 					Expr {getqueststatus[shardoftheabyssaltotempickuptimer]==0}
 					Expr {testquestflag[abyssaltotemgatewayflag]==1}
