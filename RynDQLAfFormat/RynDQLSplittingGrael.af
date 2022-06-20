@@ -284,7 +284,7 @@ STATE: {DeathRecall} ~~ {
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestGrael]==1}
 		DO: SetState {SkipQuest}
-	IF: Expr {getpvar[Death+getpvar[Profile]]>5}
+	IF: Expr {getpvar[Death+getpvar[Profile]]>4}
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestGrael,1]}
 	IF:	BlockE 00070000
 		DO: SetState {ToTN}
@@ -1021,7 +1021,9 @@ STATE: {ToDarkIsle} ~~ {
 				DoExpr {actiontrycastbyid[1636]} ~~ SpellId 1636 is "Lifestone Sending".
 				SetState {ToDarkIsle}
 	IF:	BlockE C8E90000
-		DO:	EmbedNav nav16 {[DeathDelay]}
+		DO:	DoAll
+				SetOpt {EnableNav} {True}
+				EmbedNav nav16 {[DeathDelay]}
 	IF:	All
 			NavEmpty
 			BlockE C8E90000

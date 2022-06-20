@@ -129,7 +129,7 @@ STATE: {DeathRecall} ~~ {
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLL]==1}
 		DO: SetState {SkipQuest}
-	IF: Expr {getpvar[Death+getpvar[Profile]]>5}
+	IF: Expr {getpvar[Death+getpvar[Profile]]>4}
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLL,1]}
 	IF:	BlockE 00070000
 		DO:	SetState {ToTN}
@@ -372,7 +372,9 @@ STATE: {LostRuin} ~~ {
 			Any
 				CellE 57650329
 				CellE 57650328
-		DO:	EmbedNav FirstSplitToSecondSplit {FirstSplitToSecondSplit}
+		DO:	DoAll
+				SetOpt {EnableCombat} {False}
+				EmbedNav FirstSplitToSecondSplit {FirstSplitToSecondSplit}
 	IF:	All
 			CellE 57650357
 			Expr {getpvar[LostLoreNoteOneDone]==0}
@@ -383,6 +385,7 @@ STATE: {LostRuin} ~~ {
 				CallState {PickUp} {LostRuin}
 	IF:	All
 			MobsInDist_Name 3 8 {}
+			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[46348]]==1}
 			Any
 				CellE 57650357
 				CellE 57650359
@@ -441,7 +444,7 @@ STATE: {LostRuin} ~~ {
 					Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[46348]]==7}
 		DO:	DoAll
 				DoExpr {setpvar[LostLoreNoteOneDone,1]}
-				SetOpt {EnableCombat} {True}
+				SetOpt {EnableCombat} {False}
 				DoExpr {clearpvar[QuestCompletedSkip]}
 				DoExpr {setpvar[StateName,LostRuin]}
 				DoExpr {setpvar[CheckSync,LostRuinNoteOne]}
@@ -476,9 +479,14 @@ STATE: {LostRuin} ~~ {
 				CallState {PickUp} {LostRuin}
 	IF:	All
 			MobsInDist_Name 3 8 {}
+			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[46349]]==1}
 			Any
 				CellE 5765014A
 				CellE 5765015C
+				CellE 5765015D
+				CellE 5765015E
+				CellE 5765015A
+				CellE 57650158
 		DO:	SetOpt {EnableCombat} {True}
 	IF:	All
 			CellE 5765014A
@@ -538,7 +546,7 @@ STATE: {LostRuin} ~~ {
 					Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[46348]]==7}
 		DO:	DoAll
 				DoExpr {setpvar[LostLoreNoteTwoDone,1]}
-				SetOpt {EnableCombat} {True}
+				SetOpt {EnableCombat} {False}
 				DoExpr {clearpvar[QuestCompletedSkip]}
 				DoExpr {setpvar[StateName,LostRuin]}
 				DoExpr {setpvar[CheckSync,LostRuinNoteTwo]}
@@ -1556,7 +1564,9 @@ STATE: {ToSanc} ~~ {
 				DoExpr {actiontrycastbyid[2023]} ~~ SpellId 2023 is "Recall the Sanctuary".
 				SetState {ToSanc}
 	IF:	CellE F4180104
-		DO:	EmbedNav nav21 {[DeathDelay]}
+		DO:	DoAll
+				SetOpt {EnableNav} {True}
+				EmbedNav nav21 {[DeathDelay]}
 	IF:	All
 			NavEmpty
 			CellE F4180104

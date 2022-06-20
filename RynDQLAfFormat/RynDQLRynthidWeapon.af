@@ -393,7 +393,7 @@ STATE: {DeathRecall} ~~ {
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestRW]==1}
 		DO: SetState {SkipQuest}
-	IF: Expr {getpvar[Death+getpvar[Profile]]>5}
+	IF: Expr {getpvar[Death+getpvar[Profile]]>4}
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestRW,1]}
 	IF:	Always
 		DO:	DoAll
@@ -2702,7 +2702,9 @@ STATE: {ToRynthid} ~~ {
 				DoExpr {actiontrycastbyid[6150]} ~~ SpellId 6150 is "Rynthid Recall".
 				SetState {ToRynthid}
 	IF:	BlockE 30320000
-		DO:	EmbedNav nav47 {[DeathDelay]}
+		DO:	DoAll
+				SetOpt {EnableNav} {True}
+				EmbedNav nav47 {[DeathDelay]}
 	IF:	All
 			NavEmpty
 			BlockE 30320000

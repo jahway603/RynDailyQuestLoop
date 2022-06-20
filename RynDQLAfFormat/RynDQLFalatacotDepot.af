@@ -85,7 +85,7 @@ STATE: {DeathRecall} ~~ {
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestFD]==1}
 		DO: SetState {SkipQuest}
-	IF: Expr {getpvar[Death+getpvar[Profile]]>5}
+	IF: Expr {getpvar[Death+getpvar[Profile]]>4}
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestFD,1]}
 	IF:	BlockE 00070000
 		DO:	SetState {ToTN}
@@ -100,7 +100,9 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {EnableNav} {False}
 				EmbedNav nav0 {[none]}
 	IF:	BlockE A2200000
-		DO: EmbedNav DeathDelay {[DeathDelay]}
+		DO: DoAll
+				SetOpt {EnableNav} {True}
+				EmbedNav DeathDelay {[DeathDelay]}
 	IF:	All
 			NavEmpty
 			BlockE A2200000

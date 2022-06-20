@@ -330,7 +330,7 @@ STATE: {DeathRecall} ~~ {
 		DO:	SetState {ToTN}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestGS]==1}
 		DO: SetState {SkipQuest}
-	IF: Expr {getpvar[Death+getpvar[Profile]]>5}
+	IF: Expr {getpvar[Death+getpvar[Profile]]>4}
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestGS,1]}
 	IF:	Always
 		DO:	DoAll

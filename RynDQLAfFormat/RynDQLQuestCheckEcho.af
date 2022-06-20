@@ -38,6 +38,10 @@
 ~~ }																					
 
 STATE: {CheckQuests} ~~ {
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SyncStuck,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncStuck]==1}
+		DO:	SetState {SyncStuck}
 	IF:	All
 			Expr {getcharintprop[25]>=150}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
@@ -429,6 +433,7 @@ STATE: {CheckQuests} ~~ {
 				All
 					Expr {getpvar[DoQuestDee]==1}
 					Expr {getqueststatus[deewainrocktrophy0211]==0}
+					Expr {getqueststatus[deewaincompleted0211]==0}
 			Any
 				Expr {getpvar[DoQuestPurge]==0}
 				All
@@ -717,12 +722,24 @@ STATE: {Quests} ~~ {
 	IF:	Expr {isrefreshingquests[]==0}
 		DO:	SetState {KeyCheck}
 ~~ }
+STATE: {SyncStuck} ~~ {
+	IF: Always
+		DO: DoAll
+				DoExpr {cleargvar[Checking]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffQCComplete]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]}
+				DoExpr {setpvar[StateName,Default]}
+				Chat {/vt meta load RynDQLQuestCheck}
+~~ }
 STATE: {Zstuck} ~~ {
 	IF: Always
 		DO: DoAll
-				DoExpr {setpvar[Profile,RynDQLQuestCheck]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Checking]}
-				DoExpr {setpvar[StateName,DefaultTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]}
+				DoExpr {clearpvar[IntialCleanUp]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffQCComplete]}
+				DoExpr {setpvar[Profile,RynDQLQuestCheck]}
+				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load RynDQLQuestCheck}
 ~~ }
 

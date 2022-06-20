@@ -1153,6 +1153,7 @@ STATE: {CheckQuests} ~~ {
 				All
 					Expr {getpvar[DoQuestDee]==1}
 					Expr {getqueststatus[deewainrocktrophy0211]==0}
+					Expr {getqueststatus[deewaincompleted0211]==0}
 			Any
 				Expr {getpvar[DoQuestPurge]==0}
 				All

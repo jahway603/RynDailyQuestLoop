@@ -136,7 +136,7 @@ STATE: {DeathRecall} ~~ {
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestRTL]==1}
 		DO: SetState {SkipQuest}
-	IF: Expr {getpvar[Death+getpvar[Profile]]>5}
+	IF: Expr {getpvar[Death+getpvar[Profile]]>4}
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestRTL,1]}
 	IF: Expr {getpvar[EnableDeath]==1}
 		DO: DoExpr {setpvar[Death,1]}
@@ -915,7 +915,9 @@ STATE: {ToSanc} ~~ {
 				DoExpr {actiontrycastbyid[2023]} ~~ SpellId 2023 is "Recall the Sanctuary".
 				SetState {ToSanc}
 	IF:	CellE F4180104
-		DO:	EmbedNav nav13 {[DeathDelay]}
+		DO:	DoAll
+				SetOpt {EnableNav} {True}
+				EmbedNav nav13 {[DeathDelay]}
 	IF:	All
 			NavEmpty
 			CellE F4180104

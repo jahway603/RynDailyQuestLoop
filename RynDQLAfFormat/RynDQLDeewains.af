@@ -186,7 +186,7 @@ STATE: {DeathRecall} ~~ {
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDee]==1}
 		DO: SetState {SkipQuest}
-	IF: Expr {getpvar[Death+getpvar[Profile]]>5}
+	IF: Expr {getpvar[Death+getpvar[Profile]]>4}
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDee,1]}
 	IF:	BlockE 00070000
 		DO: SetState {ToTN}
@@ -1647,14 +1647,13 @@ STATE: {ToPortalMaze} ~~ {
 		DO: SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDee]==1}
 		DO: SetState {SkipQuest}
-	IF:	All
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-				Any
-					BlockE C8E90000
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1683,14 +1682,13 @@ STATE: {PortalMazeTransition} ~~ {
 		DO:	DoAll
 				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+JumpComplete],getcharstringprop[1]]}
 				SetState {PortalMazeTransition}
-	IF:	All
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-				Any
-					BlockE C8E90000
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
