@@ -284,34 +284,34 @@ STATE: {%% Options %%} ~~ {
 		DO:	Chat {%% Set to 0 to skip the quest %%}
 	IF: Always
 		DO: DoAll
-				DoExpr {setpvar[DoQuestMouf,1}
-				DoExpr {setpvar[DoDR,1}
-				DoExpr {setpvar[DoQuestUnleashTheGearknight,1}
-				DoExpr {setpvar[DoQuestProdigalBanderling,1}
-				DoExpr {setpvar[DoQuestLostLore,1}
-				DoExpr {setpvar[DoQuestFalatacotDepot,1}
-				DoExpr {setpvar[DoQuestProdigalTusker,1}
-				DoExpr {setpvar[DoQuestIQSQ,1}
-				DoExpr {setpvar[DoQuestGrael,1}
-				DoExpr {setpvar[DoQuestVR,1}
-				DoExpr {setpvar[DoQuestNexus,1}
-				DoExpr {setpvar[DoQuestHermit,1}
-				DoExpr {setpvar[DoQuestDR,1}
-				DoExpr {setpvar[DoQuestAF,1}
-				DoExpr {setpvar[DoQuestPurge,1}
-				DoExpr {setpvar[DoQuestGX,1}
-				DoExpr {setpvar[DoQuestDee,1}
-				DoExpr {setpvar[DoQuestLugianAssault,1}
-				DoExpr {setpvar[DoQuestReleasingTheLight,1}
-				DoExpr {setpvar[DoQuestSaveKarul,1}
-				DoExpr {setpvar[DoQuestBSI,1}
-				DoExpr {setpvar[DoQuestHaltDericost,1}
-				DoExpr {setpvar[DoQuestGeraineStudy,1}
-				DoExpr {setpvar[DoQuestLU,1}
-				DoExpr {setpvar[DoQuestCP,1}
-				DoExpr {setpvar[DoQuestSBG,1}
-				DoExpr {setpvar[DoQuestEOD,1}
-				DoExpr {setpvar[DoQuestRynthidWeapon,1}
+				DoExpr {setpvar[DoQuestMouf,1]}
+				DoExpr {setpvar[DoDR,1]}
+				DoExpr {setpvar[DoQuestUnleashTheGearknight,1]}
+				DoExpr {setpvar[DoQuestProdigalBanderling,1]}
+				DoExpr {setpvar[DoQuestLostLore,1]}
+				DoExpr {setpvar[DoQuestFalatacotDepot,1]}
+				DoExpr {setpvar[DoQuestProdigalTusker,1]}
+				DoExpr {setpvar[DoQuestIQSQ,1]}
+				DoExpr {setpvar[DoQuestGrael,1]}
+				DoExpr {setpvar[DoQuestVR,1]}
+				DoExpr {setpvar[DoQuestNexus,1]}
+				DoExpr {setpvar[DoQuestHermit,1]}
+				DoExpr {setpvar[DoQuestDR,1]}
+				DoExpr {setpvar[DoQuestAF,1]}
+				DoExpr {setpvar[DoQuestPurge,1]}
+				DoExpr {setpvar[DoQuestGX,1]}
+				DoExpr {setpvar[DoQuestDee,1]}
+				DoExpr {setpvar[DoQuestLugianAssault,1]}
+				DoExpr {setpvar[DoQuestReleasingTheLight,1]}
+				DoExpr {setpvar[DoQuestSaveKarul,1]}
+				DoExpr {setpvar[DoQuestBSI,1]}
+				DoExpr {setpvar[DoQuestHaltDericost,1]}
+				DoExpr {setpvar[DoQuestGeraineStudy,1]}
+				DoExpr {setpvar[DoQuestLU,1]}
+				DoExpr {setpvar[DoQuestCP,1]}
+				DoExpr {setpvar[DoQuestSBG,1]}
+				DoExpr {setpvar[DoQuestEOD,1]}
+				DoExpr {setpvar[DoQuestRynthidWeapon,1]}
 	IF:	Never
 		DO:	Chat {%% Do Not Edit Below Here %%}
 	IF:	Never

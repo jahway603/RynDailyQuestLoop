@@ -1668,7 +1668,7 @@ STATE: {ToTN} ~~ {
 				SetOpt {EnableCombat} {False}
 	IF:	BlockE F6820000
 		DO:	DoAll
-				DoExpr {setvar[Recall,1}
+				DoExpr {setvar[Recall,1]}
 				EmbedNav nav29 {[none]}
 	IF:	All
 			Expr {getvar[Recall]==0}

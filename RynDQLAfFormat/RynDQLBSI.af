@@ -2073,7 +2073,7 @@ STATE: {ToTN} ~~ {
 		DO:	DoExpr {clearpvar[Town]}
 	IF:	BlockE F6820000
 		DO:	DoAll
-				DoExpr {setvar[Recall,1}
+				DoExpr {setvar[Recall,1]}
 				EmbedNav nav24 {[none]}
 	IF:	All
 			Expr {getvar[Recall]==0}
