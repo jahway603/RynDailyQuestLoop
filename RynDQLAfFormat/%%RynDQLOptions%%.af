@@ -544,6 +544,7 @@ STATE: {%% Options %%} ~~ {
 			Expr {getpvar[CountPhainorSummon]==CharSix}
 		DO:	ChatExpr {\/t +getcharstringprop[1]+`,It appears you haven't changed CountPhainorSummon from default. Please refer to Dailies_readme.txt from the Zip file`}
 	IF:	All
+			SecsInStateGE 5
 			Expr {getpvar[Options]==1}
 			Any
 				Expr {testpvar[Run]==1}
@@ -583,8 +584,10 @@ STATE: {%% Options %%} ~~ {
 						Expr {getpvar[QuestKeyWordUnleashTheGearknight]==KeyWordUGK}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Default]}
-				CreateView {Start} {<?xml version="1.0"?><view width="150" height="50" title="Start"><control type="layout"><control type="button" name="Start" left="0" top="0" width="149" height="49" text="Start" actionexpr="setgvar[Start,1]" /></control></view>}
-	IF: Expr {getgvar[Start]==1}
+				CreateView {Start} {<?xml version="1.0"?><view width="150" height="50" title="Start"><control type="layout"><control type="button" name="Start" left="0" top="0" width="149" height="49" text="Start" actionexpr="setgvar[setgvar[getworldname[]+getpvar[GroupIdentifier]+Start,1]" /></control></view>}
+	IF: All
+			SecsInStateGE 5
+			Expr {getgvar[setgvar[getworldname[]+getpvar[GroupIdentifier]+Start]==1}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load RynDQLQuestCheck}
