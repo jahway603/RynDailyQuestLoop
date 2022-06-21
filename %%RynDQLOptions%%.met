@@ -2652,7 +2652,7 @@ n
 s
 e
 s
-setpvar[DoQuestMouf,1
+setpvar[DoQuestMouf,1]
 i
 7
 TABLE
@@ -2665,7 +2665,7 @@ n
 s
 e
 s
-setpvar[DoDR,1
+setpvar[DoDR,1]
 i
 7
 TABLE
@@ -2678,7 +2678,7 @@ n
 s
 e
 s
-setpvar[DoQuestUnleashTheGearknight,1
+setpvar[DoQuestUnleashTheGearknight,1]
 i
 7
 TABLE
@@ -2691,7 +2691,7 @@ n
 s
 e
 s
-setpvar[DoQuestProdigalBanderling,1
+setpvar[DoQuestProdigalBanderling,1]
 i
 7
 TABLE
@@ -2704,7 +2704,7 @@ n
 s
 e
 s
-setpvar[DoQuestLostLore,1
+setpvar[DoQuestLostLore,1]
 i
 7
 TABLE
@@ -2717,7 +2717,7 @@ n
 s
 e
 s
-setpvar[DoQuestFalatacotDepot,1
+setpvar[DoQuestFalatacotDepot,1]
 i
 7
 TABLE
@@ -2730,7 +2730,7 @@ n
 s
 e
 s
-setpvar[DoQuestProdigalTusker,1
+setpvar[DoQuestProdigalTusker,1]
 i
 7
 TABLE
@@ -2743,7 +2743,7 @@ n
 s
 e
 s
-setpvar[DoQuestIQSQ,1
+setpvar[DoQuestIQSQ,1]
 i
 7
 TABLE
@@ -2756,7 +2756,7 @@ n
 s
 e
 s
-setpvar[DoQuestGrael,1
+setpvar[DoQuestGrael,1]
 i
 7
 TABLE
@@ -2769,7 +2769,7 @@ n
 s
 e
 s
-setpvar[DoQuestVR,1
+setpvar[DoQuestVR,1]
 i
 7
 TABLE
@@ -2782,7 +2782,7 @@ n
 s
 e
 s
-setpvar[DoQuestNexus,1
+setpvar[DoQuestNexus,1]
 i
 7
 TABLE
@@ -2795,7 +2795,7 @@ n
 s
 e
 s
-setpvar[DoQuestHermit,1
+setpvar[DoQuestHermit,1]
 i
 7
 TABLE
@@ -2808,7 +2808,7 @@ n
 s
 e
 s
-setpvar[DoQuestDR,1
+setpvar[DoQuestDR,1]
 i
 7
 TABLE
@@ -2821,7 +2821,7 @@ n
 s
 e
 s
-setpvar[DoQuestAF,1
+setpvar[DoQuestAF,1]
 i
 7
 TABLE
@@ -2834,7 +2834,7 @@ n
 s
 e
 s
-setpvar[DoQuestPurge,1
+setpvar[DoQuestPurge,1]
 i
 7
 TABLE
@@ -2847,7 +2847,7 @@ n
 s
 e
 s
-setpvar[DoQuestGX,1
+setpvar[DoQuestGX,1]
 i
 7
 TABLE
@@ -2860,7 +2860,7 @@ n
 s
 e
 s
-setpvar[DoQuestDee,1
+setpvar[DoQuestDee,1]
 i
 7
 TABLE
@@ -2873,7 +2873,7 @@ n
 s
 e
 s
-setpvar[DoQuestLugianAssault,1
+setpvar[DoQuestLugianAssault,1]
 i
 7
 TABLE
@@ -2886,7 +2886,7 @@ n
 s
 e
 s
-setpvar[DoQuestReleasingTheLight,1
+setpvar[DoQuestReleasingTheLight,1]
 i
 7
 TABLE
@@ -2899,7 +2899,7 @@ n
 s
 e
 s
-setpvar[DoQuestSaveKarul,1
+setpvar[DoQuestSaveKarul,1]
 i
 7
 TABLE
@@ -2912,7 +2912,7 @@ n
 s
 e
 s
-setpvar[DoQuestBSI,1
+setpvar[DoQuestBSI,1]
 i
 7
 TABLE
@@ -2925,7 +2925,7 @@ n
 s
 e
 s
-setpvar[DoQuestHaltDericost,1
+setpvar[DoQuestHaltDericost,1]
 i
 7
 TABLE
@@ -2938,7 +2938,7 @@ n
 s
 e
 s
-setpvar[DoQuestGeraineStudy,1
+setpvar[DoQuestGeraineStudy,1]
 i
 7
 TABLE
@@ -2951,7 +2951,7 @@ n
 s
 e
 s
-setpvar[DoQuestLU,1
+setpvar[DoQuestLU,1]
 i
 7
 TABLE
@@ -2964,7 +2964,7 @@ n
 s
 e
 s
-setpvar[DoQuestCP,1
+setpvar[DoQuestCP,1]
 i
 7
 TABLE
@@ -2977,7 +2977,7 @@ n
 s
 e
 s
-setpvar[DoQuestSBG,1
+setpvar[DoQuestSBG,1]
 i
 7
 TABLE
@@ -2990,7 +2990,7 @@ n
 s
 e
 s
-setpvar[DoQuestEOD,1
+setpvar[DoQuestEOD,1]
 i
 7
 TABLE
@@ -3003,7 +3003,7 @@ n
 s
 e
 s
-setpvar[DoQuestRynthidWeapon,1
+setpvar[DoQuestRynthidWeapon,1]
 s
 %% Options %%
 i
