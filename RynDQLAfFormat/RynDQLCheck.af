@@ -170,6 +170,8 @@ STATE: {Default} ~~ {
 		DO:	DoAll
 				SetOpt {EnableBuffing} {False}
 				EmbedNav nav0 {[none]}
+	IF:	Expr {getfellowshipcount[]<getpvar[FellowCount]}
+		DO:	SetState {Fellow}
 	IF: Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[CheckSync]]}
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[CheckSync],listcreate[]]}
 	IF: Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]}
@@ -476,14 +478,14 @@ STATE: {Fellow} ~~ {
 				Expr {getpvar[FellowCount]>=8&&getobjectinternaltype[wobjectfindnearestbynameandobjectclass[24,getpvar[FellowNameEight]]]==7}
 				Expr {getpvar[FellowCount]>=9&&getobjectinternaltype[wobjectfindnearestbynameandobjectclass[24,getpvar[FellowNameNine]]]==7}
 		DO:	DoAll
-				ChatExpr {\/ub fellow recruit +getpvar[FellowNameTwo]}
-				ChatExpr {\/ub fellow recruit +getpvar[FellowNameThree]}
-				ChatExpr {\/ub fellow recruit +getpvar[FellowNameFour]}
-				ChatExpr {\/ub fellow recruit +getpvar[FellowNameFive]}
-				ChatExpr {\/ub fellow recruit +getpvar[FellowNameSix]}
-				ChatExpr {\/ub fellow recruit +getpvar[FellowNameSeven]}
-				ChatExpr {\/ub fellow recruit +getpvar[FellowNameEight]}
-				ChatExpr {\/ub fellow recruit +getpvar[FellowNameNine]}
+				DoExpr {ifthen[getpvar[FellowCount]>=2,`chatbox[\\/ub fellow recruit +getpvar[FellowNameTwo]]`,`Null`]}
+				DoExpr {ifthen[getpvar[FellowCount]>=3,`chatbox[\\/ub fellow recruit +getpvar[FellowNameThree]]`,`Null`]}
+				DoExpr {ifthen[getpvar[FellowCount]>=4,`chatbox[\\/ub fellow recruit +getpvar[FellowNameFour]]`,`Null`]}
+				DoExpr {ifthen[getpvar[FellowCount]>=5,`chatbox[\\/ub fellow recruit +getpvar[FellowNameFive]]`,`Null`]}
+				DoExpr {ifthen[getpvar[FellowCount]>=6,`chatbox[\\/ub fellow recruit +getpvar[FellowNameSix]]`,`Null`]}
+				DoExpr {ifthen[getpvar[FellowCount]>=7,`chatbox[\\/ub fellow recruit +getpvar[FellowNameSeven]]`,`Null`]}
+				DoExpr {ifthen[getpvar[FellowCount]>=8,`chatbox[\\/ub fellow recruit +getpvar[FellowNameEight]]`,`Null`]}
+				DoExpr {ifthen[getpvar[FellowCount]>=9,`chatbox[\\/ub fellow recruit +getpvar[FellowNameNine]]`,`Null`]}
 	IF:	All
 			Expr {getfellowshipcount[]<getpvar[FellowCount]}
 			SecsInStateGE 5

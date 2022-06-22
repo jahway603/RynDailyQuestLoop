@@ -1382,6 +1382,19 @@ STATE: {Default} ~~ {
 		DO: DoAll
 				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup],getcharstringprop[1]]}
 				SetState {Default}
+	IF: Not Any
+			Expr {getpvar[FellowCount]>=1&&getcharstringprop[1]==getpvar[LeaderName]}
+			Expr {getpvar[FellowCount]>=2&&getcharstringprop[1]==getpvar[FellowNameTwo]}
+			Expr {getpvar[FellowCount]>=3&&getcharstringprop[1]==getpvar[FellowNameThree]}
+			Expr {getpvar[FellowCount]>=4&&getcharstringprop[1]==getpvar[FellowNameFour]}
+			Expr {getpvar[FellowCount]>=5&&getcharstringprop[1]==getpvar[FellowNameFive]}
+			Expr {getpvar[FellowCount]>=6&&getcharstringprop[1]==getpvar[FellowNameSix]}
+			Expr {getpvar[FellowCount]>=7&&getcharstringprop[1]==getpvar[FellowNameSeven]}
+			Expr {getpvar[FellowCount]>=8&&getcharstringprop[1]==getpvar[FellowNameEight]}
+			Expr {getpvar[FellowCount]>=9&&getcharstringprop[1]==getpvar[FellowNameNine]}
+		DO: DoAll
+				ChatExpr {\/ub opt set Networking\.Tags remove DailyLoop+getworldname[]+getpvar[GroupIdentifier]}
+				SetState {Finished}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
 			Expr {getpvar[Profile]==RynDQLQuestCheck}
@@ -1395,6 +1408,16 @@ STATE: {Default} ~~ {
 				Expr {getpvar[FellowCount]<2}
 		DO:	DoExpr {setpvar[AdminSkip,1]}
 	IF: All
+			Any
+				Expr {getpvar[FellowCount]>=1&&getcharstringprop[1]==getpvar[LeaderName]}
+				Expr {getpvar[FellowCount]>=2&&getcharstringprop[1]==getpvar[FellowNameTwo]}
+				Expr {getpvar[FellowCount]>=3&&getcharstringprop[1]==getpvar[FellowNameThree]}
+				Expr {getpvar[FellowCount]>=4&&getcharstringprop[1]==getpvar[FellowNameFour]}
+				Expr {getpvar[FellowCount]>=5&&getcharstringprop[1]==getpvar[FellowNameFive]}
+				Expr {getpvar[FellowCount]>=6&&getcharstringprop[1]==getpvar[FellowNameSix]}
+				Expr {getpvar[FellowCount]>=7&&getcharstringprop[1]==getpvar[FellowNameSeven]}
+				Expr {getpvar[FellowCount]>=8&&getcharstringprop[1]==getpvar[FellowNameEight]}
+				Expr {getpvar[FellowCount]>=9&&getcharstringprop[1]==getpvar[FellowNameNine]}
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
 			Expr {getpvar[SyncBuff]==0}
 			SecsInStateGE 2
@@ -1404,6 +1427,16 @@ STATE: {Default} ~~ {
 				SetState {SyncBuff}
 	IF: All
 			SecsInStateGE 2
+			Any
+				Expr {getpvar[FellowCount]>=1&&getcharstringprop[1]==getpvar[LeaderName]}
+				Expr {getpvar[FellowCount]>=2&&getcharstringprop[1]==getpvar[FellowNameTwo]}
+				Expr {getpvar[FellowCount]>=3&&getcharstringprop[1]==getpvar[FellowNameThree]}
+				Expr {getpvar[FellowCount]>=4&&getcharstringprop[1]==getpvar[FellowNameFour]}
+				Expr {getpvar[FellowCount]>=5&&getcharstringprop[1]==getpvar[FellowNameFive]}
+				Expr {getpvar[FellowCount]>=6&&getcharstringprop[1]==getpvar[FellowNameSix]}
+				Expr {getpvar[FellowCount]>=7&&getcharstringprop[1]==getpvar[FellowNameSeven]}
+				Expr {getpvar[FellowCount]>=8&&getcharstringprop[1]==getpvar[FellowNameEight]}
+				Expr {getpvar[FellowCount]>=9&&getcharstringprop[1]==getpvar[FellowNameNine]}
 			Any
 				All
 					Expr {getcharskill_buffed[32]>=391}
@@ -1415,7 +1448,18 @@ STATE: {Default} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+BuffSyncAll,1]}
 				Chat {/vt forcebuff}
 				SetState {SyncBuff}
-	IF: SecsInStateGE 2
+	IF: All
+			SecsInStateGE 2
+			Any
+				Expr {getpvar[FellowCount]>=1&&getcharstringprop[1]==getpvar[LeaderName]}
+				Expr {getpvar[FellowCount]>=2&&getcharstringprop[1]==getpvar[FellowNameTwo]}
+				Expr {getpvar[FellowCount]>=3&&getcharstringprop[1]==getpvar[FellowNameThree]}
+				Expr {getpvar[FellowCount]>=4&&getcharstringprop[1]==getpvar[FellowNameFour]}
+				Expr {getpvar[FellowCount]>=5&&getcharstringprop[1]==getpvar[FellowNameFive]}
+				Expr {getpvar[FellowCount]>=6&&getcharstringprop[1]==getpvar[FellowNameSix]}
+				Expr {getpvar[FellowCount]>=7&&getcharstringprop[1]==getpvar[FellowNameSeven]}
+				Expr {getpvar[FellowCount]>=8&&getcharstringprop[1]==getpvar[FellowNameEight]}
+				Expr {getpvar[FellowCount]>=9&&getcharstringprop[1]==getpvar[FellowNameNine]}
 		DO: SetState {SyncBuff}
 ~~}
 STATE: {SyncBuff} ~~{
@@ -3026,11 +3070,11 @@ STATE: {KeyCheck} ~~ {
 		DO:	SetState {SyncStuck}
 	IF: All
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall]}
-			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall]]==getpvar[FellowCount]}
+			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall]]>=getpvar[FellowCount]}
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo,1]}
 	IF: All
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
-			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]]==getpvar[FellowCount]}
+			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]]>=getpvar[FellowCount]}
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck,1]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Sparkling Key]]==7}
