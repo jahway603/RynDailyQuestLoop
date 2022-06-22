@@ -11,7 +11,7 @@ n
 n
 n
 n
-113
+114
 i
 21
 i
@@ -1425,6 +1425,25 @@ ba
 uTank2 NAV 1.2
 1
 0
+s
+Default
+i
+26
+i
+1
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+getfellowshipcount[]<getpvar[FellowCount]
+s
+Fellow
 s
 Default
 i
@@ -4944,7 +4963,7 @@ n
 n
 8
 i
-8
+7
 TABLE
 2
 k
@@ -4955,9 +4974,9 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameTwo]
+ifthen[getpvar[FellowCount]>=2,`chatbox[\\/ub fellow recruit +getpvar[FellowNameTwo]]`,`Null`]
 i
-8
+7
 TABLE
 2
 k
@@ -4968,9 +4987,9 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameThree]
+ifthen[getpvar[FellowCount]>=3,`chatbox[\\/ub fellow recruit +getpvar[FellowNameThree]]`,`Null`]
 i
-8
+7
 TABLE
 2
 k
@@ -4981,9 +5000,9 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameFour]
+ifthen[getpvar[FellowCount]>=4,`chatbox[\\/ub fellow recruit +getpvar[FellowNameFour]]`,`Null`]
 i
-8
+7
 TABLE
 2
 k
@@ -4994,9 +5013,9 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameFive]
+ifthen[getpvar[FellowCount]>=5,`chatbox[\\/ub fellow recruit +getpvar[FellowNameFive]]`,`Null`]
 i
-8
+7
 TABLE
 2
 k
@@ -5007,9 +5026,9 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameSix]
+ifthen[getpvar[FellowCount]>=6,`chatbox[\\/ub fellow recruit +getpvar[FellowNameSix]]`,`Null`]
 i
-8
+7
 TABLE
 2
 k
@@ -5020,9 +5039,9 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameSeven]
+ifthen[getpvar[FellowCount]>=7,`chatbox[\\/ub fellow recruit +getpvar[FellowNameSeven]]`,`Null`]
 i
-8
+7
 TABLE
 2
 k
@@ -5033,9 +5052,9 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameEight]
+ifthen[getpvar[FellowCount]>=8,`chatbox[\\/ub fellow recruit +getpvar[FellowNameEight]]`,`Null`]
 i
-8
+7
 TABLE
 2
 k
@@ -5046,7 +5065,7 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameNine]
+ifthen[getpvar[FellowCount]>=9,`chatbox[\\/ub fellow recruit +getpvar[FellowNameNine]]`,`Null`]
 s
 Fellow
 i
