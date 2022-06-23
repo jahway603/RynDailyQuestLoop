@@ -868,7 +868,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getcharintprop[25]>=200}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getpvar[DoQuestBSI]==1}
-			Expr {getpvar[FellowCount]>=4}
+			Expr {getpvar[FellowCount]>=3}
 			Expr {getqueststatus[shatteredmasterbloodstoneshardpickedup]==1}
 			Expr {testquestflag[oracleportalentry]==1}
 		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestBSI,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestBSI]+1]}
@@ -1235,6 +1235,7 @@ STATE: {CheckQuests} ~~ {
 							Expr {getqueststatus[btmpickup_0513]==1}
 			Any
 				Expr {getpvar[DoQuestBSI]==0}
+				Not Expr {getpvar[FellowCount]>=3}
 				All
 					Expr {getpvar[DoQuestBSI]==1}
 					Expr {testquestflag[oracleportalentry]==0}
@@ -1407,6 +1408,19 @@ STATE: {Default} ~~ {
 				Expr {getcharboolprop[44]==1}
 				Expr {getpvar[FellowCount]<2}
 		DO:	DoExpr {setpvar[AdminSkip,1]}
+	IF: All
+			Any
+				Expr {getpvar[FellowCount]>=1&&getcharstringprop[1]==getpvar[LeaderName]}
+				Expr {getpvar[FellowCount]>=2&&getcharstringprop[1]==getpvar[FellowNameTwo]}
+				Expr {getpvar[FellowCount]>=3&&getcharstringprop[1]==getpvar[FellowNameThree]}
+				Expr {getpvar[FellowCount]>=4&&getcharstringprop[1]==getpvar[FellowNameFour]}
+				Expr {getpvar[FellowCount]>=5&&getcharstringprop[1]==getpvar[FellowNameFive]}
+				Expr {getpvar[FellowCount]>=6&&getcharstringprop[1]==getpvar[FellowNameSix]}
+				Expr {getpvar[FellowCount]>=7&&getcharstringprop[1]==getpvar[FellowNameSeven]}
+				Expr {getpvar[FellowCount]>=8&&getcharstringprop[1]==getpvar[FellowNameEight]}
+				Expr {getpvar[FellowCount]>=9&&getcharstringprop[1]==getpvar[FellowNameNine]}
+			Not Expr {uboptget[`Networking.Tags`]#DailyLoop+getworldname[]+getpvar[GroupIdentifier]}
+		DO: ChatExpr {\/ub opt set Networking\.Tags add DailyLoop+getworldname[]+getpvar[GroupIdentifier]}
 	IF: All
 			Any
 				Expr {getpvar[FellowCount]>=1&&getcharstringprop[1]==getpvar[LeaderName]}
@@ -2892,6 +2906,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[DailyReset]}
 				DoExpr {clearpvar[IntialCleanUp]}
 				DoExpr {clearpvar[SyncBuff]}
+				DoExpr {clearpvar[Options]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]}
@@ -3337,11 +3352,13 @@ STATE: {Quests} ~~ {
 							Expr {getqueststatus[btmpickup_0513]==1}
 			Any
 				Expr {getpvar[DoQuestBSI]==0}
+				Not Expr {getpvar[FellowCount]>=3}
 				All
 					Expr {getpvar[DoQuestBSI]==1}
 					Expr {testquestflag[oracleportalentry]==0}
 				All
 					Expr {getpvar[DoQuestBSI]==1}
+					Not Expr {getpvar[FellowCount]>=3}
 					Expr {getqueststatus[shatteredmasterbloodstoneshardpickedup]==0}
 					Expr {testquestflag[oracleportalentry]==1}
 			Any
