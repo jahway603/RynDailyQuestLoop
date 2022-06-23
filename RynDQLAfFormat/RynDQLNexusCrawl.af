@@ -1647,9 +1647,10 @@ STATE: {ToNexus} ~~ {
 	IF:	All
 			SecsInStateGE 3
 			Not MobsInDist_Name 3 5 {}
+			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[6795]]==7}
 			BlockE 1C4D0000
 		DO:	DoAll
-				DoExpr {actiontryuseitem[wobjectfindnearestbyobjectclass[14]]}
+				DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[6795]]}
 				SetState {ToNexus}
 	IF:	BlockE 01100000
 		DO:	EmbedNav nav22 {[Delay]}

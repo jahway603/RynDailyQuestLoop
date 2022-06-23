@@ -482,6 +482,30 @@ STATE: {ToFrozenCave} ~~ {
 	IF:	All
 			NavEmpty
 			BlockE 33F40000
+		DO:	SetState {JumpDown}
+	IF:	BlockE C8E90000
+		DO:	SetState {ToTN}
+~~ }
+STATE: {JumpDown} ~~ {
+	IF:	Not Expr {coordinategetz[getplayercoordinates[]]#-0.2133}
+		DO:	DoAll
+				DoExpr {$GXpwr=150}
+				DoExpr {$GXPI=3.1415926535897932;}
+				DoExpr {$GXpt=listcreate[93.7061767578125,0-60.4588890075684,0-0.000888802078035143];} ~~  [VTank] Now: 93.7061767578125 SN, -60.4588890075684 WE, -0.000888802078035143 DU
+				DoExpr {$GXmyPos=getplayercoordinates[];}
+				DoExpr {$GXdx=$GXpt{{1}}-coordinategetwe[$GXmyPos];}
+				DoExpr {$GXdy=$GXpt{{0}}-coordinategetns[$GXmyPos];}
+				DoExpr {$GXdir=round[450-atan2[$GXdy,$GXdx]*180/$GXPI]%360}
+	IF:	All
+			Expr {$GXdir>0}
+			SecsInStateGE 4
+		DO:	DoAll
+				ChatExpr {`/ub jumpsw `+cstrf[$GXdir,`G0`]+` `+cstrf[$GXpwr,`G0`]}
+				DoExpr {clearvar[dir]}
+				SetState {JumpDown}
+	IF:	All
+			Expr {coordinategetz[getplayercoordinates[]]#-0.2133}
+			BlockE 33F40000
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {EnableCombat} {True}
@@ -489,8 +513,6 @@ STATE: {ToFrozenCave} ~~ {
 				DoExpr {setpvar[StateName,KillWalls]}
 				DoExpr {setpvar[CheckSync,KillWallsTwo]}
 				Chat {/vt meta load RynDQLCheck}
-	IF:	BlockE C8E90000
-		DO:	SetState {ToTN}
 ~~ }
 STATE: {ToTN} ~~ {
 	IF:	All

@@ -462,11 +462,10 @@ STATE: {FightBoss} ~~ {
 			ChatMatch {^Your fellow .* has died!$}
 			ChatMatch {!ManDown}
 			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-			All
-				Expr {testvar[StateTimer]}
-				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
+			SecsInStateGE 900
 			Any
 				BlockE C8E90000
+				BlockE 1B340000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}

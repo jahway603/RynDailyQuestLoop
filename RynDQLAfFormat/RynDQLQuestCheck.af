@@ -1501,6 +1501,7 @@ STATE: {SyncBuff} ~~{
 				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffQCComplete],getcharstringprop[1]]}
 				SetState {SyncBuff}
 	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffQCComplete]==1}
 			Not NeedToBuff
 			Any
 				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffQCComplete],getpvar[LeaderName]]}
