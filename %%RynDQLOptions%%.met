@@ -613,7 +613,7 @@ n
 s
 e
 s
-testpvar[FellowCount]==Number
+getpvar[FellowCount]==Number
 TABLE
 2
 k
@@ -673,7 +673,7 @@ n
 s
 e
 s
-testpvar[LeaderName]==CharOne
+getpvar[LeaderName]==CharOne
 TABLE
 2
 k
@@ -723,7 +723,7 @@ n
 s
 e
 s
-testpvar[FellowNameTwo]==CharTwo
+getpvar[FellowNameTwo]==CharTwo
 TABLE
 2
 k
@@ -773,7 +773,7 @@ n
 s
 e
 s
-testpvar[FellowNameThree]==CharThree
+getpvar[FellowNameThree]==CharThree
 TABLE
 2
 k
@@ -823,7 +823,7 @@ n
 s
 e
 s
-testpvar[FellowNameFour]==CharFour
+getpvar[FellowNameFour]==CharFour
 TABLE
 2
 k
@@ -873,7 +873,7 @@ n
 s
 e
 s
-testpvar[FellowNameFive]==CharFive
+getpvar[FellowNameFive]==CharFive
 TABLE
 2
 k
@@ -923,7 +923,7 @@ n
 s
 e
 s
-testpvar[FellowNameSix]==CharSix
+getpvar[FellowNameSix]==CharSix
 TABLE
 2
 k
@@ -973,7 +973,7 @@ n
 s
 e
 s
-testpvar[FellowNameSeven]==CharSeven
+getpvar[FellowNameSeven]==CharSeven
 TABLE
 2
 k
@@ -1023,7 +1023,7 @@ n
 s
 e
 s
-testpvar[FellowNameEight]==CharEight
+getpvar[FellowNameEight]==CharEight
 TABLE
 2
 k
@@ -1073,7 +1073,7 @@ n
 s
 e
 s
-testpvar[FellowNameNine]==CharNine
+getpvar[FellowNameNine]==CharNine
 TABLE
 2
 k
@@ -6314,8 +6314,8 @@ Start
 s
 x
 ba
-275
-<?xml version="1.0"?><view width="150" height="50" title="Start"><control type="layout"><control type="button" name="Start" left="0" top="0" width="149" height="49" text="Start" actionexpr="setgvar[setgvar[getworldname[]+getpvar[GroupIdentifier]+Start,1]" /></control></view>s
+267
+<?xml version="1.0"?><view width="150" height="50" title="Start"><control type="layout"><control type="button" name="Start" left="0" top="0" width="149" height="49" text="Start" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Start,1]" /></control></view>s
 %% Options %%
 i
 2
@@ -6344,7 +6344,7 @@ n
 s
 e
 s
-getgvar[setgvar[getworldname[]+getpvar[GroupIdentifier]+Start]==1
+getgvar[getworldname[]+getpvar[GroupIdentifier]+Start]==1
 TABLE
 2
 K
