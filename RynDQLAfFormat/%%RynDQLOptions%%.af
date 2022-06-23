@@ -108,45 +108,45 @@ STATE: {%% Options %%} ~~ {
 		DO:	Chat {%%% Edit Fellow Count %%%}
 	IF:	Any
 			Expr {testpvar[FellowCount]==0}
-			Expr {testpvar[FellowCount]==Number}
+			Expr {getpvar[FellowCount]==Number}
 		DO:	DoExpr {setpvar[FellowCount,Number]}
 	IF:	Never
 		DO:	Chat {%%% Edit Names Below %%%}
 	IF:	Any
 			Expr {testpvar[LeaderName]==0}
-			Expr {testpvar[LeaderName]==CharOne}
+			Expr {getpvar[LeaderName]==CharOne}
 		DO:	DoExpr {setpvar[LeaderName,`CharOne`]}
 	IF:	Any
 			Expr {testpvar[FellowNameTwo]==0}
-			Expr {testpvar[FellowNameTwo]==CharTwo}
+			Expr {getpvar[FellowNameTwo]==CharTwo}
 		DO:	DoExpr {setpvar[FellowNameTwo,`CharTwo`]}
 	IF:	Any
 			Expr {testpvar[FellowNameThree]==0}
-			Expr {testpvar[FellowNameThree]==CharThree}
+			Expr {getpvar[FellowNameThree]==CharThree}
 		DO:	DoExpr {setpvar[FellowNameThree,`CharThree`]}
 	IF:	Any
 			Expr {testpvar[FellowNameFour]==0}
-			Expr {testpvar[FellowNameFour]==CharFour}
+			Expr {getpvar[FellowNameFour]==CharFour}
 		DO:	DoExpr {setpvar[FellowNameFour,`CharFour`]}
 	IF:	Any
 			Expr {testpvar[FellowNameFive]==0}
-			Expr {testpvar[FellowNameFive]==CharFive}
+			Expr {getpvar[FellowNameFive]==CharFive}
 		DO:	DoExpr {setpvar[FellowNameFive,`CharFive`]}
 	IF:	Any
 			Expr {testpvar[FellowNameSix]==0}
-			Expr {testpvar[FellowNameSix]==CharSix}
+			Expr {getpvar[FellowNameSix]==CharSix}
 		DO:	DoExpr {setpvar[FellowNameSix,`CharSix`]}
 	IF:	Any
 			Expr {testpvar[FellowNameSeven]==0}
-			Expr {testpvar[FellowNameSeven]==CharSeven}
+			Expr {getpvar[FellowNameSeven]==CharSeven}
 		DO:	DoExpr {setpvar[FellowNameSeven,`CharSeven`]}
 	IF:	Any
 			Expr {testpvar[FellowNameEight]==0}
-			Expr {testpvar[FellowNameEight]==CharEight}
+			Expr {getpvar[FellowNameEight]==CharEight}
 		DO:	DoExpr {setpvar[FellowNameEight,`CharEight`]}
 	IF:	Any
 			Expr {testpvar[FellowNameNine]==0}
-			Expr {testpvar[FellowNameNine]==CharNine}
+			Expr {getpvar[FellowNameNine]==CharNine}
 		DO:	DoExpr {setpvar[FellowNameNine,`CharNine`]}
 	IF:	Never
 		DO:	Chat {%%% Edit Bot Count %%%}
@@ -584,10 +584,10 @@ STATE: {%% Options %%} ~~ {
 						Expr {getpvar[QuestKeyWordUnleashTheGearknight]==KeyWordUGK}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Default]}
-				CreateView {Start} {<?xml version="1.0"?><view width="150" height="50" title="Start"><control type="layout"><control type="button" name="Start" left="0" top="0" width="149" height="49" text="Start" actionexpr="setgvar[setgvar[getworldname[]+getpvar[GroupIdentifier]+Start,1]" /></control></view>}
+				CreateView {Start} {<?xml version="1.0"?><view width="150" height="50" title="Start"><control type="layout"><control type="button" name="Start" left="0" top="0" width="149" height="49" text="Start" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Start,1]" /></control></view>}
 	IF: All
 			SecsInStateGE 5
-			Expr {getgvar[setgvar[getworldname[]+getpvar[GroupIdentifier]+Start]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Start]==1}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load RynDQLQuestCheck}
