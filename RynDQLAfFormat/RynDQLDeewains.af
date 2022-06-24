@@ -1374,12 +1374,12 @@ STATE: {DeewainJumpToBottom} ~~ {
 		DO: SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDee]==1}
 		DO: SetState {SkipQuest}
-	IF:	Not Expr {testvar[JumpTimer]}
-		DO: DoExpr {stopwatchstart[setvar[JumpTimer, stopwatchcreate[]]]}
+	IF:	Not Expr {testvar[JumpTimerFail]}
+		DO: DoExpr {stopwatchstart[setvar[JumpTimerFail, stopwatchcreate[]]]}
 	IF: All
 			Not Expr {$pos=getplayercoordinates[];coordinategetns[$pos]>0-100.52916666666} ~~ N/S coordinate of edge of top ledge
-			Expr {testvar[JumpTimer]}
-			Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=300}
+			Expr {testvar[JumpTimerFail]}
+			Expr {stopwatchelapsedseconds[getvar[JumpTimerFail]]>=300}
 		DO: SetState {WatchDog}
 	IF: Always
 		DO: EmbedNav navBlank {Empty}
@@ -1401,6 +1401,7 @@ STATE: {DeewainJumpToBottom} ~~ {
 				SetState {DeewainJumpToBottom}
 	IF:	Expr {coordinategetz[getplayercoordinates[]]#-0.02497} ~~ -0.02497
 		DO:	DoAll
+				DoExpr {clearvar[JumpTimerFail]}
 				DoExpr {clearvar[JumpTimer]}
 				SetState {ResetJumps}
 ~~ }
@@ -1424,14 +1425,13 @@ STATE: {DeewainJumpPuzzle} ~~ {
 			Expr {testvar[JumpTimer]}
 			Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=300}
 		DO: SetState {DeewainJumpToBottom}
-	IF:	All
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-				Any
-					BlockE C8E90000
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1469,14 +1469,13 @@ STATE: {AddNavPoint} ~~ {
 			Expr {testvar[JumpTimer]}
 			Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=300}
 		DO: SetState {DeewainJumpToBottom}
-	IF:	All
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-				Any
-					BlockE C8E90000
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1518,14 +1517,13 @@ STATE: {DoJump} ~~ {
 			Expr {testvar[JumpTimer]}
 			Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=300}
 		DO: SetState {DeewainJumpToBottom}
-	IF:	All
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-				Any
-					BlockE C8E90000
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1565,14 +1563,13 @@ STATE: {InFlight} ~~ { This and InFlightB cycle to collect more jump-arc points 
 			Expr {testvar[JumpTimer]}
 			Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=300}
 		DO: SetState {DeewainJumpToBottom}
-	IF:	All
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-				Any
-					BlockE C8E90000
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1608,14 +1605,13 @@ STATE: {InFlightB} ~~ { This and InFlight cycle to collect more jump-arc points 
 			Expr {testvar[JumpTimer]}
 			Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=300}
 		DO: SetState {DeewainJumpToBottom}
-	IF:	All
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-				Any
-					BlockE C8E90000
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1729,14 +1725,13 @@ STATE: {LandJump} ~~ {
 			Expr {testvar[JumpTimer]}
 			Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=300}
 		DO: SetState {DeewainJumpToBottom}
-	IF:	All
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-				Any
-					BlockE C8E90000
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1790,14 +1785,13 @@ STATE: {ResetJumps} ~~ {
 			Expr {testvar[JumpTimer]}
 			Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=300}
 		DO: SetState {DeewainJumpToBottom}
-	IF:	All
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-				Any
-					BlockE C8E90000
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
@@ -1845,14 +1839,13 @@ STATE: {UpdateJumpPowerMultiplier} ~~ {
 			Expr {testvar[JumpTimer]}
 			Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=300}
 		DO: SetState {DeewainJumpToBottom}
-	IF:	All
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-				Any
-					BlockE C8E90000
+				BlockE C8E90000
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
