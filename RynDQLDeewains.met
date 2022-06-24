@@ -17062,7 +17062,7 @@ n
 s
 e
 s
-$ptDee=listcreate[0-100.60,0-0.72,0-0.02];
+$ptDee=listcreate[0-100.590881347656,0-0.734366655349731,0-0.00010407985912429];
 i
 7
 TABLE
@@ -17088,7 +17088,7 @@ n
 s
 e
 s
-$dxDee=$pt{1}-coordinategetwe[$myPos];
+$dxDee=$ptDee{1}-coordinategetwe[$myPosDee];
 i
 7
 TABLE
@@ -17101,7 +17101,7 @@ n
 s
 e
 s
-$dyDee=$pt{0}-coordinategetns[$myPos];
+$dyDee=$ptDee{0}-coordinategetns[$myPosDee];
 i
 7
 TABLE
