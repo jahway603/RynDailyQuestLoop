@@ -157,6 +157,11 @@ STATE: {BookSplit} ~~ {
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==7}
+		DO:	DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+AllDone,1]}
 	IF:	Always
 		DO:	DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 	IF:	All
@@ -201,11 +206,18 @@ STATE: {BookSplit} ~~ {
 				Chat {/vt meta load RynDQLCheck}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==1}
-			Any
-				All
-					Expr {getpvar[Leader]==1}
-					Expr {getpvar[AdminSkip]==0}
-				Expr {getpvar[Char]==2}
+			Expr {getpvar[Leader]==1}
+		DO: DoAll
+				DoExpr {setvar[CorpseName,Corpse of Geraine]}
+				DoExpr {setvar[LootItem,Book]}
+				DoExpr {setvar[LootRange,3]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]}
+				DoExpr {setvar[LootReturn,BookSplit]}
+				CallState {Loot} {BookSplit}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==1}
+			Expr {getpvar[Char]==2}
 			CellE 93020161
 			NoMobsInDist 15
 			NavEmpty
@@ -272,6 +284,258 @@ STATE: {BookSplit} ~~ {
 				CellE 9302018C
 			NavEmpty
 		DO:	CallState {UseBook} {BookSplit}
+~~ }
+
+STATE: {Loot} ~~ {
+	IF:	All
+			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
+			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
+		DO:	DoAll
+				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
+				DoExpr {clearvar[capturegroup_tellquest]}
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLL,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLL]==1}
+		DO: SetState {SkipQuest}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatMatch {!ManDown}
+			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			Any
+				BlockE C8E90000
+		DO:	DoAll
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
+				SetOpt {EnableLooting} {True}
+				SetOpt {NavCloseStopRange} {0.00625}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]}
+				DoExpr {clearvar[CorpseName]}
+				DoExpr {clearvar[LootItem]}
+				DoExpr {clearvar[Loot]}
+				DoExpr {clearvar[CorpseDetect]}
+				DoExpr {clearvar[LootCount]}
+				DoExpr {clearvar[CloseCorpseTimer]}
+				DoExpr {clearvar[SourceNotFound]}
+				DoExpr {clearvar[LootStuckDelay]}
+				DoExpr {clearvar[LootCloseCorpse]}
+				DoExpr {clearvar[LootCloseCorpseTwo]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
+				Chat {/f !ManDown}
+				SetState {DeathRecall}
+	IF:	Always
+		DO:	DoAll
+				EmbedNav nav998 {[none]}
+				SetOpt {EnableLooting} {False}
+	IF:	All
+			NavEmpty
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,`^`+getvar[CorpseName]+`.*`]]==7}
+			Expr {coordinatedistancewithz[getplayercoordinates[], wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[27,`^`+getvar[CorpseName]+`.*`]]]>=3}
+		DO:	DoAll
+				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]]}
+				ChatExpr {\/vt addnavpt +coordinatetostring[wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[27,`^`+getvar[CorpseName]+`.*`]]]}
+				SetOpt {NavCloseStopRange} {0.00083333333}
+				SetState {Loot}
+	IF:	All
+			Expr {testvar[LootCount]==1}
+			Expr {getobjectinternaltype[wobjectgetopencontainer[]]==1}
+			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]==getvar[LootCount]}
+		DO:	DoAll
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
+				SetOpt {EnableLooting} {True}
+				SetOpt {NavCloseStopRange} {0.00625}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]}
+				DoExpr {clearvar[CorpseName]}
+				DoExpr {clearvar[LootItem]}
+				DoExpr {clearvar[Loot]}
+				DoExpr {clearvar[CorpseDetect]}
+				DoExpr {clearvar[LootCount]}
+				DoExpr {clearvar[CloseCorpseTimer]}
+				DoExpr {clearvar[SourceNotFound]}
+				DoExpr {clearvar[LootStuckDelay]}
+				DoExpr {clearvar[LootCloseCorpse]}
+				DoExpr {clearvar[LootCloseCorpseTwo]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
+				Return
+	IF:	Any
+			ChatMatch {^You may complete this quest again in}
+			ChatMatch {^You have solved this quest too recently!}
+		DO:	DoAll
+				DoExpr {setvar[LootCount,getitemcountininventorybyname[getvar[LootItem]]}
+				DoExpr {setpvar[QuestCompletedSkip,1]}
+				SetState {Loot}
+	IF:	Expr {testvar[LootCount]==0}
+		DO:	DoAll
+				DoExpr {setvar[LootCount,getitemcountininventorybyname[getvar[LootItem]]+1]}
+				DoExpr {stopwatchstart[setvar[LootStuckDelay, stopwatchcreate[]]]}
+				SetState {Loot}
+	IF:	All
+			Expr {testvar[LootCount]==1}
+			Any
+				Expr {getobjectinternaltype[getvar[CloseCorpseTimer]]==7&&stopwatchelapsedseconds[getvar[CloseCorpseTimer]]>=5}
+				Expr {getbusystate[]==0&&getvar[LootCorpseCloseTwo]==1}
+			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]==getvar[LootCount]&&getobjectinternaltype[wobjectgetopencontainer[]]==7}
+		DO:	DoAll
+				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]] && listcount[$CorpseDetect] > 0 && (actiontryuseitem[$CorpseDetect{{0}}] || 1)}
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
+		DO:	DoAll
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`}
+				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
+	IF:	Expr {getvar[SourceNotFound]>9}
+		DO:	DoAll
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
+				DoExpr {clearvar[SourceNotFound]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Looting]}
+				DoExpr {actiontryuseitem[wobjectgetopencontainer[]]}
+				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]]}
+				SetState {Loot}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectgetopencontainer[]]==7}
+			Expr {wobjectgetname[wobjectgetopencontainer[]]#getvar[CorpseName]==0}
+		DO:	DoAll
+				DoExpr {actiontryuseitem[wobjectgetopencontainer[]]}
+				SetState {Loot}
+	IF:	All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==0}
+			Expr {testvar[LootCount]==1}
+			Expr {getvar[CloseCorpseTimer]==0}
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,`^`+getvar[CorpseName]+`.*`]]==7}
+			Expr {coordinatedistancewithz[getplayercoordinates[], wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[27,`^`+getvar[CorpseName]+`.*`]]]<3}
+			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]<getvar[LootCount]}
+			SecsInStateGE 4
+		DO:	DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail,getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]+1]}
+				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]]}
+				SetState {Loot}
+	IF:	All
+			Expr {testvar[LootCount]==1}
+			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]<getvar[LootCount]}
+			Expr {getobjectinternaltype[wobjectgetopencontainer[]]==7}
+			Expr {wobjectgetname[wobjectgetopencontainer[]]#getvar[CorpseName]}
+		DO:	DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,1]}
+				DoExpr {stopwatchstart[setvar[LootCloseCorpse, stopwatchcreate[]]]}
+	IF:	All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==1}
+			Expr {getbusystate[]==5}
+		DO:	DoExpr {setvar[LootCorpseCloseTwo,1]}
+	IF:	All
+			All
+				Expr {getobjectinternaltype[getvar[LootCloseCorpse]]==7}
+				Expr {stopwatchelapsedseconds[getvar[LootCloseCorpse]]>=2}
+			Expr {testvar[LootCount]==1}
+			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]<getvar[LootCount]}
+			Expr {getobjectinternaltype[wobjectgetopencontainer[]]==7}
+			Expr {wobjectgetname[wobjectgetopencontainer[]]#getvar[CorpseName]}
+		DO:	DoAll
+				DoExpr {setvar[SourceNotFound,getvar[SourceNotFound]+1]}
+				DoExpr {setvar[Loot,listfilter[wobjectfindallbycontainer[wobjectgetopencontainer[]], `wobjectgetname[$1]#getvar[LootItem]`]] && listcount[$Loot] > 0 && (actiontryuseitem[$Loot{{0}}] || 1) && (vtsetmetastate[Loot] || 1)}
+	IF:	All
+			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,`^`+getvar[CorpseName]+`.*`]]==7}
+			Expr {coordinatedistancewithz[getplayercoordinates[], wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[27,`^`+getvar[CorpseName]+`.*`]]]<3}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==0&&getvar[LootCount]>0}
+			Expr {getitemcountininventorybyname[getvar[LootItem]]<getvar[LootCount]&&getobjectinternaltype[wobjectgetopencontainer[]]==1}
+		DO:	DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]] && listcount[$CorpseDetect] > 0 && (actiontryuseitem[$CorpseDetect{{0}}] || 1)}
+	IF:	All
+			Expr {testvar[LootCount]==1}
+			Expr {getvar[CloseCorpseTimer]==0}
+			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]==getvar[LootCount]}
+		DO:	DoExpr {stopwatchstart[setvar[CloseCorpseTimer, stopwatchcreate[]]]}
+	IF:	Any
+			All
+				Expr {getobjectinternaltype[getvar[LootStuckDelay]]==7}
+				Expr {stopwatchelapsedseconds[getvar[LootStuckDelay]]>=180}
+			All
+				All
+					Expr {getobjectinternaltype[getvar[LootStuckDelay]]==7}
+					Expr {stopwatchelapsedseconds[getvar[LootStuckDelay]]>=20}
+				Expr {getitemcountininventorybyname[getvar[LootItem]]<getvar[LootCount]}
+				Expr {listcount[$CorpseDetect]==0}
+			All
+				Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,`^`+getvar[CorpseName]+`.*`]]==7}
+				Expr {coordinatedistancewithz[getplayercoordinates[], wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[27,`^`+getvar[CorpseName]+`.*`]]]<3}
+				All
+					Expr {getobjectinternaltype[getvar[LootCloseCorpse]]==7}
+					Expr {stopwatchelapsedseconds[getvar[LootCloseCorpse]]>=10}
+				Expr {getitemcountininventorybyname[getvar[LootItem]]<getvar[LootCount]}
+				Expr {getobjectinternaltype[wobjectgetopencontainer[]]==7&&listcount[$Loot]==0}
+				Expr {wobjectgetname[wobjectgetopencontainer[]]#getvar[CorpseName]}
+		DO:	DoAll
+				DoExpr {clearvar[LootStuckDelay]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
+				SetState {LootStuckDelay}
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]}
+			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]]}
+			SecsInStateGE 30
+		DO:	DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
+				SetState {Loot}
+~~ }
+STATE: {LootStuckDelay} ~~ {
+	IF:	All
+			Expr {getobjectinternaltype[wobjectgetopencontainer[]]==1}
+			Expr {getitemcountininventorybyname[getvar[LootItem]]==getvar[LootCount]}
+		DO:	DoAll
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
+				SetOpt {EnableLooting} {True}
+				SetOpt {NavCloseStopRange} {0.00625}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]}
+				DoExpr {clearvar[CorpseName]}
+				DoExpr {clearvar[LootItem]}
+				DoExpr {clearvar[Loot]}
+				DoExpr {clearvar[CorpseDetect]}
+				DoExpr {clearvar[LootCount]}
+				DoExpr {clearvar[CloseCorpseTimer]}
+				DoExpr {clearvar[SourceNotFound]}
+				DoExpr {clearvar[LootStuckDelay]}
+				DoExpr {clearvar[LootCloseCorpse]}
+				DoExpr {clearvar[LootCloseCorpseTwo]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
+				Return
+	IF:	All
+			Expr {getobjectinternaltype[wobjectgetopencontainer[]]==1}
+			SecsInStateGE 15
+		DO:	DoAll
+				DoExpr {setvar[LootStuckDelayInternalCounter,getvar[LootStuckDelayInternalCounter]+1]}
+				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]] && (vtsetmetastate[LootStuckDelay] || 1)}
+	IF:	All
+			SecsInStateGE 2
+			Expr {getobjectinternaltype[wobjectgetopencontainer[]]==7}
+		DO:	DoAll
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt opt set EnableCombat False}
+				DoExpr {actiontryuseitem[wobjectgetopencontainer[]]}
+				SetState {LootStuckDelay}
+	IF:	Any
+			Expr {getvar[LootStuckDelayInternalCounter]>19}
+			Expr {listcount[$CorpseDetect]==0}
+		DO:	DoAll
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
+				SetOpt {EnableLooting} {True}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]}
+				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]}
+				DoExpr {clearvar[CorpseName]}
+				DoExpr {clearvar[LootItem]}
+				DoExpr {clearvar[Loot]}
+				DoExpr {clearvar[CorpseDetect]}
+				DoExpr {clearvar[LootCount]}
+				DoExpr {clearvar[CloseCorpseTimer]}
+				DoExpr {clearvar[SourceNotFound]}
+				DoExpr {clearvar[LootStuckDelay]}
+				DoExpr {clearvar[LootCloseCorpseTwo]}
+				DoExpr {clearvar[LootStuckDelayInternalCounter]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt opt set EnableCombat True}
+				DoExpr {vtsetmetastate[getvar[LootReturn]]}
 ~~ }
 STATE: {SkipQuest} ~~{
 	IF:	All
@@ -658,10 +922,6 @@ STATE: {Geraine} ~~ {
 		DO:	DoAll
 				SetOpt {EnableCombat} {True}
 				SetOpt {SummonPets} {True}
-	IF:	All
-			Expr {getpvar[Char]==2}
-			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==7}
-		DO:	DoExpr {setpvar[TwoDone,1]}
 	IF:	Expr {getpvar[AdminSkip]==1}
 		DO:	DoExpr {setpvar[Char,9]}
 	IF:	Always
@@ -671,11 +931,6 @@ STATE: {Geraine} ~~ {
 				EmbedNav nav20 {ToGeraine.nav}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==1}
-			Any
-				Expr {getpvar[Char]>0}
-				All
-					Expr {getpvar[Leader]==1}
-					Expr {getpvar[TwoDone]==1}
 			CellE 93020161
 			Not MobsInDist_Name 1 55 {Geraine}
 		DO:	SetState {BookSplit}
@@ -2160,12 +2415,6 @@ STATE: {UseBook} ~~ {
 				SetState {DeathRecall}
 	IF:	Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==1}
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[45680]]}
-	IF:	All
-			Expr {getpvar[Leader]==1}
-			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==7}
-		DO:	DoAll
-				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+AllDone,1]}
-				Return
 	IF:	Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==7}
 		DO:	Return
 	IF:	SecsInStateGE 3
@@ -2822,4 +3071,6 @@ NAV: nav42 once ~~ {
 	pnt 16.06748863856 -100.97562529246 2.08333134651184E-05
 	chk 16.06748863856 -100.97562529246 2.08333134651184E-05
 	pnt 16.06748863856 -100.97562529246 2.08333134651184E-05
+~~ }
+NAV: nav998 once ~~ {
 ~~ }

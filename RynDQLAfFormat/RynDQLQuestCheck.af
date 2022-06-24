@@ -636,7 +636,7 @@ STATE: {CheckQuests} ~~ {
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ]==getpvar[FellowCount]}
 		DO:	DoAll
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestIQSQ]}
 				SetState {LoadQuest}
@@ -1143,6 +1143,9 @@ STATE: {CheckQuests} ~~ {
 					Expr {getpvar[DoQuestIQSQ]==1}
 					Expr {testquestflag[quiddityseedquestflag]==1}
 					Expr {getqueststatus[clawofthehopeslayerpickuptimer]==0}
+				All
+					Expr {getpvar[DoQuestIQSQ]==1}
+					Not Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ]==getpvar[FellowCount]}
 			Any
 				Expr {getpvar[DoQuestGX]==0}
 				All
@@ -2659,6 +2662,7 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {clearpvar[EoDAbortSkip]}
 	IF: Always
 		DO: DoAll
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Start]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LargeTome]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Scroll]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RynDQLQuestCheck]}
@@ -2666,6 +2670,7 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffQCComplete]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LumTokens]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+IQSQ]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Skull]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Mouf]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+UnleashTheGearknight]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ProdigalBanderling]}
@@ -3267,6 +3272,9 @@ STATE: {Quests} ~~ {
 					Expr {getpvar[DoQuestIQSQ]==1}
 					Expr {testquestflag[quiddityseedquestflag]==1}
 					Expr {getqueststatus[clawofthehopeslayerpickuptimer]==0}
+				All
+					Expr {getpvar[DoQuestIQSQ]==1}
+					Not Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestIQSQ]==getpvar[FellowCount]}
 			Any
 				Expr {getpvar[DoQuestGX]==0}
 				All
