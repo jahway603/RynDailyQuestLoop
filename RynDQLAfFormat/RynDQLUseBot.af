@@ -41,7 +41,7 @@ STATE: {%% ToBotLocation %%} ~~ {
 		DO: DoAll
 				Chat {/vt meta load %%RynDQLOptions%%}
 				Chat {/vt setmetastate %% ToBotLocation %%}
-				DoExpr {setpvar[Profile,RynDQLUuseBot]}
+				DoExpr {setpvar[Profile,RynDQLUseBot]}
 				DoExpr {setpvar[StateName,`%% ToBotLocation %%`]}
 ~~}
 STATE: {ToTN} ~~ {
@@ -70,19 +70,19 @@ STATE: {ToTN} ~~ {
 		DO:	DoAll
 				Chat {/vt meta load %%RynDQLOptions%%}
 				Chat {/vt setmetastate %% ToBotLocation %%}
-				DoExpr {setpvar[Profile,RynDQLUuseBot]}
+				DoExpr {setpvar[Profile,RynDQLUseBot]}
 				DoExpr {setpvar[StateName,CheckBotOnline]}
 				DoExpr {clearvar[Recall]}
 ~~ }
 STATE: {Default} ~~ {
 	IF: All
-			Expr {getpvar[Profile]==RynDQLUuseBot}
+			Expr {getpvar[Profile]==RynDQLUseBot}
 			Expr {getpvar[StateName]!=Default}
 			Not NeedToBuff
 		DO:	ChatExpr {\/vt setmetastate +getpvar[StateName]}
 	IF: Always
 		DO: DoAll
-				DoExpr {setpvar[Profile,RynDQLUuseBot]}
+				DoExpr {setpvar[Profile,RynDQLUseBot]}
 				DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
@@ -359,7 +359,7 @@ STATE: {CheckSummonTwo} ~~ {
 				DoExpr {setpvar[StateName,ToHoshar]}
 				DoExpr {setpvar[CheckSync,ToHoshar]}
 				DoExpr {clearvar[CombatStuck]}
-				DoExpr {cleargvar[RynDQLUuseBot]}
+				DoExpr {cleargvar[RynDQLUseBot]}
 				Chat {/vt meta load RynDQLCheck} ~~ ToHoshar
 	IF:	All
 			Expr {getpvar[ReturnMetaProfile]==RynDQLCountPhainor}
@@ -369,7 +369,7 @@ STATE: {CheckSummonTwo} ~~ {
 				DoExpr {setpvar[StateName,GY]}
 				DoExpr {setpvar[CheckSync,GY]}
 				DoExpr {clearvar[CombatStuck]}
-				DoExpr {cleargvar[RynDQLUuseBot]}
+				DoExpr {cleargvar[RynDQLUseBot]}
 				Chat {/vt meta load RynDQLCheck} ~~ ToGY
 	IF:	All
 			Expr {getpvar[ReturnMetaProfile]==RynDQLDeathsAllure}
@@ -379,7 +379,7 @@ STATE: {CheckSummonTwo} ~~ {
 				DoExpr {setpvar[StateName,Hermit]}
 				DoExpr {setpvar[CheckSync,Hermit]}
 				DoExpr {clearvar[CombatStuck]}
-				DoExpr {cleargvar[RynDQLUuseBot]}
+				DoExpr {cleargvar[RynDQLUseBot]}
 				Chat {/vt meta load RynDQLCheck} ~~ Hermit
 	IF:	All
 			Expr {getpvar[ReturnMetaProfile]==RynDQLPurgingTheCorruption}
@@ -389,7 +389,7 @@ STATE: {CheckSummonTwo} ~~ {
 				DoExpr {setpvar[StateName,ToStudy]}
 				DoExpr {setpvar[CheckSync,ToStudy]}
 				DoExpr {clearvar[CombatStuck]}
-				DoExpr {cleargvar[RynDQLUuseBot]}
+				DoExpr {cleargvar[RynDQLUseBot]}
 				Chat {/vt meta load RynDQLCheck} ~~ ToStudy
 	IF:	All
 			Expr {getpvar[ReturnMetaProfile]==RynDQLProdigalBanderling}
@@ -399,7 +399,7 @@ STATE: {CheckSummonTwo} ~~ {
 				DoExpr {setpvar[StateName,ToWinterborn]}
 				DoExpr {setpvar[CheckSync,ToWinterborn]}
 				DoExpr {clearvar[CombatStuck]}
-				DoExpr {cleargvar[RynDQLUuseBot]}
+				DoExpr {cleargvar[RynDQLUseBot]}
 				Chat {/vt meta load RynDQLCheck} ~~ ToWinterborn
 	IF:	All
 			Expr {getpvar[ReturnMetaProfile]==RynDQLNexusCrawl}
@@ -409,7 +409,7 @@ STATE: {CheckSummonTwo} ~~ {
 				DoExpr {setpvar[StateName,ToNexus]}
 				DoExpr {setpvar[CheckSync,ToNexus]}
 				DoExpr {clearvar[CombatStuck]}
-				DoExpr {cleargvar[RynDQLUuseBot]}
+				DoExpr {cleargvar[RynDQLUseBot]}
 				Chat {/vt meta load RynDQLCheck} ~~ ToNexus
 	IF:	All
 			Expr {getpvar[ReturnMetaProfile]==RynDQLUnleashTheGearknight}
@@ -419,7 +419,7 @@ STATE: {CheckSummonTwo} ~~ {
 				DoExpr {setpvar[StateName,ToDungeon]}
 				DoExpr {setpvar[CheckSync,ToDungeon]}
 				DoExpr {clearvar[CombatStuck]}
-				DoExpr {cleargvar[RynDQLUuseBot]}
+				DoExpr {cleargvar[RynDQLUseBot]}
 				Chat {/vt meta load RynDQLCheck} ~~ ToDungeon
 	IF: All
 			Any

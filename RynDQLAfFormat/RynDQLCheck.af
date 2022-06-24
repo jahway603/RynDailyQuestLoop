@@ -361,7 +361,7 @@ STATE: {ConfirmProfile} ~~{
 				Expr {getpvar[Profile]==RynDQLEndOfDays}
 				Expr {getpvar[Profile]==RynDQLRynthidWeapon}
 				Expr {getpvar[Profile]==RynDQLBobo}
-				Expr {getpvar[Profile]==RynDQLUuseBot}
+				Expr {getpvar[Profile]==RynDQLUseBot}
 		DO: DoAll
 				DoExpr {clearvar[ConfirmProfileFail]}
 				Chat {/f !ManDown}

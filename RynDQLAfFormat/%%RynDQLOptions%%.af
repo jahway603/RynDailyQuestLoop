@@ -616,12 +616,12 @@ STATE: {%% ToBotLocation %%} ~~ {
 			NavEmpty
 			BlockE 016C0000
 		DO:	DoAll
-				DoExpr {setpvar[Profile,RynDQLUuseBot]}
+				DoExpr {setpvar[Profile,RynDQLUseBot]}
 				DoExpr {setpvar[StateName,CheckBotOnline]}
 				Chat {/vt meta load RynDQLCheck}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[Profile,RynDQLUuseBot]}
+				DoExpr {setpvar[Profile,RynDQLUseBot]}
 				DoExpr {setpvar[StateName,ToTN]}
 				SetWatchdog 5 30 {ZBotWatchDog}
 ~~ }
@@ -722,7 +722,7 @@ STATE: {RecallCheck} ~~ {
 STATE: {ZBotWatchDog} ~~ {
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[Profile,RynDQLUuseBot]}
+				DoExpr {setpvar[Profile,RynDQLUseBot]}
 				DoExpr {setpvar[StateName,ToTN]}
 				Chat {/vt meta load RynDQLCheck}
 ~~ }
