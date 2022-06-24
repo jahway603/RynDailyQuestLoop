@@ -792,7 +792,9 @@ STATE: {Pillar} ~~ {
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
 		DO:	SetState {Watchdog}
 	IF:	Always
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoAll
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0208]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+				SetOpt {EnableCombat} {True}
 	IF:	Any
 			CellE 0098012A
 			CellE 00980125
