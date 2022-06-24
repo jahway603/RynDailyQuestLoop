@@ -2662,7 +2662,6 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {clearpvar[EoDAbortSkip]}
 	IF: Always
 		DO: DoAll
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Start]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LargeTome]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Scroll]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RynDQLQuestCheck]}
@@ -2915,6 +2914,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[IntialCleanUp]}
 				DoExpr {clearpvar[SyncBuff]}
 				DoExpr {clearpvar[Options]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Start]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]}
