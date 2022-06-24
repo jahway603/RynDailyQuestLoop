@@ -1361,7 +1361,7 @@ STATE: {WatchDog} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 ~~ }
-STATE: {DeewainJumpToBottom} ~~ {
+STATE: {DeewainJumpToBottom} ~~ { ~~~ 0x7E030410 99.751999 -287.459015 0.005000 1.000000 0.000000 0.000000 0.000000
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -1387,10 +1387,10 @@ STATE: {DeewainJumpToBottom} ~~ {
 		DO:	DoAll
 				DoExpr {$pwrDee=50}
 				DoExpr {$PIDee=3.1415926535897932;}
-				DoExpr {$ptDee=listcreate[0-100.60,0-0.72,0-0.02];} ~~~ 100.60S, 0.72W, -0.02Z
+				DoExpr {$ptDee=listcreate[0-100.590881347656,0-0.734366655349731,0-0.00010407985912429];} ~~~ 100.60S, 0.72W, -0.02Z
 				DoExpr {$myPosDee=getplayercoordinates[];}
-				DoExpr {$dxDee=$pt{{1}}-coordinategetwe[$myPos];}
-				DoExpr {$dyDee=$pt{{0}}-coordinategetns[$myPos];}
+				DoExpr {$dxDee=$ptDee{{1}}-coordinategetwe[$myPosDee];}
+				DoExpr {$dyDee=$ptDee{{0}}-coordinategetns[$myPosDee];}
 				DoExpr {$dirDee=round[450-atan2[$dyDee,$dxDee]*180/$PIDee]%360}
 	IF:	All
 			Expr {$dirDee>0}
