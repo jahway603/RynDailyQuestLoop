@@ -1383,16 +1383,18 @@ STATE: {Default} ~~ {
 		DO: DoAll
 				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup],getcharstringprop[1]]}
 				SetState {Default}
-	IF: Not Any
-			Expr {getpvar[FellowCount]>=1&&getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getpvar[FellowCount]>=2&&getcharstringprop[1]==getpvar[FellowNameTwo]}
-			Expr {getpvar[FellowCount]>=3&&getcharstringprop[1]==getpvar[FellowNameThree]}
-			Expr {getpvar[FellowCount]>=4&&getcharstringprop[1]==getpvar[FellowNameFour]}
-			Expr {getpvar[FellowCount]>=5&&getcharstringprop[1]==getpvar[FellowNameFive]}
-			Expr {getpvar[FellowCount]>=6&&getcharstringprop[1]==getpvar[FellowNameSix]}
-			Expr {getpvar[FellowCount]>=7&&getcharstringprop[1]==getpvar[FellowNameSeven]}
-			Expr {getpvar[FellowCount]>=8&&getcharstringprop[1]==getpvar[FellowNameEight]}
-			Expr {getpvar[FellowCount]>=9&&getcharstringprop[1]==getpvar[FellowNameNine]}
+	IF: All
+			Expr {testpvar[Options]==1}
+			Not Any
+				Expr {getpvar[FellowCount]>=1&&getcharstringprop[1]==getpvar[LeaderName]}
+				Expr {getpvar[FellowCount]>=2&&getcharstringprop[1]==getpvar[FellowNameTwo]}
+				Expr {getpvar[FellowCount]>=3&&getcharstringprop[1]==getpvar[FellowNameThree]}
+				Expr {getpvar[FellowCount]>=4&&getcharstringprop[1]==getpvar[FellowNameFour]}
+				Expr {getpvar[FellowCount]>=5&&getcharstringprop[1]==getpvar[FellowNameFive]}
+				Expr {getpvar[FellowCount]>=6&&getcharstringprop[1]==getpvar[FellowNameSix]}
+				Expr {getpvar[FellowCount]>=7&&getcharstringprop[1]==getpvar[FellowNameSeven]}
+				Expr {getpvar[FellowCount]>=8&&getcharstringprop[1]==getpvar[FellowNameEight]}
+				Expr {getpvar[FellowCount]>=9&&getcharstringprop[1]==getpvar[FellowNameNine]}
 		DO: DoAll
 				ChatExpr {\/ub opt set Networking\.Tags remove DailyLoop+getworldname[]+getpvar[GroupIdentifier]}
 				SetState {Finished}
