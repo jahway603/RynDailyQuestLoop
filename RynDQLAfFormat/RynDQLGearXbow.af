@@ -498,11 +498,11 @@ STATE: {JumpDown} ~~ {
 				DoExpr {$GXdy=$GXpt{{0}}-coordinategetns[$GXmyPos];}
 				DoExpr {$GXdir=round[450-atan2[$GXdy,$GXdx]*180/$GXPI]%360}
 	IF:	All
-			Expr {$GXdir>0}
+			Expr {testvar[GXdir]}
 			SecsInStateGE 4
 		DO:	DoAll
 				ChatExpr {`/ub jumpsw `+cstrf[$GXdir,`G0`]+` `+cstrf[$GXpwr,`G0`]}
-				DoExpr {clearvar[dir]}
+				DoExpr {clearvar[GXdir]}
 				SetState {JumpDown}
 	IF:	All
 			Expr {coordinategetz[getplayercoordinates[]]#-0.2133}
