@@ -15730,7 +15730,7 @@ n
 s
 e
 s
-testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]
 i
 26
 TABLE
@@ -15743,7 +15743,7 @@ n
 s
 e
 s
-testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]
 i
 26
 TABLE
