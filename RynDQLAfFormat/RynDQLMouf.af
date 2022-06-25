@@ -59,7 +59,7 @@ STATE: {SkipQuest} ~~{
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load RynDQLQuestCheck}
 ~~}
-STATE: {DeathRecall} ~~ {
+STATE: {ReGroupRecall} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -91,7 +91,7 @@ STATE: {DeathRecall} ~~ {
 		DO: SetState {ToTN}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[StateName,DeathRecall]}
+				DoExpr {setpvar[StateName,ReGroupRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorOpenMouf]}
@@ -104,7 +104,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	Not CellE 38F7001B
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[2645]} ~~ SpellId 2645 is "Portal Recall".
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF:	CellE 38F7001B
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
@@ -206,13 +206,12 @@ STATE: {FightBoss} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	CellE 584D010F
 		DO:	DoAll
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
@@ -367,13 +366,12 @@ STATE: {FrigidDoorOne} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	SetWatchdog 5 90 {WatchDog}
 	IF:	Any
@@ -425,13 +423,12 @@ STATE: {FrigidDoorTwo} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	SetWatchdog 5 90 {WatchDog}
 	IF:	Expr {getpvar[FellowCount]>=2}
@@ -490,13 +487,12 @@ STATE: {FrigidGate} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	SetWatchdog 5 90 {WatchDog}
 	IF:	Expr {getpvar[FellowCount]>=2}
@@ -533,13 +529,12 @@ STATE: {LeverDoor} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[46292]]==7}
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[46292]],getplayercoordinates[]]<10}
@@ -578,8 +573,7 @@ STATE: {Loot} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000 ~~ Lifestone Landblock
 		DO:	DoAll
@@ -599,8 +593,8 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpse]}
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				EmbedNav nav7 {[none]}
@@ -829,13 +823,12 @@ STATE: {SecDoor} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF: All
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[46307]]==7}
 			All
@@ -944,13 +937,12 @@ STATE: {TinyHead} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
@@ -1067,7 +1059,7 @@ STATE: {ToFrigid} ~~ {
 	IF:	Always
 		DO:	DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Go]}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 				SetWatchdog 5 45 {WatchDog}
 	IF:	CellE 3CF5003E
 		DO:	EmbedNav nav13 {[none]}
@@ -1159,7 +1151,7 @@ STATE: {ToUber} ~~ {
 	IF:	Always
 		DO:	SetWatchdog 5 30 {WatchDog}
 	IF:	Always
-		DO:	DoExpr {setpvar[Stuck, DeathRecall]}
+		DO:	DoExpr {setpvar[Stuck, ReGroupRecall]}
 	IF:	CellE 38F7001B
 		DO:	EmbedNav nav16 {[none]}
 	IF:	All
@@ -1281,13 +1273,12 @@ STATE: {UseLever} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF: All
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[46292]]==7}
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[46292]],getplayercoordinates[]]<70}
@@ -1395,8 +1386,8 @@ STATE: {WatchDog} ~~ {
 		DO: SetState {SkipQuest}
 	IF:	Always
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {Zstuck} ~~ {
 	IF:	Always

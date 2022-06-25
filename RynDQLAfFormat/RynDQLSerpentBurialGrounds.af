@@ -54,11 +54,10 @@ STATE: {AcidPit} ~~ {
 			Death
 			ChatMatch {^Your fellow .* has died!$}
 			BlockE C8E90000
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	SetWatchdog 5 90 {WatchDog}
 	IF:	Any
@@ -129,7 +128,7 @@ STATE: {SkipQuest} ~~{
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load RynDQLQuestCheck}
 ~~}
-STATE: {DeathRecall} ~~ {
+STATE: {ReGroupRecall} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -162,14 +161,14 @@ STATE: {DeathRecall} ~~ {
 	IF:	Always
 		DO:	DoAll
 				EmbedNav nav2 {[none]}
-				DoExpr {setpvar[StateName,DeathRecall]}
+				DoExpr {setpvar[StateName,ReGroupRecall]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {EnableCombat} {False}
 	IF:	Not CellE 64D5000B
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[2645]}
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF:	BlockE 64D50000
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
@@ -214,7 +213,7 @@ STATE: {Default} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Profile, RynDQLSerpentBurialGrounds]}
 				DoExpr {setpvar[StateName, Default]}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 	IF:	Expr {getcharstringprop[1]==getpvar[LeaderName]}
 		DO:	DoAll
 				CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestSBG,1]" /></control></view>}
@@ -286,13 +285,12 @@ STATE: {FightBoss} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	SetOpt {AttackDistance} {0.25}
 	IF:	All
@@ -332,8 +330,8 @@ STATE: {FightBoss} ~~ {
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[Step,1]}
-				DoExpr {setpvar[StateName,DeathRecall]}
-				DoExpr {setpvar[CheckSync,DeathRecall]}
+				DoExpr {setpvar[StateName,ReGroupRecall]}
+				DoExpr {setpvar[CheckSync,ReGroupRecall]}
 				Chat {/vt meta load RynDQLCheck}
 	IF:	All
 			Expr {getpvar[QuestCompletedSkip]==0}
@@ -444,8 +442,7 @@ STATE: {Loot} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
@@ -465,8 +462,8 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpse]}
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				EmbedNav nav4 {[none]}
@@ -697,11 +694,10 @@ STATE: {SerpentBurialGrounds} ~~ {
 			Death
 			ChatMatch {^Your fellow .* has died!$}
 			BlockE C8E90000
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				SetWatchdog 5 90 {WatchDog}
@@ -864,7 +860,7 @@ STATE: {ToKraytuss} ~~ {
 			NavEmpty
 			CellE 64D50014
 		DO:	DoAll
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 				SetState {UseKraytuss}
 	IF:	BlockE C8E90000
 		DO:	SetState {ToTN}
@@ -885,14 +881,13 @@ STATE: {ToSerpentBurialGrounds} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			SecsInStateGE 300
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				SetWatchdog 5 20 {WatchDog}
@@ -1103,13 +1098,12 @@ STATE: {ClearMobs} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	SetWatchdog 5 90 {WatchDog}
 	IF: Expr {getcharskill_traininglevel[33]==3}
@@ -1141,8 +1135,8 @@ STATE: {WatchDog} ~~ {
 		DO: SetState {SkipQuest}
 	IF:	Always
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {Zstuck} ~~ {
 	IF:	Always

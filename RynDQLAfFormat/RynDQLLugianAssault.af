@@ -53,13 +53,12 @@ STATE: {CommanderPresk} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]}
@@ -127,7 +126,7 @@ STATE: {SkipQuest} ~~{
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load RynDQLQuestCheck}
 ~~}
-STATE: {DeathRecall} ~~ {
+STATE: {ReGroupRecall} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -157,7 +156,7 @@ STATE: {DeathRecall} ~~ {
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLA,1]}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[StateName,DeathRecall]}
+				DoExpr {setpvar[StateName,ReGroupRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+InsideDungeon]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RangeDown]}
@@ -176,7 +175,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	Not CellE 3032001C
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[6150]} ~~ SpellId 6150 is "Rynthid Recall".
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF:	CellE 3032001C
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
@@ -278,13 +277,12 @@ STATE: {Dungeon} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	SetWatchdog 5 90 {WatchDog}
 	IF:	All
@@ -674,13 +672,12 @@ STATE: {FightBoss} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
@@ -836,8 +833,7 @@ STATE: {Loot} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
@@ -857,8 +853,8 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpse]}
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				EmbedNav nav18 {[none]}
@@ -1087,13 +1083,12 @@ STATE: {LugianDoor} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			CellE 5951010A
@@ -1199,8 +1194,8 @@ STATE: {LugianDoor} ~~ {
 		DO:	SetState {CommanderPresk}
 	IF:	CellE 59510100
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Any
 			CellE 5951010F
 			CellE 5951010E
@@ -1281,17 +1276,16 @@ STATE: {ToDungeon} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				SetWatchdog 5 45 {WatchDog}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 				DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	CellE 3032001C
 		DO:	DoAll
@@ -1761,18 +1755,17 @@ STATE: {WatchDog} ~~ {
 		DO: SetState {SkipQuest}
 	IF:	Always
 		DO:	DoAll
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				DoExpr {clearvar[StateTimer]}
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 		DO:	DoAll
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				DoExpr {clearvar[StateTimer]}
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {Zstuck} ~~ {
 	IF:	Always

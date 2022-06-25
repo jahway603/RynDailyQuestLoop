@@ -133,16 +133,16 @@ STATE: {C} ~~ {
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub quit}
 	IF:	Expr {getvar[fail]==1100}
 		DO:	DoAll
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				SetState {Stuck}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!Stuck\"$}
-			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
+			ChatCapture {!Stuck} {19}
 		DO:	DoAll
 				DoExpr {setvar[stuck, 1]}
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				SetState {Stuck}
 	IF:	Expr {getvar[check]==getpvar[FellowCount]-1}
 		DO:	DoAll
@@ -226,21 +226,21 @@ STATE: {ConfirmProfile} ~~{
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!Stuck\"$}
-			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
+			ChatCapture {!Stuck} {19}
 		DO:	DoAll
 				DoExpr {clearvar[FellowTimerCheck]}
 				DoExpr {setvar[stuck, 1]}
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				SetState {Stuck}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
+				ChatMatch {!ReGroup}
 		DO:	DoAll
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 	IF:	Expr {getfellowshipcount[]<getpvar[FellowCount]}
 		DO:	SetState {Fellow}
 	IF:	All
@@ -364,7 +364,7 @@ STATE: {ConfirmProfile} ~~{
 				Expr {getpvar[Profile]==RynDQLUseBot}
 		DO: DoAll
 				DoExpr {clearvar[ConfirmProfileFail]}
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 	IF:	All
 			SecsInStateGE 600
 			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]]<getpvar[FellowCount]}
@@ -425,12 +425,12 @@ STATE: {DefaultPass}  ~~{
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!Stuck\"$}
-			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
+			ChatCapture {!Stuck} {19}
 		DO:	DoAll
 				DoExpr {clearvar[FellowTimerCheck]}
 				DoExpr {setvar[stuck, 1]}
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				SetState {Stuck}
 ~~}
 STATE: {Fellow} ~~ {
@@ -507,13 +507,13 @@ STATE: {Fellow} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!Stuck\"$}
-			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
+			ChatCapture {!Stuck} {19}
 		DO:	DoAll
 				DoExpr {clearvar[FellowTimerCheck]}
 				DoExpr {clearvar[FellowStuck]}
 				DoExpr {setvar[stuck, 1]}
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				SetState {Stuck}
 ~~ }
 STATE: {GoNow} ~~ {	
@@ -588,11 +588,11 @@ STATE: {GoNow} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!Stuck\"$}
-			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
+			ChatCapture {!Stuck} {19}
 		DO:	DoAll
 				DoExpr {setvar[stuck, 1]}
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				SetState {Stuck}
 ~~ }
 STATE: {Stuck} ~~ {
@@ -655,10 +655,10 @@ STATE: {W} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!Stuck\"$}
-			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
+			ChatCapture {!Stuck} {19}
 		DO:	DoAll
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				SetState {Stuck}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]==1}
 		DO:	DoAll

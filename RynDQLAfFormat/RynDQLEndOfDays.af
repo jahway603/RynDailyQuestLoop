@@ -55,14 +55,13 @@ STATE: {ClearMobs} ~~ {
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==1}
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			SecsInStateGE 180
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF: Expr {getcharskill_traininglevel[33]==3}
 		DO: SetOpt {SummonPets} {True}
 	IF: Always
@@ -115,7 +114,7 @@ STATE: {SkipQuest} ~~{
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load RynDQLQuestCheck}	
 ~~}
-STATE: {DeathRecall} ~~ {
+STATE: {ReGroupRecall} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -145,7 +144,7 @@ STATE: {DeathRecall} ~~ {
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestEOD,1]}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[StateName,DeathRecall]}
+				DoExpr {setpvar[StateName,ReGroupRecall]}
 				DoExpr {clearvar[Room]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[Safe]}
@@ -177,7 +176,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	Not CellE 3032001C
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[6150]} ~~ SpellId 6150 is "Rynthid Recall".
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF: All
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==0}
 			CellE 3032001C
@@ -340,8 +339,7 @@ STATE: {Dungeon} ~~ {
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==1}
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			SecsInStateGE 600
 			All
 				Expr {testvar[StateTimer]}
@@ -349,8 +347,8 @@ STATE: {Dungeon} ~~ {
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF: All
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+PortalStuck]==0}
 			Expr {getvar[Room]<4}
@@ -592,16 +590,15 @@ STATE: {FightBoss} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Always
@@ -774,8 +771,7 @@ STATE: {Loot} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000 ~~ Lifestone Landblock
 		DO:	DoAll
@@ -795,8 +791,8 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpse]}
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				EmbedNav BlankOnce {[none]}
@@ -1028,14 +1024,13 @@ STATE: {PortalCheck} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==1}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF: Any
 			All
 				Expr {getpvar[Leader]==1}
@@ -1075,14 +1070,13 @@ STATE: {PortalStuck} ~~ {
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==1}
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			SecsInStateGE 600
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF: Expr {getpvar[Leader]==1}
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+PortalStuck,1]}	
 	IF: All
@@ -1091,7 +1085,7 @@ STATE: {PortalStuck} ~~ {
 		DO: DoAll
 				Chat {/f !Abort}
 				DoExpr {setpvar[EoDAbortSkip,1]}
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF: Any
 			All
 				Expr {getpvar[Leader]==1}
@@ -1200,13 +1194,12 @@ STATE: {ToDungeon} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[Profile,RynDQLEndOfDays]}
@@ -1226,7 +1219,7 @@ STATE: {ToDungeon} ~~ {
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 				DoExpr {setpvar[Profile,RynDQLEndOfDays]}
 				DoExpr {setpvar[StateName,ToDungeon]}
 				DoExpr {setpvar[CheckSync,ToDungeonPitStopOne]}
@@ -1380,7 +1373,7 @@ STATE: {ToRynthid} ~~ {
 			CellE 3032001C
 		DO:	DoAll
 				DoExpr {setpvar[StateName,ToAun]}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 				DoExpr {setpvar[ReturnMetaProfile,RynDQLEndOfDays]}
 				DoExpr {setpvar[Profile,RynDQLKillTasks]}
 				Chat {/vt meta load RynDQLKillTasks}
@@ -1389,7 +1382,7 @@ STATE: {ToRynthid} ~~ {
 			CellE 3032001C
 		DO:	DoAll
 				DoExpr {setpvar[StateName,ToDungeon]}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 				DoExpr {setpvar[ReturnMetaProfile,RynDQLEndOfDays]}
 				DoExpr {setpvar[Profile,RynDQLKillTasks]}
 				DoExpr {setpvar[Flag,1]}
@@ -1398,7 +1391,7 @@ STATE: {ToRynthid} ~~ {
 			Expr {getpvar[Flag]==1}
 			CellE 3032001C
 		DO:	DoAll
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 				DoExpr {setpvar[StateName,ToDungeon]}
 				DoExpr {setpvar[CheckSync,ToDungeon]}
 				Chat {/vt meta load RynDQLCheck} ~~ ToDungeon
@@ -1416,8 +1409,8 @@ STATE: {WatchDog} ~~ {
 		DO: SetState {SkipQuest}
 	IF:	Always
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {Zstuck} ~~ {
 	IF: Always

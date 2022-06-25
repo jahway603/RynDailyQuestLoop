@@ -53,16 +53,15 @@ STATE: {BabyFive} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Any
@@ -130,16 +129,15 @@ STATE: {BabyFour} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Any
@@ -207,16 +205,15 @@ STATE: {BabyOne} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Any
@@ -284,16 +281,15 @@ STATE: {BabySix} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Any
@@ -362,16 +358,15 @@ STATE: {BabyThree} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Any
@@ -439,16 +434,15 @@ STATE: {BabyTwo} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Any
@@ -593,7 +587,7 @@ STATE: {SkipQuest} ~~{
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load RynDQLQuestCheck}
 ~~}
-STATE: {DeathRecall} ~~ {
+STATE: {ReGroupRecall} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -625,7 +619,7 @@ STATE: {DeathRecall} ~~ {
 		DO:	SetState {ToTN}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[StateName,DeathRecall]}
+				DoExpr {setpvar[StateName,ReGroupRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
@@ -636,7 +630,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	Not CellE 002902E7
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[2645]} ~~ SpellId 2645 is "Portal Recall".
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF:	CellE 002902E7
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
@@ -671,13 +665,12 @@ STATE: {DeathRoute} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+B]==0}
 		DO:	SetState {ToBabyOne}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+B]==1}
@@ -934,7 +927,7 @@ STATE: {Hermit} ~~ {
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDA]==1}
 		DO: SetState {SkipQuest}
 	IF:	Always
-		DO:	DoExpr {setpvar[Stuck,DeathRecall]}
+		DO:	DoExpr {setpvar[Stuck,ReGroupRecall]}
 	IF:	Always
 		DO:	DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	All
@@ -949,7 +942,7 @@ STATE: {Hermit} ~~ {
 			CellE 002902E7
 		DO:	DoAll
 				EmbedNav nav16 {[none]}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 				DoExpr {setpvar[StateName,ToBabyOne]}
 				DoExpr {setpvar[CheckSync,ToBabyOne]}
 				Chat {/vt meta load RynDQLCheck}
@@ -1040,7 +1033,7 @@ STATE: {Mp} ~~ {
 			CellE 5119002C
 			BlockE 11330000
 		DO:	DoAll
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				SetState {ToMP}
 	IF:	CellE 016C01BC
 		DO:	EmbedNav nav17 {[none]}
@@ -1089,11 +1082,10 @@ STATE: {RecallDrop} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	All
@@ -1137,7 +1129,7 @@ STATE: {RunToHermit} ~~ {
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDA]==1}
 		DO: SetState {SkipQuest}
 	IF:	Always
-		DO:	DoExpr {setpvar[Stuck,DeathRecall]}
+		DO:	DoExpr {setpvar[Stuck,ReGroupRecall]}
 	IF:	Always
 		DO:	DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	CellE 00070145
@@ -1170,13 +1162,12 @@ STATE: {StuckMid} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	All
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+B]==4}
 			CellE 00290187
@@ -1336,16 +1327,15 @@ STATE: {ToBabyFive} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
@@ -1376,16 +1366,15 @@ STATE: {ToBabyFour} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
@@ -1414,16 +1403,15 @@ STATE: {ToBabyOne} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
@@ -1455,16 +1443,15 @@ STATE: {ToBabySix} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
@@ -1490,16 +1477,15 @@ STATE: {ToBabyThree} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Expr {getpvar[FellowCount]<2}
@@ -1529,16 +1515,15 @@ STATE: {ToBabyTwo} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=900}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
@@ -1564,13 +1549,12 @@ STATE: {ToExit} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	EmbedNav nav31 {[none]}
 	IF:	CellE 49F50100

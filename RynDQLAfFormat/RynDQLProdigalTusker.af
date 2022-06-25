@@ -53,16 +53,15 @@ STATE: {Cavern} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=420}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	All
 			Expr {getvar[StopTimer]==0}
 			Expr {testvar[StateTimer]}
@@ -204,13 +203,12 @@ STATE: {ClearMobs} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
@@ -260,7 +258,7 @@ STATE: {SkipQuest} ~~{
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load RynDQLQuestCheck}
 ~~}
-STATE: {DeathRecall} ~~ {
+STATE: {ReGroupRecall} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -290,7 +288,7 @@ STATE: {DeathRecall} ~~ {
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestPT,1]}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[StateName,DeathRecall]}
+				DoExpr {setpvar[StateName,ReGroupRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
@@ -309,13 +307,13 @@ STATE: {DeathRecall} ~~ {
 			Not CellE EA6C0156
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[2645]} ~~ SpellId 2645 is "Portal Recall".
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF:	All
 			Expr {getpvar[Tied]==1}
 			Not CellE EA6C0156
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[2647]} ~~ SpellId 2647 is "Secondary Portal Recall".
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF:	CellE EA6C0156
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
@@ -355,7 +353,7 @@ STATE: {Default} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Profile, RynDQLProdigalTusker]}
 				DoExpr {setpvar[StateName, Default]}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 	IF:	Any
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			ItemCountGE 1 {Egg}
@@ -511,8 +509,7 @@ STATE: {Loot} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
@@ -532,8 +529,8 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpse]}
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				EmbedNav nav5 {[none]}
@@ -982,8 +979,8 @@ STATE: {ToJilnaFullgood} ~~ {
 STATE: {Watchdog} ~~ {
 	IF:	Always
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {Zstuck} ~~ {
 	IF:	Always

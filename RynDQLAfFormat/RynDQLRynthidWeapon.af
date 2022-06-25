@@ -53,23 +53,22 @@ STATE: {CatacombsOfTorment} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -297,23 +296,22 @@ STATE: {ClearMobs} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
@@ -348,7 +346,7 @@ STATE: {ClearMobs} ~~ {
 				SetOpt {EnableNav} {True}
 				DoExpr {vtsetmetastate[getpvar[ClearMobs]]}
 	IF:	SecsInStateGE 180
-		DO:	Chat {/f !ManDown}
+		DO:	Chat {/f !ReGroup}
 ~~ }
 STATE: {SkipQuest} ~~{
 	IF:	All
@@ -373,7 +371,7 @@ STATE: {SkipQuest} ~~{
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load RynDQLQuestCheck}
 ~~}
-STATE: {DeathRecall} ~~ {
+STATE: {ReGroupRecall} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -401,7 +399,7 @@ STATE: {DeathRecall} ~~ {
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestRW,1]}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[StateName,DeathRecall]}
+				DoExpr {setpvar[StateName,ReGroupRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
@@ -412,7 +410,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	Not CellE 3032001C
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[6150]} ~~ SpellId 6150 is "Rynthid Recall".
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF:	BlockE 30320000
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
@@ -458,7 +456,7 @@ STATE: {Default} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Profile, RynDQLRynthidWeapon]}
 				DoExpr {setpvar[StateName, Default]}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 	IF:	Always
 		DO:	DoExpr {setpvar[Shard,getitemcountininventorybyname[Shard of the Curator of Torment's Mask]+1]}
 	IF:	Any
@@ -588,23 +586,22 @@ STATE: {FightBoss} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
@@ -668,9 +665,9 @@ STATE: {FightBoss} ~~ {
 					Expr {getpvar[AdminSkip]==1}
 					Expr {getitemcountininventorybyname[Shard of the Curator of Torment's Mask]==getpvar[Shard]}
 		DO:	DoAll
-				DoExpr {setpvar[StateName,DeathRecall]}
-				DoExpr {setpvar[CheckSync,DeathRecall]}
-				Chat {/vt meta load RynDQLCheck} ~~ DeathRecall
+				DoExpr {setpvar[StateName,ReGroupRecall]}
+				DoExpr {setpvar[CheckSync,ReGroupRecall]}
+				Chat {/vt meta load RynDQLCheck} ~~ ReGroupRecall
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Curator of Torment]]==7}
 			CellE 59540144
@@ -775,24 +772,23 @@ STATE: {GroundToTorment} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Pillar]==4}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -983,8 +979,7 @@ STATE: {Loot} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000 ~~ Lifestone Landblock
 		DO:	DoAll
@@ -1004,17 +999,17 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpse]}
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	Always
 		DO:	DoAll
@@ -1244,23 +1239,22 @@ STATE: {MoveToHallway} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
@@ -1382,24 +1376,23 @@ STATE: {PathOfRage} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Pillar]==4}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -1549,24 +1542,23 @@ STATE: {PathOfTorment} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Pillar]==4}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -1678,24 +1670,23 @@ STATE: {PlatformOfRage} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Pillar]==4}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -1829,24 +1820,23 @@ STATE: {PlatformOfTorment} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Pillar]==4}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -1998,23 +1988,22 @@ STATE: {PlatformPicker} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -2091,23 +2080,22 @@ STATE: {TalkToCurator} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	Any
 			ChatMatch {^As the Lothus still loyal to the Curator of Torment reform one of the Warding Crystals, the path to his catacombs is hidden once again.$}
@@ -2172,23 +2160,22 @@ STATE: {ToCatacombsOfTorment} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -2307,24 +2294,23 @@ STATE: {ToGroundPillarOne} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Pillar]==4}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -2449,23 +2435,22 @@ STATE: {ToGroundPillarTwo} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -2552,23 +2537,22 @@ STATE: {ToPlatform} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ Remove Me
 	IF:	All~~ Remove Me
 			Expr {getpvar[Leader]==1}~~ Remove Me
 			SecsInStateGE 3 ~~ Remove Me
 			Expr {getpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[]]==0}~~ Remove Me
 		DO: DoAll~~ Remove Me
-				Chat {/f !ManDown}~~ Remove Me
+				Chat {/f !ReGroup}~~ Remove Me
 				DoExpr {setpvar[DeathCheck+getpvar[Profile]+vtgetmetastate[],1]}~~ Remove Me
-				SetState {DeathRecall}~~ Remove Me
+				SetState {ReGroupRecall}~~ Remove Me
 ~~ Remove Me
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}

@@ -59,7 +59,7 @@ STATE: {SkipQuest} ~~{
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load RynDQLQuestCheck}
 ~~}
-STATE: {DeathRecall} ~~ {
+STATE: {ReGroupRecall} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -91,7 +91,7 @@ STATE: {DeathRecall} ~~ {
 		DO:	SetState {ToTN}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[StateName,DeathRecall]}
+				DoExpr {setpvar[StateName,ReGroupRecall]}
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
@@ -100,7 +100,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	Not BlockE 38F70000
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[2645]} ~~ SpellId 2645 is "Portal Recall".
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF:	BlockE 38F70000
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
@@ -247,16 +247,15 @@ STATE: {KillWalls} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {testvar[StateTimer]}
 				Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=720}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Expr {getpvar[AdminSkip]==0}
@@ -326,7 +325,7 @@ STATE: {KillWalls} ~~ {
 				SetOpt {EnableNav} {False}
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 				DoExpr {setpvar[StateName,KillWalls]}
 				DoExpr {setpvar[CheckSync,KillWallsOne]}
 				Chat {/vt meta load RynDQLCheck}
@@ -439,16 +438,15 @@ STATE: {ToFrozenCave} ~~ {
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				ChatCapture {!ReGroup} {19}
 				All
 					Expr {testvar[StateTimer]}
 					Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=300}
 				Any
 					BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF: Any
 			BlockE F6820000
 			BlockE F6810000
@@ -654,18 +652,17 @@ STATE: {Watchdog} ~~ {
 		DO: SetState {SkipQuest}
 	IF:	Always
 		DO:	DoAll
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				DoExpr {clearvar[StateTimer]}
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 		DO:	DoAll
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				DoExpr {clearvar[StateTimer]}
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {Zstuck} ~~ {
 	IF:	Always

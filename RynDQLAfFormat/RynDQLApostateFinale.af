@@ -46,12 +46,12 @@ STATE: {ClearMobs} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
-	IF: Expr {getcharskill_traininglevel[33]==3}
-		DO: SetOpt {SummonPets} {True}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
+	IF:	Expr {getcharskill_traininglevel[33]==3}
+		DO:	SetOpt {SummonPets} {True}
 	IF:	Always
 		DO:	DoAll
 				SetOpt {EnableNav} {False}
@@ -63,14 +63,13 @@ STATE: {ClearMobs} ~~ {
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				ChatCapture {!ReGroup} {19}
 				SecsInStateGE 180
 				Any
 					BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecallNonShard}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecallNonShard}
 	IF:	All
 			Any
 				Not Expr {getpvar[ClearMobs]==`FirstDungeon`}
@@ -78,14 +77,13 @@ STATE: {ClearMobs} ~~ {
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				ChatCapture {!ReGroup} {19}
 				SecsInStateGE 180
 				Any
 					BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Any
 			NoMobsInDist 30
 			SecsInStateGE 30
@@ -103,174 +101,6 @@ STATE: {ClearMobs} ~~ {
 				SetOpt {EnableCombat} {False}
 				ChatExpr {\/vt setmetastate +getpvar[ClearMobs]}
 ~~ }
-STATE: {DeathRecallNonShard} ~~ {
-	IF:	All
-			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
-			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
-		DO:	DoAll
-				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
-				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
-	IF: Always
-		DO: SetState {ToGK}
-~~ }
-STATE: {SkipQuest} ~~{
-	IF:	All
-			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
-			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
-		DO:	DoAll
-				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
-				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Always
-		DO: DoAll
-				DoExpr {setpvar[DoQuestAF,0]}
-				DoExpr {clearpvar[Death+getpvar[Profile]]}
-				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
-	IF:	All
-			Expr {getpvar[DoQuestAF]==0}
-			Expr {getpvar[Death+getpvar[Profile]]==0}
-			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO:	DoAll
-				DoExpr {setpvar[Profile,RynDQLQuestCheck]}
-				DoExpr {setpvar[StateName,Default]}
-				Chat {/vt meta load RynDQLQuestCheck}
-~~}
-STATE: {DeathRecall} ~~ {
-	IF:	All
-			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
-			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
-		DO:	DoAll
-				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
-				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF:	Not Expr {testvar[CombatStuck]}
-		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
-	IF:	All
-			Expr {testvar[CombatStuck]]}
-			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
-			Any
-				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
-				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
-		DO:	Chat {/ub quit}
-	IF:	IntoPortal
-		DO:	DoExpr {clearvar[CombatStuck]}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
-	IF: Expr {getpvar[Death+getpvar[Profile]]>4}
-		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]}
-	IF:	Always
-		DO:	DoExpr {setpvar[StateName,vtgetmetastate[]]}
-	IF:	Always
-		DO:	DoAll
-				DoExpr {setpvar[StateName,DeathRecall]}
-				DoExpr {clearvar[PitStop]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree]}
-				DoExpr {clearpvar[ApostateFinaleShardOne]}
-				DoExpr {clearpvar[ApostateFinaleShardTwo]}
-				DoExpr {clearpvar[ApostateFinaleShardThree]}
-				SetOpt {NavCloseStopRange} {0.00625}
-				DoExpr {clearvar[StateTimer]}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
-				SetOpt {EnableCombat} {False}
-				SetOpt {EnableNav} {False}
-				EmbedNav nav0 {[none]}
-	IF:	Not Any
-			CellE 8B03018F
-			CellE 8B030471
-			CellE 8B030476
-			CellE 8B030464
-			CellE 8B0303FF
-			CellE 8B030332
-		DO:	DoAll
-				DoExpr {actiontrycastbyid[2645]} ~~ SpellId 2645 is "Portal Recall".
-				SetState {DeathRecall}
-	IF:	CellE 8B03018F
-		DO:	DoAll
-				SetOpt {EnableNav} {True}
-				DoExpr {clearvar[CombatStuck]}
-				EmbedNav nav1 {[DelayShardOne]}
-	IF:	All
-			Any
-				NavEmpty
-				SecsInStateGE 60
-			CellE 8B03018F
-		DO:	DoAll
-				DoExpr {clearvar[CombatStuck]}
-				SetOpt {EnableNav} {True}
-				DoExpr {setpvar[StateName,FirstDungeon]}
-				DoExpr {ifthen[getpvar[Leader]==1,`setpvar[Death+getpvar[Profile],getpvar[Death+getpvar[Profile]]+1]&&setpvar[StateName,getpvar[StateName]]`,`setpvar[StateName,getpvar[StateName]]`]}
-				DoExpr {setpvar[CheckSync,Death]}
-				Chat {/vt meta load RynDQLCheck} ~~ Death
-	IF:	Any
-			CellE 8B030471
-			CellE 8B030476
-			CellE 8B030464
-		DO:	DoAll
-				SetOpt {EnableNav} {True}
-				EmbedNav nav2 {[DelayShardTwo]}
-	IF:	All
-			Any
-				NavEmpty
-				SecsInStateGE 60
-				ExitPortal
-			Any
-				CellE 8B030471
-				CellE 8B030476
-				CellE 8B030464
-		DO:	DoAll
-				DoExpr {clearvar[CombatStuck]}
-				SetOpt {EnableNav} {True}
-				DoExpr {setpvar[StateName,GetShardTwo]}
-				DoExpr {ifthen[getpvar[Leader]==1,`setpvar[Death+getpvar[Profile],getpvar[Death+getpvar[Profile]]+1]&&setpvar[StateName,getpvar[StateName]]`,`setpvar[StateName,getpvar[StateName]]`]}
-				DoExpr {setpvar[CheckSync,Death]}
-				Chat {/vt meta load RynDQLCheck} ~~ GetShardTwo
-	IF:	CellE 8B0303FF
-		DO:	DoAll
-				SetOpt {EnableNav} {True}
-				EmbedNav nav3 {[DelayShardThree]}
-	IF:	All
-			Any
-				NavEmpty
-				SecsInStateGE 60
-				ExitPortal
-			CellE 8B0303FF
-		DO:	DoAll
-				DoExpr {clearvar[CombatStuck]}
-				SetOpt {EnableNav} {True}
-				DoExpr {setpvar[StateName,GetShardThree]}
-				DoExpr {ifthen[getpvar[Leader]==1,`setpvar[Death+getpvar[Profile],getpvar[Death+getpvar[Profile]]+1]&&setpvar[StateName,getpvar[StateName]]`,`setpvar[StateName,getpvar[StateName]]`]}
-				DoExpr {setpvar[CheckSync,Death]}
-				Chat {/vt meta load RynDQLCheck} ~~ GetShardThree
-	IF:	CellE 8B030332
-		DO:	DoAll
-				SetOpt {EnableNav} {True}
-				EmbedNav nav4 {[DelayHeart]}
-	IF:	All
-			Any
-				NavEmpty
-				SecsInStateGE 60
-				ExitPortal
-			CellE 8B030332
-		DO:	DoAll
-				DoExpr {clearvar[CombatStuck]}
-				SetOpt {EnableNav} {True}
-				DoExpr {setpvar[StateName,Heart]}
-				DoExpr {ifthen[getpvar[Leader]==1,`setpvar[Death+getpvar[Profile],getpvar[Death+getpvar[Profile]]+1]&&setpvar[StateName,getpvar[StateName]]`,`setpvar[StateName,getpvar[StateName]]`]}
-				DoExpr {setpvar[CheckSync,Death]}
-				Chat {/vt meta load RynDQLCheck} ~~ Heart
-~~ }
 STATE: {Default} ~~ {
 	IF:	All
 			Expr {getpvar[Profile]==RynDQLApostateFinale}
@@ -281,7 +111,7 @@ STATE: {Default} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Profile, RynDQLApostateFinale]}
 				DoExpr {setpvar[StateName, Default]}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 	IF:	Any
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			ItemCountGE 1 {Egg}
@@ -345,8 +175,8 @@ STATE: {Default} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing,1]}
 				DoExpr {setpvar[StateName,vtgetmetastate[]]}
 				SetState {SyncBuff}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
-		DO: DoAll
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
+		DO:	DoAll
 				DoExpr {setpvar[StateName,vtgetmetastate[]]}
 				SetState {SyncBuff}
 	IF:	All
@@ -357,62 +187,6 @@ STATE: {Default} ~~ {
 				DoExpr {setpvar[StateName,ToGK]}
 				SetState {ToGK}
 ~~ }
-STATE: {SyncBuff} ~~ {
-	IF:	All
-			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
-			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
-		DO:	DoAll
-				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
-				DoExpr {clearvar[capturegroup_tellquest]}
-	IF:	Not Expr {uiviewexists[STUCK]}
-		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestGrael,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestGrael]==1}
-		DO: SetState {SkipQuest}
-	IF:	All
-			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]}
-			SecsInStateGE 240
-		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
-	IF: Not Expr {testpvar[BuffingStartAll]}
-		DO: DoAll
-				DoExpr {setpvar[BuffingStartAll,1]}
-				Chat {/vt forcebuff}
-	IF: All
-			NeedToBuff
-			Expr {vtgetsetting[EnableBuffing]!=True}
-		DO: SetOpt {EnableBuffing} {True}
-	IF:	All
-			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]}
-			Not NeedToBuff
-		DO:	DoAll
-				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete,listcreate[]]}
-				SetState {SyncBuff}
-	IF:	All
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]}
-			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getcharstringprop[1]]}
-			Not NeedToBuff
-		DO:	DoAll
-				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getcharstringprop[1]]}
-				SetState {SyncBuff}
-	IF:	All
-			Not NeedToBuff
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]}
-			Any
-				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]}
-				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]}
-				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]}
-				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]}
-				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]}
-				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]}
-				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]}
-				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]}
-				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameNine]]}		
-		DO: DoAll
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]}
-				DoExpr {setpvar[StateName,Default]}
-				DoExpr {vtsetmetastate[getpvar[StateName]]}
-~~}
 STATE: {Finished} ~~ {
 	IF:	All
 			SecsInStateGE 5
@@ -530,27 +304,26 @@ STATE: {FirstDungeon} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecallNonShard}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecallNonShard}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,FirstDungeon]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[Stuck,DeathRecallNonShard]}
+				DoExpr {setpvar[Stuck,ReGroupRecallNonShard]}
 				DoExpr {setpvar[LootDungeon,1]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
@@ -588,9 +361,9 @@ STATE: {FirstDungeon} ~~ {
 				DoExpr {setpvar[Shard,1]}
 				DoExpr {setpvar[StateName,ToGK]}
 				DoExpr {setpvar[CheckSync,ToGKShardOne]}
-				Chat {/vt meta load RynDQLCheck} ~~ ToGKShardOne
+				Chat {/vt meta load RynDQLCheck}
 	IF:	CellE 8B03018F
-		DO:	EmbedNav nav5 {[none]}
+		DO:	EmbedNav nav0 {[none]}
 	IF:	All
 			MobsInDist_Name 1 15 {Apostate Nexus Master}
 			NavEmpty
@@ -622,12 +395,12 @@ STATE: {Flag} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
 	IF:	CellE 21700031
-		DO:	EmbedNav nav6 {[none]}
+		DO:	EmbedNav nav1 {[none]}
 	IF:	Any
 			ChatMatch {^Emissary of Asheron tells you, "Find the force or entity responsible, end it. Return to me with proof, and I'll reward you."}
 			ChatMatch {^Emissary of Asheron tells you, "Any questions?"}
@@ -663,7 +436,7 @@ STATE: {Flag} ~~ {
 				DoExpr {setpvar[Step,2]}
 				DoExpr {setpvar[StateName,ToGK]}
 				DoExpr {setpvar[CheckSync,ToGKFlag]}
-				Chat {/vt meta load RynDQLCheck} ~~ ToGKFlag
+				Chat {/vt meta load RynDQLCheck}
 	IF:	All
 			CellE 21700029
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[37,Emissary of Asheron]]==7}
@@ -682,20 +455,19 @@ STATE: {GetShardThree} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,GetShardThree]}
@@ -738,9 +510,9 @@ STATE: {GetShardThree} ~~ {
 				DoExpr {setpvar[Shard,3]}
 				DoExpr {setpvar[StateName,ToGK]}
 				DoExpr {setpvar[CheckSync,ToGKShardThree]}
-				Chat {/vt meta load RynDQLCheck} ~~ ToGKShardThree
+				Chat {/vt meta load RynDQLCheck}
 	IF:	CellE 8B0303FF
-		DO:	EmbedNav nav7 {[none]}
+		DO:	EmbedNav nav2 {[none]}
 	IF:	All
 			MobsInDist_Name 1 15 {Apostate Nexus Master}
 			NavEmpty
@@ -772,20 +544,19 @@ STATE: {GetShardTwo} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,GetShardTwo]}
@@ -828,13 +599,13 @@ STATE: {GetShardTwo} ~~ {
 				DoExpr {setpvar[Shard,2]}
 				DoExpr {setpvar[StateName,ToGK]}
 				DoExpr {setpvar[CheckSync,ToGKShardTwo]}
-				Chat {/vt meta load RynDQLCheck} ~~ ToGKShardTwo
+				Chat {/vt meta load RynDQLCheck}
 	IF:	Any
 			CellE 8B030471
 			CellE 8B030476
 			CellE 8B030464
 			CellE 8B03046F
-		DO:	EmbedNav nav8 {[none]}
+		DO:	EmbedNav nav3 {[none]}
 	IF:	All
 			MobsInDist_Name 1 15 {Apostate Nexus Master}
 			NavEmpty
@@ -866,21 +637,20 @@ STATE: {Heart} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-			Any	
+			ChatCapture {!ReGroup} {19}
+			Any
 				BlockE C8E90000
 				CellE 21760036
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,Heart]}
@@ -890,7 +660,7 @@ STATE: {Heart} ~~ {
 	IF:	Always
 		DO:	DoExpr {setpvar[LootDungeon,4]}
 	IF:	CellE 8B030332
-		DO:	EmbedNav nav9 {[none]}
+		DO:	EmbedNav nav4 {[none]}
 	IF:	All
 			Expr {getpvar[FellowCount]>=2}
 			NavEmpty
@@ -903,7 +673,7 @@ STATE: {Heart} ~~ {
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,HeartJump]}
 				DoExpr {setpvar[CheckSync,HeartJump]}
-				Chat {/vt meta load RynDQLCheck} ~~ HeartJump High Fellow
+				Chat {/vt meta load RynDQLCheck}
 	IF:	All
 			Expr {getpvar[FellowCount]<2}
 			NavEmpty
@@ -916,7 +686,7 @@ STATE: {Heart} ~~ {
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,HeartJump]}
 				DoExpr {setpvar[CheckSync,HeartJump]}
-				Chat {/vt meta load RynDQLCheck} ~~ HeartJump Low fellow
+				Chat {/vt meta load RynDQLCheck}
 ~~ }
 STATE: {HeartJump} ~~ {
 	IF:	All
@@ -927,20 +697,19 @@ STATE: {HeartJump} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	All
 			Not Expr {testvar[JumpTimer]}
 			NoMobsInDist 15
@@ -963,7 +732,7 @@ STATE: {HeartJump} ~~ {
 				CellE 8B03016C
 				CellE 8B03016D
 				CellE 8B0301CA
-		DO:	EmbedNav nav10 {[none]}
+		DO:	EmbedNav nav5 {[none]}
 	IF:	All
 			All
 				Expr {testvar[JumpTimer]}
@@ -1013,7 +782,7 @@ STATE: {HeartJump} ~~ {
 				SetOpt {NavPriorityBoost} {False}
 				DoExpr {setpvar[StateName,ToGK]}
 				DoExpr {setpvar[CheckSync,ToGKHeart]}
-				Chat {/vt meta load RynDQLCheck} ~~ ToGKHeart
+				Chat {/vt meta load RynDQLCheck}
 	IF:	Any
 			CellE 8B030115
 			CellE 8B030118
@@ -1026,11 +795,14 @@ STATE: {HeartJump} ~~ {
 		DO:	DoAll
 				SetOpt {NavPriorityBoost} {True}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.1875]]`]}
-				EmbedNav nav12 {[none]}
+				EmbedNav nav6 {[none]}
 	IF:	All
-			MobsInDist_Name 1 15 {Apostate Grand Director}
+			MobsInDist_Name 1 35 {Apostate Grand Director}
+			Expr {coordinategetz[getplayercoordinates[]]#0.4749}
 			NavEmpty
-		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
+		DO:	DoAll
+				EmbedNav nav7 {[none]}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getitemcountininventorybyname[Shard of the Apostate Grand Director's Broken Mask]<getpvar[BrokenShard]]}
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Apostate Grand Director]]==7}
@@ -1058,17 +830,16 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
-				BlockE C8E90000 ~~ Lifestone Landblock
+				BlockE C8E90000
 		DO:	DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
 				SetOpt {EnableLooting} {True}
@@ -1086,11 +857,11 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpse]}
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
-				EmbedNav nav13 {[none]}
+				EmbedNav nav8 {[none]}
 				SetOpt {EnableLooting} {False}
 	IF:	All
 			NavEmpty
@@ -1305,14 +1076,159 @@ STATE: {PickStep} ~~ {
 		DO:	SetState {Flag}
 	IF:	Expr {getpvar[Step]==2}
 		DO:	DoAll
-				DoExpr {setpvar[Stuck,DeathRecallNonShard]}
+				DoExpr {setpvar[Stuck,ReGroupRecallNonShard]}
 				SetState {ToFirstDungeon}
 	IF:	Expr {getpvar[Step]==3}
 		DO:	DoAll
-				DoExpr {setpvar[Stuck,DeathRecall]}
+				DoExpr {setpvar[Stuck,ReGroupRecall]}
 				SetState {ToShards}
 	IF:	Expr {getpvar[Step]==4}
 		DO:	SetState {TurnIn}
+~~ }
+STATE: {ReGroupRecall} ~~ {
+	IF:	All
+			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
+			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
+		DO:	DoAll
+				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
+				DoExpr {clearvar[capturegroup_tellquest]}
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Not Expr {testvar[CombatStuck]}
+		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
+	IF:	All
+			Expr {testvar[CombatStuck]]}
+			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+		DO:	Chat {/ub quit}
+	IF:	IntoPortal
+		DO:	DoExpr {clearvar[CombatStuck]}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
+	IF:	Expr {getpvar[Death+getpvar[Profile]]>4}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]}
+	IF:	Always
+		DO:	DoExpr {setpvar[StateName,vtgetmetastate[]]}
+	IF:	Always
+		DO:	DoAll
+				DoExpr {setpvar[StateName,ReGroupRecall]}
+				DoExpr {clearvar[PitStop]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree]}
+				DoExpr {clearpvar[ApostateFinaleShardOne]}
+				DoExpr {clearpvar[ApostateFinaleShardTwo]}
+				DoExpr {clearpvar[ApostateFinaleShardThree]}
+				SetOpt {NavCloseStopRange} {0.00625}
+				DoExpr {clearvar[StateTimer]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				SetOpt {EnableCombat} {False}
+				SetOpt {EnableNav} {False}
+				EmbedNav nav9 {[none]}
+	IF:	Not Any
+			CellE 8B03018F
+			CellE 8B030471
+			CellE 8B030476
+			CellE 8B030464
+			CellE 8B0303FF
+			CellE 8B030332
+		DO:	DoAll
+				DoExpr {actiontrycastbyid[2645]} ~~ SpellId 2645 is "Portal Recall".
+				SetState {ReGroupRecall}
+	IF:	CellE 8B03018F
+		DO:	DoAll
+				SetOpt {EnableNav} {True}
+				DoExpr {clearvar[CombatStuck]}
+				EmbedNav nav10 {[DelayShardOne]}
+	IF:	All
+			Any
+				NavEmpty
+				SecsInStateGE 60
+			CellE 8B03018F
+		DO:	DoAll
+				DoExpr {clearvar[CombatStuck]}
+				SetOpt {EnableNav} {True}
+				DoExpr {setpvar[StateName,FirstDungeon]}
+				DoExpr {ifthen[getpvar[Leader]==1,`setpvar[Death+getpvar[Profile],getpvar[Death+getpvar[Profile]]+1]&&setpvar[StateName,getpvar[StateName]]`,`setpvar[StateName,getpvar[StateName]]`]}
+				DoExpr {setpvar[CheckSync,Death]}
+				Chat {/vt meta load RynDQLCheck}
+	IF:	Any
+			CellE 8B030471
+			CellE 8B030476
+			CellE 8B030464
+		DO:	DoAll
+				SetOpt {EnableNav} {True}
+				EmbedNav nav11 {[DelayShardTwo]}
+	IF:	All
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
+			Any
+				CellE 8B030471
+				CellE 8B030476
+				CellE 8B030464
+		DO:	DoAll
+				DoExpr {clearvar[CombatStuck]}
+				SetOpt {EnableNav} {True}
+				DoExpr {setpvar[StateName,GetShardTwo]}
+				DoExpr {ifthen[getpvar[Leader]==1,`setpvar[Death+getpvar[Profile],getpvar[Death+getpvar[Profile]]+1]&&setpvar[StateName,getpvar[StateName]]`,`setpvar[StateName,getpvar[StateName]]`]}
+				DoExpr {setpvar[CheckSync,Death]}
+				Chat {/vt meta load RynDQLCheck}
+	IF:	CellE 8B0303FF
+		DO:	DoAll
+				SetOpt {EnableNav} {True}
+				EmbedNav nav12 {[DelayShardThree]}
+	IF:	All
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
+			CellE 8B0303FF
+		DO:	DoAll
+				DoExpr {clearvar[CombatStuck]}
+				SetOpt {EnableNav} {True}
+				DoExpr {setpvar[StateName,GetShardThree]}
+				DoExpr {ifthen[getpvar[Leader]==1,`setpvar[Death+getpvar[Profile],getpvar[Death+getpvar[Profile]]+1]&&setpvar[StateName,getpvar[StateName]]`,`setpvar[StateName,getpvar[StateName]]`]}
+				DoExpr {setpvar[CheckSync,Death]}
+				Chat {/vt meta load RynDQLCheck}
+	IF:	CellE 8B030332
+		DO:	DoAll
+				SetOpt {EnableNav} {True}
+				EmbedNav nav13 {[DelayHeart]}
+	IF:	All
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
+			CellE 8B030332
+		DO:	DoAll
+				DoExpr {clearvar[CombatStuck]}
+				SetOpt {EnableNav} {True}
+				DoExpr {setpvar[StateName,Heart]}
+				DoExpr {ifthen[getpvar[Leader]==1,`setpvar[Death+getpvar[Profile],getpvar[Death+getpvar[Profile]]+1]&&setpvar[StateName,getpvar[StateName]]`,`setpvar[StateName,getpvar[StateName]]`]}
+				DoExpr {setpvar[CheckSync,Death]}
+				Chat {/vt meta load RynDQLCheck}
+~~ }
+STATE: {ReGroupRecallNonShard} ~~ {
+	IF:	All
+			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
+			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
+		DO:	DoAll
+				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
+				DoExpr {clearvar[capturegroup_tellquest]}
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
+	IF:	Always
+		DO:	SetState {ToGK}
 ~~ }
 STATE: {Shard} ~~ {
 	IF:	All
@@ -1323,36 +1239,34 @@ STATE: {Shard} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
 	IF:	All
 			Expr {getpvar[Shard]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				ChatCapture {!ReGroup} {19}
 				Any
 					BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecallNonShard}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecallNonShard}
 	IF:	All
 			Expr {getpvar[Shard]>1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				ChatCapture {!ReGroup} {19}
 				Any
 					BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
-	IF: Expr {getpvar[Shard]==1}
-		DO: DoExpr {setpvar[Stuck,DeathRecallNonShard]}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
+	IF:	Expr {getpvar[Shard]==1}
+		DO:	DoExpr {setpvar[Stuck,ReGroupRecallNonShard]}
 	IF:	All
 			Expr {getpvar[Shard]==0}
 			IntoPortal
@@ -1391,10 +1305,10 @@ STATE: {Shard} ~~ {
 				CellE 8B03046F
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 				DoExpr {setpvar[StateName,GetShardTwo]}
 				DoExpr {setpvar[CheckSync,GetShardTwo]}
-				Chat {/vt meta load RynDQLCheck} ~~ GetShardTwo
+				Chat {/vt meta load RynDQLCheck}
 	IF:	CellE 8B0303FF
 		DO:	EmbedNav nav16 {Delay}
 	IF:	All
@@ -1402,10 +1316,10 @@ STATE: {Shard} ~~ {
 			CellE 8B0303FF
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 				DoExpr {setpvar[StateName,GetShardThree]}
 				DoExpr {setpvar[CheckSync,GetShardThree]}
-				Chat {/vt meta load RynDQLCheck} ~~ GetShardThree
+				Chat {/vt meta load RynDQLCheck}
 	IF:	CellE 8B030332
 		DO:	EmbedNav nav17 {[none]}
 	IF:	All
@@ -1413,10 +1327,10 @@ STATE: {Shard} ~~ {
 			CellE 8B030332
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 				DoExpr {setpvar[StateName,Heart]}
 				DoExpr {setpvar[CheckSync,Heart]}
-				Chat {/vt meta load RynDQLCheck} ~~ Heart
+				Chat {/vt meta load RynDQLCheck}
 	IF:	All
 			SecsInStateGE 5
 			Any
@@ -1425,6 +1339,85 @@ STATE: {Shard} ~~ {
 				CellE 2172011B
 				CellE 217201C8
 		DO:	SetState {Shard}
+~~ }
+STATE: {SkipQuest} ~~ {
+	IF:	All
+			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
+			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
+		DO:	DoAll
+				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
+				DoExpr {clearvar[capturegroup_tellquest]}
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
+	IF:	Always
+		DO:	DoAll
+				DoExpr {setpvar[DoQuestAF,0]}
+				DoExpr {clearpvar[Death+getpvar[Profile]]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
+	IF:	All
+			Expr {getpvar[DoQuestAF]==0}
+			Expr {getpvar[Death+getpvar[Profile]]==0}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	DoAll
+				DoExpr {setpvar[Profile,RynDQLQuestCheck]}
+				DoExpr {setpvar[StateName,Default]}
+				Chat {/vt meta load RynDQLQuestCheck}
+~~ }
+STATE: {SyncBuff} ~~ {
+	IF:	All
+			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
+			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
+		DO:	DoAll
+				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
+				DoExpr {clearvar[capturegroup_tellquest]}
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestGrael,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestGrael]==1}
+		DO:	SetState {SkipQuest}
+	IF:	All
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]}
+			SecsInStateGE 240
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
+	IF:	Not Expr {testpvar[BuffingStartAll]}
+		DO:	DoAll
+				DoExpr {setpvar[BuffingStartAll,1]}
+				Chat {/vt forcebuff}
+	IF:	All
+			NeedToBuff
+			Expr {vtgetsetting[EnableBuffing]!=True}
+		DO:	SetOpt {EnableBuffing} {True}
+	IF:	All
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]}
+			Not NeedToBuff
+		DO:	DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete,listcreate[]]}
+				SetState {SyncBuff}
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getcharstringprop[1]]}
+			Not NeedToBuff
+		DO:	DoAll
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getcharstringprop[1]]}
+				SetState {SyncBuff}
+	IF:	All
+			Not NeedToBuff
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameNine]]}
+		DO:	DoAll
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]}
+				DoExpr {setpvar[StateName,Default]}
+				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~ }
 STATE: {ToFirstDungeon} ~~ {
 	IF:	All
@@ -1435,28 +1428,27 @@ STATE: {ToFirstDungeon} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecallNonShard}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecallNonShard}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[Stuck,DeathRecallNonShard]}
+				DoExpr {setpvar[Stuck,ReGroupRecallNonShard]}
 				DoExpr {setpvar[ClearMobs,ToFirstDungeon]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	Any
 			SecsInStateGE 300
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 		DO:	SetState {ToGK}
 	IF:	CellE 21700031
 		DO:	EmbedNav nav18 {[none]}
@@ -1466,10 +1458,10 @@ STATE: {ToFirstDungeon} ~~ {
 			NavEmpty
 			CellE 8B03018F
 		DO:	DoAll
-				DoExpr {setpvar[Stuck, DeathRecallNonShard]}
+				DoExpr {setpvar[Stuck, ReGroupRecallNonShard]}
 				DoExpr {setpvar[StateName,FirstDungeon]}
 				DoExpr {setpvar[CheckSync,FirstDungeon]}
-				Chat {/vt meta load RynDQLCheck} ~~ FirstDungeon
+				Chat {/vt meta load RynDQLCheck}
 	IF:	Any
 			CellE 21760289
 			CellE 2176028A
@@ -1486,10 +1478,10 @@ STATE: {ToGK} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
 	IF:	Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	All
@@ -1520,7 +1512,7 @@ STATE: {ToGK} ~~ {
 				DoExpr {clearvar[CombatStuck]}
 				DoExpr {setpvar[StateName,PickStep]}
 				DoExpr {setpvar[CheckSync,PickStep]}
-				Chat {/vt meta load RynDQLCheck} ~~ PickStep
+				Chat {/vt meta load RynDQLCheck}
 ~~ }
 STATE: {ToShards} ~~ {
 	IF:	All
@@ -1531,29 +1523,28 @@ STATE: {ToShards} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Any
 				Death
 				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				ChatCapture {!ReGroup} {19}
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecallNonShard}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecallNonShard}
 	IF:	Any
 			SecsInStateGE 900
 			Death
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 		DO:	SetState {ToGK}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[Stuck,DeathRecallNonShard]}
+				DoExpr {setpvar[Stuck,ReGroupRecallNonShard]}
 				DoExpr {setpvar[ClearMobs,ToShards]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	All
@@ -1646,7 +1637,7 @@ STATE: {ToShards} ~~ {
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,Shard]}
 				DoExpr {setpvar[CheckSync,ShardThree]}
-				Chat {/vt meta load RynDQLCheck} ~~ ShardThree
+				Chat {/vt meta load RynDQLCheck}
 	IF:	All
 			NavEmpty
 			Any
@@ -1697,7 +1688,7 @@ STATE: {ToShards} ~~ {
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,Shard]}
 				DoExpr {setpvar[CheckSync,ShardTwo]}
-				Chat {/vt meta load RynDQLCheck} ~~ ShardTwo
+				Chat {/vt meta load RynDQLCheck}
 	IF:	All
 			CellE 21720250
 			NavEmpty
@@ -1736,7 +1727,7 @@ STATE: {ToShards} ~~ {
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,Shard]}
 				DoExpr {setpvar[CheckSync,ShardOne]}
-				Chat {/vt meta load RynDQLCheck} ~~ ShardOne
+				Chat {/vt meta load RynDQLCheck}
 ~~ }
 STATE: {TurnIn} ~~ {
 	IF:	All
@@ -1747,10 +1738,10 @@ STATE: {TurnIn} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
 	IF:	CellE 21700031
 		DO:	EmbedNav nav26 {[none]}
 	IF:	All
@@ -1796,7 +1787,7 @@ STATE: {TurnIn} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[StateName,Finished]}
 				DoExpr {setpvar[CheckSync,Finished]}
-				Chat {/vt meta load RynDQLCheck} ~~ Finished
+				Chat {/vt meta load RynDQLCheck}
 ~~ }
 STATE: {Watchdog} ~~ {
 	IF:	All
@@ -1807,25 +1798,24 @@ STATE: {Watchdog} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
-		DO: SetState {Zstuck}
-	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
-		DO: SetState {SkipQuest}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
 	IF:	Always
 		DO:	DoAll
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				DoExpr {clearvar[StateTimer]}
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {Zstuck} ~~ {
 	IF:	Always
@@ -1837,50 +1827,7 @@ STATE: {Zstuck} ~~ {
 
 ~~========================= ONLY NAVS APPEAR BELOW THIS LINE =========================~~
 
-NAV: nav0 circular ~~ {
-~~ }
-NAV: nav1 once ~~ {
-	pnt 9.54168300628662 -99.9179697990417 -0.324979146321615
-	pnt 9.54168300628662 -99.9179697990417 -0.324979146321615
-	pnt 9.54168300628662 -99.9179697990417 -0.324979146321615
-	pau 96.5192172686259 -77.3924765904744 -0.406645806630452 9000
-	pnt 9.54168300628662 -99.9179697990417 -0.324979146321615
-	pnt 9.54168300628662 -99.9179697990417 -0.324979146321615
-	pnt 9.54168300628662 -99.9179697990417 -0.324979146321615
-~~ }
-NAV: nav2 once ~~ {
-	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
-	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
-	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
-	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
-	pau 96.5192172686259 -77.3924765904744 -0.406645806630452 9000
-	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
-	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
-	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
-	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
-~~ }
-NAV: nav3 once ~~ {
-	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
-	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
-	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
-	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
-	pau 96.5192172686259 -77.3924765904744 -0.406645806630452 9000
-	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
-	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
-	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
-	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
-~~ }
-NAV: nav4 once ~~ {
-	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
-	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
-	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
-	pau 96.5192172686259 -77.3924765904744 -0.406645806630452 9000
-	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
-	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
-	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
-	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
-~~ }
-NAV: nav5 once ~~ {
+NAV: nav0 once ~~ {
 	pnt 9.54168300628662 -99.9179697990417 -0.324979146321615
 	pnt 9.54109967549642 -99.9041444778442 -0.324979146321615
 	pnt 9.5108367284139 -99.8806578954061 -0.324979146321615
@@ -1949,7 +1896,7 @@ NAV: nav5 once ~~ {
 	pnt 9.79056142171224 -99.7196892102559 -0.299979146321615
 	pnt 9.79078267415365 -99.7958357493083 -0.299979146321615
 ~~ }
-NAV: nav6 once ~~ {
+NAV: nav1 once ~~ {
 	pnt -74.9435952504476 -12.2925535440445 0.741687456766764
 	pnt -74.9463097890218 -12.306547943751 0.741687456766764
 	pnt -74.948743057251 -12.3190918803215 0.741687456766764
@@ -1959,7 +1906,7 @@ NAV: nav6 once ~~ {
 	pnt -74.9786753336589 -12.341226926446 0.741687456766764
 	pnt -74.9909161885579 -12.3335593869289 0.741687456766764
 ~~ }
-NAV: nav7 once ~~ {
+NAV: nav2 once ~~ {
 	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
 	pnt 9.70928777058919 -100.146480687459 -0.0792583783467611
 	pnt 9.71040178934733 -100.124220530192 -0.092614467938741
@@ -2004,7 +1951,7 @@ NAV: nav7 once ~~ {
 	pnt 9.66702527999878 -99.9294836362203 -0.199979162216187
 	pnt 9.66702527999878 -99.9294836362203 -0.199979162216187
 ~~ }
-NAV: nav8 once ~~ {
+NAV: nav3 once ~~ {
 	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
 	pnt 10.1684970855713 -100.044321378072 -0.0405539592107137
 	pnt 10.1694194793701 -100.024971866608 -0.0499791701634725
@@ -2034,7 +1981,7 @@ NAV: nav8 once ~~ {
 	pnt 10.2725522359212 -100.071255143483 -0.0999791701634725
 	pnt 10.2755081812541 -100.068429311117 -0.0999791701634725
 ~~ }
-NAV: nav9 once ~~ {
+NAV: nav4 once ~~ {
 	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
 	pnt 10.2910833358765 -99.9483969370524 -0.199979162216187
 	pnt 10.2907917658488 -99.9302933375041 -0.199979162216187
@@ -2098,14 +2045,64 @@ NAV: nav9 once ~~ {
 	pnt 10.0372870763143 -99.8080213387807 -0.349979146321615
 	pnt 10.0452620824178 -99.8216681480408 -0.349979146321615
 ~~ }
-NAV: nav10 circular ~~ {
+NAV: nav5 circular ~~ {
 	jmp 10.0422876358032 -99.8216449419657 -0.349979146321615 180 {True} 250.00003
 	pau 10.0422876358032 -99.8216449419657 -0.349979146321615 1000
 ~~ }
-NAV: nav12 once ~~ {
+NAV: nav6 once ~~ {
 	pnt 10.0411361694336 -99.82556031545 -0.474979146321615
 ~~ }
+NAV: nav7 once ~~ {
+	pnt 10.0433280309041 -99.8206486066182 -0.474979146321615
+	pnt 10.0438002268473 -99.7596038182576 -0.474979146321615
+	pnt 10.0435387929281 -99.72396012942 -0.474979146321615
+	pnt 10.0437022527059 -99.8282751401266 -0.474979146321615
+	pnt 10.0426890691121 -99.8401324590047 -0.474979146321615
+~~ }
+NAV: nav8 once ~~ {
+~~ }
+NAV: nav9 circular ~~ {
+~~ }
+NAV: nav10 once ~~ {
+	pnt 9.54168300628662 -99.9179697990417 -0.324979146321615
+	pnt 9.54168300628662 -99.9179697990417 -0.324979146321615
+	pnt 9.54168300628662 -99.9179697990417 -0.324979146321615
+	pau 96.5192172686259 -77.3924765904744 -0.406645806630452 9000
+	pnt 9.54168300628662 -99.9179697990417 -0.324979146321615
+	pnt 9.54168300628662 -99.9179697990417 -0.324979146321615
+	pnt 9.54168300628662 -99.9179697990417 -0.324979146321615
+~~ }
+NAV: nav11 once ~~ {
+	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
+	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
+	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
+	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
+	pau 96.5192172686259 -77.3924765904744 -0.406645806630452 9000
+	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
+	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
+	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
+	pnt 10.1688297271729 -100.048901939392 -0.0378056248029073
+~~ }
+NAV: nav12 once ~~ {
+	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
+	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
+	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
+	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
+	pau 96.5192172686259 -77.3924765904744 -0.406645806630452 9000
+	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
+	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
+	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
+	pnt 9.70813357035319 -100.169543965658 -0.0749791701634725
+~~ }
 NAV: nav13 once ~~ {
+	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
+	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
+	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
+	pau 96.5192172686259 -77.3924765904744 -0.406645806630452 9000
+	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
+	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
+	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
+	pnt 10.2910833358765 -99.9664356549581 -0.199979162216187
 ~~ }
 NAV: nav14 once ~~ {
 	pnt 9.54168300628662 -99.9179697990417 -0.324979146321615
@@ -2468,4 +2465,3 @@ NAV: nav26 once ~~ {
 	pnt -74.9786753336589 -12.341226926446 0.741687456766764
 	pnt -74.9909161885579 -12.3335593869289 0.741687456766764
 ~~ }
-~~~ Meta Created By Kaitro of Leafcull/Frostfell/Coldeve

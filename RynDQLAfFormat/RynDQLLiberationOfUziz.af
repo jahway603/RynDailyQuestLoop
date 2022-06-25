@@ -59,7 +59,7 @@ STATE: {SkipQuest} ~~{
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load RynDQLQuestCheck}
 ~~}																					
-STATE: {DeathRecall} ~~ {
+STATE: {ReGroupRecall} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -91,7 +91,7 @@ STATE: {DeathRecall} ~~ {
 		DO:	SetState {ToTN}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[StateName,DeathRecall]}
+				DoExpr {setpvar[StateName,ReGroupRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[NavTrigger]}
 				DoExpr {clearvar[StateTimer]}
@@ -111,7 +111,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	Not BlockE 96640000
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[2645]} ~~ SpellId 2645 is "Portal Recall".
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF:	BlockE 96640000
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
@@ -141,7 +141,7 @@ STATE: {Default} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Profile, RynDQLLiberationOfUziz]}
 				DoExpr {setpvar[StateName, Default]}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 	IF:	Any
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			ItemCountGE 1 {Egg}
@@ -215,14 +215,13 @@ STATE: {DoorStep} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			SecsInStateGE 900
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
@@ -281,8 +280,7 @@ STATE: {EdificeDoorOne} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {getpvar[Leader]==1}
 				All
@@ -291,8 +289,8 @@ STATE: {EdificeDoorOne} ~~ {
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {EdificeDoorThree} ~~ {
 	IF:	All
@@ -326,8 +324,7 @@ STATE: {EdificeDoorThree} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {getpvar[Leader]==1}
 				All
@@ -336,8 +333,8 @@ STATE: {EdificeDoorThree} ~~ {
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {EdificeDoorTwo} ~~ {
 	IF:	All
@@ -371,8 +368,7 @@ STATE: {EdificeDoorTwo} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			All
 				Expr {getpvar[Leader]==1}
 				All
@@ -381,8 +377,8 @@ STATE: {EdificeDoorTwo} ~~ {
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {EdificeJump} ~~ {
 	IF:	All
@@ -416,13 +412,12 @@ STATE: {EdificeJump} ~~ {
 			Death
 			ChatMatch {^Your fellow .* has died!$}
 			BlockE C8E90000
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	All
 			Expr {getvar[Jumps]==1}
 			Expr {coordinategetz[getplayercoordinates[]]<=0.079}
@@ -442,13 +437,12 @@ STATE: {EdificeJump} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {EdificeToDelegateBoss} ~~ {
 	IF:	All
@@ -516,15 +510,14 @@ STATE: {EdificeToDelegateBoss} ~~ {
 			Death
 			ChatMatch {^Your fellow .* has died!$}
 			BlockE C8E90000
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!Stuck\"$}
 			All
 				Expr {getobjectinternaltype[wobjectfindbyid[1971744830]]==7}
 				Expr {wobjectgetisdooropen[wobjectfindbyid[1971744830]]==0}
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	All
 			NavEmpty
 			Any
@@ -624,13 +617,12 @@ STATE: {EdificeToDoorOne} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Expr {getpvar[FellowCount]<2}
 		DO:	SetOpt {EnableCombat} {False}
 	IF:	Expr {getpvar[FellowCount]>=2}
@@ -671,13 +663,12 @@ STATE: {EdificeToDoorThree} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Expr {getpvar[FellowCount]<2}
 		DO:	SetOpt {EnableCombat} {False}
 	IF:	Expr {getpvar[FellowCount]>=2}
@@ -718,13 +709,12 @@ STATE: {EdificeToDoorTwo} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Expr {getpvar[FellowCount]<2}
 		DO:	SetOpt {EnableCombat} {False}
 	IF:	Expr {getpvar[FellowCount]>=2}
@@ -790,13 +780,12 @@ STATE: {EdificeToLeverOne} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {EdificeToLeverThree} ~~ {
 	IF:	All
@@ -831,16 +820,15 @@ STATE: {EdificeToLeverThree} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!Stuck\"$}
 			ChatMatch {!Missed}
 			Any
 				BlockE C8E90000
 				CellE 58670185
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	All
 			CellE 58670262
 			Expr {getvar[JumpStuck]==0}
@@ -912,15 +900,14 @@ STATE: {EdificeToLeverTwo} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
 			ChatMatch {!Missed}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-			ChatMatch {^\[Fellowship\] (|).* (say|says), \"!Stuck\"$}
+			ChatCapture {!ReGroup} {19}
+			ChatCapture {!Stuck} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {EdificeUseLeverOne} ~~ {
 	IF:	All
@@ -952,13 +939,12 @@ STATE: {EdificeUseLeverOne} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {EdificeUseLeverThree} ~~ {
 	IF:	All
@@ -990,13 +976,12 @@ STATE: {EdificeUseLeverThree} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {EdificeUseLeverTwo} ~~ {
 	IF:	All
@@ -1030,13 +1015,12 @@ STATE: {EdificeUseLeverTwo} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {Finished} ~~ {
 	IF:	All
@@ -1151,13 +1135,12 @@ STATE: {FixJump} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {Loot} ~~ {
 	IF:	All
@@ -1175,8 +1158,7 @@ STATE: {Loot} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
@@ -1196,8 +1178,8 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpse]}
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				EmbedNav nav21 {[none]}
@@ -1511,7 +1493,7 @@ STATE: {ToArqas} ~~ {
 			BlockE 58670000
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
-				DoExpr {setpvar[Stuck, DeathRecall]}
+				DoExpr {setpvar[Stuck, ReGroupRecall]}
 				DoExpr {setpvar[StateName,EdificeToLeverOne]}
 				DoExpr {setpvar[CheckSync,EdificeToLeverOne]}
 				Chat {/vt meta load RynDQLCheck}
@@ -1552,11 +1534,10 @@ STATE: {ToDelegate} ~~ {
 				Death
 				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				ChatCapture {!ReGroup} {19}
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	All
 			Expr {getvar[NavTrigger]==0}
 			CellE 5867013C
@@ -1808,13 +1789,12 @@ STATE: {ToDelegateJump} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {ToTN} ~~ {
 	IF:	All
@@ -1937,17 +1917,16 @@ STATE: {UseDelegate} ~~ {
 				Death
 				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatMatch {!ManDown}
-				ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+				ChatCapture {!ReGroup} {19}
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {WatchDog} ~~ {
 	IF:	Always
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {Zstuck} ~~ {
 	IF:	Always
