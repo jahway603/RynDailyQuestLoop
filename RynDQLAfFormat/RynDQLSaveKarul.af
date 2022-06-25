@@ -63,7 +63,9 @@ STATE: {ClearMobs} ~~ {
 	IF:	Expr {getcharskill_traininglevel[33]==3}
 		DO:	SetOpt {SummonPets} {True}
 	IF: Always
-		DO: DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
+		DO: DoAll
+				SetWatchdog 5 90 {Watchdog}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	Any
 			NoMobsInDist 30
 			SecsInStateGE 30
@@ -279,6 +281,7 @@ STATE: {Dungeon} ~~ {
 		DO:	SetState {Watchdog}
 	IF:	Always
 		DO:	DoAll
+				SetWatchdog 5 90 {Watchdog}
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetOpt {UseDispelItems} {True}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.125]]`]}
@@ -1195,12 +1198,13 @@ STATE: {ToDungeon} ~~ {
 			NavEmpty
 			Expr {getvar[PitStop]==3}
 			SecsInStateGE 1
+			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[49449]]==7}
 			Any
 				CellE 4CE20109
 				CellE 4CE20102
 				CellE 4CE20108
 		DO:	DoAll
-				DoExpr {actiontryuseitem[wobjectfindnearestbyobjectclass[14]]}
+				DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[49449]]}
 				SetState {ToDungeon}
 	IF:	Any
 			CellE 586401F7
