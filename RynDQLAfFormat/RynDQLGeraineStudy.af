@@ -630,7 +630,10 @@ STATE: {DeathRecall} ~~ {
 				EmbedNav nav18 {[DeathDelay]}
 	IF:	All
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AllDone]==1}
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
 			CellE 482D0104
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}
@@ -648,7 +651,10 @@ STATE: {DeathRecall} ~~ {
 				EmbedNav nav19 {[DeathDelay]}
 	IF:	All
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AllDone]==0}
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
 			Any
 				BlockE 74EA0000
 				BlockE 74E90000

@@ -419,7 +419,10 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {clearvar[CombatStuck]}
 				EmbedNav nav5 {[DeathDelay]}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
 			CellE 3032001C
 			Expr {getitemcountininventorybyname[Shard of the Curator of Torment's Mask]==getpvar[Shard]}
 		DO:	DoAll

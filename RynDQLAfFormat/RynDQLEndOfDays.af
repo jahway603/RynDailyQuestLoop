@@ -186,7 +186,10 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {clearvar[CombatStuck]}
 				EmbedNav DeathDelay {[DeathDelay]}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]==0}
 			CellE 3032001C
 		DO:	DoAll

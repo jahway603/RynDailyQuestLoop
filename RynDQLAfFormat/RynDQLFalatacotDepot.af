@@ -104,7 +104,10 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {EnableNav} {True}
 				EmbedNav DeathDelay {[DeathDelay]}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
 			BlockE A2200000
 		DO:	DoAll
 				SetOpt {EnableNav} {True}

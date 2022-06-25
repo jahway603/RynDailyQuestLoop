@@ -234,7 +234,9 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {EnableNav} {True}
 				EmbedNav nav3 {[DeathDelayTwo]}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
 			CellE 3FB10024
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}
@@ -244,7 +246,10 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {setpvar[CheckSync,Death]}
 				Chat {/vt meta load RynDQLCheck}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
 			BlockE 42AE0000
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}

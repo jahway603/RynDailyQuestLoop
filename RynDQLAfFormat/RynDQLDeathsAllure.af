@@ -642,7 +642,10 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {EnableNav} {True}
 				EmbedNav nav7 {[DeathDelay]}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
 			CellE 002902E7
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}

@@ -202,7 +202,9 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {clearvar[CombatStuck]}
 				EmbedNav nav1 {[DelayShardOne]}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
 			CellE 8B03018F
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}
@@ -219,7 +221,10 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {EnableNav} {True}
 				EmbedNav nav2 {[DelayShardTwo]}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
 			Any
 				CellE 8B030471
 				CellE 8B030476
@@ -236,7 +241,10 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {EnableNav} {True}
 				EmbedNav nav3 {[DelayShardThree]}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
 			CellE 8B0303FF
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}
@@ -250,7 +258,10 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {EnableNav} {True}
 				EmbedNav nav4 {[DelayHeart]}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
 			CellE 8B030332
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}

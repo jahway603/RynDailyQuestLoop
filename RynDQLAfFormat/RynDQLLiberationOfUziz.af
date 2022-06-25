@@ -118,7 +118,10 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {clearvar[CombatStuck]}
 				EmbedNav nav1 {[DeathDelay]}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
 			BlockE 96640000
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}

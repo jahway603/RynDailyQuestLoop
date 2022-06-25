@@ -110,7 +110,10 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {EnableNav} {True}
 				EmbedNav nav1 {[DeathDelay]}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
 			CellE F4180104
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}
@@ -1057,6 +1060,7 @@ STATE: {ToAun} ~~ {
 			SecsInStateGE 4
 		DO:	SetState {ToAun}
 	IF:	All
+			SecsInStateGE 2
 			CellE 2581003C
 			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==0}
@@ -1477,11 +1481,13 @@ STATE: {UseSentry} ~~ {
 				SetState {ToAun}
 	IF:	All
 			CellE 2581003C
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+GoToAun]==0}
 			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==0}
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5}
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[24493]]}
 	IF:	All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+GoToAun]==0}
 			SecsInStateGE 15
 			CellE 2581003C
 		DO:	SetState {UseSentry}
