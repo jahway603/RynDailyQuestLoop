@@ -1094,8 +1094,8 @@ STATE: {Loot} ~~ {
 		DO:	DoAll
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]] && listcount[$CorpseDetect] > 0 && (actiontryuseitem[$CorpseDetect{{0}}] || 1)}
 	IF:	All
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]]}
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
 		DO:	DoAll
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`}
@@ -1581,7 +1581,7 @@ STATE: {StockpileJump} ~~ {
 				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
 				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}
 	IF:	All
-			Expr {$dir>0}
+			Expr {testvar[dir]}
 			SecsInStateGE 4
 		DO:	DoAll
 				ChatExpr {`/ub jumpsw `+cstrf[$dir,`G0`]+` `+cstrf[$pwr,`G0`]}

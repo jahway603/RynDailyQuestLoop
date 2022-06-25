@@ -93,6 +93,7 @@ STATE: {DeathRecall} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[StateName,DeathRecall]}
 				DoExpr {clearvar[PitStop]}
+				DoExpr {clearvar[NavTrigger]}
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorOne]}
@@ -528,7 +529,7 @@ STATE: {EdificeToDelegateBoss} ~~ {
 				CellE 58670187
 				CellE 58670182
 				CellE 58670181
-			Not Expr {coordinategetz[getplayercoordinates[]]#-0.1499}
+			Not Expr {coordinategetz[getplayercoordinates[]]#-0.1499} 
 		DO:	DoAll
 				DoExpr {$pwr=150}
 				DoExpr {$PI=3.1415926535897932;}
@@ -538,7 +539,7 @@ STATE: {EdificeToDelegateBoss} ~~ {
 				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
 				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}
 	IF:	All
-			Expr {$dir>0}
+			Expr {testvar[dir]}
 			SecsInStateGE 4
 			Any
 				CellE 58670188
@@ -574,7 +575,7 @@ STATE: {EdificeToDelegateBoss} ~~ {
 				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
 				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}
 	IF:	All
-			Expr {$dir>0}
+			Expr {testvar[dir]}
 			SecsInStateGE 4
 			Any
 				CellE 58670178
@@ -1133,7 +1134,7 @@ STATE: {FixJump} ~~ {
 				DoExpr {$dy=$pt{{1}}-coordinategetns[$myPos];}
 				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}
 	IF:	All
-			Expr {$dir>0}
+			Expr {testvar[dir]}
 			SecsInStateGE 4
 		DO:	DoAll
 				ChatExpr {`/ub jumpsw `+cstrf[$dir,`G0`]+` `+cstrf[$pwr,`G0`]}
@@ -1250,8 +1251,8 @@ STATE: {Loot} ~~ {
 		DO:	DoAll
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]] && listcount[$CorpseDetect] > 0 && (actiontryuseitem[$CorpseDetect{{0}}] || 1)}
 	IF:	All
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]]}
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
 		DO:	DoAll
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`}
@@ -1553,22 +1554,27 @@ STATE: {ToDelegate} ~~ {
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	CellE 5867013C
-		DO:	EmbedNav nav26 {junk.nav}
+	IF:	All
+			Expr {getvar[NavTrigger]==0}
+			CellE 5867013C
+		DO:	DoAll
+				DoExpr {setvar[NavTrigger,1]}
+				EmbedNav nav26 {junk.nav}
 	IF:	All
 			NavEmpty
 			CellE 58670139
-			Not Expr {coordinategetz[getplayercoordinates[]]#-0.2749}
+			Not Expr {coordinategetz[getplayercoordinates[]]#-0.2749} ~~ ~~~  0x5867013C [140.272751 -119.151756 -59.994999] -0.713895 0.000000 0.000000 -0.700253
 		DO:	DoAll
 				DoExpr {$pwr=150}
 				DoExpr {$PI=3.1415926535897932;}
-				DoExpr {$pt=listcreate[0-20.03,0-31.01,0-0.27Z];}
+				DoExpr {$pt=listcreate[0-20.0263729095459,0-31.0102634429932,0-0.001145];} ~~~ -20.0263729095459 SN, -31.0102634429932 WE, -0.00114574644300673 DU
 				DoExpr {$myPos=getplayercoordinates[];}
 				DoExpr {$dx=$pt{{1}}-coordinategetwe[$myPos];}
 				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
-				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}
+				DoExpr {$dir=(450-atan2[$dy,$dx]*180/$PI)%360} ~~ (450-atan2[$dy,$dx]*180/$PI)/360
 	IF:	All
-			Expr {$dir>0}
+			Expr {testvar[dir]}
+			NavEmpty
 			SecsInStateGE 4
 			CellE 58670139
 			Not Expr {coordinategetz[getplayercoordinates[]]#-0.2749}
@@ -1592,13 +1598,14 @@ STATE: {ToDelegate} ~~ {
 		DO:	DoAll
 				DoExpr {$pwr=150}
 				DoExpr {$PI=3.1415926535897932;}
-				DoExpr {$pt=listcreate[0-19.97,0-30.95,0-0.30Z];}
+				DoExpr {$pt=listcreate[0-19.96,0-30.94,0-0.30];} ~~ -19.9671363830566 SN, -30.9419593811035 WE, -0.00124991310967339 DU
 				DoExpr {$myPos=getplayercoordinates[];}
 				DoExpr {$dx=$pt{{1}}-coordinategetwe[$myPos];}
 				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
 				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}
 	IF:	All
-			Expr {$dir>0}
+			Expr {testvar[dir]}
+			NavEmpty
 			SecsInStateGE 4
 			CellE 58670126
 			Not Expr {coordinategetz[getplayercoordinates[]]#-0.2999}
@@ -1610,6 +1617,7 @@ STATE: {ToDelegate} ~~ {
 			Any
 				CellE 58670126
 				CellE 58670114
+				CellE 58670115
 			Expr {coordinategetz[getplayercoordinates[]]#-0.2999}
 		DO:	DoAll
 				DoExpr {clearvar[dir]}
@@ -1621,13 +1629,14 @@ STATE: {ToDelegate} ~~ {
 		DO:	DoAll
 				DoExpr {$pwr=150}
 				DoExpr {$PI=3.1415926535897932;}
-				DoExpr {$pt=listcreate[0-19.88,0-30.91,0-0.32Z];}
+				DoExpr {$pt=listcreate[0-19.8844146728516,0-30.9017066955566,0-0.001354];} ~~~ -19.8844146728516 SN, -30.9017066955566 WE, -0.00135407977634006 DU
 				DoExpr {$myPos=getplayercoordinates[];}
 				DoExpr {$dx=$pt{{1}}-coordinategetwe[$myPos];}
 				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
 				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}
 	IF:	All
-			Expr {$dir>0}
+			Expr {testvar[dir]}
+			NavEmpty
 			SecsInStateGE 4
 			CellE 5867010F
 			Not Expr {coordinategetz[getplayercoordinates[]]#-0.3249}
@@ -1690,6 +1699,13 @@ STATE: {ToDelegate} ~~ {
 				All
 					CellE 5867010F
 					Not Expr {coordinategetz[getplayercoordinates[]]#-0.3249}
+		DO: SetState {ToDelegate}
+	IF: All
+			SecsInStateGE 60
+			Any
+				CellE 58670126
+				CellE 58670139
+				CellE 5867010F
 		DO: SetState {ToDelegate}
 ~~ }
 STATE: {ToDelegateJump} ~~ {
