@@ -449,10 +449,11 @@ STATE: {Fellow} ~~ {
 	IF:	Expr {getvar[FailFellow]>=25}
 		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt setmetastate Stuck}
 	IF:	Always
-		DO:	DoAll
-				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Checking,1]}
-				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear],getcharstringprop[1]]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Checking,1]}
+	IF: Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]}
+		DO: DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]}
+	IF: Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]}
+		DO: DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear],getcharstringprop[1]]}
 	IF: Any
 			Expr {getfellowshiplocked[]}
 			ChatMatch {^.* is already a member of a Fellowship.}
@@ -618,7 +619,6 @@ STATE: {Stuck} ~~ {
 				DoExpr {clearvar[FellowTimerCheck]}
 				DoExpr {clearvar[FellowStuck]}
 				DoExpr {clearvar[FailFellow]}
-				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear],getcharstringprop[1]]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Checking]}
 	IF:	SecsInStateGE 1
 		DO:	DoAll
