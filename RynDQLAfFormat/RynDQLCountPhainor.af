@@ -1264,16 +1264,6 @@ STATE: {ToGY} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[StateName,ToGY]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
-	IF:	Any
-			Death
-			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
-			Any
-				BlockE C8E90000
-		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
 	IF:	Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	All
@@ -1287,10 +1277,7 @@ STATE: {ToGY} ~~ {
 			CellE 482D0104
 			IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
-	IF:	All
-			SecsInStateGE 3
-			Expr {getvar[Recall]==0}
-			Not CellE 482D0104
+	IF:	Not CellE 482D0104
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[4128]} ~~ SpellId 4128 is "Call of the Mhoire Forge".
 				SetState {ToGY}
