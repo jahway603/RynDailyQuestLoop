@@ -168,7 +168,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -178,13 +178,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -208,11 +217,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 ClearMobs
 i
@@ -749,7 +758,7 @@ e
 s
 clearvar[capturegroup_tellquest]
 s
-DeathRecall
+ReGroupRecall
 i
 21
 i
@@ -790,7 +799,7 @@ x
 ba
 436
 <?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestSK,1]" /></control></view>s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -809,7 +818,7 @@ getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 s
 Zstuck
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -828,7 +837,7 @@ getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestSK]==1
 s
 SkipQuest
 s
-DeathRecall
+ReGroupRecall
 i
 21
 i
@@ -865,7 +874,7 @@ e
 s
 stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]
 s
-DeathRecall
+ReGroupRecall
 i
 2
 i
@@ -941,7 +950,7 @@ getequippedweapontype[]==Wand&&getcombatstate[]==Melee
 s
 /ub quit
 s
-DeathRecall
+ReGroupRecall
 i
 19
 i
@@ -960,7 +969,7 @@ e
 s
 clearvar[CombatStuck]
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -979,7 +988,7 @@ getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestSK]==1
 s
 SkipQuest
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -1007,7 +1016,7 @@ e
 s
 setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestSK,1]
 s
-DeathRecall
+ReGroupRecall
 i
 1
 i
@@ -1048,7 +1057,7 @@ v
 s
 False
 s
-DeathRecall
+ReGroupRecall
 i
 1
 i
@@ -1074,7 +1083,7 @@ n
 s
 e
 s
-setpvar[StateName,DeathRecall]
+setpvar[StateName,ReGroupRecall]
 i
 7
 TABLE
@@ -1162,7 +1171,7 @@ uTank2 NAV 1.2
 1
 0
 s
-DeathRecall
+ReGroupRecall
 i
 21
 i
@@ -1201,9 +1210,9 @@ actiontrycastbyid[2645]
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
-DeathRecall
+ReGroupRecall
 i
 18
 i
@@ -1280,7 +1289,7 @@ uTank2 NAV 1.2
 2.08333134651184E-05
 0
 s
-DeathRecall
+ReGroupRecall
 i
 2
 i
@@ -1437,7 +1446,7 @@ i
 s
 /vt meta load RynDQLCheck
 s
-DeathRecall
+ReGroupRecall
 i
 2
 i
@@ -2397,7 +2406,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -2411,13 +2420,22 @@ i
 i
 -924254208
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 TABLE
 2
 K
@@ -2428,11 +2446,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 Dungeon
 i
@@ -2455,9 +2473,22 @@ i
 i
 0
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+p
+s
+!ReGroup
+s
+c
+s
+19
 TABLE
 2
 K
@@ -2468,11 +2499,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 Dungeon
 i
@@ -4349,7 +4380,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -4363,13 +4394,22 @@ i
 i
 -924254208
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 TABLE
 2
 K
@@ -4380,11 +4420,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 FightBoss
 i
@@ -4416,7 +4456,7 @@ i
 i
 -924254208
 s
-/f !ManDown
+/f !ReGroup
 s
 FightBoss
 i
@@ -4429,17 +4469,26 @@ K
 V
 n
 n
+1
+i
+28
+TABLE
 2
-i
-4
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
 s
-DeathRecall
+c
+s
+19
+s
+ReGroupRecall
 s
 FightBoss
 i
@@ -5901,7 +5950,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -5915,13 +5964,22 @@ i
 i
 -924254208
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 TABLE
 2
 K
@@ -5932,11 +5990,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 Karul
 i
@@ -5968,7 +6026,7 @@ i
 i
 -924254208
 s
-/f !ManDown
+/f !ReGroup
 s
 Karul
 i
@@ -5981,17 +6039,26 @@ K
 V
 n
 n
+1
+i
+28
+TABLE
 2
-i
-4
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
 s
-DeathRecall
+c
+s
+19
+s
+ReGroupRecall
 s
 Karul
 i
@@ -6468,7 +6535,7 @@ n
 s
 e
 s
-setpvar[StateName,DeathRecall]
+setpvar[StateName,ReGroupRecall]
 i
 7
 TABLE
@@ -6481,7 +6548,7 @@ n
 s
 e
 s
-setpvar[CheckSync,DeathRecall]
+setpvar[CheckSync,ReGroupRecall]
 i
 2
 s
@@ -6760,7 +6827,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -6774,13 +6841,22 @@ i
 i
 -924254208
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 TABLE
 2
 K
@@ -6791,11 +6867,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 KarulDoor
 i
@@ -6827,7 +6903,7 @@ i
 i
 -924254208
 s
-/f !ManDown
+/f !ReGroup
 s
 KarulDoor
 i
@@ -6840,17 +6916,26 @@ K
 V
 n
 n
+1
+i
+28
+TABLE
 2
-i
-4
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
 s
-DeathRecall
+c
+s
+19
+s
+ReGroupRecall
 s
 KarulDoor
 i
@@ -7881,11 +7966,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 KarulDoor
 i
@@ -8066,7 +8151,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -8080,13 +8165,22 @@ i
 i
 -924254208
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 TABLE
 2
 K
@@ -8313,11 +8407,11 @@ setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 Loot
 i
@@ -8574,7 +8668,7 @@ setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 s
 Loot
 i
@@ -8587,15 +8681,24 @@ K
 V
 n
 n
+1
+i
+28
+TABLE
 2
-i
-4
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 TABLE
 2
 K
@@ -8822,7 +8925,7 @@ setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 Loot
 i
@@ -12102,7 +12205,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -12116,13 +12219,22 @@ i
 i
 -924254208
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 TABLE
 2
 K
@@ -12133,11 +12245,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 ToDungeon
 i
@@ -12169,7 +12281,7 @@ i
 i
 -924254208
 s
-/f !ManDown
+/f !ReGroup
 s
 ToDungeon
 i
@@ -12182,17 +12294,26 @@ K
 V
 n
 n
+1
+i
+28
+TABLE
 2
-i
-4
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
 s
-DeathRecall
+c
+s
+19
+s
+ReGroupRecall
 s
 ToDungeon
 i
@@ -13889,7 +14010,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -13903,13 +14024,22 @@ i
 i
 -924254208
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 TABLE
 2
 K
@@ -13920,11 +14050,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 ToHoshTent
 i
@@ -13956,7 +14086,7 @@ i
 i
 -924254208
 s
-/f !ManDown
+/f !ReGroup
 s
 ToHoshTent
 i
@@ -13969,17 +14099,26 @@ K
 V
 n
 n
+1
+i
+28
+TABLE
 2
-i
-4
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
 s
-DeathRecall
+c
+s
+19
+s
+ReGroupRecall
 s
 ToHoshTent
 i
@@ -15200,7 +15339,7 @@ n
 s
 e
 s
-setpvar[Stuck, DeathRecall]
+setpvar[Stuck, ReGroupRecall]
 i
 4
 ba
@@ -18383,7 +18522,7 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 7
 TABLE
@@ -18400,7 +18539,7 @@ clearvar[StateTimer]
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 Watchdog
 i
@@ -18413,7 +18552,7 @@ K
 V
 n
 n
-4
+3
 i
 8
 i
@@ -18423,13 +18562,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 TABLE
 2
 K
@@ -18440,7 +18588,7 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 7
 TABLE
@@ -18457,7 +18605,7 @@ clearvar[StateTimer]
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 Watchdog
 i

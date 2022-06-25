@@ -1082,7 +1082,7 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
@@ -1109,13 +1109,39 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!Stuck\"$
+p
+s
+!ReGroup
+s
+c
+s
+19
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!ManDown\"$
+p
+s
+!Stuck
+s
+c
+s
+19
 TABLE
 2
 K
@@ -1139,7 +1165,7 @@ setvar[stuck, 1]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
@@ -2089,13 +2115,39 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!Stuck\"$
+p
+s
+!ReGroup
+s
+c
+s
+19
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!ManDown\"$
+p
+s
+!Stuck
+s
+c
+s
+19
 TABLE
 2
 K
@@ -2132,7 +2184,7 @@ setvar[stuck, 1]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
@@ -2183,7 +2235,7 @@ s
 i
 4
 s
-!ManDown
+!ReGroup
 TABLE
 2
 K
@@ -2194,7 +2246,7 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 s
 ConfirmProfile
 i
@@ -3674,7 +3726,7 @@ clearvar[ConfirmProfileFail]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 s
 ConfirmProfile
 i
@@ -4377,13 +4429,39 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!Stuck\"$
+p
+s
+!ReGroup
+s
+c
+s
+19
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!ManDown\"$
+p
+s
+!Stuck
+s
+c
+s
+19
 TABLE
 2
 K
@@ -4420,7 +4498,7 @@ setvar[stuck, 1]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
@@ -5293,13 +5371,39 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!Stuck\"$
+p
+s
+!ReGroup
+s
+c
+s
+19
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!ManDown\"$
+p
+s
+!Stuck
+s
+c
+s
+19
 TABLE
 2
 K
@@ -5349,7 +5453,7 @@ setvar[stuck, 1]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
@@ -6267,13 +6371,39 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!Stuck\"$
+p
+s
+!ReGroup
+s
+c
+s
+19
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!ManDown\"$
+p
+s
+!Stuck
+s
+c
+s
+19
 TABLE
 2
 K
@@ -6297,7 +6427,7 @@ setvar[stuck, 1]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
@@ -6942,13 +7072,39 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!Stuck\"$
+p
+s
+!ReGroup
+s
+c
+s
+19
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!ManDown\"$
+p
+s
+!Stuck
+s
+c
+s
+19
 TABLE
 2
 K
@@ -6959,7 +7115,7 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s

@@ -329,7 +329,7 @@ e
 s
 clearvar[capturegroup_tellquest]
 s
-DeathRecall
+ReGroupRecall
 i
 21
 i
@@ -370,7 +370,7 @@ x
 ba
 436
 <?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLU,1]" /></control></view>s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -389,7 +389,7 @@ getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 s
 Zstuck
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -408,7 +408,7 @@ getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLU]==1
 s
 SkipQuest
 s
-DeathRecall
+ReGroupRecall
 i
 21
 i
@@ -445,7 +445,7 @@ e
 s
 stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]
 s
-DeathRecall
+ReGroupRecall
 i
 2
 i
@@ -521,7 +521,7 @@ getequippedweapontype[]==Wand&&getcombatstate[]==Melee
 s
 /ub quit
 s
-DeathRecall
+ReGroupRecall
 i
 19
 i
@@ -540,7 +540,7 @@ e
 s
 clearvar[CombatStuck]
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -559,7 +559,7 @@ getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLU]==1
 s
 SkipQuest
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -587,7 +587,7 @@ e
 s
 setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLU,1]
 s
-DeathRecall
+ReGroupRecall
 i
 17
 i
@@ -597,7 +597,7 @@ i
 s
 ToTN
 s
-DeathRecall
+ReGroupRecall
 i
 1
 i
@@ -623,7 +623,7 @@ n
 s
 e
 s
-setpvar[StateName,DeathRecall]
+setpvar[StateName,ReGroupRecall]
 i
 7
 TABLE
@@ -841,7 +841,7 @@ uTank2 NAV 1.2
 1
 0
 s
-DeathRecall
+ReGroupRecall
 i
 21
 i
@@ -880,9 +880,9 @@ actiontrycastbyid[2645]
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
-DeathRecall
+ReGroupRecall
 i
 17
 i
@@ -977,7 +977,7 @@ uTank2 NAV 1.2
 0.0590341607729594
 0
 s
-DeathRecall
+ReGroupRecall
 i
 2
 i
@@ -1095,7 +1095,7 @@ i
 s
 /vt meta load RynDQLCheck
 s
-DeathRecall
+ReGroupRecall
 i
 2
 i
@@ -1210,7 +1210,7 @@ n
 s
 e
 s
-setpvar[Stuck, DeathRecall]
+setpvar[Stuck, ReGroupRecall]
 s
 Default
 i
@@ -2052,7 +2052,7 @@ K
 V
 n
 n
-6
+5
 i
 8
 i
@@ -2062,13 +2062,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 6
 i
@@ -2096,11 +2105,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 DoorStep
 i
@@ -3194,7 +3203,7 @@ K
 V
 n
 n
-6
+5
 i
 8
 i
@@ -3204,13 +3213,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 2
 TABLE
@@ -3291,11 +3309,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeDoorOne
 i
@@ -3643,7 +3661,7 @@ K
 V
 n
 n
-6
+5
 i
 8
 i
@@ -3653,13 +3671,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 2
 TABLE
@@ -3740,11 +3767,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeDoorThree
 i
@@ -4092,7 +4119,7 @@ K
 V
 n
 n
-6
+5
 i
 8
 i
@@ -4102,13 +4129,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 2
 TABLE
@@ -4189,11 +4225,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeDoorTwo
 i
@@ -4660,7 +4696,7 @@ K
 V
 n
 n
-6
+5
 i
 8
 i
@@ -4674,13 +4710,22 @@ i
 i
 -924254208
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -4704,11 +4749,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeJump
 i
@@ -4879,7 +4924,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -4889,13 +4934,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -4919,11 +4973,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeJump
 i
@@ -5583,7 +5637,7 @@ K
 V
 n
 n
-7
+6
 i
 8
 i
@@ -5597,13 +5651,22 @@ i
 i
 -924254208
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 4
 s
@@ -5653,11 +5716,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeToDelegateBoss
 i
@@ -6756,7 +6819,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -6766,13 +6829,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -6796,11 +6868,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeToDoorOne
 i
@@ -7489,7 +7561,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -7499,13 +7571,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -7529,11 +7610,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeToDoorThree
 i
@@ -8362,7 +8443,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -8372,13 +8453,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -8402,11 +8492,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeToDoorTwo
 i
@@ -9592,7 +9682,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -9602,13 +9692,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -9632,11 +9731,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeToLeverOne
 i
@@ -9952,7 +10051,7 @@ K
 V
 n
 n
-7
+6
 i
 8
 i
@@ -9962,13 +10061,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 4
 s
@@ -10004,11 +10112,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeToLeverThree
 i
@@ -11163,7 +11271,7 @@ K
 V
 n
 n
-7
+6
 i
 8
 i
@@ -11175,19 +11283,41 @@ s
 i
 4
 s
-!ManDown
-i
-4
-s
 !Missed
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+p
+s
+!ReGroup
+s
+c
+s
+19
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!Stuck\"$
+p
+s
+!Stuck
+s
+c
+s
+19
 i
 3
 TABLE
@@ -11211,11 +11341,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeToLeverTwo
 i
@@ -11510,7 +11640,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -11520,13 +11650,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -11550,11 +11689,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeUseLeverOne
 i
@@ -11849,7 +11988,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -11859,13 +11998,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -11889,11 +12037,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeUseLeverThree
 i
@@ -12211,7 +12359,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -12221,13 +12369,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -12251,11 +12408,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 EdificeUseLeverTwo
 i
@@ -13573,7 +13730,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -13583,13 +13740,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -13613,11 +13779,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 FixJump
 i
@@ -13776,7 +13942,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -13786,13 +13952,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -14032,11 +14207,11 @@ setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 Loot
 i
@@ -18045,7 +18220,7 @@ n
 s
 e
 s
-setpvar[Stuck, DeathRecall]
+setpvar[Stuck, ReGroupRecall]
 i
 7
 TABLE
@@ -18346,7 +18521,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -18360,13 +18535,22 @@ i
 i
 -924254208
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 TABLE
 2
 K
@@ -18377,11 +18561,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 ToDelegate
 i
@@ -21162,7 +21346,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -21172,13 +21356,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -21202,11 +21395,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 ToDelegateJump
 i
@@ -22467,7 +22660,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -22481,13 +22674,22 @@ i
 i
 -924254208
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 TABLE
 2
 K
@@ -22498,11 +22700,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 UseDelegate
 i
@@ -22521,11 +22723,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 WatchDog
 i

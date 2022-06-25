@@ -329,7 +329,7 @@ e
 s
 clearvar[capturegroup_tellquest]
 s
-DeathRecall
+ReGroupRecall
 i
 21
 i
@@ -370,7 +370,7 @@ x
 ba
 438
 <?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestIQSQ,1]" /></control></view>s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -389,7 +389,7 @@ getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 s
 Zstuck
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -408,7 +408,7 @@ getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestIQSQ]==1
 s
 SkipQuest
 s
-DeathRecall
+ReGroupRecall
 i
 21
 i
@@ -445,7 +445,7 @@ e
 s
 stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]
 s
-DeathRecall
+ReGroupRecall
 i
 2
 i
@@ -521,7 +521,7 @@ getequippedweapontype[]==Wand&&getcombatstate[]==Melee
 s
 /ub quit
 s
-DeathRecall
+ReGroupRecall
 i
 19
 i
@@ -540,7 +540,7 @@ e
 s
 clearvar[CombatStuck]
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -559,7 +559,7 @@ getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestIQSQ]==1
 s
 SkipQuest
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -587,7 +587,7 @@ e
 s
 setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestIQSQ,1]
 s
-DeathRecall
+ReGroupRecall
 i
 17
 i
@@ -597,7 +597,7 @@ i
 s
 ToTN
 s
-DeathRecall
+ReGroupRecall
 i
 1
 i
@@ -623,7 +623,7 @@ n
 s
 e
 s
-setpvar[StateName,DeathRecall]
+setpvar[StateName,ReGroupRecall]
 i
 7
 TABLE
@@ -750,7 +750,7 @@ uTank2 NAV 1.2
 1
 0
 s
-DeathRecall
+ReGroupRecall
 i
 21
 i
@@ -789,9 +789,9 @@ actiontrycastbyid[2023]
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
-DeathRecall
+ReGroupRecall
 i
 18
 i
@@ -868,7 +868,7 @@ uTank2 NAV 1.2
 0.707520802815755
 0
 s
-DeathRecall
+ReGroupRecall
 i
 2
 i
@@ -986,7 +986,7 @@ i
 s
 /vt meta load RynDQLCheck
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -1014,7 +1014,7 @@ e
 s
 setgvar[getworldname[]+getpvar[GroupIdentifier]+Skull,1]
 s
-DeathRecall
+ReGroupRecall
 i
 2
 i
@@ -1952,7 +1952,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -1962,13 +1962,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -1992,11 +2001,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 DreamThief
 i
@@ -2707,7 +2716,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -2717,13 +2726,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -2747,11 +2765,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 DungeonOne
 i
@@ -3283,7 +3301,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -3293,13 +3311,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -3323,11 +3350,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 DungeonTwoButtonRoute
 i
@@ -4268,7 +4295,7 @@ K
 V
 n
 n
-6
+5
 i
 8
 i
@@ -4278,13 +4305,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 2
 TABLE
@@ -4386,11 +4422,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 DungeonTwoDoor
 i
@@ -5026,7 +5062,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -5036,13 +5072,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -5066,11 +5111,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 DungeonTwoJump
 i
@@ -5536,7 +5581,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -5546,13 +5591,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -5576,11 +5630,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 FightBoss
 i
@@ -7486,7 +7540,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -7496,13 +7550,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -7742,11 +7805,11 @@ setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 Loot
 i
@@ -11920,7 +11983,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -11930,13 +11993,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -11960,11 +12032,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 ToDreamThief
 i
@@ -12635,7 +12707,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -12645,13 +12717,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -12675,11 +12756,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 ToDungeonOne
 i
@@ -13616,7 +13697,7 @@ n
 s
 e
 s
-setpvar[Stuck, DeathRecall]
+setpvar[Stuck, ReGroupRecall]
 i
 1
 s
@@ -13817,7 +13898,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -13831,13 +13912,22 @@ i
 i
 -924254208
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 TABLE
 2
 K
@@ -13861,11 +13951,11 @@ clearvar[ShadeStuck]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 ToShadeOfDule
 i
@@ -13968,7 +14058,7 @@ clearpvar[ShadeFail]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 s
 ToShadeOfDule
 i
@@ -14091,7 +14181,7 @@ setpvar[ShadeFail,getpvar[ShadeFail]+1]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 s
 ToShadeOfDule
 i
@@ -16544,11 +16634,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 WatchDog
 i
