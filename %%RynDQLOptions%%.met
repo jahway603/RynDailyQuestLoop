@@ -11,7 +11,7 @@ n
 n
 n
 n
-149
+155
 i
 0
 i
@@ -2604,6 +2604,84 @@ i
 i
 0
 s
+%% Summon Toggles Below %%
+s
+%% Options %%
+i
+0
+i
+2
+i
+0
+s
+%% Disabled By Default %%
+s
+%% Options %%
+i
+0
+i
+2
+i
+0
+s
+%% Set to 1 to Enable %%
+s
+%% Options %%
+i
+0
+i
+2
+i
+0
+s
+%% Set to 0 to Disable %%
+s
+%% Options %%
+i
+1
+i
+7
+i
+0
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+setpvar[SummonForBosses,0]
+s
+%% Options %%
+i
+1
+i
+7
+i
+0
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+setpvar[SummonAllTheTime,0]
+s
+%% Options %%
+i
+0
+i
+2
+i
+0
+s
 %% Quest Toggles Below %%
 s
 %% Options %%
@@ -3580,7 +3658,7 @@ n
 s
 e
 s
-getvar[ReloadOptions]==1
+getvar[ReloadOptions]>=3
 i
 3
 TABLE
@@ -4261,7 +4339,7 @@ n
 s
 e
 s
-testpvar[UseBot]==0
+testpvar[Run]==0
 i
 26
 TABLE
