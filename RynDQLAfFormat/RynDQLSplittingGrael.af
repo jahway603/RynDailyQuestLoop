@@ -799,6 +799,10 @@ STATE: {Pillar} ~~ {
 			Expr {testvar[StateTimer]}
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=600}
 		DO:	SetState {Watchdog}
+	IF: Always
+		DO: DoAll
+				DoExpr {setvar[Arcs,vtgetsetting[UseArcs]]}
+				DoExpr {vtsetsetting[UseArcs,`1`]}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0208]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
@@ -830,6 +834,7 @@ STATE: {Pillar} ~~ {
 				SetOpt {AutoAttackPower} {True}
 				Chat {/vt setattackbar 1}
 				DoExpr {clearvar[StateTimer]}
+				DoExpr {vtsetsetting[UseArcs,cstr[getvar[Arcs]]]}
 				SetState {Pickup}
 ~~ }
 STATE: {RunToAB} ~~ {
