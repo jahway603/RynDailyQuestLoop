@@ -6463,7 +6463,7 @@ n
 s
 e
 s
-$GXdir>0
+testvar[GXdir]
 i
 6
 i
@@ -6500,7 +6500,7 @@ n
 s
 e
 s
-clearvar[dir]
+clearvar[GXdir]
 i
 1
 s
