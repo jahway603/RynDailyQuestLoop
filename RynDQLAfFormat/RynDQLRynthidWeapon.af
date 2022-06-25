@@ -106,7 +106,7 @@ STATE: {CatacombsOfTorment} ~~ {
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Checking]==1}
 			CellE 006004C1
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,CatacombsOfTorment]}
 				DoExpr {setpvar[CheckSync,CatacombsOfTorment]}
 				Chat {/vt meta load RynDQLCheck} ~~ CatacombsOfTorment
@@ -131,7 +131,7 @@ STATE: {CatacombsOfTorment} ~~ {
 				CellE 59540712
 				CellE 59540713
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,CatacombsOfTorment]}
@@ -145,7 +145,7 @@ STATE: {CatacombsOfTorment} ~~ {
 				CellE 59540712
 				CellE 59540713
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,CatacombsOfTorment]}
@@ -159,7 +159,7 @@ STATE: {CatacombsOfTorment} ~~ {
 				CellE 59540713
 				CellE 59540712
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav1 {CoTPt2.nav}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -178,7 +178,7 @@ STATE: {CatacombsOfTorment} ~~ {
 				CellE 59540558
 				CellE 5954055A
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,CatacombsOfTorment]}
@@ -192,7 +192,7 @@ STATE: {CatacombsOfTorment} ~~ {
 				CellE 59540558
 				CellE 5954055A
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,CatacombsOfTorment]}
@@ -206,7 +206,7 @@ STATE: {CatacombsOfTorment} ~~ {
 				CellE 5954055A
 				CellE 59540558
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav2 {CoTPt3.nav}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -225,7 +225,7 @@ STATE: {CatacombsOfTorment} ~~ {
 				CellE 59540164
 				CellE 59540165
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,3]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {stopwatchstart[setvar[DelayCurator, stopwatchcreate[]]]}
@@ -240,7 +240,7 @@ STATE: {CatacombsOfTorment} ~~ {
 				CellE 59540164
 				CellE 59540165
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,3]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {stopwatchstart[setvar[DelayCurator, stopwatchcreate[]]]}
@@ -259,7 +259,7 @@ STATE: {CatacombsOfTorment} ~~ {
 				CellE 59540164
 				CellE 59540165
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav3 {CoTPortal.nav}
 	IF:	CellE 59540144
 		DO:	DoAll
@@ -272,7 +272,7 @@ STATE: {Clear} ~~ {
 			Expr {vtgetsetting[EnableCombat]==0}
 			Expr {vtgetsetting[EnableNav]==0}
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetOpt {EnableNav} {True}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -329,17 +329,21 @@ STATE: {ClearMobs} ~~ {
 	IF:	Always
 		DO:	DoAll
 				SetOpt {EnableNav} {False}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NoClear]==1}
 		DO:	SetOpt {EnableNav} {True}
 	IF:	Any
+			NoMobsInDist 30
+			SecsInStateGE 30
+			All
+				SecsInStateGE 3
+				NoMobsInDist 15
+			All
+				SecsInStateGE 15
+				NoMobsInDist 8
 			All
 				SecsInStateGE 10
-				NoMobsInDist 5
-			All
-				SecsInStateGE 5
 				NoMobsInDist 3
-			NoMobsInDist 8
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
 				DoExpr {vtsetmetastate[getpvar[ClearMobs]]}
@@ -611,7 +615,7 @@ STATE: {FightBoss} ~~ {
 	IF:	Not NoMobsInDist 80
 		DO:	DoAll
 				SetOpt {NavPriorityBoost} {True}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
 	IF:	All
 			Expr {getpvar[QuestCompletedSkip]==0}
@@ -831,7 +835,7 @@ STATE: {GroundToTorment} ~~ {
 				CellE 3032001C
 				CellE 3032001C
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav8 {[none]}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -848,7 +852,7 @@ STATE: {GroundToTorment} ~~ {
 			Expr {getvar[PitStop]==0}
 			CellE 2D31002C
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,GroundToTorment]}
@@ -861,7 +865,7 @@ STATE: {GroundToTorment} ~~ {
 			Expr {getvar[PitStop]==0}
 			CellE 2D31002C
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,GroundToTorment]}
@@ -874,7 +878,7 @@ STATE: {GroundToTorment} ~~ {
 			Expr {getvar[PitStop]==1}
 			CellE 2D31002C
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav9 {[GroundToTormentJump]}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -893,7 +897,7 @@ STATE: {GroundToTorment} ~~ {
 				CellE 2D31002A
 				CellE 2D310023
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,GroundToTorment]}
@@ -909,7 +913,7 @@ STATE: {GroundToTorment} ~~ {
 				CellE 2D31002A
 				CellE 2D310023
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,GroundToTorment]}
@@ -926,7 +930,7 @@ STATE: {GroundToTorment} ~~ {
 				CellE 2D31002A
 				CellE 2D310033
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav10 {GroundToTormentAfterJump.nav}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 	IF:	All
@@ -954,7 +958,7 @@ STATE: {GroundToTorment} ~~ {
 				CellE 5879052A
 				CellE 58790529
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,PathOfTorment]}
 				DoExpr {setpvar[CheckSync,PathOfTorment]}
 				Chat {/vt meta load RynDQLCheck} ~~ PathOfTorment
@@ -1064,7 +1068,10 @@ STATE: {Loot} ~~ {
 			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]==getvar[LootCount]&&getobjectinternaltype[wobjectgetopencontainer[]]==7}
 		DO:	DoAll
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]] && listcount[$CorpseDetect] > 0 && (actiontryuseitem[$CorpseDetect{{0}}] || 1)}
-	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
 		DO:	DoAll
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`}
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]]}
@@ -1152,10 +1159,12 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootStuckDelay]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				SetState {LootStuckDelay}
-	IF: All
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]}
 			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]]}
 			SecsInStateGE 30
-		DO: DoAll
+		DO:	DoAll
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				SetState {Loot}
 ~~ }
@@ -1264,8 +1273,7 @@ STATE: {MoveToHallway} ~~ {
 	IF:	Always
 		DO:	DoAll
 				SetOpt {NavPriorityBoost} {True}
-				SetOpt {EnableCombat} {True}
-				SetOpt {SummonPets} {False}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 	IF:	All
 			NoMobsInDist 80
@@ -1290,7 +1298,7 @@ STATE: {MoveToHallway} ~~ {
 				CellE 5954013C
 				CellE 5954013C
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setvar[Flag,0]}
@@ -1305,7 +1313,7 @@ STATE: {MoveToHallway} ~~ {
 				CellE 5954013C
 				CellE 5954013C
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav15 {StayInHallway}
 	IF:	All
 			NoMobsInDist 15
@@ -1334,7 +1342,7 @@ STATE: {MoveToHallway} ~~ {
 				Expr {stopwatchelapsedseconds[getvar[RyCountDown]]>=315}
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
-				SetOpt {SummonPets} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetOpt {UseDispelItems} {True}
 				DoExpr {setvar[PitStop,0]}
 				DoExpr {clearvar[RyCountDown]}
@@ -1437,7 +1445,7 @@ STATE: {PathOfRage} ~~ {
 			Expr {getvar[PitStop]==0}
 			CellE 587903F5
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PathOfRage]}
@@ -1449,7 +1457,7 @@ STATE: {PathOfRage} ~~ {
 			Expr {getvar[PitStop]==0}
 			CellE 587903F5
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PathOfRage]}
@@ -1461,7 +1469,7 @@ STATE: {PathOfRage} ~~ {
 			Expr {getvar[PitStop]==1}
 			CellE 587903F5
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav18 {[none]}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -1476,7 +1484,7 @@ STATE: {PathOfRage} ~~ {
 			Expr {getvar[PitStop]==1}
 			CellE 58790354
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PathOfRage]}
@@ -1488,7 +1496,7 @@ STATE: {PathOfRage} ~~ {
 			Expr {getvar[PitStop]==1}
 			CellE 58790354
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PathOfRage]}
@@ -1500,7 +1508,7 @@ STATE: {PathOfRage} ~~ {
 			Expr {getvar[PitStop]==2}
 			CellE 58790354
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav19 {[none]}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -1516,7 +1524,7 @@ STATE: {PathOfRage} ~~ {
 			Any
 				CellE 2C300007
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,PlatformOfRage]}
 				DoExpr {setpvar[CheckSync,PlatformOfRage]}
 				Chat {/vt meta load RynDQLCheck} ~~ PlatformOfRage
@@ -1606,7 +1614,7 @@ STATE: {PathOfTorment} ~~ {
 			Expr {getvar[PitStop]==0}
 			CellE 58790471
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PathOfTorment]}
@@ -1630,14 +1638,14 @@ STATE: {PathOfTorment} ~~ {
 			Expr {getvar[PitStop]==1}
 			CellE 58790471
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav22 {PathOfTormentPt2.nav}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==0}
 			Expr {getvar[PitStop]==1}
 			CellE 58790471
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav22 {PathOfTormentPt2.nav}
 	IF:	CellE 2D31002E
 		DO:	EmbedNav nav23 {Clear}
@@ -1645,7 +1653,7 @@ STATE: {PathOfTorment} ~~ {
 			NavEmpty
 			CellE 2D31002E
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,PlatformOfTorment]}
 				DoExpr {setpvar[CheckSync,PlatformOfTorment]}
 				Chat {/vt meta load RynDQLCheck} ~~ PlatformOfTorment
@@ -1736,7 +1744,7 @@ STATE: {PlatformOfRage} ~~ {
 			Expr {getvar[PitStop]==0}
 			CellE 2C300015
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PlatformOfRage]}
@@ -1752,7 +1760,7 @@ STATE: {PlatformOfRage} ~~ {
 			Expr {getvar[PitStop]==1}
 			CellE 2C300023
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PlatformOfRage]}
@@ -1768,7 +1776,7 @@ STATE: {PlatformOfRage} ~~ {
 			Expr {getvar[PitStop]==2}
 			CellE 2C300015
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,3]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PlatformOfRage]}
@@ -1779,7 +1787,7 @@ STATE: {PlatformOfRage} ~~ {
 			Expr {getvar[PitStop]==3}
 			CellE 2C300015
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav27 {[none]}
 	IF:	All
 			NavEmpty
@@ -1787,7 +1795,7 @@ STATE: {PlatformOfRage} ~~ {
 				CellE 2B30003D
 				CellE 2C300005
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[51973]]==7}
-		DO: SetOpt {EnableCombat} {True}
+		DO: DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			NavEmpty
 			Any
@@ -1796,7 +1804,7 @@ STATE: {PlatformOfRage} ~~ {
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[51973]]==1}
 		DO:	DoAll
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Pillar,2]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,ToGroundPillarOne]}
 				DoExpr {setpvar[CheckSync,ToGroundPillarOnePitStopTwo]}
 				Chat {/vt meta load RynDQLCheck} ~~ ToGroundPillarOnePitStopTwo
@@ -1906,7 +1914,7 @@ STATE: {PlatformOfTorment} ~~ {
 			Expr {getvar[PitStop]==0}
 			CellE 2D310008
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PlatformOfTorment]}
@@ -1917,14 +1925,14 @@ STATE: {PlatformOfTorment} ~~ {
 			Expr {getvar[PitStop]==1}
 			CellE 2D310008
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav30 {Junk.nav}
 	IF:	All
 			NavEmpty
 			Expr {getvar[PitStop]==1}
 			CellE 2D31001D
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PlatformOfTorment]}
@@ -1935,14 +1943,14 @@ STATE: {PlatformOfTorment} ~~ {
 			Expr {getvar[PitStop]==2}
 			CellE 2D31001D
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav31 {[none]}
 	IF:	All
 			NavEmpty
 			Expr {getvar[PitStop]==2}
 			CellE 2D31002B
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,3]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PlatformOfTorment]}
@@ -1953,7 +1961,7 @@ STATE: {PlatformOfTorment} ~~ {
 			Expr {getvar[PitStop]==3}
 			CellE 2D31002B
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav32 {[none]}
 	IF:	Any
 			CellE 587903EB
@@ -1965,7 +1973,7 @@ STATE: {PlatformOfTorment} ~~ {
 				CellE 587903EB
 				CellE 587903EA
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,PathOfRage]}
 				DoExpr {setpvar[CheckSync,PathOfRage]}
 				Chat {/vt meta load RynDQLCheck} ~~ PathOfRage
@@ -2119,7 +2127,7 @@ STATE: {TalkToCurator} ~~ {
 				CellE 5954013C
 				CellE 5954013C
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav34 {TalkToCurator}
 	IF:	Any
 			All
@@ -2131,7 +2139,7 @@ STATE: {TalkToCurator} ~~ {
 				Expr {stopwatchelapsedseconds[getvar[RyCountDown]]>=315}
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
-				SetOpt {SummonPets} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses[==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetOpt {UseDispelItems} {True}
 				DoExpr {setvar[PitStop,0]}
 				DoExpr {clearvar[RyCountDown]}
@@ -2216,7 +2224,7 @@ STATE: {ToCatacombsOfTorment} ~~ {
 			Expr {vtgetsetting[EnableCombat]==1}
 			CellE 2D31002A
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				EmbedNav nav37 {[none]}
 	IF:	All
@@ -2232,7 +2240,7 @@ STATE: {ToCatacombsOfTorment} ~~ {
 			Expr {getvar[PitStop]==0}
 			CellE 2D310025
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
@@ -2245,7 +2253,7 @@ STATE: {ToCatacombsOfTorment} ~~ {
 			Expr {getvar[PitStop]==0}
 			CellE 2D310025
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
@@ -2258,7 +2266,7 @@ STATE: {ToCatacombsOfTorment} ~~ {
 			Expr {getvar[PitStop]==1}
 			CellE 2D310025
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav38 {[none]}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -2274,7 +2282,7 @@ STATE: {ToCatacombsOfTorment} ~~ {
 			Any
 				CellE 59540817
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {setpvar[StateName,CatacombsOfTorment]}
 				DoExpr {setpvar[CheckSync,CatacombsOfTorment]}
@@ -2363,7 +2371,7 @@ STATE: {ToGroundPillarOne} ~~ {
 			Any
 				CellE 2C30001D
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,ToGroundPillarOne]}
@@ -2388,7 +2396,7 @@ STATE: {ToGroundPillarOne} ~~ {
 			Expr {getvar[PitStop]==1}
 			CellE 2C30001D
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav42 {[none]}
 	IF:	All
 			Expr {vtgetsetting[EnableCombat]==0}
@@ -2407,7 +2415,7 @@ STATE: {ToGroundPillarOne} ~~ {
 			Any
 				CellE 2D30000B
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3333333]]`]}
 	IF:	All
 			NavEmpty
@@ -2499,7 +2507,7 @@ STATE: {ToGroundPillarTwo} ~~ {
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[51971]]==7}
 			Any
 				CellE 2C300040
-		DO: SetOpt {EnableCombat} {True}
+		DO: DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			NavEmpty
 			Expr {vtgetsetting[EnableCombat]==1}
@@ -2507,7 +2515,7 @@ STATE: {ToGroundPillarTwo} ~~ {
 			Any
 				CellE 2C300040
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Pillar,4]}
 				DoExpr {setpvar[StateName,ToCatacombsOfTorment]}
 				DoExpr {setpvar[CheckSync,ToCatacombsOfTorment]}
@@ -2520,7 +2528,7 @@ STATE: {ToGroundPillarTwo} ~~ {
 				CellE 2C300040
 		DO:	DoAll
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Pillar,4]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,ToCatacombsOfTorment]}
 				DoExpr {setpvar[CheckSync,ToCatacombsOfTorment]}
 				Chat {/vt meta load RynDQLCheck} ~~ ToCatacombsOfTorment
@@ -2626,7 +2634,7 @@ STATE: {ToPlatform} ~~ {
 				CellE 2F320012
 				CellE 2F32000A
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {setpvar[StateName,ToPlatform]}
 				DoExpr {setpvar[CheckSync,ToPlatformPitStopOne]}
@@ -2638,7 +2646,7 @@ STATE: {ToPlatform} ~~ {
 				CellE 2F320012
 				CellE 2F32000A
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav45 {[none]}
 	IF:	All
 			NavEmpty
@@ -2647,7 +2655,7 @@ STATE: {ToPlatform} ~~ {
 				CellE 2D320039
 				CellE 2E320001
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,ToPlatform]}
@@ -2660,13 +2668,13 @@ STATE: {ToPlatform} ~~ {
 				CellE 2D320039
 				CellE 2E320001
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav46 {Junk.nav}
 	IF:	All
 			NavEmpty
 			CellE 2D31002A
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,0]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,PlatformPicker]}

@@ -277,6 +277,18 @@ STATE: {%% Options %%} ~~ {
 				Expr {testpvar[CountPhainorSummon]==CharTwo}
 		DO:	DoExpr {setpvar[CountPhainorSummon,CharTwo]}
 	IF:	Never
+		DO:	Chat {%% Summon Toggles Below %%}
+	IF:	Never
+		DO:	Chat {%% Disabled By Default %%}
+	IF:	Never
+		DO:	Chat {%% Set to 1 to Enable %%}
+	IF:	Never
+		DO:	Chat {%% Set to 0 to Disable %%}
+	IF: Always
+		DO: DoExpr {setpvar[SummonForBosses,0]}
+	IF: Always
+		DO: DoExpr {setpvar[SummonAllTheTime,0]}
+	IF:	Never
 		DO:	Chat {%% Quest Toggles Below %%}
 	IF:	Never
 		DO:	Chat {%% Set to 1 to run the quest %%}
@@ -365,7 +377,7 @@ STATE: {%% Options %%} ~~ {
 	IF:	All
 			Expr {testpvar[LeaderName]}
 			Expr {testpvar[FellowCount]}
-			Expr {getvar[ReloadOptions]==1}
+			Expr {getvar[ReloadOptions]>=3}
 			Any
 				Expr {getpvar[FellowCount]==2&&testpvar[FellowNameTwo]==1}
 				Expr {getpvar[FellowCount]==3&&testpvar[FellowNameTwo]==1&&testpvar[FellowNameThree]==1}
@@ -421,7 +433,7 @@ STATE: {%% Options %%} ~~ {
 			Expr {testpvar[UseBot]==0}
 		DO:	ChatExpr {\/t +getcharstringprop[1]+`,It appears you haven't changed Run settings from default. Please refer to Dailies_readme.txt from the Zip file`}
 	IF:	All
-			Expr {testpvar[UseBot]==0}
+			Expr {testpvar[Run]==0}
 			Expr {testpvar[SummonPortal]==0}
 			Expr {testpvar[UseBot]==0}
 		DO:	ChatExpr {\/t +getcharstringprop[1]+`,It appears you haven't changed UseBot settings from default. Please refer to Dailies_readme.txt from the Zip file`}

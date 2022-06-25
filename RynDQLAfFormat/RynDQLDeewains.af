@@ -77,7 +77,7 @@ STATE: {Bridge} ~~ {
 			MobsInDist_Name 1 80 {Fallen Rock}
 		DO:	DoAll
 				SetOpt {EnableNav} {False}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.125]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 	IF:	All
 			Any
@@ -104,9 +104,7 @@ STATE: {Bridge} ~~ {
 				CellE 7E03075E
 				CellE 7E03075D
 				CellE 7E03075C
-		DO:	DoAll
-				SetOpt {SummonPets} {True}
-				SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[43789]]==7}
 			Any
@@ -129,8 +127,7 @@ STATE: {Bridge} ~~ {
 		DO:	DoAll
 				DoExpr {clearvar[JumpTimer]}
 				DoExpr {clearvar[StateTimer]}
-				SetOpt {EnableCombat} {True}
-				SetOpt {SummonPets} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridgeGo,1]}
 				SetState {DeewainFight}
@@ -300,16 +297,15 @@ STATE: {DeewainFight} ~~ {
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Alive]==0}
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[43781]]==7}
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Alive,1]}
 	IF:	All
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Go]==0}
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[43781]]==7}
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.25]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetOpt {EnableNav} {False}
-				SetOpt {SummonPets} {True}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
@@ -372,7 +368,7 @@ STATE: {DeewainFight} ~~ {
 				CellE 7E030861
 		DO:	DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,LootRock]}
 				DoExpr {setpvar[CheckSync,LootRock]}
 				Chat {/vt meta load RynDQLCheck} ~~ LootRock
@@ -574,7 +570,7 @@ STATE: {Defenders} ~~ {
 			CellE 7E030122
 			CellE 7E030121
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				EmbedNav nav3 {DeewainDefender.nav}
 	IF:	All
@@ -621,7 +617,7 @@ STATE: {DefendersWait} ~~ {
 				MobsInDist_Name 1 240 {Fiery Defender}
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetState {Defenders}
 ~~ }
 STATE: {FallingRocks} ~~ {
@@ -1088,7 +1084,7 @@ STATE: {ToDarkCavern} ~~ {
 			Expr {getvar[PitStop]==0}
 			CellE 73ED0033
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,ToDarkCavern]}
@@ -1332,21 +1328,22 @@ STATE: {ClearMobs} ~~ {
 				SetState {DeathRecall}
 	IF: Expr {getcharskill_traininglevel[33]==3}
 		DO: SetOpt {SummonPets} {True}
+	IF: Always
+		DO: DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	Any
+			NoMobsInDist 30
+			SecsInStateGE 30
 			All
-				SecsInStateGE 1
-				NoMobsInDist 5
+				SecsInStateGE 3
+				NoMobsInDist 15
 			All
-				SecsInStateGE 2
+				SecsInStateGE 15
+				NoMobsInDist 8
+			All
+				SecsInStateGE 10
 				NoMobsInDist 3
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
-				SetOpt {SummonPets} {True}
-				Return
-	IF:	SecsInStateGE 300
-		DO:	DoAll
-				SetOpt {EnableNav} {True}
-				SetOpt {SummonPets} {True}
 				Return
 ~~ }
 STATE: {WatchDog} ~~ {
@@ -1656,7 +1653,7 @@ STATE: {ToPortalMaze} ~~ {
 	IF:	Expr {coordinategetz[getplayercoordinates[]]#0.1000}
 		DO:	DoAll
 				SetOpt {NavCloseStopRange} {0.00625}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav ToPortalMaze {[none]}
 	IF:	CellE 7E030606
 		DO: DoAll

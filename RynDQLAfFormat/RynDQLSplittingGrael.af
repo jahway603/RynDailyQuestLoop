@@ -87,7 +87,7 @@ STATE: {Abyssal} ~~ {
 				CellE 00980126
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,Pillar]}
 				DoExpr {setpvar[CheckSync,Pillar]}
 				Chat {/vt meta load RynDQLCheck} ~~ Pillar
@@ -178,9 +178,7 @@ STATE: {ClearMobs} ~~ {
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestGrael]==1}
 		DO: SetState {SkipQuest}
 	IF:	Always
-		DO:	DoAll
-				SetOpt {SummonPets} {True}
-				SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
@@ -192,10 +190,20 @@ STATE: {ClearMobs} ~~ {
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	NoMobsInDist 10
+	IF:	Any
+			NoMobsInDist 30
+			SecsInStateGE 30
+			All
+				SecsInStateGE 3
+				NoMobsInDist 15
+			All
+				SecsInStateGE 15
+				NoMobsInDist 8
+			All
+				SecsInStateGE 10
+				NoMobsInDist 3
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
-				SetOpt {SummonPets} {False}
 				ChatExpr {\/vt setmetastate +getpvar[ClearMobs]}
 ~~ }
 STATE: {ClearTorch} ~~ {
@@ -219,7 +227,7 @@ STATE: {ClearTorch} ~~ {
 			Expr {getpvar[FellowCount]<2}
 			CellE C7EB0005
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav1 {[none]}
 	IF:	All
 			Expr {getpvar[FellowCount]>=2}
@@ -794,7 +802,7 @@ STATE: {Pillar} ~~ {
 	IF:	Always
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0208]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	Any
 			CellE 0098012A
 			CellE 00980125
@@ -1176,7 +1184,7 @@ STATE: {ToTorch} ~~ {
 			CellE C7EB0005
 		DO:	DoAll
 				SetState {ClearTorch}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 ~~ }
 STATE: {Watchdog} ~~ {
 	IF:	All

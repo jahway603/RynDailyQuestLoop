@@ -919,9 +919,7 @@ STATE: {Geraine} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Always
-		DO:	DoAll
-				SetOpt {EnableCombat} {True}
-				SetOpt {SummonPets} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	Expr {getpvar[AdminSkip]==1}
 		DO:	DoExpr {setpvar[Char,9]}
 	IF:	Always
@@ -1254,7 +1252,7 @@ STATE: {Stones} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Always
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Expr {getinventorycountbytemplatetype[45668]>=getpvar[CircleCount]}
@@ -1660,7 +1658,7 @@ STATE: {ToEast} ~~ {
 	IF:	Always
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	Expr {getpvar[Leader]==1}
 		DO:	SetOpt {LootOnlyRareCorpses} {False}
 	IF:	CellE 93020171
@@ -1759,7 +1757,6 @@ STATE: {ToGY} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[StateName,ToGY]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
-				SetOpt {SummonPets} {False}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
@@ -1858,7 +1855,7 @@ STATE: {ToRen} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Always
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getpvar[Char]==2}
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==7}
@@ -1919,7 +1916,7 @@ STATE: {ToSouth} ~~ {
 	IF:	Always
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	Expr {getpvar[Leader]==1}
 		DO:	SetOpt {LootOnlyRareCorpses} {False}
 	IF:	CellE 93020129
@@ -2117,7 +2114,7 @@ STATE: {ToStudy} ~~ {
 			CellE 77E70019
 		DO:	DoAll
 				SetOpt {EnableNav} {False}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {setpvar[Stuck, DeathRecall]}
 				DoExpr {setpvar[StateName,ToStudy]}
@@ -2129,7 +2126,7 @@ STATE: {ToStudy} ~~ {
 			NoMobsInDist 7
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav38 {[none]}
 	IF:	BlockE 93020000
 		DO:	DoAll
@@ -2249,7 +2246,7 @@ STATE: {ToWest} ~~ {
 	IF:	Always
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	Expr {getpvar[Leader]==1}
 		DO:	SetOpt {LootOnlyRareCorpses} {False}
 	IF:	CellE 93020171

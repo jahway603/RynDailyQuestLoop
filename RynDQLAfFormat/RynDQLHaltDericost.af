@@ -64,16 +64,23 @@ STATE: {ClearMobs} ~~ {
 		DO: SetOpt {SummonPets} {True}
 	IF:	Always
 		DO:	DoAll
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0208]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {EnableNav} {False}
 	IF:	Any
-			NoMobsInDist 5
+			NoMobsInDist 30
+			SecsInStateGE 30
 			All
-				NoMobsInDist 10
+				SecsInStateGE 3
+				NoMobsInDist 15
+			All
 				SecsInStateGE 15
+				NoMobsInDist 8
+			All
+				SecsInStateGE 10
+				NoMobsInDist 3
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
-				SetOpt {SummonPets} {False}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				ChatExpr {\/vt setmetastate +getpvar[ClearMobs]}
 ~~ }
@@ -550,7 +557,10 @@ STATE: {Loot} ~~ {
 			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]==getvar[LootCount]&&getobjectinternaltype[wobjectgetopencontainer[]]==7}
 		DO:	DoAll
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]] && listcount[$CorpseDetect] > 0 && (actiontryuseitem[$CorpseDetect{{0}}] || 1)}
-	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
 		DO:	DoAll
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`}
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]]}
@@ -639,7 +649,9 @@ STATE: {Loot} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				SetState {LootStuckDelay}
 	IF:	All
-			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==getpvar[FellowCount]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]}
+			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]]}
 			SecsInStateGE 30
 		DO:	DoAll
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
@@ -821,7 +833,7 @@ STATE: {MenhirEastBP} ~~ {
 	IF:	Always
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	ChatMatch {^The apparitions that haunt this artifact begin to stir.}
 		DO:	DoExpr {setvar[UseBP,1]}
 	IF:	All
@@ -896,7 +908,7 @@ STATE: {MenhirEastJumpToBottom} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,MenhirEastJumpToBottom]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	Expr {coordinategetz[getplayercoordinates[]]#-0.3249}
 		DO:	DoAll
 				DoExpr {$pwr=150}
@@ -947,7 +959,7 @@ STATE: {MenhirEastJumpToMid} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,MenhirEastJumpToMid]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			SecsInStateGE 1
 			Not NoMobsInDist 10
@@ -1002,7 +1014,7 @@ STATE: {MenhirEastToBottom} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,MenhirEastToBottom]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			SecsInStateGE 1
 			Not NoMobsInDist 10
@@ -1073,7 +1085,7 @@ STATE: {MenhirEastToMid} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,MenhirEastToMid]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			SecsInStateGE 1
 			Not NoMobsInDist 10
@@ -1117,7 +1129,7 @@ STATE: {MenhirEastWaves} ~~ {
 	IF:	Always
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.25]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
-				SetOpt {SummonPets} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	Always
 		DO:	DoAll
 				SetOpt {NavPriorityBoost} {True}
@@ -1208,9 +1220,8 @@ STATE: {MenhirWest} ~~ {
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,MenhirWest]}
-				SetOpt {SummonPets} {True}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getvar[Clear]==0}
 			Not NoMobsInDist 15
@@ -1224,7 +1235,7 @@ STATE: {MenhirWest} ~~ {
 				CellE 56520381
 			Expr {getpvar[Triangle]==4}
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[Clear,1]}
 	IF:	All
 			Expr {getpvar[Triangle]<4}
@@ -1725,9 +1736,7 @@ STATE: {UseEnchantedMnemosynes} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Always
-		DO:	DoAll
-				SetOpt {SummonPets} {True}
-				SetOpt {EnableNav} {False}
+		DO:	SetOpt {EnableNav} {False}
 	IF:	All
 			Any
 				CellE 56520270
@@ -1746,7 +1755,6 @@ STATE: {UseEnchantedMnemosynes} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Triangle,1]}
 				SetOpt {EnableNav} {True}
-				SetOpt {SummonPets} {False}
 				DoExpr {setpvar[StateName,MenhirWest]}
 				DoExpr {setpvar[CheckSync,MenhirWestTriangleOne]}
 				Chat {/vt meta load RynDQLCheck}
@@ -1767,7 +1775,6 @@ STATE: {UseEnchantedMnemosynes} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Triangle,2]}
 				SetOpt {EnableNav} {True}
-				SetOpt {SummonPets} {False}
 				DoExpr {setpvar[StateName,MenhirWest]}
 				DoExpr {setpvar[CheckSync,MenhirWestTriangleTwo]}
 				Chat {/vt meta load RynDQLCheck}
@@ -1790,7 +1797,6 @@ STATE: {UseEnchantedMnemosynes} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Triangle,3]}
 				SetOpt {EnableNav} {True}
-				SetOpt {SummonPets} {False}
 				DoExpr {setpvar[StateName,MenhirWest]}
 				DoExpr {setpvar[CheckSync,MenhirWestTriangleThree]}
 				Chat {/vt meta load RynDQLCheck}
@@ -1814,7 +1820,6 @@ STATE: {UseEnchantedMnemosynes} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Triangle,4]}
 				SetOpt {EnableNav} {True}
-				SetOpt {SummonPets} {False}
 				DoExpr {setpvar[StateName,MenhirWest]}
 				DoExpr {setpvar[CheckSync,MenhirWestTriangleFour]}
 				Chat {/vt meta load RynDQLCheck}

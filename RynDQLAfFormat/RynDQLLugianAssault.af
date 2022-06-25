@@ -163,7 +163,6 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RangeDown]}
 				SetOpt {EnableCombat} {False}
 				SetOpt {EnableNav} {False}
-				SetOpt {SummonPets} {False}
 				EmbedNav nav0 {[none]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {clearpvar[Door]}
@@ -308,7 +307,7 @@ STATE: {Dungeon} ~~ {
 				CellE 5951017D
 				CellE 59510171
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getpvar[FellowCount]<2}
 			Any
@@ -627,7 +626,7 @@ STATE: {Dungeon} ~~ {
 				CellE 59510161
 				CellE 5951016A
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {setpvar[StateName,Dungeon]}
 				DoExpr {setpvar[CheckSync,DungeonPitStopOne]}
@@ -649,7 +648,7 @@ STATE: {Dungeon} ~~ {
 			NavEmpty
 			CellE 5951010F
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+InsideDungeon]}
 				DoExpr {setpvar[StateName,FightBoss]}
@@ -682,6 +681,7 @@ STATE: {FightBoss} ~~ {
 	IF:	Always
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+RangeDown]==1}
 		DO:	DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
@@ -911,7 +911,10 @@ STATE: {Loot} ~~ {
 			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]==getvar[LootCount]&&getobjectinternaltype[wobjectgetopencontainer[]]==7}
 		DO:	DoAll
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]] && listcount[$CorpseDetect] > 0 && (actiontryuseitem[$CorpseDetect{{0}}] || 1)}
-	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
 		DO:	DoAll
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`}
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]]}
@@ -1000,6 +1003,8 @@ STATE: {Loot} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				SetState {LootStuckDelay}
 	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]}
 			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]]}
 			SecsInStateGE 30
 		DO:	DoAll
@@ -1307,7 +1312,7 @@ STATE: {ToDungeon} ~~ {
 			Expr {getvar[PitStop]==0}
 			CellE 2F340008
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {setpvar[StateName,ToDungeon]}
@@ -1337,7 +1342,7 @@ STATE: {ToDungeon} ~~ {
 			Expr {getvar[PitStop]==1}
 			CellE 2C320022
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,2]}
 				DoExpr {setpvar[StateName,ToDungeon]}
 				DoExpr {setpvar[CheckSync,ToDungeonPitStopTwo]}
@@ -1358,7 +1363,6 @@ STATE: {ToDungeon} ~~ {
 				CellE 2B2F0040
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
-				SetOpt {SummonPets} {True}
 				DoExpr {setvar[PitStop,3]}
 				DoExpr {setpvar[StateName,ToDungeon]}
 				DoExpr {setpvar[CheckSync,ToDungeonPitStopThree]}
@@ -1371,8 +1375,7 @@ STATE: {ToDungeon} ~~ {
 				CellE 2B2F0040
 				CellE 2B2F0040
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
-				SetOpt {SummonPets} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,3]}
 				DoExpr {setpvar[StateName,ToDungeon]}
 				DoExpr {setpvar[CheckSync,ToDungeonPitStopThree]}
@@ -1394,7 +1397,6 @@ STATE: {ToDungeon} ~~ {
 			NavEmpty
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
-				SetOpt {SummonPets} {True}
 				DoExpr {setvar[PitStop,4]}
 				DoExpr {setpvar[StateName,ToDungeon]}
 				DoExpr {setpvar[CheckSync,ToDungeonPitStopFour]}
@@ -1406,8 +1408,7 @@ STATE: {ToDungeon} ~~ {
 				CellE 2C2F0020
 			NavEmpty
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
-				SetOpt {SummonPets} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,4]}
 				DoExpr {setpvar[StateName,ToDungeon]}
 				DoExpr {setpvar[CheckSync,ToDungeonPitStopFour]}
@@ -1443,7 +1444,7 @@ STATE: {ToDungeon} ~~ {
 				CellE 59510139
 				CellE 59510138
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[Clear]}
 				DoExpr {clearvar[StateTimer]}

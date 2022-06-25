@@ -120,7 +120,7 @@ STATE: {DeathRecall} ~~ {
 				DoExpr {setpvar[CheckSync,Death]}
 				Chat {/vt meta load RynDQLCheck}
 	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Avoren's Skull]]==7}
-		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setvar[PitStop,1]}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Skull,1]}
 ~~ }
 STATE: {Default} ~~ {
 	IF:	All
@@ -288,10 +288,12 @@ STATE: {DungeonOne} ~~ {
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Skull]==1}
+		DO: DoExpr {setvar[PitStop,1]}
 	IF:	Always
 		DO:	SetWatchdog 5 45 {WatchDog}
 	IF:	Expr {getpvar[FellowCount]>=2}
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	Expr {getpvar[FellowCount]<2}
 		DO:	SetOpt {EnableCombat} {False}
 	IF:	CellE 00A702AA
@@ -352,7 +354,7 @@ STATE: {DungeonTwoButtonRoute} ~~ {
 			NavEmpty
 			CellE 00A7015B
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,DungeonTwoDoor]}
 				DoExpr {setpvar[CheckSync,DungeonDoor]}
@@ -498,8 +500,8 @@ STATE: {DungeonTwoJump} ~~ {
 			CellE 00A7010B
 			CellE 00A70103
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
-				SetOpt {NavPriorityBoost} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
+				SetOpt {NavPriorityBoost} {False}
 	IF:	All
 			Any
 				CellE 00A701AA
@@ -533,7 +535,7 @@ STATE: {FightBoss} ~~ {
 	IF:	Always
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0625]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetOpt {NavPriorityBoost} {False}
 	IF:	All
 			Expr {getpvar[QuestCompletedSkip]==0}
@@ -607,6 +609,7 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[ShadeFail]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Step]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Skull]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+IQSQTurnIn]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==1}
@@ -631,6 +634,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[ShadeFail]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Step]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Skull]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+IQSQTurnIn]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Looting]}
@@ -655,6 +659,7 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[ShadeFail]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Step]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Skull]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+IQSQTurnIn]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Looting]==0}
@@ -766,7 +771,10 @@ STATE: {Loot} ~~ {
 			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]==getvar[LootCount]&&getobjectinternaltype[wobjectgetopencontainer[]]==7}
 		DO:	DoAll
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]] && listcount[$CorpseDetect] > 0 && (actiontryuseitem[$CorpseDetect{{0}}] || 1)}
-	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
 		DO:	DoAll
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`}
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]]}
@@ -855,7 +863,9 @@ STATE: {Loot} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				SetState {LootStuckDelay}
 	IF:	All
-			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==getpvar[FellowCount]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]}
+			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]]}
 			SecsInStateGE 30
 		DO:	DoAll
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
@@ -1094,7 +1104,7 @@ STATE: {ToDreamThief} ~~ {
 				CellE 00A701D3
 				CellE 00A701E9
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,DreamThief]}
 				DoExpr {setpvar[CheckSync,Thief]}
 				Chat {/vt meta load RynDQLCheck}
@@ -1139,6 +1149,10 @@ STATE: {ToDungeonOne} ~~ {
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Skull]==1}
+		DO: DoExpr {setvar[PitStop,1]}
+	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Avoren's Skull]]==7}
+		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Skull,1]}
 	IF:	Always
 		DO:	DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	Always
@@ -1367,7 +1381,7 @@ STATE: {ToTeth} ~~ {
 			CellE 2581003C
 			NavEmpty
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,UseSentry]}
 				DoExpr {setpvar[CheckSync,Sentry]}
 				Chat {/vt meta load RynDQLCheck}

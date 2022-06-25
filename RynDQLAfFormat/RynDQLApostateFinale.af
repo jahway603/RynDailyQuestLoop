@@ -54,9 +54,8 @@ STATE: {ClearMobs} ~~ {
 		DO: SetOpt {SummonPets} {True}
 	IF:	Always
 		DO:	DoAll
-				SetOpt {SummonPets} {True}
-				SetOpt {EnableNav} {True}
-				SetOpt {EnableCombat} {True}
+				SetOpt {EnableNav} {False}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Any
 				Expr {getpvar[ClearMobs]==`FirstDungeon`}
@@ -87,9 +86,20 @@ STATE: {ClearMobs} ~~ {
 		DO:	DoAll
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
-	IF:	NoMobsInDist 10
+	IF:	Any
+			NoMobsInDist 30
+			SecsInStateGE 30
+			All
+				SecsInStateGE 3
+				NoMobsInDist 15
+			All
+				SecsInStateGE 15
+				NoMobsInDist 8
+			All
+				SecsInStateGE 10
+				NoMobsInDist 3
 		DO:	DoAll
-				SetOpt {SummonPets} {False}
+				SetOpt {EnableNav} {True}
 				SetOpt {EnableCombat} {False}
 				ChatExpr {\/vt setmetastate +getpvar[ClearMobs]}
 ~~ }
@@ -573,7 +583,7 @@ STATE: {FirstDungeon} ~~ {
 	IF:	All
 			MobsInDist_Name 1 15 {Apostate Nexus Master}
 			NavEmpty
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Apostate Nexus Master]]==7}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sparkling Apostate Shard]]==1}
@@ -723,7 +733,7 @@ STATE: {GetShardThree} ~~ {
 	IF:	All
 			MobsInDist_Name 1 15 {Apostate Nexus Master}
 			NavEmpty
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Apostate Nexus Master]]==7}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Shimmering Apostate Shard]]==1}
@@ -817,7 +827,7 @@ STATE: {GetShardTwo} ~~ {
 	IF:	All
 			MobsInDist_Name 1 15 {Apostate Nexus Master}
 			NavEmpty
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Apostate Nexus Master]]==7}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Scintillating Apostate Shard]]==1}
@@ -865,7 +875,7 @@ STATE: {Heart} ~~ {
 				DoExpr {setpvar[ClearMobs,Heart]}
 				SetWatchdog 5 30 {ClearMobs}
 	IF:	CellE 8B030169
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	Always
 		DO:	DoExpr {setpvar[LootDungeon,4]}
 	IF:	CellE 8B030332
@@ -879,7 +889,7 @@ STATE: {Heart} ~~ {
 				CellE 8B030169
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,HeartJump]}
 				DoExpr {setpvar[CheckSync,HeartJump]}
 				Chat {/vt meta load RynDQLCheck} ~~ HeartJump High Fellow
@@ -892,7 +902,7 @@ STATE: {Heart} ~~ {
 				CellE 8B030169
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,HeartJump]}
 				DoExpr {setpvar[CheckSync,HeartJump]}
 				Chat {/vt meta load RynDQLCheck} ~~ HeartJump Low fellow
@@ -1009,7 +1019,7 @@ STATE: {HeartJump} ~~ {
 	IF:	All
 			MobsInDist_Name 1 15 {Apostate Grand Director}
 			NavEmpty
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getitemcountininventorybyname[Shard of the Apostate Grand Director's Broken Mask]<getpvar[BrokenShard]]}
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Apostate Grand Director]]==7}
@@ -1122,7 +1132,10 @@ STATE: {Loot} ~~ {
 			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]==getvar[LootCount]&&getobjectinternaltype[wobjectgetopencontainer[]]==7}
 		DO:	DoAll
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]] && listcount[$CorpseDetect] > 0 && (actiontryuseitem[$CorpseDetect{{0}}] || 1)}
-	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
 		DO:	DoAll
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`}
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]]}
@@ -1210,10 +1223,12 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootStuckDelay]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				SetState {LootStuckDelay}
-	IF: All
-			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==getpvar[FellowCount]}
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]}
+			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]]}
 			SecsInStateGE 30
-		DO: DoAll
+		DO:	DoAll
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				SetState {Loot}
 ~~ }
@@ -1544,7 +1559,7 @@ STATE: {ToShards} ~~ {
 			All
 				CellE 217202D8
 				Expr {getpvar[Shard]==3}
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	CellE 21700031
 		DO:	EmbedNav nav22 {junk.nav}
 	IF:	All
@@ -1617,7 +1632,7 @@ STATE: {ToShards} ~~ {
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardThree],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,Shard]}
 				DoExpr {setpvar[CheckSync,ShardThree]}
 				Chat {/vt meta load RynDQLCheck} ~~ ShardThree
@@ -1668,7 +1683,7 @@ STATE: {ToShards} ~~ {
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardTwo],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,Shard]}
 				DoExpr {setpvar[CheckSync,ShardTwo]}
 				Chat {/vt meta load RynDQLCheck} ~~ ShardTwo
@@ -1707,7 +1722,7 @@ STATE: {ToShards} ~~ {
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleShardOne],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,Shard]}
 				DoExpr {setpvar[CheckSync,ShardOne]}
 				Chat {/vt meta load RynDQLCheck} ~~ ShardOne

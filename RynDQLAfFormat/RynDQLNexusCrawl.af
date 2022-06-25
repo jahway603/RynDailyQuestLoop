@@ -121,9 +121,7 @@ STATE: {ClearMobs} ~~ {
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestNC]==1}
 		DO: SetState {SkipQuest}
 	IF:	Always
-		DO:	DoAll
-				SetOpt {SummonPets} {True}
-				SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Any
@@ -153,7 +151,17 @@ STATE: {ClearMobs} ~~ {
 				Chat {/f !ManDown}
 				SetState {DeathRecall}
 	IF:	Any
-			NoMobsInDist 10
+			NoMobsInDist 30
+			SecsInStateGE 30
+			All
+				SecsInStateGE 3
+				NoMobsInDist 15
+			All
+				SecsInStateGE 15
+				NoMobsInDist 8
+			All
+				SecsInStateGE 10
+				NoMobsInDist 3
 			All
 				NavEmpty
 				Any
@@ -161,7 +169,6 @@ STATE: {ClearMobs} ~~ {
 					CellE 7F0201F8
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
-				SetOpt {SummonPets} {False}
 				ChatExpr {\/vt setmetastate +getpvar[ClearMobs]}
 ~~ }
 STATE: {SkipQuest} ~~{
@@ -608,7 +615,10 @@ STATE: {Loot} ~~ {
 			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]==getvar[LootCount]&&getobjectinternaltype[wobjectgetopencontainer[]]==7}
 		DO:	DoAll
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]] && listcount[$CorpseDetect] > 0 && (actiontryuseitem[$CorpseDetect{{0}}] || 1)}
-	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
 		DO:	DoAll
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`}
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]]}
@@ -697,6 +707,8 @@ STATE: {Loot} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				SetState {LootStuckDelay}
 	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]}
 			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]]}
 			SecsInStateGE 30
 		DO:	DoAll
@@ -943,7 +955,7 @@ STATE: {Nexus} ~~ {
 	IF:	All
 			Expr {getpvar[FellowCount]>=2}
 			CellE 7F0201B7
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			NavEmpty
 			Any
@@ -951,7 +963,7 @@ STATE: {Nexus} ~~ {
 				CellE 7F0201F8
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,LeverDoor]}
 				DoExpr {setpvar[CheckSync,LeverDoor]}
 				Chat {/vt meta load RynDQLCheck}
@@ -1158,7 +1170,7 @@ STATE: {NexusThree} ~~ {
 	IF:	All
 			Expr {getpvar[FellowCount]>=2}
 			CellE 7F020109
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 ~~ }
 STATE: {NexusTwo} ~~ {
 	IF:	All
@@ -1212,7 +1224,7 @@ STATE: {NexusTwo} ~~ {
 	IF:	CellE 7F0201FA
 		DO:	EmbedNav nav10 {NexusDungeonPt2.nav}
 	IF:	MobsInDist_Name 1 15 {Apostate Nexus Master}
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Aetherium Vault Key`]]==1}
@@ -1265,7 +1277,7 @@ STATE: {NexusTwo} ~~ {
 			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Aetherium Vault Key`]]==7}
 		DO:	DoAll
 				EmbedNav nav12 {[none]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Aetherium Vault Key`]]==7}
 			NavEmpty
@@ -1285,7 +1297,7 @@ STATE: {NexusTwo} ~~ {
 				CellE 7F02019C
 				CellE 7F02019D
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setpvar[StateName,NexusDoor]}
 				DoExpr {setpvar[CheckSync,NexusDoor]}
 				Chat {/vt meta load RynDQLCheck}
@@ -1370,7 +1382,7 @@ STATE: {OldNexus} ~~ {
 				CellE 011002C8
 				CellE 011002C7
 			Not NoMobsInDist 5
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			NavEmpty
 			Any
@@ -1639,7 +1651,7 @@ STATE: {ToNexus} ~~ {
 	IF:	All
 			BlockE 1C4D0000
 			MobsInDist_Name 3 5 {}
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	CellE 0F390034
 		DO:	EmbedNav nav20 {[none]}
 	IF:	CellE 14550032

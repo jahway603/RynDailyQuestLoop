@@ -51,9 +51,7 @@ STATE: {ClearMobs} ~~ {
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLL]==1}
 		DO: SetState {SkipQuest}
 	IF:	Always
-		DO:	DoAll
-				SetOpt {SummonPets} {True}
-				SetOpt {EnableCombat} {True}
+		DO: DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
@@ -67,17 +65,20 @@ STATE: {ClearMobs} ~~ {
 	IF: Expr {getcharskill_traininglevel[33]==3}
 		DO: SetOpt {SummonPets} {True}
 	IF:	Any
+			NoMobsInDist 30
+			SecsInStateGE 30
 			All
-				SecsInStateGE 5
-				NoMobsInDist 3
+				SecsInStateGE 3
+				NoMobsInDist 15
 			All
 				SecsInStateGE 15
-				NoMobsInDist 5
-			NoMobsInDist 10
+				NoMobsInDist 8
+			All
+				SecsInStateGE 10
+				NoMobsInDist 3
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
 				SetOpt {EnableCombat} {False}
-				SetOpt {SummonPets} {False}
 				ChatExpr {\/vt setmetastate +getpvar[ClearMobs]}
 ~~ }
 STATE: {SkipQuest} ~~{
@@ -381,7 +382,7 @@ STATE: {LostRuin} ~~ {
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[46348]]==1}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				CallState {PickUp} {LostRuin}
 	IF:	All
 			MobsInDist_Name 3 8 {}
@@ -390,7 +391,7 @@ STATE: {LostRuin} ~~ {
 				CellE 57650357
 				CellE 57650359
 				CellE 5765035B
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Any
 				CellE 57650357
@@ -475,7 +476,7 @@ STATE: {LostRuin} ~~ {
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[46349]]==1}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				CallState {PickUp} {LostRuin}
 	IF:	All
 			MobsInDist_Name 3 8 {}
@@ -487,7 +488,7 @@ STATE: {LostRuin} ~~ {
 				CellE 5765015E
 				CellE 5765015A
 				CellE 57650158
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			CellE 5765014A
 			Expr {getpvar[LostLoreNoteTwo]==0}
@@ -578,7 +579,7 @@ STATE: {LostRuin} ~~ {
 			NavEmpty
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {clearpvar[QuestCompletedSkip]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.08333333333]]`,`vtsetsetting[AttackDistance,cstr[0.08333333333]]`]}
 	~~ IF:	All
@@ -599,7 +600,7 @@ STATE: {LostRuin} ~~ {
 				~~ Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[27,Corpse of Falatacot Blood Prophetess]],getplayercoordinates[]]<10}
 		~~ DO:	DoAll
 				~~ DoExpr {clearvar[StateTimer]}
-				~~ SetOpt {EnableCombat} {True}
+				~~ DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				~~ DoExpr {clearpvar[QuestCompletedSkip]}
 				~~ DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.08333333333]]`,`vtsetsetting[AttackDistance,cstr[0.08333333333]]`]}
 				~~ CallState {PickUp} {LostRuin}
@@ -626,6 +627,7 @@ STATE: {LostRuin} ~~ {
 				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter],getcharstringprop[1]]}
 				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter],getcharstringprop[1]]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.08333333333]]`,`vtsetsetting[AttackDistance,cstr[0.08333333333]]`]}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[LootReturn,LostRuin]}
 				CallState {Loot} {LostRuin}
 	IF: All
@@ -687,11 +689,11 @@ STATE: {LostRuin} ~~ {
 				DoExpr {setpvar[ToTranslator,1]}
 				DoExpr {setpvar[StateName,ToTN]}
 				DoExpr {setpvar[CheckSync,ToTN]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.1875]]`]}
 				Chat {/vt meta load RynDQLCheck}
 	IF: CellE 5765019C
-		DO: SetOpt {EnableCombat} {True}
+		DO: DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Any
 				CellE 5765019E
@@ -719,7 +721,7 @@ STATE: {LostRuin} ~~ {
 			NavEmpty
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.1875]]`]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getpvar[FellowCount]<2}
 			Any
@@ -806,7 +808,7 @@ STATE: {LostRuinJump} ~~ {
 			Expr {getpvar[FellowCount]>=2}
 			Not Expr {coordinategetz[getplayercoordinates[]]#-0.1499}
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav JumpCombat {[JumpCombat]}
 				SetState {LostRuinJump}
 	IF:	Expr {coordinategetz[getplayercoordinates[]]#-0.1499}

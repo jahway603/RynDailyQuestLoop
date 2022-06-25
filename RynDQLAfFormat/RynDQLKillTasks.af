@@ -64,7 +64,7 @@ STATE: {Finished} ~~ {
 	IF:	Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+KillTasks]==0}
 		DO:	DoAll
 				DoExpr {clearvar[NPC]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				ChatExpr {\/vt meta load +getpvar[ReturnMetaProfile]}
 				ChatExpr {\/vt setmetastate +getpvar[StateName]}
@@ -367,7 +367,7 @@ STATE: {KilltaskHoshino} ~~ {
 				ChatMatch {Sergeant Trebuus tells you, "I have been watching what I can from here.  Well fought.  When you've killed 15 of the Spectral Archers, return to me."}
 				ChatMatch {Sergeant Trebuus tells you, "}
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				EmbedNav nav10 {[none]}
 				CallState {ReactNPC} {KilltaskHoshino}
 	IF:	All

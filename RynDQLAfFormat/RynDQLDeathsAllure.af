@@ -684,7 +684,7 @@ STATE: {DeathRoute} ~~ {
 			CellE 0029028A
 			NavEmpty
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetState {ToBabyOne}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+B]==2}
 		DO:	EmbedNav nav9 {[none]}
@@ -693,7 +693,7 @@ STATE: {DeathRoute} ~~ {
 			CellE 00290235
 			NavEmpty
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetState {ToBabyTwo}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+B]==3}
 		DO:	EmbedNav nav10 {[none]}
@@ -702,7 +702,7 @@ STATE: {DeathRoute} ~~ {
 			CellE 0029028D
 			NavEmpty
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetState {ToBabyThree}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+B]==4}
 		DO:	EmbedNav nav11 {junk.nav}
@@ -714,7 +714,7 @@ STATE: {DeathRoute} ~~ {
 				CellE 0029010C
 			NavEmpty
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetState {ToBabyFour}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+B]==5}
 		DO:	EmbedNav nav12 {junk.nav}
@@ -723,7 +723,7 @@ STATE: {DeathRoute} ~~ {
 			CellE 002901AB
 			NavEmpty
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetState {ToBabyFive}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+B]==6}
 		DO:	EmbedNav nav13 {junk.nav}
@@ -732,7 +732,7 @@ STATE: {DeathRoute} ~~ {
 			CellE 0029013A
 			NavEmpty
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetState {ToBabySix}
 ~~ }
 STATE: {Default} ~~ {
@@ -1142,7 +1142,7 @@ STATE: {RunToHermit} ~~ {
 	IF:	CellE 49F00013
 		DO:	EmbedNav nav20 {Junk.nav}
 	IF:	CellE 49F5002A
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			NavEmpty
 			CellE 49F50100
@@ -1432,7 +1432,7 @@ STATE: {ToBabyOne} ~~ {
 	IF:	Expr {getpvar[FellowCount]<2}
 		DO:	SetOpt {EnableCombat} {False}
 	IF:	Expr {getpvar[FellowCount]>=2}
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 ~~ }
 STATE: {ToBabySix} ~~ {
 	IF:	All
@@ -1502,7 +1502,7 @@ STATE: {ToBabyThree} ~~ {
 	IF:	Expr {getpvar[FellowCount]<2}
 		DO:	SetOpt {EnableCombat} {False}
 	IF:	Expr {getpvar[FellowCount]>=2}
-		DO:	SetOpt {EnableCombat} {True}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			NavEmpty
 			CellE 0029028D
