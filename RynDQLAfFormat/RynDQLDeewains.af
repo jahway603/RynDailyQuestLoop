@@ -1390,7 +1390,7 @@ STATE: {DeewainJumpToBottom} ~~ { ~~~ 0x7E030410 99.751999 -287.459015 0.005000 
 				DoExpr {$dyDee=$ptDee{{0}}-coordinategetns[$myPosDee];}
 				DoExpr {$dirDee=round[450-atan2[$dyDee,$dxDee]*180/$PIDee]%360}
 	IF:	All
-			Expr {$dirDee>0}
+			Expr {testvar[dirDee]}
 			SecsInStateGE 4
 		DO:	DoAll
 				ChatExpr {`/ub jumpsw `+cstrf[$dirDee,`G0`]+` `+cstrf[$pwrDee,`G0`]}
