@@ -777,8 +777,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getpvar[DoQuestPurge]==1}
 			Any
 				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CandethRecallKnown]==1}
-				Expr {getisspellknown[4214]==1} ~~ Candeth
-				Expr {getpvar[LSRecall]==1}
+				Expr {getpvar[LSRecall]==1} 	
 			Expr {getpvar[FellowCount]>=3}
 			Any
 				Expr {getqueststatus[jtmkeypickup_0613]==1}
