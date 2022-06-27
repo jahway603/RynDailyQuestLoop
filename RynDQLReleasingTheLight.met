@@ -7035,7 +7035,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[JumpStuck]]>=10
+stopwatchelapsedseconds[getvar[JumpStuck]]>=4
 TABLE
 2
 K

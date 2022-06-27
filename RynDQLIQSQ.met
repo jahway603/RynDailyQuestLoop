@@ -11761,7 +11761,7 @@ n
 s
 e
 s
-getobjectinternaltype[wobjectfindnearestdoor[]]==7
+getobjectinternaltype[wobjectfindnearestbytemplatetype[2179]]==7
 i
 26
 TABLE
@@ -11774,7 +11774,7 @@ n
 s
 e
 s
-wobjectgetisdooropen[wobjectfindnearestdoor[]]==0
+wobjectgetisdooropen[wobjectfindnearestbytemplatetype[2179]]==0
 i
 26
 TABLE
@@ -11787,7 +11787,7 @@ n
 s
 e
 s
-coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5
+coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[2179]],getplayercoordinates[]]<5
 TABLE
 2
 K
@@ -16419,7 +16419,7 @@ n
 s
 e
 s
-getobjectinternaltype[wobjectfindnearestdoor[]]==7
+getobjectinternaltype[wobjectfindnearestbytemplatetype[2179]]==7
 i
 26
 TABLE
@@ -16432,7 +16432,7 @@ n
 s
 e
 s
-wobjectgetisdooropen[wobjectfindnearestdoor[]]==1
+wobjectgetisdooropen[wobjectfindnearestbytemplatetype[2179]]==0
 i
 26
 TABLE
@@ -16445,7 +16445,7 @@ n
 s
 e
 s
-coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5
+coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[2179]],getplayercoordinates[]]<5
 i
 26
 TABLE
@@ -16542,7 +16542,7 @@ n
 s
 e
 s
-getobjectinternaltype[wobjectfindnearestdoor[]]==7
+getobjectinternaltype[wobjectfindnearestbytemplatetype[2179]]==7
 i
 26
 TABLE
@@ -16555,7 +16555,7 @@ n
 s
 e
 s
-wobjectgetisdooropen[wobjectfindnearestdoor[]]==0
+wobjectgetisdooropen[wobjectfindnearestbytemplatetype[2179]]==0
 i
 26
 TABLE
@@ -16568,7 +16568,7 @@ n
 s
 e
 s
-coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5
+coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[2179]],getplayercoordinates[]]<5
 TABLE
 2
 k

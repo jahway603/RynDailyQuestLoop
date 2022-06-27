@@ -13639,7 +13639,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[JumpStuck]]>=5
+stopwatchelapsedseconds[getvar[JumpStuck]]>=8
 ba
 1874
 [None]
@@ -13847,7 +13847,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[JumpStuck]]>=7
+stopwatchelapsedseconds[getvar[JumpStuck]]>=10
 TABLE
 2
 K

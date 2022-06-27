@@ -14913,7 +14913,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[JumpStuck]]>=3
+stopwatchelapsedseconds[getvar[JumpStuck]]>=8
 i
 3
 TABLE
@@ -15018,7 +15018,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[JumpStuck]]>=7
+stopwatchelapsedseconds[getvar[JumpStuck]]>=10
 i
 3
 TABLE

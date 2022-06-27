@@ -10219,7 +10219,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[JumpStuck]]>=3
+stopwatchelapsedseconds[getvar[JumpStuck]]>=8
 TABLE
 2
 K
@@ -10824,7 +10824,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[JumpStuck]]>=3
+stopwatchelapsedseconds[getvar[JumpStuck]]>=8
 TABLE
 2
 K
@@ -21119,7 +21119,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[JumpStuck]]>=5
+stopwatchelapsedseconds[getvar[JumpStuck]]>=8
 i
 3
 TABLE
@@ -21247,7 +21247,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[JumpStuck]]>=9
+stopwatchelapsedseconds[getvar[JumpStuck]]>=10
 i
 18
 i

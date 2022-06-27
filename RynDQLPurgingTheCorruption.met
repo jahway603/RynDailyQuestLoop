@@ -11711,7 +11711,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[JumpStuck]]>=5
+stopwatchelapsedseconds[getvar[JumpStuck]]>=8
 ba
 738
 junk.nav
@@ -11831,7 +11831,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[JumpStuck]]>=8
+stopwatchelapsedseconds[getvar[JumpStuck]]>=10
 TABLE
 2
 K

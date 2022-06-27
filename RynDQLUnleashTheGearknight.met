@@ -12610,7 +12610,7 @@ n
 s
 e
 s
-stopwatchelapsedseconds[getvar[JumpTimer]]>=5
+stopwatchelapsedseconds[getvar[JumpTimer]]>=8
 i
 18
 i

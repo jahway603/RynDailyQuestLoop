@@ -5084,7 +5084,7 @@ n
 s
 e
 s
-getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==0
+getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecallKnown]==0
 TABLE
 2
 K
@@ -37559,7 +37559,7 @@ n
 s
 e
 s
-\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub delay 250 /vt meta load RynDQLLumTokens
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load RynDQLLumTokens
 s
 Quests
 i
@@ -40546,7 +40546,7 @@ n
 s
 e
 s
-\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub delay 250 /vt meta load RynDQLLumTokens
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load RynDQLLumTokens
 s
 Quests
 i
