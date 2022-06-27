@@ -11,7 +11,7 @@ n
 n
 n
 n
-349
+353
 i
 0
 i
@@ -3063,6 +3063,55 @@ s
 e
 s
 setpvar[DoQuestRynthidWeapon,0]
+s
+%% Options %%
+i
+0
+i
+2
+i
+0
+s
+%% Clear At End Toggles Below %%
+s
+%% Options %%
+i
+0
+i
+2
+i
+0
+s
+%% Set to 1 to Not Clear Options %%
+s
+%% Options %%
+i
+0
+i
+2
+i
+0
+s
+%% Set to 0 to Clear Options %%
+s
+%% Options %%
+i
+1
+i
+7
+i
+0
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+setpvar[DoNotClearOptionsAtEnd,1]
 s
 %% Options %%
 i
