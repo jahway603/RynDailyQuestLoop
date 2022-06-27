@@ -11,7 +11,7 @@ n
 n
 n
 n
-353
+352
 i
 0
 i
@@ -527,25 +527,6 @@ s
 e
 s
 setpvar[TuskerSecondary,1]
-s
-%% Options %%
-i
-0
-i
-7
-i
-0
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-setpvar[RynthidWeapon,1]
 s
 %% Options %%
 i
@@ -10339,7 +10320,7 @@ n
 s
 e
 s
-testpvar[Secondary]
+testpvar[TuskerSecondary]
 i
 21
 TABLE
@@ -10444,7 +10425,7 @@ n
 s
 e
 s
-setpvar[Secondary,1]
+setpvar[TuskerSecondary,1]
 s
 AutoSetupPartTwo
 i
@@ -10512,7 +10493,7 @@ n
 s
 e
 s
-setpvar[Secondary,0]
+setpvar[TuskerSecondary,0]
 s
 AutoSetupPartTwo
 i
@@ -10964,7 +10945,7 @@ n
 s
 e
 s
-testpvar[Secondary]
+testpvar[TuskerSecondary]
 i
 26
 TABLE
@@ -18516,7 +18497,7 @@ n
 s
 e
 s
-setpvar[Secondary,1]
+setpvar[TuskerSecondary,1]
 i
 1
 s
@@ -18583,7 +18564,7 @@ n
 s
 e
 s
-setpvar[Secondary,0]
+setpvar[TuskerSecondary,0]
 i
 1
 s
@@ -19061,7 +19042,7 @@ K
 V
 n
 n
-57
+56
 i
 7
 TABLE
@@ -19192,19 +19173,6 @@ s
 e
 s
 clearpvar[TuskerSecondary]
-i
-7
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-clearpvar[RynthidWeapon]
 i
 7
 TABLE
@@ -19817,7 +19785,7 @@ K
 V
 n
 n
-52
+51
 i
 7
 TABLE
@@ -19948,19 +19916,6 @@ s
 e
 s
 clearpvar[TuskerSecondary]
-i
-7
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-clearpvar[RynthidWeapon]
 i
 7
 TABLE
@@ -23768,7 +23723,7 @@ n
 s
 e
 s
-getpvar[Secondary]==0
+getpvar[TuskerSecondary]==0
 i
 26
 TABLE
