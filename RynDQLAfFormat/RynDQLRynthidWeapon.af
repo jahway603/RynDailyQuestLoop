@@ -2011,7 +2011,7 @@ STATE: {TalkToCurator} ~~ {
 				Expr {stopwatchelapsedseconds[getvar[RyCountDown]]>=315}
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
-				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses[==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetOpt {UseDispelItems} {True}
 				DoExpr {setvar[PitStop,0]}
 				DoExpr {clearvar[RyCountDown]}
