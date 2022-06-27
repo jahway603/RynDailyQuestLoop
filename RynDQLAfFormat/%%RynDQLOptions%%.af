@@ -323,6 +323,14 @@ STATE: {%% Options %%} ~~ {
 				DoExpr {setpvar[DoQuestEOD,1]}
 				DoExpr {setpvar[DoQuestRynthidWeapon,0]}
 	IF:	Never
+		DO:	Chat {%% Clear At End Toggles Below %%}
+	IF:	Never
+		DO:	Chat {%% Set to 1 to Not Clear Options %%}
+	IF:	Never
+		DO:	Chat {%% Set to 0 to Clear Options %%}
+	IF: Always
+		DO: DoExpr {setpvar[DoNotClearOptionsAtEnd,1]}
+	IF:	Never
 		DO:	Chat {%% Do Not Edit Below Here %%}
 	IF:	Never
 		DO:	Chat {%% Do Not Edit Below Here %%}
@@ -727,6 +735,7 @@ STATE: {GroupCountCount} ~~ {
 		DO: DoAll
 				DestroyAllViews
 				SetState {FellowLayout}
+~~ }
 STATE: {GroupCountSetup} ~~ {
 	IF:	All
 			Expr {getfellowshipisleader[]==1}
