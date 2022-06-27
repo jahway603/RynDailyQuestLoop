@@ -29402,7 +29402,7 @@ n
 s
 e
 s
-ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses[==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]
+ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]
 i
 12
 TABLE
