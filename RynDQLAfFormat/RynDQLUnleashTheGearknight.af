@@ -1164,7 +1164,7 @@ STATE: {ReavingDoor} ~~ {
 			Any
 				All
 					Expr {testvar[JumpTimer]}
-					Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=5}
+					Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=8}
 				CellE 3FB1010B
 		DO:	EmbedNav nav11 {[none]}
 	IF:	All

@@ -1055,9 +1055,9 @@ STATE: {ToAun} ~~ {
 	IF:	All
 			SecsInStateGE 2
 			CellE 2581003C
-			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
-			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==0}
-			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5}
+			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[2179]]==7}
+			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[2179]]==0} ~~ Door
+			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[2179]],getplayercoordinates[]]<5}
 		DO:	DoAll
 				DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[24493]]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+GoToAun,0]}
@@ -1461,9 +1461,9 @@ STATE: {UseSentry} ~~ {
 			NoMobsInDist 5
 			Any
 				All
-					Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
-					Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==1}
-					Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5}
+					Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[2179]]==7}
+					Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[2179]]==0} ~~ Door
+					Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[2179]],getplayercoordinates[]]<5}
 				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+GoToAun]==1}
 		DO:	DoAll
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+GoToAun,1]}
@@ -1472,9 +1472,9 @@ STATE: {UseSentry} ~~ {
 	IF:	All
 			CellE 2581003C
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+GoToAun]==0}
-			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
-			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==0}
-			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<5}
+			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[2179]]==7}
+			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[2179]]==0} ~~ Door
+			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[2179]],getplayercoordinates[]]<5}
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[24493]]}
 	IF:	All
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+GoToAun]==0}

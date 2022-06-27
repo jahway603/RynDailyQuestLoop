@@ -1198,14 +1198,14 @@ STATE: {ToCount} ~~ {
 				CellE 5862013A
 				CellE 5862013B
 			Expr {testvar[CountJump]}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=5}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=8}
 		DO:	EmbedNav nav11 {[none]}
 	IF: All
 			Any
 				CellE 5862013A
 				CellE 5862013B
 			Expr {testvar[JumpStuck]}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=7}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=10}
 		DO:	DoAll
 				EmbedNav nav12 {junk.nav}
 				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}

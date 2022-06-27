@@ -1087,14 +1087,14 @@ STATE: {ServitorDoor} ~~ {
 				CellE 58700158
 				CellE 58700149
 			Expr {testvar[JumpStuck]}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=5}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=8}
 		DO:	EmbedNav nav13 {junk.nav}
 	IF:	All
 			Any
 				CellE 58700158
 				CellE 58700149
 			Expr {testvar[JumpStuck]}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=8}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=10}
 		DO:	DoAll
 				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 				SetState {ServitorDoor}

@@ -689,7 +689,9 @@ STATE: {KarulDoor} ~~ {
 			Expr {wobjectgetisdooropen[wobjectfindnearestdoor[]]==1}
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestdoor[]],getplayercoordinates[]]<10}
 			CellE 58640119
-		DO:	DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
+		DO:	DoAll
+				
+				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 	IF:	All
 			Expr {testvar[JumpStuck]}
 			Any
@@ -700,7 +702,7 @@ STATE: {KarulDoor} ~~ {
 				EmbedNav nav9 {[MoveUP]}
 	IF:	All
 			Expr {testvar[JumpStuck]}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=7}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=8}
 		DO:	EmbedNav nav10 {[JUMP]}
 	IF:	All
 			Expr {testvar[JumpStuck]}

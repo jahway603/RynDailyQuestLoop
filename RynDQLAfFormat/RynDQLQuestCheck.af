@@ -470,7 +470,7 @@ STATE: {CheckQuests} ~~ {
 	
 	IF: All
 			Expr {getpvar[DoQuestAF]==1}
-			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==0}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecallKnown]==0}
 		DO: DoAll
 				ChatExpr {\/t +getcharstringprop[1]+`,It appears you do not know GK Recall on all characters skipping Apostate Finale, skipping the quest till tomorrow.`}
 				DoExpr {setpvar[DoQuestAF,0]}
@@ -3210,7 +3210,7 @@ STATE: {Quests} ~~ {
 				Chat {/f Going to Spend Lum}
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[ReturnProfile,RynDQLQuestCheck]}
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[StateName,KeyCheck]}
-				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub delay 250 /vt meta load RynDQLLumTokens}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load RynDQLLumTokens}
 	IF: All
 			Expr {getcharquadprop[6]>=1010001}
 			Not All
@@ -3459,7 +3459,7 @@ STATE: {Quests} ~~ {
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[ReturnProfile,RynDQLQuestCheck]}
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[StateName,KeyCheck]}
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[Finished,1]}
-				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub delay 250 /vt meta load RynDQLLumTokens}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load RynDQLLumTokens}
 	IF: All
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ColoRecallKnown]==1}
 			Any

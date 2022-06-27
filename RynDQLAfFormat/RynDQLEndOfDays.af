@@ -1314,7 +1314,7 @@ STATE: {ToDungeon} ~~ {
 				Chat {/vt meta load RynDQLCheck} ~~ Dungeon
 	IF:	All
 			Expr {testvar[JumpStuck]}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=3}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=8}
 			Any
 				CellE 2F340030
 				CellE 2F340029
@@ -1323,7 +1323,7 @@ STATE: {ToDungeon} ~~ {
 		DO:	EmbedNav nav13 {[none]}
 	IF:	All
 			Expr {testvar[JumpStuck]}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=7}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=10}
 			Any
 				CellE 2F340030
 				CellE 2F340029

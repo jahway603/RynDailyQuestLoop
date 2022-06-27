@@ -49,8 +49,12 @@ STATE: {ClearListsCheck} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]]==0}
-			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[CheckSync]]]==0}
+			All
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]}
+				Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]]==0}
+			All
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[CheckSync]]}
+				Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[CheckSync]]]==0}
 		DO:	DoAll
 				DoExpr {ifthen[vtgetsetting[EnableCombat]==1,`setvar[Combat,On]`,`setvar[Combat,Off]`]}
 				DoExpr {vtsetsetting[EnableCombat,cstr[0]]}
@@ -58,8 +62,12 @@ STATE: {ClearListsCheck} ~~ {
 				SetState {C}
 	IF:	All
 			Expr {getcharstringprop[1]!=getpvar[LeaderName]}
-			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]]==0}
-			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[CheckSync]]]==0}
+			All
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]}
+				Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]]==0}
+			All
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[CheckSync]]}
+				Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[CheckSync]]]==0}
 		DO:	DoAll
 				DoExpr {ifthen[vtgetsetting[EnableCombat]==1,`setvar[Combat,On]`,`setvar[Combat,Off]`]}
 				DoExpr {vtsetsetting[EnableCombat,cstr[0]]}

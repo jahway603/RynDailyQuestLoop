@@ -1158,14 +1158,19 @@ STATE: {LugianDoor} ~~ {
 		DO: DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[51917]]}
 	IF:	All
 			CellE 59510109
-			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[51917]]==7}
-			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[51917]]==1}
-			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[51917]],getplayercoordinates[]]<5}
+			Any
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA]==1}
+				All
+					Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[51917]]==7}
+					Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[51917]]==1}
+					Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[51917]],getplayercoordinates[]]<5}
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA,1]}
 				EmbedNav nav20 {junk.nav}
 	IF:	All
 			Not Expr {testvar[JumpStuck]}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA]==1}
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[51917]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[51917]]==1}
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[51917]],getplayercoordinates[]]<5}
@@ -1176,13 +1181,13 @@ STATE: {LugianDoor} ~~ {
 				CellE 59510109
 				CellE 59510108
 			Expr {testvar[JumpStuck]}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=3}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=8}
 		DO:	DoAll
 				EmbedNav nav21 {[Jump]}
 				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 	IF:	All
 			Expr {testvar[JumpStuck]}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=6}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=10}
 		DO:	DoAll
 				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 				SetState {LugianDoor}
@@ -1450,7 +1455,7 @@ STATE: {ToDungeon} ~~ {
 				Chat {/vt meta load RynDQLCheck}
 	IF:	All
 			Expr {testvar[JumpStuck]}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=3}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=8}
 			Any
 				CellE 2F340030
 				CellE 2F340029
@@ -1459,7 +1464,7 @@ STATE: {ToDungeon} ~~ {
 		DO:	EmbedNav nav28 {[none]}
 	IF:	All
 			Expr {testvar[JumpStuck]}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=7}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=10}
 			Any
 				CellE 2F340030
 				CellE 2F340029

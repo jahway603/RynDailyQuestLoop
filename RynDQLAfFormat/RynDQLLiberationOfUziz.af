@@ -837,7 +837,7 @@ STATE: {EdificeToLeverThree} ~~ {
 				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 	IF:	All
 			Expr {testvar[JumpStuck]==1}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=3}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=8}
 		DO:	DoAll
 				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 				EmbedNav nav15 {[none]}
@@ -870,7 +870,7 @@ STATE: {EdificeToLeverTwo} ~~ {
 				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 	IF:	All
 			Expr {testvar[JumpStuck]==1}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=3}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=8}
 		DO:	DoAll
 				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 				EmbedNav nav18 {LibToLeverOne.nav}
@@ -1766,7 +1766,7 @@ STATE: {ToDelegateJump} ~~ {
 				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 	IF:	All
 			Expr {testvar[JumpStuck]==1}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=5}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=8}
 			Any
 				CellE 5867013E
 				CellE 5867013D
@@ -1775,7 +1775,7 @@ STATE: {ToDelegateJump} ~~ {
 				EmbedNav nav32 {[none]}
 	IF:	All
 			Expr {testvar[JumpStuck]==1}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=9}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=10}
 			CellE 5867013E
 		DO:	DoAll
 				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}

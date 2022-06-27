@@ -1149,7 +1149,9 @@ STATE: {ToUber} ~~ {
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestMouf]==1}
 		DO: SetState {SkipQuest}
 	IF:	Always
-		DO:	SetWatchdog 5 30 {WatchDog}
+		DO:	DoAll
+				SetOpt {EnableCombat} {False}
+				SetWatchdog 5 30 {WatchDog}
 	IF:	Always
 		DO:	DoExpr {setpvar[Stuck, ReGroupRecall]}
 	IF:	CellE 38F7001B

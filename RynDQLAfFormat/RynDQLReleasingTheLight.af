@@ -553,7 +553,7 @@ STATE: {DungeonJump} ~~ {
 				CellE F81E0464
 				Not Expr {coordinategetz[getplayercoordinates[]]#-0.3566}
 			Expr {testvar[JumpStuck]}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=10}
+			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=4}
 		DO:	DoAll
 				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 				SetState {DungeonJump}

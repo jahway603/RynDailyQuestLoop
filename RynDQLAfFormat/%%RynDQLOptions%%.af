@@ -327,7 +327,7 @@ STATE: {%% Options %%} ~~ {
 	IF:	Never
 		DO:	Chat {%% Set to 0 to Clear Options %%}
 	IF: Always
-		DO: DoExpr {setpvar[DoNotClearOptionsAtEnd,1]}
+		DO: DoExpr {setpvar[DoNotClearOptionsAtEnd,0]}
 	IF:	Never
 		DO:	Chat {%% Do Not Edit Below Here %%}
 	IF:	Never
@@ -806,6 +806,7 @@ STATE: {FellowLayout} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameFour,listgetitem[getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout],2]]}
 				SetState {FellowLayout}
 	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=9}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameFive]}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout]}
 			Expr {getfellowshipisleader[]==1}
@@ -813,6 +814,7 @@ STATE: {FellowLayout} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameFive,listgetitem[getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout],4]]}
 				SetState {FellowLayout}
 	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=9}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameSix]}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout]}
 			Expr {getfellowshipisleader[]==1}
@@ -820,6 +822,7 @@ STATE: {FellowLayout} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameSix,listgetitem[getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout],5]]}
 				SetState {FellowLayout}
 	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=9}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameSeven]}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout]}
 			Expr {getfellowshipisleader[]==1}
@@ -827,6 +830,7 @@ STATE: {FellowLayout} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameSeven,listgetitem[getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout],6]]}
 				SetState {FellowLayout}
 	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=9}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameEight]}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout]}
 			Expr {getfellowshipisleader[]==1}
@@ -834,11 +838,52 @@ STATE: {FellowLayout} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameEight,listgetitem[getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout],7]]}
 				SetState {FellowLayout}
 	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=9}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameNine]}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout]}
 			Expr {getfellowshipisleader[]==1}
 		DO: DoAll
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameNine,listgetitem[getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout],3]]}
+				SetState {FellowLayout}
+	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]<9}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameFive]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout]}
+			Expr {getfellowshipisleader[]==1}
+		DO: DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameFive,listgetitem[getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout],3]]}
+				SetState {FellowLayout}
+	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]<9}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameSix]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout]}
+			Expr {getfellowshipisleader[]==1}
+		DO: DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameSix,listgetitem[getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout],4]]}
+				SetState {FellowLayout}
+	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]<9}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameSeven]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout]}
+			Expr {getfellowshipisleader[]==1}
+		DO: DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameSeven,listgetitem[getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout],5]]}
+				SetState {FellowLayout}
+	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]<9}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameEight]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout]}
+			Expr {getfellowshipisleader[]==1}
+		DO: DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameEight,listgetitem[getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout],6]]}
+				SetState {FellowLayout}
+	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]<9}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameNine]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout]}
+			Expr {getfellowshipisleader[]==1}
+		DO: DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameNine,listgetitem[getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayout],7]]}
 				SetState {FellowLayout}
 ~~ }
 STATE: {FellowLayoutPrune} ~~{
@@ -893,9 +938,42 @@ STATE: {FellowLayoutPrune} ~~{
 		DO: SetState {AutoSetupPartTwo}
 ~~}
 STATE: {AutoSetupPartTwo} ~~ {
+	~~ SummonPets
+	IF:	All
+			Expr {getfellowshipisleader[]==1}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SummonPetOptios]}
+			Not Any
+				Expr {testpvar[SummonForBosses]}
+				Expr {testpvar[SummonAllTheTime]}
+			Not Expr {uiviewexists[SummonPetOptios]}
+		DO:	CreateView {SummonPetOptios} {<?xml version="1.0"?><view width="360" height="152" title="SummonPetOptios"><control type="layout"><control type="button" name="SummonPetOptios" left="0" top="0" width="359" height="49" text="When would you like to use Summed Pets?" actionexpr=""/><control type="button" name="Bosses" left="0" top="50" width="179" height="49" text="Bosses" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SummonPetOptios,Bosses]"/><control type="button" name="ATT" left="180" top="50" width="179" height="49" text="All The time" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SummonPetOptios,ATT]"/><control type="button" name="Never" left="0" top="101" width="359" height="49" text="Never" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SummonPetOptios,None]"/></control></view>}
+	IF: All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SummonPetOptios]}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SummonPetOptios]==Bosses}
+		DO: DoAll
+				DestroyAllViews
+				DoExpr {setpvar[SummonForBosses,1]}
+				DoExpr {setpvar[SummonAllTheTime,0]}
+	IF: All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SummonPetOptios]}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SummonPetOptios]==ATT}
+		DO: DoAll
+				DestroyAllViews
+				DoExpr {setpvar[SummonAllTheTime,1]}
+				DoExpr {setpvar[SummonForBosses,1]}
+	IF: All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SummonPetOptios]}
+			Any
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SummonPetOptios]==None}
+				SecsInStateGE 30
+		DO: DoAll
+				DestroyAllViews
+				DoExpr {setpvar[SummonAllTheTime,0]}
+				DoExpr {setpvar[SummonForBosses,0]}
 	~~ Grael
 	IF:	All
 			Expr {getfellowshipisleader[]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SummonPetOptios]}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DoQuestGraelOption]}
 			Not Expr {testpvar[DoQuestGrael]}
 			Not Expr {uiviewexists[DoQuestGraelOption]}
@@ -913,6 +991,7 @@ STATE: {AutoSetupPartTwo} ~~ {
 				DestroyAllViews
 				DoExpr {setpvar[DoQuestGrael,0]}
 	IF: All
+			Not Expr {testpvar[DoQuestGrael]}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DoQuestGraelOption]}
 			Any
 				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoQuestGraelOption]==Maybe}
@@ -923,6 +1002,7 @@ STATE: {AutoSetupPartTwo} ~~ {
 	~~ ProdigalTusker
 	IF:	All
 			Expr {getfellowshipisleader[]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SummonPetOptios]}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DoQuestGraelOption]}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SecondaryOptions]}
 			Not Expr {testpvar[TuskerSecondary]}
@@ -941,6 +1021,7 @@ STATE: {AutoSetupPartTwo} ~~ {
 				DestroyAllViews
 				DoExpr {setpvar[TuskerSecondary,0]}
 	IF: All
+			Not Expr {testpvar[TuskerSecondary]}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SecondaryOptions]}
 			Any
 				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SecondaryOptions]==Maybe}
@@ -951,6 +1032,7 @@ STATE: {AutoSetupPartTwo} ~~ {
 	~~ Candeth
 	IF:	All
 			Expr {getfellowshipisleader[]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SummonPetOptios]}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DoQuestGraelOption]}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SecondaryOptions]}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+CandethAccess]}
@@ -970,6 +1052,7 @@ STATE: {AutoSetupPartTwo} ~~ {
 				DestroyAllViews
 				DoExpr {setpvar[LSRecall,0]}
 	IF: All
+			Not Expr {testpvar[LSRecall]}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+CandethAccess]}
 			Any
 				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CandethAccess]==Maybe}
@@ -978,6 +1061,9 @@ STATE: {AutoSetupPartTwo} ~~ {
 				DestroyAllViews
 				SetState {CheckCandethAccess}
 	IF: All
+			Any
+				Expr {testpvar[SummonForBosses]}
+				Expr {testpvar[SummonAllTheTime]}
 			Expr {testpvar[DoQuestGrael]}
 			Expr {testpvar[TuskerSecondary]}
 			Expr {testpvar[LSRecall]}
@@ -1056,7 +1142,7 @@ STATE: {UGKCycle} ~~ {
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+UGK]==Maybe}
 			All
 				Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+UGK]}
-				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+UGKCharNum]>=12}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+UGKCharNum]>=getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]+3}
 		DO: DoAll
 				DoExpr {setpvar[RouteToggleUGK,Run]}
 				DoExpr {setpvar[UGKSummon,Undefined]}
@@ -1064,6 +1150,7 @@ STATE: {UGKCycle} ~~ {
 				SetState {SetupSummonProcess}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=1}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+UGK]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+UGKCharNum]==0}
 		DO: DoAll
@@ -1071,6 +1158,7 @@ STATE: {UGKCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[UGKSummonSetup,UGKDesignate],Is +getpvar[LeaderName]+\ Tied to UGK Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=2}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+UGK]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+UGKCharNum]==1}
 		DO: DoAll
@@ -1078,6 +1166,7 @@ STATE: {UGKCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[UGKSummonSetup,UGKDesignate],Is +getpvar[FellowNameTwo]+\ Tied to UGK Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=3}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+UGK]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+UGKCharNum]==2}
 		DO: DoAll
@@ -1085,6 +1174,7 @@ STATE: {UGKCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[UGKSummonSetup,UGKDesignate],Is +getpvar[FellowNameThree]+\ Tied to UGK Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=4}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+UGK]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+UGKCharNum]==3}
 		DO: DoAll
@@ -1092,6 +1182,7 @@ STATE: {UGKCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[UGKSummonSetup,UGKDesignate],Is +getpvar[FellowNameFour]+\ Tied to UGK Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=5}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+UGK]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+UGKCharNum]==4}
 		DO: DoAll
@@ -1099,6 +1190,7 @@ STATE: {UGKCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[UGKSummonSetup,UGKDesignate],Is +getpvar[FellowNameFive]+\ Tied to UGK Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=6}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+UGK]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+UGKCharNum]==5}
 		DO: DoAll
@@ -1106,6 +1198,7 @@ STATE: {UGKCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[UGKSummonSetup,UGKDesignate],Is +getpvar[FellowNameSix]+\ Tied to UGK Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=7}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+UGK]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+UGKCharNum]==6}
 		DO: DoAll
@@ -1113,6 +1206,7 @@ STATE: {UGKCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[UGKSummonSetup,UGKDesignate],Is +getpvar[FellowNameSeven]+\ Tied to UGK Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=8}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+UGK]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+UGKCharNum]==7}
 		DO: DoAll
@@ -1120,6 +1214,7 @@ STATE: {UGKCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[UGKSummonSetup,UGKDesignate],Is +getpvar[FellowNameEight]+\ Tied to UGK Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=9}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+UGK]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+UGKCharNum]==8}
 		DO: DoAll
@@ -1143,7 +1238,7 @@ STATE: {AyanCycle} ~~ {
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Ayan]==Maybe}
 			All
 				Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Ayan]}
-				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AyanCharNum]>=12}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AyanCharNum]>=getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]+3}
 		DO: DoAll
 				DoExpr {setpvar[RouteToggleSplittingGrael,Run]}
 				DoExpr {setpvar[RouteToggleProdigalBanderling,Run]}
@@ -1153,12 +1248,14 @@ STATE: {AyanCycle} ~~ {
 				SetState {SetupSummonProcess}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=1}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Ayan]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AyanCharNum]==0}
 		DO: DoAll
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+AyanChar,getpvar[LeaderName]]}
 				DoExpr {uisetlabel[uigetcontrol[AyanSummonSetup,AyanDesignate],Is +getpvar[LeaderName]+\ Tied to Ayan Town Drop Portal\?]}
 	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=2}
 			Expr {getfellowshipisleader[]==1}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Ayan]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AyanCharNum]==1}
@@ -1166,6 +1263,7 @@ STATE: {AyanCycle} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+AyanChar,getpvar[FellowNameTwo]]}
 				DoExpr {uisetlabel[uigetcontrol[AyanSummonSetup,AyanDesignate],Is +getpvar[FellowNameTwo]+\ Tied to Ayan Town Drop Portal\?]}
 	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=3}
 			Expr {getfellowshipisleader[]==1}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Ayan]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AyanCharNum]==2}
@@ -1173,6 +1271,7 @@ STATE: {AyanCycle} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+AyanChar,getpvar[FellowNameThree]]}
 				DoExpr {uisetlabel[uigetcontrol[AyanSummonSetup,AyanDesignate],Is +getpvar[FellowNameThree]+\ Tied to Ayan Town Drop Portal\?]}
 	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=4}
 			Expr {getfellowshipisleader[]==1}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Ayan]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AyanCharNum]==3}
@@ -1180,6 +1279,7 @@ STATE: {AyanCycle} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+AyanChar,getpvar[FellowNameFour]]}
 				DoExpr {uisetlabel[uigetcontrol[AyanSummonSetup,AyanDesignate],Is +getpvar[FellowNameFour]+\ Tied to Ayan Town Drop Portal\?]}
 	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=5}
 			Expr {getfellowshipisleader[]==1}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Ayan]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AyanCharNum]==4}
@@ -1187,6 +1287,7 @@ STATE: {AyanCycle} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+AyanChar,getpvar[FellowNameFive]]}
 				DoExpr {uisetlabel[uigetcontrol[AyanSummonSetup,AyanDesignate],Is +getpvar[FellowNameFive]+\ Tied to Ayan Town Drop Portal\?]}
 	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=6}
 			Expr {getfellowshipisleader[]==1}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Ayan]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AyanCharNum]==5}
@@ -1194,6 +1295,7 @@ STATE: {AyanCycle} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+AyanChar,getpvar[FellowNameSix]]}
 				DoExpr {uisetlabel[uigetcontrol[AyanSummonSetup,AyanDesignate],Is +getpvar[FellowNameSix]+\ Tied to Ayan Town Drop Portal\?]}
 	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=7}
 			Expr {getfellowshipisleader[]==1}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Ayan]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AyanCharNum]==6}
@@ -1202,6 +1304,7 @@ STATE: {AyanCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[AyanSummonSetup,AyanDesignate],Is +getpvar[FellowNameSeven]+\ Tied to Ayan Town Drop Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=8}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Ayan]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AyanCharNum]==7}
 		DO: DoAll
@@ -1209,6 +1312,7 @@ STATE: {AyanCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[AyanSummonSetup,AyanDesignate],Is +getpvar[FellowNameEight]+\ Tied to Ayan Town Drop Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=9}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Ayan]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AyanCharNum]==8}
 		DO: DoAll
@@ -1230,7 +1334,7 @@ STATE: {PurgeCycle} ~~ {
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Purge]==Maybe}
 			All
 				Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Purge]}
-				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+PurgeCharNum]>=12}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+PurgeCharNum]>=getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]+3}
 		DO: DoAll
 				DoExpr {setpvar[RouteTogglePurgingTheCorruption,Run]}
 				DoExpr {setpvar[PurgingTheCorruptionSummon,Undefined]}
@@ -1238,6 +1342,7 @@ STATE: {PurgeCycle} ~~ {
 				SetState {SetupSummonProcess}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=1}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Purge]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+PurgeCharNum]==0}
 		DO: DoAll
@@ -1245,6 +1350,7 @@ STATE: {PurgeCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[PurgeSummonSetup,PurgeDesignate],Is +getpvar[LeaderName]+\ Tied to Tumerok Chamber Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=2}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Purge]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+PurgeCharNum]==1}
 		DO: DoAll
@@ -1252,6 +1358,7 @@ STATE: {PurgeCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[PurgeSummonSetup,PurgeDesignate],Is +getpvar[FellowNameTwo]+\ Tied to Tumerok Chamber Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=3}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Purge]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+PurgeCharNum]==2}
 		DO: DoAll
@@ -1259,6 +1366,7 @@ STATE: {PurgeCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[PurgeSummonSetup,PurgeDesignate],Is +getpvar[FellowNameThree]+\ Tied to Tumerok Chamber Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=4}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Purge]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+PurgeCharNum]==3}
 		DO: DoAll
@@ -1266,6 +1374,7 @@ STATE: {PurgeCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[PurgeSummonSetup,PurgeDesignate],Is +getpvar[FellowNameFour]+\ Tied to Tumerok Chamber Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=5}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Purge]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+PurgeCharNum]==4}
 		DO: DoAll
@@ -1273,6 +1382,7 @@ STATE: {PurgeCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[PurgeSummonSetup,PurgeDesignate],Is +getpvar[FellowNameFive]+\ Tied to Tumerok Chamber Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=6}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Purge]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+PurgeCharNum]==5}
 		DO: DoAll
@@ -1280,6 +1390,7 @@ STATE: {PurgeCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[PurgeSummonSetup,PurgeDesignate],Is +getpvar[FellowNameSix]+\ Tied to Tumerok Chamber Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=7}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Purge]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+PurgeCharNum]==6}
 		DO: DoAll
@@ -1287,6 +1398,7 @@ STATE: {PurgeCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[PurgeSummonSetup,PurgeDesignate],Is +getpvar[FellowNameSeven]+\ Tied to Tumerok Chamber Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=8}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Purge]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+PurgeCharNum]==7}
 		DO: DoAll
@@ -1294,6 +1406,7 @@ STATE: {PurgeCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[PurgeSummonSetup,PurgeDesignate],Is +getpvar[FellowNameEight]+\ Tied to Tumerok Chamber Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=9}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Purge]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+PurgeCharNum]==8}
 		DO: DoAll
@@ -1315,7 +1428,7 @@ STATE: {NexusCycle} ~~ {
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Nexus]==Maybe}
 			All
 				Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Nexus]}
-				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NexusCharNum]>=12}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NexusCharNum]>=getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]+3}
 		DO: DoAll
 				DoExpr {setpvar[RouteToggleNexusCrawl,Run]}
 				DoExpr {setpvar[NexusCrawlSummon,Undefined]}
@@ -1323,6 +1436,7 @@ STATE: {NexusCycle} ~~ {
 				SetState {SetupSummonProcess}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=1}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Nexus]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NexusCharNum]==0}
 		DO: DoAll
@@ -1330,6 +1444,7 @@ STATE: {NexusCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[NexusSummonSetup,NexusDesignate],Is +getpvar[LeaderName]+\ Tied to Nexus Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=2}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Nexus]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NexusCharNum]==1}
 		DO: DoAll
@@ -1337,6 +1452,7 @@ STATE: {NexusCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[NexusSummonSetup,NexusDesignate],Is +getpvar[FellowNameTwo]+\ Tied to Nexus Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=3}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Nexus]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NexusCharNum]==2}
 		DO: DoAll
@@ -1344,6 +1460,7 @@ STATE: {NexusCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[NexusSummonSetup,NexusDesignate],Is +getpvar[FellowNameThree]+\ Tied to Nexus Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=4}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Nexus]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NexusCharNum]==3}
 		DO: DoAll
@@ -1351,6 +1468,7 @@ STATE: {NexusCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[NexusSummonSetup,NexusDesignate],Is +getpvar[FellowNameFour]+\ Tied to Nexus Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=5}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Nexus]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NexusCharNum]==4}
 		DO: DoAll
@@ -1358,6 +1476,7 @@ STATE: {NexusCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[NexusSummonSetup,NexusDesignate],Is +getpvar[FellowNameFive]+\ Tied to Nexus Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=6}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Nexus]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NexusCharNum]==5}
 		DO: DoAll
@@ -1365,6 +1484,7 @@ STATE: {NexusCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[NexusSummonSetup,NexusDesignate],Is +getpvar[FellowNameSix]+\ Tied to Nexus Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=7}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Nexus]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NexusCharNum]==6}
 		DO: DoAll
@@ -1372,6 +1492,7 @@ STATE: {NexusCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[NexusSummonSetup,NexusDesignate],Is +getpvar[FellowNameSeven]+\ Tied to Nexus Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=8}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Nexus]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NexusCharNum]==7}
 		DO: DoAll
@@ -1379,6 +1500,7 @@ STATE: {NexusCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[NexusSummonSetup,NexusDesignate],Is +getpvar[FellowNameEight]+\ Tied to Nexus Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=9}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Nexus]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NexusCharNum]==8}
 		DO: DoAll
@@ -1400,7 +1522,7 @@ STATE: {DeathsAllureCycle} ~~ {
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllure]==Maybe}
 			All
 				Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllure]}
-				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllureCharNum]>=12}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllureCharNum]>=getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]+3}
 		DO: DoAll
 				DoExpr {setpvar[RouteToggleDeathsAllure,Run]}
 				DoExpr {setpvar[DeathsAllureSummon,Undefined]}
@@ -1408,6 +1530,7 @@ STATE: {DeathsAllureCycle} ~~ {
 				SetState {SetupSummonProcess}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=1}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllure]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllureCharNum]==0}
 		DO: DoAll
@@ -1415,6 +1538,7 @@ STATE: {DeathsAllureCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[DeathsAllureSummonSetup,DeathsAllureDesignate],Is +getpvar[LeaderName]+\ Tied to Thrungus Hole Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=2}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllure]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllureCharNum]==1}
 		DO: DoAll
@@ -1422,6 +1546,7 @@ STATE: {DeathsAllureCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[DeathsAllureSummonSetup,DeathsAllureDesignate],Is +getpvar[FellowNameTwo]+\ Tied to Thrungus Hole Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=3}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllure]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllureCharNum]==2}
 		DO: DoAll
@@ -1429,6 +1554,7 @@ STATE: {DeathsAllureCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[DeathsAllureSummonSetup,DeathsAllureDesignate],Is +getpvar[FellowNameThree]+\ Tied to Thrungus Hole Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=4}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllure]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllureCharNum]==3}
 		DO: DoAll
@@ -1436,6 +1562,7 @@ STATE: {DeathsAllureCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[DeathsAllureSummonSetup,DeathsAllureDesignate],Is +getpvar[FellowNameFour]+\ Tied to Thrungus Hole Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=5}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllure]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllureCharNum]==4}
 		DO: DoAll
@@ -1443,6 +1570,7 @@ STATE: {DeathsAllureCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[DeathsAllureSummonSetup,DeathsAllureDesignate],Is +getpvar[FellowNameFive]+\ Tied to Thrungus Hole Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=6}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllure]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllureCharNum]==5}
 		DO: DoAll
@@ -1450,6 +1578,7 @@ STATE: {DeathsAllureCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[DeathsAllureSummonSetup,DeathsAllureDesignate],Is +getpvar[FellowNameSix]+\ Tied to Thrungus Hole Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=7}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllure]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllureCharNum]==6}
 		DO: DoAll
@@ -1457,6 +1586,7 @@ STATE: {DeathsAllureCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[DeathsAllureSummonSetup,DeathsAllureDesignate],Is +getpvar[FellowNameSeven]+\ Tied to Thrungus Hole Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=8}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllure]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllureCharNum]==7}
 		DO: DoAll
@@ -1464,6 +1594,7 @@ STATE: {DeathsAllureCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[DeathsAllureSummonSetup,DeathsAllureDesignate],Is +getpvar[FellowNameEight]+\ Tied to Thrungus Hole Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=9}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllure]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeathsAllureCharNum]==8}
 		DO: DoAll
@@ -1477,7 +1608,7 @@ STATE: {CountPhainorCycle} ~~ {
 		DO:	CreateView {CountPhainorSummonSetup} {<?xml version="1.0"?><view width="360" height="152" title="CountPhainorSummonSetup"><control type="layout"><control type="button" name="CountPhainorDesignate" left="0" top="0" width="359" height="49" text="Is IFNH tied to Count Phainor Surface Portal?" actionexpr=""/><control type="button" name="Yes" left="0" top="50" width="179" height="49" text="Yes" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor,1]"/><control type="button" name="No" left="180" top="50" width="179" height="49" text="No" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum,getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum]+1]&amp;&amp;vtsetmetastate[vtgetmetastate[]]"/><control type="button" name="Maybe" left="0" top="101" width="179" height="49" text="Maybe" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor,Maybe]"/><control type="button" name="BackButton" left="180" top="101" width="179" height="49" text="Back" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum,getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum]-1]&amp;&amp;vtsetmetastate[vtgetmetastate[]]"/></control></view>}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]==1}
 		DO: DoAll
-				DoExpr {setpvar[RouteToggleCountPhainor,SummonPortal]}
+				DoExpr {setpvar[RouteTogglePhainor,SummonPortal]}
 				DoExpr {setpvar[CountPhainorSummon,getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorChar]]}
 				DestroyAllViews
 				SetState {SetupSummonProcess}
@@ -1485,14 +1616,15 @@ STATE: {CountPhainorCycle} ~~ {
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]==Maybe}
 			All
 				Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]}
-				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum]>=12}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum]>=getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]+3}
 		DO: DoAll
-				DoExpr {setpvar[RouteToggleCountPhainor,Run]}
+				DoExpr {setpvar[RouteTogglePhainor,Run]}
 				DoExpr {setpvar[CountPhainorSummon,Undefined]}
 				DestroyAllViews
 				SetState {SetupSummonProcess}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=1}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum]==0}
 		DO: DoAll
@@ -1500,6 +1632,7 @@ STATE: {CountPhainorCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[CountPhainorSummonSetup,CountPhainorDesignate],Is +getpvar[LeaderName]+\ Tied to Count Phainor Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=2}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum]==1}
 		DO: DoAll
@@ -1507,6 +1640,7 @@ STATE: {CountPhainorCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[CountPhainorSummonSetup,CountPhainorDesignate],Is +getpvar[FellowNameTwo]+\ Tied to Count Phainor Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=3}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum]==2}
 		DO: DoAll
@@ -1514,6 +1648,7 @@ STATE: {CountPhainorCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[CountPhainorSummonSetup,CountPhainorDesignate],Is +getpvar[FellowNameThree]+\ Tied to Count Phainor Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=4}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum]==3}
 		DO: DoAll
@@ -1521,6 +1656,7 @@ STATE: {CountPhainorCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[CountPhainorSummonSetup,CountPhainorDesignate],Is +getpvar[FellowNameFour]+\ Tied to Count Phainor Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=5}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum]==4}
 		DO: DoAll
@@ -1528,6 +1664,7 @@ STATE: {CountPhainorCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[CountPhainorSummonSetup,CountPhainorDesignate],Is +getpvar[FellowNameFive]+\ Tied to Count Phainor Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=6}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum]==5}
 		DO: DoAll
@@ -1535,6 +1672,7 @@ STATE: {CountPhainorCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[CountPhainorSummonSetup,CountPhainorDesignate],Is +getpvar[FellowNameSix]+\ Tied to Count Phainor Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=7}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum]==6}
 		DO: DoAll
@@ -1542,6 +1680,7 @@ STATE: {CountPhainorCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[CountPhainorSummonSetup,CountPhainorDesignate],Is +getpvar[FellowNameSeven]+\ Tied to Count Phainor Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=8}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum]==7}
 		DO: DoAll
@@ -1549,6 +1688,7 @@ STATE: {CountPhainorCycle} ~~ {
 				DoExpr {uisetlabel[uigetcontrol[CountPhainorSummonSetup,CountPhainorDesignate],Is +getpvar[FellowNameEight]+\ Tied to Count Phainor Surface Portal\?]}
 	IF: All
 			Expr {getfellowshipisleader[]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FellowLayoutFellowCount]>=9}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainorCharNum]==8}
 		DO: DoAll
@@ -1639,13 +1779,13 @@ STATE: {CheckCandethAccess} ~~ {
 ~~ }
 STATE: {Default} ~~ {
 	IF:	Not Expr {uiviewexists[Setup]}
-		DO:	CreateView {Setup} {<?xml version="1.0"?><view width="150" height="152" title="Manual"><control type="layout"><control type="button" name="Manual" left="0" top="0" width="149" height="49" text="Manual Setup" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Manual,1]"/><control type="button" name="Auto-Gen Setup" left="0" top="50" width="149" height="49" text="Auto-Setup" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+AutoSetup,1]"/><control type="button" name="Do Not Ask Again" left="0" top="100" width="149" height="49" text="Do Not Ask Again" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+DoNotClearOptionsAtEnd,1]"/></control></view>}
+		DO:	CreateView {Setup} {<?xml version="1.0"?><view width="150" height="152" title="Manual"><control type="layout"><control type="button" name="Manual" left="0" top="0" width="149" height="49" text="Preset" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Manual,1]"/><control type="button" name="Auto-Gen Setup" left="0" top="50" width="149" height="49" text="Assisted Setup" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+AutoSetup,1]"/><control type="button" name="Do Not Ask Again" left="0" top="100" width="149" height="49" text="Do Not Ask Again" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+DoNotClearOptionsAtEnd,1]"/></control></view>}
 	IF:	All
 			Expr {getpvar[ReturnProfile]==CMD}
 		DO:	SetState {%% Options %%}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoNotClearOptionsAtEnd]==1}
 		DO: DoAll
-				ChatExpr {\/t +getcharstringprop[1]+`,You pressed Do Not Ask Again, if you clear your persistent or global variables you will have to re-apply your options from Manual or Auto-setup.`}
+				ChatExpr {\/t +getcharstringprop[1]+`,You pressed Do Not Ask Again, if you clear your persistent or global variables you will have to re-apply your options from Preset or Auto-setup.`}
 				DoExpr {setpvar[DoNotClearOptionsAtEnd,1]}
 	IF:	Any
 			SecsInStateGE 60
@@ -1704,7 +1844,7 @@ STATE: {Default} ~~ {
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Profile]}
 				ChatExpr {\/t +getcharstringprop[1]+`,Follow The Prompts.`}
-				DestroyView {Setup}
+				DestroyAllViews
 				DoExpr {setpvar[DoNotClearOptionsAtEnd,1]}
 				SetState {AutoSetupIntial}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Manual]==1}
@@ -1758,6 +1898,7 @@ STATE: {Default} ~~ {
 				DoExpr {clearpvar[CountPhainorSummon]}
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Profile]}
+				DestroyAllViews
 				ChatExpr {\/t +getcharstringprop[1]+`,Press the Start Button to begin the daily quest loop. You'll experience a small delay after pressing start as it checks your recall spells for the group.`}
 				SetState {%% Options %%}
 ~~ }
