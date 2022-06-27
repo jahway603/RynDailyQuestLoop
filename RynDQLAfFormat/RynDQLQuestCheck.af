@@ -3206,7 +3206,6 @@ STATE: {Quests} ~~ {
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]}
 				Chat {/ub myquests}
 	IF: All
-			Expr {getqueststatus[moufreward]==1}
 			Expr {isrefreshingquests[]==0}
 			Expr {getcharquadprop[6]>=1010001}
 			Not All
