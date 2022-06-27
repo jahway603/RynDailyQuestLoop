@@ -1067,19 +1067,15 @@ STATE: {CheckQuests} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestEOD]}
 				SetState {LoadQuest}
 	IF:	All
-			Expr {getpvar[RynthidWeapon]==1}
 			Expr {getcharintprop[25]>=200}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+RynthidRecallKnown]==1}
-			Expr {getpvar[DoQuestRynthidWeapon]==1}
 			Expr {getpvar[FellowCount]>=4}
 			Expr {getqueststatus[tormentshardpickup]==1}
 		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestRynthidWeapon,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestRynthidWeapon]+1]}
 	IF:	All
 			SecsInStateGE 1
-			Expr {getpvar[DoQuestRynthidWeapon]==1}
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==0}
-			Expr {getpvar[RynthidWeapon]==1}
 			Expr {getpvar[FellowCount]>=3}
 			Any
 				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestRynthidWeapon]>=1}
@@ -1323,7 +1319,6 @@ STATE: {CheckQuests} ~~ {
 				All
 					Expr {getpvar[DoQuestRynthidWeapon]==1}
 					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]==0}
-					Expr {getpvar[RynthidWeapon]==1}
 					Expr {getqueststatus[tormentshardpickup]==0}
 			Any
 				Expr {getpvar[DoQuestEOD]==0}
@@ -3443,7 +3438,6 @@ STATE: {Quests} ~~ {
 				All
 					Expr {getpvar[DoQuestRynthidWeapon]==1}
 					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]==0}
-					Expr {getpvar[RynthidWeapon]==1}
 					Expr {getqueststatus[tormentshardpickup]==0}
 			Any
 				Expr {getpvar[DoQuestEOD]==0}

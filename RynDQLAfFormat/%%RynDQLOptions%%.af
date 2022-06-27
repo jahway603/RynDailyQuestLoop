@@ -101,8 +101,6 @@ STATE: {%% Options %%} ~~ {
 	IF:	Never
 		DO:	DoExpr {setpvar[TuskerSecondary,1]}
 	IF:	Never
-		DO:	DoExpr {setpvar[RynthidWeapon,1]}
-	IF:	Never
 		DO:	Chat {%%% Edit Fellow Count %%%}
 	IF:	Any
 			Expr {testpvar[FellowCount]==0}
@@ -927,7 +925,7 @@ STATE: {AutoSetupPartTwo} ~~ {
 			Expr {getfellowshipisleader[]==1}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DoQuestGraelOption]}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SecondaryOptions]}
-			Not Expr {testpvar[Secondary]}
+			Not Expr {testpvar[TuskerSecondary]}
 			Not Expr {uiviewexists[SecondaryOptions]}
 		DO:	CreateView {SecondaryOptions} {<?xml version="1.0"?><view width="360" height="152" title="SecondaryOptions"><control type="layout"><control type="button" name="SecondaryOptions" left="0" top="0" width="359" height="49" text="Is your secondary tie Whispering Caverns?" actionexpr=""/><control type="button" name="Yes" left="0" top="50" width="179" height="49" text="Yes" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SecondaryOptions,1]"/><control type="button" name="No" left="180" top="50" width="179" height="49" text="No" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SecondaryOptions,0]"/><control type="button" name="Maybe" left="0" top="101" width="359" height="49" text="Maybe" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SecondaryOptions,Maybe]"/></control></view>}
 	IF: All
@@ -935,13 +933,13 @@ STATE: {AutoSetupPartTwo} ~~ {
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SecondaryOptions]==1}
 		DO: DoAll
 				DestroyAllViews
-				DoExpr {setpvar[Secondary,1]}
+				DoExpr {setpvar[TuskerSecondary,1]}
 	IF: All
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SecondaryOptions]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SecondaryOptions]==0}
 		DO: DoAll
 				DestroyAllViews
-				DoExpr {setpvar[Secondary,0]}
+				DoExpr {setpvar[TuskerSecondary,0]}
 	IF: All
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SecondaryOptions]}
 			Any
@@ -981,7 +979,7 @@ STATE: {AutoSetupPartTwo} ~~ {
 				SetState {CheckCandethAccess}
 	IF: All
 			Expr {testpvar[DoQuestGrael]}
-			Expr {testpvar[Secondary]}
+			Expr {testpvar[TuskerSecondary]}
 			Expr {testpvar[LSRecall]}
 		DO: SetState {SummonSetup}
 ~~}
@@ -1593,14 +1591,14 @@ STATE: {CheckProdigalTie} ~~ {
 			Expr {getvar[CheckProdigalTie]==1}
 			BlockE EA6C0000
 		DO:	DoAll
-				DoExpr {setpvar[Secondary,1]}
+				DoExpr {setpvar[TuskerSecondary,1]}
 				SetState {AutoSetupPartTwo}
 	IF:	All
 			SecsInStateGE 3
 			Expr {getvar[CheckProdigalTie]==1}
 			Not BlockE EA6C0000
 		DO:	DoAll
-				DoExpr {setpvar[Secondary,0]}
+				DoExpr {setpvar[TuskerSecondary,0]}
 				SetState {AutoSetupPartTwo}
 	IF: IntoPortal
 		DO: DoExpr {setvar[CheckProdigalTie,1]}
@@ -1663,7 +1661,6 @@ STATE: {Default} ~~ {
 				DoExpr {clearpvar[LSRecall]}
 				DoExpr {clearpvar[Grael]}
 				DoExpr {clearpvar[TuskerSecondary]}
-				DoExpr {clearpvar[RynthidWeapon]}
 				DoExpr {clearpvar[FellowCount]}
 				DoExpr {clearpvar[LeaderName]}
 				DoExpr {clearpvar[FellowNameTwo]}
@@ -1722,7 +1719,6 @@ STATE: {Default} ~~ {
 				DoExpr {clearpvar[LSRecall]}
 				DoExpr {clearpvar[Grael]}
 				DoExpr {clearpvar[TuskerSecondary]}
-				DoExpr {clearpvar[RynthidWeapon]}
 				DoExpr {clearpvar[FellowCount]}
 				DoExpr {clearpvar[LeaderName]}
 				DoExpr {clearpvar[FellowNameTwo]}
@@ -2041,7 +2037,7 @@ STATE: {RecallCheck} ~~ {
 				DoExpr {setpvar[DoQuestGeraineStudy,0]}
 				ChatExpr {\/t +getcharstringprop[1]+`,You are missing Graveyard Recall. Skipping Associated Quests: Count Phainor and Geraine Study If summon is disabled.`}
 	IF:	All
-			Expr {getpvar[Secondary]==0}
+			Expr {getpvar[TuskerSecondary]==0}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+FacHubKnown]==0}
 		DO:	DoAll
 				DoExpr {setpvar[DoQuestProdigalTusker,0]}
