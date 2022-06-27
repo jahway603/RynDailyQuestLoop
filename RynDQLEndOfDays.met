@@ -9688,7 +9688,7 @@ n
 s
 e
 s
-\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`/ /ub mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`
 i
 7
 TABLE

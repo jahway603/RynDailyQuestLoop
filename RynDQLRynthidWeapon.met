@@ -8064,7 +8064,7 @@ n
 s
 e
 s
-getpvar[Death+getpvar[Profile]]>4
+getpvar[Death+getpvar[Profile]]>30
 TABLE
 2
 k
@@ -15838,7 +15838,7 @@ n
 s
 e
 s
-\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`/ /ub mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`
 i
 7
 TABLE
