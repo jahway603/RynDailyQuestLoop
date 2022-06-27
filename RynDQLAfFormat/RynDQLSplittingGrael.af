@@ -304,9 +304,18 @@ STATE: {ReGroupRecall} ~~ {
 				SetOpt {EnableNav} {False}
 				DoExpr {setpvar[Step,0]}
 				EmbedNav nav3 {[none]}
-	IF:	Not BlockE C8E90000
+	IF:	All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LSSKnown]==1}
+			Not BlockE C8E90000
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[1636]} ~~ SpellId 1636 is "Lifestone Sending".
+				SetState {ReGroupRecall}
+	IF:	All
+			SecsInStateGE 10
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LSSKnown]==0}
+			Not BlockE C8E90000
+		DO:	DoAll
+				Chat {/ls} ~~ SpellId 1636 is "Lifestone Sending".
 				SetState {ReGroupRecall}
 	IF:	BlockE C8E90000
 		DO:	DoAll
@@ -1028,9 +1037,18 @@ STATE: {ToDarkIsle} ~~ {
 				DoExpr {setpvar[Step,0]}
 				SetOpt {LootOnlyRareCorpses} {True}
 				SetOpt {EnableCombat} {False}
-	IF:	Not BlockE C8E90000
+	IF:	All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LSSKnown]==1}
+			Not BlockE C8E90000
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[1636]} ~~ SpellId 1636 is "Lifestone Sending".
+				SetState {ToDarkIsle}
+	IF:	All
+			SecsInStateGE 10
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LSSKnown]==0}
+			Not BlockE C8E90000
+		DO:	DoAll
+				Chat {/ls} ~~ SpellId 1636 is "Lifestone Sending".
 				SetState {ToDarkIsle}
 	IF:	BlockE C8E90000
 		DO:	DoAll

@@ -1149,6 +1149,15 @@ STATE: {MenhirSplit} ~~ {
 		DO:	SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestHD]==1}
 		DO: SetState {SkipQuest}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatCapture {!ReGroup} {19}
+			Any
+				BlockE C8E90000
+		DO:	DoAll
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Expr {getpvar[Triangle]==4}
 		DO:	DoExpr {setpvar[Step,1]}
 	IF:	All

@@ -472,7 +472,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getpvar[DoQuestAF]==1}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==0}
 		DO: DoAll
-				ChatExpr {\/t +getcharstringprop[1]+`,It appears you do not know GK Recall on all cahracters skipping Apostate Finale, skipping the quest till tomorrow.`}
+				ChatExpr {\/t +getcharstringprop[1]+`,It appears you do not know GK Recall on all characters skipping Apostate Finale, skipping the quest till tomorrow.`}
 				DoExpr {setpvar[DoQuestAF,0]}
 	IF:	All
 			Expr {getcharintprop[25]>=150}
@@ -553,7 +553,7 @@ STATE: {CheckQuests} ~~ {
 	IF:	All
 			Expr {getcharintprop[25]>=150}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
-			Expr {getisspellknown[2023]==1} ~~ Sanc
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SancRecallKnown]==1}
 			Expr {getpvar[DoQuestLostLore]==1}
 			Any
 				Expr {getqueststatus[tornstripofparchmentpickuptimer]==1}
@@ -623,7 +623,7 @@ STATE: {CheckQuests} ~~ {
 	IF:	All
 			Expr {getcharintprop[25]>=130}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
-			Expr {getisspellknown[2023]==1} ~~ Sanc
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SancRecallKnown]==1}
 			Expr {getpvar[DoQuestIQSQ]==1}
 			Expr {testquestflag[quiddityseedquestflag]==1}
 			Expr {getqueststatus[clawofthehopeslayerpickuptimer]==1}
@@ -644,7 +644,6 @@ STATE: {CheckQuests} ~~ {
 			Expr {getcharintprop[25]>=150}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getpvar[DoQuestGrael]==1}
-			Expr {getpvar[Grael]==1}
 			Expr {testquestflag[abyssaltotemgatewayflag]==1}
 			Any
 				Expr {getqueststatus[splitgraelhighcomplete0806]==1}
@@ -752,9 +751,8 @@ STATE: {CheckQuests} ~~ {
 	IF:	All
 			Expr {getcharintprop[25]>=150}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
-			Expr {getisspellknown[5330]==1} ~~ GK
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecallKnown]==1}
 			Expr {getpvar[DoQuestAF]==1}
-			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==1}
 			Any
 				Expr {getqueststatus[apostatefinalemaskshardpickup]==1}
 				Expr {getqueststatus[apostatefinalecompleted_0910]==1}
@@ -778,6 +776,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getpvar[DoQuestPurge]==1}
 			Any
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+CandethRecallKnown]==1}
 				Expr {getisspellknown[4214]==1} ~~ Candeth
 				Expr {getpvar[LSRecall]==1}
 			Expr {getpvar[FellowCount]>=3}
@@ -844,7 +843,7 @@ STATE: {CheckQuests} ~~ {
 	IF:	All
 			Expr {getcharintprop[25]>=180}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
-			Expr {getisspellknown[2023]==1} ~~ Sanc
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SancRecallKnown]==1}
 			Expr {getpvar[DoQuestReleasingTheLight]==1}
 			Any
 				Expr {getqueststatus[blessedcavereachedend]==1}
@@ -913,6 +912,7 @@ STATE: {CheckQuests} ~~ {
 	IF:	All
 			Expr {getcharintprop[25]>=200}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+GYRecallKnown]==1}
 			Expr {getpvar[DoQuestGeraineStudy]==1}
 			Expr {getpvar[FellowCount]>=3}
 			Any
@@ -958,7 +958,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getpvar[DoQuestCP]==1}
 			Any
-				Expr {getisspellknown[4128]==1} ~~ GY
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+GYRecallKnown]==1}
 				Expr {getpvar[SummonPortal]==1}
 			Expr {getqueststatus[graverobbercompleted_0213]==1}
 		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestCP,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestCP]+1]}
@@ -1023,7 +1023,7 @@ STATE: {CheckQuests} ~~ {
 	IF:	All
 			Expr {getcharintprop[25]>=180}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
-			Expr {getisspellknown[6150]==1} ~~ Rynthid
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+RynthidRecallKnown]==1}
 			Expr {getpvar[DoQuestLugianAssault]==1}
 			Expr {getpvar[FellowCount]>=3}
 			Expr {getqueststatus[lugianassaultcompleted_0913]==1}
@@ -1045,7 +1045,7 @@ STATE: {CheckQuests} ~~ {
 	IF:	All
 			Expr {getcharintprop[25]>=200}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
-			Expr {getisspellknown[6150]==1} ~~ Rynthid
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+RynthidRecallKnown]==1}
 			Expr {getpvar[DoQuestEOD]==1}
 			Expr {getpvar[FellowCount]>=3}
 			Any
@@ -1070,7 +1070,7 @@ STATE: {CheckQuests} ~~ {
 	IF:	All
 			Expr {getpvar[RynthidWeapon]==1}
 			Expr {getcharintprop[25]>=200}
-			Expr {getisspellknown[6150]==1} ~~ Rynthid
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+RynthidRecallKnown]==1}
 			Expr {getpvar[DoQuestRynthidWeapon]==1}
 			Expr {getpvar[FellowCount]>=4}
 			Expr {getqueststatus[tormentshardpickup]==1}
@@ -1183,11 +1183,9 @@ STATE: {CheckQuests} ~~ {
 				Expr {getpvar[Grael]==0}
 				All
 					Expr {getpvar[DoQuestGrael]==1}
-					Expr {getpvar[Grael]==1}
 					Expr {testquestflag[abyssaltotemgatewayflag]==0}
 				All
 					Expr {getpvar[DoQuestGrael]==1}
-					Expr {getpvar[Grael]==1}
 					Expr {getqueststatus[splitgraelhighcomplete0806]==0}
 					Expr {getqueststatus[shardoftheabyssaltotempickuptimer]==0}
 					Expr {testquestflag[abyssaltotemgatewayflag]==1}
@@ -1322,10 +1320,10 @@ STATE: {CheckQuests} ~~ {
 					Expr {getqueststatus[graverobbercompleted_0213]==0}
 			Any
 				Expr {getpvar[DoQuestRynthidWeapon]==0}
-				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]==1}
 				All
 					Expr {getpvar[DoQuestRynthidWeapon]==1}
-					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==0}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]==0}
 					Expr {getpvar[RynthidWeapon]==1}
 					Expr {getqueststatus[tormentshardpickup]==0}
 			Any
@@ -1345,48 +1343,43 @@ STATE: {CheckQuests} ~~ {
 		DO:	DoAll
 				DoExpr {clearpvar[ReturnProfile]}
 				Chat {/f All Quests Complete!}
-				DoExpr {setpvar[Profile,RynDQLQuestCheck]}
 				DoExpr {setpvar[FinishedAllQuests,1]}
+	IF: All
+			Expr {getpvar[FinishedAllQuests]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ColoRecallKnown]==1}
+		DO: DoAll
+				DoExpr {setpvar[Profile,RynDQLQuestCheck]}
 				DoExpr {setpvar[StateName,Finished]}
 				SetState {PackCleanUp}
+	IF: All
+			Expr {getpvar[FinishedAllQuests]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ColoRecallKnown]==0}
+		DO: DoAll
+				DoExpr {setpvar[Profile,RynDQLQuestCheck]}
+				DoExpr {setpvar[StateName,Finished]}
+				SetState {Finished}
 ~~ }
 STATE: {Default} ~~ {
-	IF:	All
+	IF:	Any
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==0}
 			Expr {testpvar[Options]==0}
 			SecsInStateGE 30
 		DO:	DoAll
 				Chat {/ub opt set VTank.PatchExpressionEngine true}
 				Chat {/ub delay 3000 /ub mexec setpvar[PatchToggle,1]}
-	IF: Expr {testpvar[Options]==0}
+	IF: All
+			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
+			Expr {testpvar[Options]==0}
 		DO: Chat {/vt meta load %%RynDQLOptions%%}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall]==0}
+			Expr {testpvar[Options]==1}
+			Expr {getisspellknown[2645]==0} ~~ PortalRecall
 		DO: DoAll
-				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall,listcreate[]]}
-				SetState {Default}
+				ChatExpr {\/t +getcharstringprop[1]+`,It appears you haven't learned portal recall the meta will not function without it setting state to finished.`}
+				SetState {Finished}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==0}
-			Expr {getisspellknown[5330]==1}
-			Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]==0}
-		DO: DoAll
-				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]}
-				SetState {Default}
-	IF: Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
-		DO: DoAll
-				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup,listcreate[]]}
-				SetState {Default}
-	IF: All
-			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
-			Expr {getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3}
-			Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup],getcharstringprop[1]]==0}
-		DO: DoAll
-				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup],getcharstringprop[1]]}
-				SetState {Default}
-	IF: All
 			Expr {testpvar[Options]==1}
 			Not Any
 				Expr {getpvar[FellowCount]>=1&&getcharstringprop[1]==getpvar[LeaderName]}
@@ -2531,12 +2524,6 @@ STATE: {DefaultTwo} ~~ {
 		DO:	SetState {IntialProfileSetup}
 	IF:	Expr {getpvar[DailyReset]==0}
 		DO:	SetState {DailyReset}
-	IF: All
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==0}
-			Expr {getisspellknown[5330]==1}
-			Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]==0}
-		DO: DoAll
-				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]}
 	IF:	Always
 		DO:	DoAll
 				EmbedNav nav0 {[empty]}
@@ -2756,15 +2743,15 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DelegateDoorOpen]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RelogTimerComplete]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RynDQLKillTasks]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn VII]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn II]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn VI]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn IV]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn VIII]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn IX]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn III]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Ryn V]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LeaderName]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameThree]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameFour]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameFive]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameSix]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameSeven]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameEight]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+FellowNameNine]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RynDQLLostLore]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RangeDown]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SplittingGraelTurnIn]}
@@ -2907,15 +2894,16 @@ STATE: {Finished} ~~ {
 		DO:	SetState {SyncStuck}
 	IF: Expr {getpvar[PatchToggle]==1}
 		DO: DoExpr {uboptset[`VTank.PatchExpressionEngine`, 0]}
+	IF: Expr {getpvar[DoNotClearOptionsAtEnd]==0}
+		DO: DoExpr {clearpvar[Options]}
 	IF: Always
 		DO: DoAll
 				DoExpr {clearpvar[IntialProfileSetup]}
 				DoExpr {clearpvar[DailyReset]}
 				DoExpr {clearpvar[IntialCleanUp]}
 				DoExpr {clearpvar[SyncBuff]}
-				DoExpr {clearpvar[Options]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Start]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupheck]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RynDQLQuestCheck]}
@@ -3091,14 +3079,6 @@ STATE: {KeyCheck} ~~ {
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SyncStuck,1]" /></control></view>}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncStuck]==1}
 		DO:	SetState {SyncStuck}
-	IF: All
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall]}
-			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall]]>=getpvar[FellowCount]}
-		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo,1]}
-	IF: All
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
-			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]]>=getpvar[FellowCount]}
-		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck,1]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Sparkling Key]]==7}
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Crackling Key]]==7}
@@ -3115,14 +3095,29 @@ STATE: {MeetUp} ~~ {
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SyncStuck,1]" /></control></view>}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncStuck]==1}
 		DO:	SetState {SyncStuck}
+	
+	IF:	All
+			SecsInStateGE 15
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ColoRecallKnown]==0}
+			Not CellE 016C01BC
+		DO:	DoAll
+				Chat {/mp} ~~ Marketplace with retry
+				SetState {MeetUp}
 	IF:	All
 			SecsInStateGE 3
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ColoRecallKnown]==1}
 			Not CellE 00AF0118
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[4213]} ~~ SpellId 4213 is "Colosseum Recall".
 				SetState {MeetUp}
 	IF:	All
-			CellE 00AF0118
+			Any
+				All
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ColoRecallKnown]==1}
+					CellE 00AF0118
+				All
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ColoRecallKnown]==0}
+					CellE 016C01BC 
 			Not Expr {getcharstringprop[1]==getpvar[LeaderName]}
 		DO:	DoAll
 				DoExpr {clearvar[Recall]}
@@ -3131,7 +3126,13 @@ STATE: {MeetUp} ~~ {
 				DoExpr {setpvar[CheckSync,DefaultTwoMeetUp]}
 				Chat {/vt meta load RynDQLCheck} ~~ DefaultTwoMeetUp
 	IF:	All
-			CellE 00AF0118
+			Any
+				All
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ColoRecallKnown]==1}
+					CellE 00AF0118
+				All
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ColoRecallKnown]==0}
+					CellE 016C01BC 
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
 				All
@@ -3168,9 +3169,7 @@ STATE: {MeetUp} ~~ {
 		DO: DoAll
 				DoExpr {setvar[MeetUpFail,getvar[MeetUpFail]+1]}
 				SetState {MeetUp}
-	IF:	All
-			Expr {getworldname[]==Coldeve}
-			Expr {getvar[MeetUpFail]>8}
+	IF:	Expr {getvar[MeetUpFail]>8}
 		DO:	DoAll
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load RynDQLQuestCheck}
 				DoExpr {clearvar[MeetUpFail]}
@@ -3202,12 +3201,6 @@ STATE: {Quests} ~~ {
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SyncStuck,1]" /></control></view>}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncStuck]==1}
 		DO:	SetState {SyncStuck}
-	IF: All
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleGo]==0}
-			Expr {getisspellknown[5330]==1}
-			Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]==0}
-		DO: DoAll
-				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecall],getcharstringprop[1]]}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]}
@@ -3448,10 +3441,10 @@ STATE: {Quests} ~~ {
 					Expr {getqueststatus[graverobbercompleted_0213]==0}
 			Any
 				Expr {getpvar[DoQuestRynthidWeapon]==0}
-				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]==1}
 				All
 					Expr {getpvar[DoQuestRynthidWeapon]==1}
-					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupCheck]==0}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]==0}
 					Expr {getpvar[RynthidWeapon]==1}
 					Expr {getqueststatus[tormentshardpickup]==0}
 			Any
@@ -3475,37 +3468,39 @@ STATE: {Quests} ~~ {
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[StateName,KeyCheck]}
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[Finished,1]}
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub delay 250 /vt meta load RynDQLLumTokens}
-	IF: Any
-			All
-				Expr {isrefreshingquests[]==0}
-				Expr {getqueststatus[gerainestudybookpickup]==1}
-				Expr {getqueststatus[geraineslibrarycompleted0312]==1}
-				Any
-					Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==7} ~~ Geraine Study
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Torn Parchment]]==7} ~~ Lost Lore or Geraine Study
-			All
-				Expr {isrefreshingquests[]==0}
-				Expr {getqueststatus[shardofharraagsdaggerpickuptimer]==1}
-				Expr {getqueststatus[aerbaxsprodigalbanderling_wait]==1}
-				Expr {getobjectinternaltype[wobjectfindininventorybyname[Shard of Harraag's Dagger]]==7} ~~ ProdigalBanderling
-			All
-				Expr {isrefreshingquests[]==0}
-				Expr {getqueststatus[tornstripofparchmentpickuptimer]==1}
-				Any
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[The Story of the Lost Sisters]]==7} ~~ LostLore Will Break
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Torn Parchment]]==7} ~~ LostLore or Geraine Study
-			All
-				Expr {isrefreshingquests[]==0}
-				Expr {getqueststatus[crimsonscarabpickup]==1}
-				Expr {getqueststatus[eodcompleted_1013]==1}
-				Expr {getobjectinternaltype[wobjectfindininventorybyname[Purified Crimson Scarab]]==7} ~~ EndofDays
-			All
-				Expr {isrefreshingquests[]==0}
-				Expr {getqueststatus[ordersforzrikux_pickup]==1}
-				Any
-					Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[47196]]==7} ~~ FalatacotDepot
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Translated Orders for Zrikux]]==7} ~~ FalatacotDepot Will Break
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Forging Gloves]]==7}~~ FalatacotDepot
+	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ColoRecallKnown]==1}
+			Any
+				All
+					Expr {isrefreshingquests[]==0}
+					Expr {getqueststatus[gerainestudybookpickup]==1}
+					Expr {getqueststatus[geraineslibrarycompleted0312]==1}
+					Any
+						Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==7} ~~ Geraine Study
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Torn Parchment]]==7} ~~ Lost Lore or Geraine Study
+				All
+					Expr {isrefreshingquests[]==0}
+					Expr {getqueststatus[shardofharraagsdaggerpickuptimer]==1}
+					Expr {getqueststatus[aerbaxsprodigalbanderling_wait]==1}
+					Expr {getobjectinternaltype[wobjectfindininventorybyname[Shard of Harraag's Dagger]]==7} ~~ ProdigalBanderling
+				All
+					Expr {isrefreshingquests[]==0}
+					Expr {getqueststatus[tornstripofparchmentpickuptimer]==1}
+					Any
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[The Story of the Lost Sisters]]==7} ~~ LostLore Will Break
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Torn Parchment]]==7} ~~ LostLore or Geraine Study
+				All
+					Expr {isrefreshingquests[]==0}
+					Expr {getqueststatus[crimsonscarabpickup]==1}
+					Expr {getqueststatus[eodcompleted_1013]==1}
+					Expr {getobjectinternaltype[wobjectfindininventorybyname[Purified Crimson Scarab]]==7} ~~ EndofDays
+				All
+					Expr {isrefreshingquests[]==0}
+					Expr {getqueststatus[ordersforzrikux_pickup]==1}
+					Any
+						Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[47196]]==7} ~~ FalatacotDepot
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Translated Orders for Zrikux]]==7} ~~ FalatacotDepot Will Break
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Forging Gloves]]==7}~~ FalatacotDepot
 		DO: DoAll
 				Chat {/ub autocram}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]}
@@ -3524,35 +3519,38 @@ STATE: {Quests} ~~ {
 	IF: All
 			Expr {isrefreshingquests[]==0}
 			Expr {getpvar[IntialCleanUp]==0}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ColoRecallKnown]==1}
 		DO: SetState {PackCleanUpCheck}
-	IF:	Any
-			All
-				SecsInStateGE 5
-				Expr {isrefreshingquests[]==0}
-				MainSlotsLE 15
-			All
-				Any
-					Expr {getqueststatus[moufreward]==1}
-					Expr {getpvar[ECleanUp]==1}
-				Expr {isrefreshingquests[]==0}
-				Any
-					Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==7} ~~ Geraine Study
-					Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[47196]]==7} ~~ FalatacotDepot
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Shard of Harraag's Dagger]]==7} ~~ ProdigalBanderling
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Empowered Robe of the Perfect Light]]==7}
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Gear Crossbow]]==7}
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[The Story of the Lost Sisters]]==7} ~~ Lost Lore Will Break
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Apostate Grand Director's Mask]]==7} ~~ Apostate Finale
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Torn Parchment]]==7} ~~ Lost Lore or Geraine Study
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Purified Crimson Scarab]]==7} ~~ End of Days
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Translated Orders for Zrikux]]==7} ~~ FalatacotDepot Will Break
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Forging Gloves]]==7}~~ FalatacotDepot
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Virindi Prison Key]]==7} ~~ Virindi Rescue Keys May Break
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Aetherium Vault Key]]==7} ~~ Nexus Crawl Keys May Break
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Private Chamber Key]]==7} ~~  PTC Keys May Break
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Phainor's Chamber Key]]==7} ~~ Count Phainor Wont Break
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Arrival Chamber Key]]==7} ~~ UGK Wont Break
-					Expr {getobjectinternaltype[wobjectfindininventorybyname[Treasury Key]]==7} ~~ Lugian Assault Wont break
+	IF:	All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ColoRecallKnown]==1}
+			Any
+				All
+					SecsInStateGE 5
+					Expr {isrefreshingquests[]==0}
+					MainSlotsLE 15
+				All
+					Any
+						Expr {getqueststatus[moufreward]==1}
+						Expr {getpvar[ECleanUp]==1}
+					Expr {isrefreshingquests[]==0}
+					Any
+						Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[45680]]==7} ~~ Geraine Study
+						Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[47196]]==7} ~~ FalatacotDepot
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Shard of Harraag's Dagger]]==7} ~~ ProdigalBanderling
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Empowered Robe of the Perfect Light]]==7}
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Gear Crossbow]]==7}
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[The Story of the Lost Sisters]]==7} ~~ Lost Lore Will Break
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Apostate Grand Director's Mask]]==7} ~~ Apostate Finale
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Torn Parchment]]==7} ~~ Lost Lore or Geraine Study
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Purified Crimson Scarab]]==7} ~~ End of Days
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Translated Orders for Zrikux]]==7} ~~ FalatacotDepot Will Break
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Forging Gloves]]==7}~~ FalatacotDepot
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Virindi Prison Key]]==7} ~~ Virindi Rescue Keys May Break
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Aetherium Vault Key]]==7} ~~ Nexus Crawl Keys May Break
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Private Chamber Key]]==7} ~~  PTC Keys May Break
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Phainor's Chamber Key]]==7} ~~ Count Phainor Wont Break
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Arrival Chamber Key]]==7} ~~ UGK Wont Break
+						Expr {getobjectinternaltype[wobjectfindininventorybyname[Treasury Key]]==7} ~~ Lugian Assault Wont break
 		DO:	DoAll
 				Chat {/ub autocram}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]}
