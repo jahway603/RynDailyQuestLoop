@@ -64,8 +64,10 @@ STATE: {ClearMobs} ~~ {
 	IF:	Always
 		DO:	DoAll
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0208]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0208]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				SetOpt {EnableNav} {False}
+	IF: Expr {getpvar[ClearMobs]==MenhirWest}
+		DO: DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0208]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 	IF:	Any
 			NoMobsInDist 30
 			SecsInStateGE 30
@@ -73,7 +75,7 @@ STATE: {ClearMobs} ~~ {
 				SecsInStateGE 3
 				NoMobsInDist 15
 			All
-				SecsInStateGE 15
+				SecsInStateGE 8
 				NoMobsInDist 8
 			All
 				SecsInStateGE 10

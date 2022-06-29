@@ -1147,14 +1147,18 @@ STATE: {LugianDoor} ~~ {
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[51919]],getplayercoordinates[]]<5}
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA,1]}
 				EmbedNav nav19 {junk.nav}
 	IF:	All
 			Expr {getpvar[Leader]==1}
 			NavEmpty
 			CellE 59510109
-			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[51917]]==7}
-			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[51917]]==0}
-			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[51917]],getplayercoordinates[]]<5}
+			Any
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA]==1}
+				All
+					Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[51917]]==7}
+					Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[51917]]==0}
+					Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[51917]],getplayercoordinates[]]<5}
 		DO: DoExpr {actiontryuseitem[wobjectfindnearestbytemplatetype[51917]]}
 	IF:	All
 			CellE 59510109
