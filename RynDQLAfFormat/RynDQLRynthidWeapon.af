@@ -257,6 +257,29 @@ STATE: {CatacombsOfTorment} ~~ {
 				SetState {FightBoss}
 ~~ }
 STATE: {Clear} ~~ {
+	IF:	All
+			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
+			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
+		DO:	DoAll
+				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
+				DoExpr {clearvar[capturegroup_tellquest]}
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+NoClear,2]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO: SetState {Zstuck}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestRW]==1}
+		DO: SetState {SkipQuest}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatCapture {!ReGroup} {19}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Pillar]==4}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
+		DO:	DoAll
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Any
 			Expr {vtgetsetting[EnableCombat]==0}
 			Expr {vtgetsetting[EnableNav]==0}
@@ -1288,6 +1311,29 @@ STATE: {MoveToHallway} ~~ {
 				SetState {FightBoss}
 ~~ }
 STATE: {NoClear} ~~ {
+	IF:	All
+			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
+			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
+		DO:	DoAll
+				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
+				DoExpr {clearvar[capturegroup_tellquest]}
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="150" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="NoClear" left="0" top="50" width="149" height="49" text="NoClear" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+NoClear,1]" /><control type="button" name="Clear" left="0" top="100" width="149" height="49" text="Clear" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+NoClear,2]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO: SetState {Zstuck}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestRW]==1}
+		DO: SetState {SkipQuest}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatCapture {!ReGroup} {19}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Pillar]==4}
+			SecsInStateGE 900
+			Any
+				BlockE C8E90000
+		DO:	DoAll
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Any
 			Expr {vtgetsetting[EnableCombat]==1}
 			Expr {vtgetsetting[EnableNav]==0}
@@ -2449,9 +2495,11 @@ STATE: {ToPlatform} ~~ {
 		DO:	DoAll
 				SetOpt {UseDispelItems} {False}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
-	IF:	Any
-			CellE 3032001C
-			CellE 30320014
+	IF:	All
+			NavEmpty
+			Any
+				CellE 3032001C
+				CellE 30320014
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
 				EmbedNav nav44 {[none]}

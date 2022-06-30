@@ -365,77 +365,66 @@ STATE: {SetTokenVar} ~~ {
 			Expr {getcharintprop[344]==5}
 			Expr {getquestktprogress[lumaugskillquest]==2}
 		DO:	SetState {TokenCountVar}
-	IF:	All
-			Expr {getquestktprogress[lumaugskillquest]<2}
+	IF:	Expr {getquestktprogress[lumaugskillquest]<2}
 		DO:	DoAll
-				DoExpr {setpvar[TokenVar,Token of the Aura of Valor]}
+				DoExpr {setpvar[TokenVar,Token of Skill]}
 				DoExpr {setpvar[TokenLocation,Castle]}
 				SetState {TokenCountVar}
-	IF:	All
-			Expr {getcharintprop[334]<5}
+	IF:	Expr {getcharintprop[334]<5}
 		DO:	DoAll
 				DoExpr {setpvar[CurrentAura,getcharintprop[334]]}
 				DoExpr {setpvar[TokenVar,Token of the Aura of Protection]}
 				DoExpr {setpvar[TokenLocation,Castle]}
 				SetState {TokenCountVar}
-	IF:	All
-			Expr {getcharintprop[333]<5}
+	IF:	Expr {getcharintprop[333]<5}
 		DO:	DoAll
 				DoExpr {setpvar[CurrentAura,getcharintprop[333]]}
 				DoExpr {setpvar[TokenVar,Token of the Aura of Valor]}
 				DoExpr {setpvar[TokenLocation,Castle]}
 				SetState {TokenCountVar}
-	IF:	All
-			Expr {getcharintprop[336]<5}
+	IF:	Expr {getcharintprop[336]<5}
 		DO:	DoAll
 				DoExpr {setpvar[CurrentAura,getcharintprop[336]]}
 				DoExpr {setpvar[TokenVar,Token of the Aura of Temperance]}
 				DoExpr {setpvar[TokenLocation,Castle]}
 				SetState {TokenCountVar}
-	IF:	All
-			Expr {getcharintprop[335]<5}
+	IF:	Expr {getcharintprop[335]<5}
 		DO:	DoAll
 				DoExpr {setpvar[CurrentAura,getcharintprop[335]]}
 				DoExpr {setpvar[TokenVar,Token of the Aura of Glory]}
 				DoExpr {setpvar[TokenLocation,Castle]}
 				SetState {TokenCountVar}
-	IF:	All
-			Expr {getcharintprop[338]<5}
+	IF:	Expr {getcharintprop[338]<5}
 		DO:	DoAll
 				DoExpr {setpvar[CurrentAura,getcharintprop[338]]}
 				DoExpr {setpvar[TokenVar,Token of the Aura of Aetheric Vision]}
 				DoExpr {setpvar[TokenLocation,Castle]}
 				SetState {TokenCountVar}
-	IF:	All
-			Expr {getcharintprop[343]<5}
+	IF:	Expr {getcharintprop[343]<5}
 		DO:	DoAll
 				DoExpr {setpvar[CurrentAura,getcharintprop[343]]}
 				DoExpr {setpvar[TokenVar,Token of the Aura of the Craftsman]}
 				DoExpr {setpvar[TokenLocation,Castle]}
 				SetState {TokenCountVar}
-	IF:	All
-			Expr {getcharintprop[339]<5}
+	IF:	Expr {getcharintprop[339]<5}
 		DO:	DoAll
 				DoExpr {setpvar[CurrentAura,getcharintprop[339]]}
 				DoExpr {setpvar[TokenVar,Token of the Aura of Mana Flow]}
 				DoExpr {setpvar[TokenLocation,Castle]}
 				SetState {TokenCountVar}
-	IF:	All
-			Expr {getcharintprop[340]<5}
+	IF:	Expr {getcharintprop[340]<5}
 		DO:	DoAll
 				DoExpr {setpvar[CurrentAura,getcharintprop[340]]}
 				DoExpr {setpvar[TokenVar,Token of the Aura of Mana Infusion]}
 				DoExpr {setpvar[TokenLocation,Castle]}
 				SetState {TokenCountVar}
-	IF:	All
-			Expr {getcharintprop[342]<5}
+	IF:	Expr {getcharintprop[342]<5}
 		DO:	DoAll
 				DoExpr {setpvar[CurrentAura,getcharintprop[342]]}
 				DoExpr {setpvar[TokenVar,Token of the Aura of Purity]}
 				DoExpr {setpvar[TokenLocation,Castle]}
 				SetState {TokenCountVar}
-	IF:	All
-			Expr {getcharintprop[365]<10}
+	IF:	Expr {getcharintprop[365]<10}
 		DO:	DoAll
 				DoExpr {setpvar[CurrentAura,getcharintprop[365]]}
 				DoExpr {setpvar[TokenVar,Token of the Aura of the World]}
@@ -651,7 +640,9 @@ STATE: {TokenCountVar} ~~ {
 			Expr {getcharintprop[344]==5}
 			Expr {getquestktprogress[lumaugskillquest]==2}
 		DO:	SetState {SpecializationMath}
-	IF:	Expr {getpvar[TokenVar]#`^Token of the Aura of (Purity|Mana Infusion|Mana Flow|the Craftsman|Aetheric Vision|Glory|Temperance|Valor|Protection)$`}
+	IF:	Any
+			Expr {getpvar[TokenVar]#`^Token of the Aura of (Purity|Mana Infusion|Mana Flow|the Craftsman|Aetheric Vision|Glory|Temperance|Valor|Protection)$`}
+			Expr {getpvar[TokenVar]==Token of Skill}
 		DO:	DoExpr {setpvar[TokenCount,6-getpvar[CurrentAura]]}
 	IF:	All
 			Expr {getpvar[TokenVar]==Token of the Aura of the World}

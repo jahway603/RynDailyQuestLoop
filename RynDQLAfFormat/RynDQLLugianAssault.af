@@ -1142,9 +1142,12 @@ STATE: {LugianDoor} ~~ {
 	IF:	All
 			NavEmpty
 			CellE 5951010A
-			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[51919]]==7}
-			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[51919]]==1}
-			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[51919]],getplayercoordinates[]]<5}
+			Any
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA]==1}
+				All
+					Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[51919]]==7}
+					Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[51919]]==1}
+					Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[51919]],getplayercoordinates[]]<5}
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA,1]}
@@ -1163,18 +1166,18 @@ STATE: {LugianDoor} ~~ {
 	IF:	All
 			CellE 59510109
 			Any
-				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA]==1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA]==2}
 				All
 					Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[51917]]==7}
 					Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[51917]]==1}
 					Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[51917]],getplayercoordinates[]]<5}
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
-				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA,1]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA,2]}
 				EmbedNav nav20 {junk.nav}
 	IF:	All
 			Not Expr {testvar[JumpStuck]}
-			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA]==1}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA]==2}
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[51917]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindnearestbytemplatetype[51917]]==1}
 			Expr {coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbytemplatetype[51917]],getplayercoordinates[]]<5}
@@ -1195,10 +1198,20 @@ STATE: {LugianDoor} ~~ {
 		DO:	DoAll
 				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
 				SetState {LugianDoor}
-	IF:	CellE 59510107
+	IF:	Any
+			CellE 59510107
+			CellE 59510105
+			CellE 59510106
+			CellE 59510104
+			CellE 59510103
 		DO:	DoExpr {clearvar[JumpStuck]}
 	IF:	All
-			CellE 59510107
+			Any
+				CellE 59510107
+				CellE 59510105
+				CellE 59510106
+				CellE 59510104
+				CellE 59510103
 			NavEmpty
 		DO:	SetState {CommanderPresk}
 	IF:	CellE 59510100
