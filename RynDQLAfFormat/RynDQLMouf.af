@@ -264,7 +264,7 @@ STATE: {FightBoss} ~~ {
 ~~ }
 STATE: {Finished} ~~ {
 	IF:	All
-			SecsInStateGE 5
+			SecsInStateGE 15
 			Any
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Go]==1}
@@ -1364,6 +1364,7 @@ STATE: {UseMouf} ~~ {
 					Expr {getpvar[AdminSkip]==1}
 					Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Letter from Mouf`]]==7}
 		DO:	DoAll
+				DoExpr {setpvar[MoufDone,1]}
 				DoExpr {setpvar[StateName,ToTN]}
 				DoExpr {setpvar[Stuck, ToTN]}
 				DoExpr {setpvar[CheckSync, ToTN]}

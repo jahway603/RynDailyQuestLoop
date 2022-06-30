@@ -534,6 +534,8 @@ STATE: {EdificeToDelegateBoss} ~~ {
 				DoExpr {$dx=$pt{{1}}-coordinategetwe[$myPos];}
 				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
 				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}
+	IF: Expr {getvar[dir]==360}
+		DO: DoExpr {setvar[dir,0]}
 	IF:	All
 			Expr {testvar[dir]}
 			SecsInStateGE 4
