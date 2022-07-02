@@ -534,8 +534,7 @@ STATE: {EdificeToDelegateBoss} ~~ {
 				DoExpr {$dx=$pt{{1}}-coordinategetwe[$myPos];}
 				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
 				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}
-	IF: Expr {getvar[dir]==360}
-		DO: DoExpr {setvar[dir,0]}
+				DoExpr {ifthen[getvar[dir]>=360,`setvar[dir,0]`,`setvar[dir,round[450-atan2[$dy,$dx]*180/$PI]%360]`]}
 	IF:	All
 			Expr {testvar[dir]}
 			SecsInStateGE 4
@@ -572,6 +571,7 @@ STATE: {EdificeToDelegateBoss} ~~ {
 				DoExpr {$dx=$pt{{1}}-coordinategetwe[$myPos];}
 				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
 				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}
+				DoExpr {ifthen[getvar[dir]>=360,`setvar[dir,0]`,`setvar[dir,round[450-atan2[$dy,$dx]*180/$PI]%360]`]}
 	IF:	All
 			Expr {testvar[dir]}
 			SecsInStateGE 4
@@ -1558,6 +1558,7 @@ STATE: {ToDelegate} ~~ {
 				DoExpr {$dx=$pt{{1}}-coordinategetwe[$myPos];}
 				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
 				DoExpr {$dir=(450-atan2[$dy,$dx]*180/$PI)%360} ~~ (450-atan2[$dy,$dx]*180/$PI)/360
+				DoExpr {ifthen[getvar[dir]>=360,`setvar[dir,0]`,`setvar[dir,round[450-atan2[$dy,$dx]*180/$PI]%360]`]}
 	IF:	All
 			Expr {testvar[dir]}
 			NavEmpty
@@ -1589,6 +1590,7 @@ STATE: {ToDelegate} ~~ {
 				DoExpr {$dx=$pt{{1}}-coordinategetwe[$myPos];}
 				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
 				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}
+				DoExpr {ifthen[getvar[dir]>=360,`setvar[dir,0]`,`setvar[dir,round[450-atan2[$dy,$dx]*180/$PI]%360]`]}
 	IF:	All
 			Expr {testvar[dir]}
 			NavEmpty
@@ -1620,6 +1622,7 @@ STATE: {ToDelegate} ~~ {
 				DoExpr {$dx=$pt{{1}}-coordinategetwe[$myPos];}
 				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
 				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}
+				DoExpr {ifthen[getvar[dir]>=360,`setvar[dir,0]`,`setvar[dir,round[450-atan2[$dy,$dx]*180/$PI]%360]`]}
 	IF:	All
 			Expr {testvar[dir]}
 			NavEmpty

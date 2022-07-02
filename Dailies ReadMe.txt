@@ -7,8 +7,8 @@
 	Once in game load %%RynOptions%%.met on one character to make all of the changes outlined below.
 	Follow all setup instructions below. Please do not make any changes below the lines containing %% Do Not Edit Below Here %%
 ~~ Setup Meta ~~
-	Requires edits to %%DQLOptionsPublic%%.met under %%Options%% state.
-	Requires edits to %%DQLOptionsPublic%%.met under %% ToBotLocation %% state if you'd like to use a portal bot.
+	Requires edits to %%RynDQLOptions%%.met under %% Options %% state.
+	Requires edits to %%RynDQLOptions%%.met under %% ToBotLocation %% state if you'd like to use a portal bot.
 
 Under %%% Enable Options %%% in %%Options%% state.
 	Change Never to Always on the options you'd like to use.
@@ -22,7 +22,7 @@ Eg. Refer to VtankExamples.png
 	
 This is how it would look if you'd like to self summon Count Phainor portal.
 
-UseBot - If you chose to UseBots on any of the above toggles it will require route edits to your bot in %%DQLOptionsPublic%%.met under %% ToBotLocation %% state.
+UseBot - If you chose to UseBots on any of the above toggles it will require route edits to your bot in %%DQLOptions%%.met under %% ToBotLocation %% state.
 SummonPortal - If you chose to SummonPortal on any of the above toggles it will require the following ties as primary on character specified under %% Summon Names Below %% Jump to Routes for list of how to get to them.
 
 Under %% ToBotLocation %% state if you set any of the above metas to UseBot.
@@ -39,8 +39,8 @@ Under %%% Edit Fellow Count %%% in %%Options%% state.
 	Change setpvar[FellowCount,number] to the number of members you plan to run the meta with.
 
 Under %%% Edit Names Below %%% in %%Options%% state.
-	Change setpvar[LeaderName,CharOne] to the character name you'd like to be fellow leader and to use doors/levers/puzzles in dungeons. Ex. setpvar[LeaderName,Kai]
-	Change setpvar[FellowNameTwo,CharTwo] to any other characters that is not the leader. Do the same for the remaining lines under this section. Up to the amount you have in the fellow Ex. setpvar[FellowNameTwo,Kai II]
+	Change setpvar[LeaderName,CharOne] to the character name you'd like to be fellow leader and to use doors/levers/puzzles in dungeons. Ex. setpvar[LeaderName,Ryn]
+	Change setpvar[FellowNameTwo,CharTwo] to any other characters that is not the leader. Do the same for the remaining lines under this section. Up to the amount you have in the fellow Ex. setpvar[FellowNameTwo,Ryn II]
 
 Under %%% Edit Bot Count %%% in %%Options%% state.
 	[BotCount,number] to the number of portal bots on the account for setting up names.
@@ -59,13 +59,15 @@ Under Chat %%% BotKeywords Below %%% If Summoning portals yourself is the wanted
 	Change setpvar[QuestKeyWordUnleashTheGearknight,QuestKeyWordUnleashTheGearknight] to match the keyword the bot needs to hear to summon the portal. RynBot requires the word QuestKeyWordUnleashTheGearknight to summon Reaving Facility dungeon.
 
 Under %% Summon Names Below %% If Summoning portals yourself is the wanted.These can be mixed and matched with self summon and bot use to save ties.
-	Change setpvar[UGKSummon,CharTwo] to the character that is tied to the respective portals from the list below. UGK Surface Ex setpvar[UGKSummon,Kai II]
-	Change setpvar[SplittingGraelSummon,CharThree] to the character that is tied to the respective portals from the list below. Ayan town tie Ex setpvar[SplittingGraelSummon,Kai III]
-	Change setpvar[PurgingTheCorruptionSummon,CharFour] to the character that is tied to the respective portals from the list below. Tumerok Chamber Ex setpvar[PurgingTheCorruptionSummon,Kai IV]
-	Change setpvar[ProdigalBanderlingSummon,CharThree] to the character that is tied to the respective portals from the list below. Ayan town tie Ex setpvar[ProdigalBanderlingSummon,Kai III]
-	Change setpvar[NexusCrawlSummon,CharFive] to the character that is tied to the respective portals from the list below. Nexus Crawl Surface Ex setpvar[NexusCrawlSummon,Kai V]
-	Change setpvar[DeathsAllureSummon,CharSix] to the character that is tied to the respective portals from the list below. Thrungus Hole Surface Ex setpvar[DeathsAllureSummon,Kai VI]
-	Change setpvar[CountPhainorSummon,CharSeven] to the character that is tied to the respective portals from the list below. Count Phainor Surface Ex setpvar[CountPhainorSummon,Kai VII]
+	Change setpvar[UGKSummon,CharTwo] to the character that is tied to the respective portals from the list below. UGK Surface Ex setpvar[UGKSummon,Ryn II]
+	Change setpvar[SplittingGraelSummon,CharThree] to the character that is tied to the respective portals from the list below. Ayan town tie Ex setpvar[SplittingGraelSummon,Ryn III]
+	Change setpvar[PurgingTheCorruptionSummon,CharFour] to the character that is tied to the respective portals from the list below. Tumerok Chamber Ex setpvar[PurgingTheCorruptionSummon,Ryn IV]
+	Change setpvar[ProdigalBanderlingSummon,CharThree] to the character that is tied to the respective portals from the list below. Ayan town tie Ex setpvar[ProdigalBanderlingSummon,Ryn III]
+	Change setpvar[NexusCrawlSummon,CharFive] to the character that is tied to the respective portals from the list below. Nexus Crawl Surface Ex setpvar[NexusCrawlSummon,Ryn V]
+	Change setpvar[DeathsAllureSummon,CharSix] to the character that is tied to the respective portals from the list below. Thrungus Hole Surface Ex setpvar[DeathsAllureSummon,Ryn VI]
+	Change setpvar[CountPhainorSummon,CharSeven] to the character that is tied to the respective portals from the list below. Count Phainor Surface Ex setpvar[CountPhainorSummon,Ryn VII]
+
+Under %% Quest Toggles Below %% Set to 1 to run the quest, 0 to skip the quest.
 
 ~~ Routes ~~
 Primary Ties   Pathing
@@ -77,7 +79,7 @@ Primary Ties   Pathing
 	Deaths Allure - Take the Eastwatch portal in the Town Network, run through the Shattered Outlands pass at 93.0N, 47.0W, and then head due east to the small cave at 94.2N 43.0W. Once inside tie to surface.
 	Count Phainor - Tie to surface portal at the end of Count Phainor. Graveyard at 65.0S 44.1W.
 ~ To Begin ~~
-Once all settings are completed load QuestCheckPublic on all characters setup above with /vt meta load QuestCheckPublic or with a broadcast command of /ub bc QuestCheckPublic 
+Once all settings are completed load QuestCheck on all characters setup above with /vt meta load QuestCheck or with a broadcast command of /ub bc QuestCheck 
 Warning the broadcast will send to all open clients if Vital sharing is on
 If you're missing recalls it will warn you that it is skipping associated quests.
 If all options are setup correctly a Start button will pop up. Press Start to start the meta loop. Settings must be setup before you send start or it will not function!

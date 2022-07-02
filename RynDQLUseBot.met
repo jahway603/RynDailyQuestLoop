@@ -45,7 +45,7 @@ n
 s
 e
 s
-setpvar[Profile,RynDQLUuseBot]
+setpvar[Profile,RynDQLUseBot]
 i
 7
 TABLE
@@ -351,7 +351,7 @@ n
 s
 e
 s
-setpvar[Profile,RynDQLUuseBot]
+setpvar[Profile,RynDQLUseBot]
 i
 7
 TABLE
@@ -403,7 +403,7 @@ n
 s
 e
 s
-getpvar[Profile]==RynDQLUuseBot
+getpvar[Profile]==RynDQLUseBot
 i
 26
 TABLE
@@ -468,7 +468,7 @@ n
 s
 e
 s
-setpvar[Profile,RynDQLUuseBot]
+setpvar[Profile,RynDQLUseBot]
 i
 7
 TABLE
@@ -3496,7 +3496,7 @@ n
 s
 e
 s
-cleargvar[RynDQLUuseBot]
+cleargvar[RynDQLUseBot]
 i
 2
 s
@@ -3602,7 +3602,7 @@ n
 s
 e
 s
-cleargvar[RynDQLUuseBot]
+cleargvar[RynDQLUseBot]
 i
 2
 s
@@ -3708,7 +3708,7 @@ n
 s
 e
 s
-cleargvar[RynDQLUuseBot]
+cleargvar[RynDQLUseBot]
 i
 2
 s
@@ -3814,7 +3814,7 @@ n
 s
 e
 s
-cleargvar[RynDQLUuseBot]
+cleargvar[RynDQLUseBot]
 i
 2
 s
@@ -3920,7 +3920,7 @@ n
 s
 e
 s
-cleargvar[RynDQLUuseBot]
+cleargvar[RynDQLUseBot]
 i
 2
 s
@@ -4026,7 +4026,7 @@ n
 s
 e
 s
-cleargvar[RynDQLUuseBot]
+cleargvar[RynDQLUseBot]
 i
 2
 s
@@ -4132,7 +4132,7 @@ n
 s
 e
 s
-cleargvar[RynDQLUuseBot]
+cleargvar[RynDQLUseBot]
 i
 2
 s

@@ -474,6 +474,55 @@ STATE: {CheckQuests} ~~ {
 		DO: DoAll
 				ChatExpr {\/t +getcharstringprop[1]+`,It appears you do not know GK Recall on all characters skipping Apostate Finale, skipping the quest till tomorrow.`}
 				DoExpr {setpvar[DoQuestAF,0]}
+	IF: Expr {getcharintprop[25]<200}
+		DO: DoAll
+				DoExpr {setpvar[DoQuestSaveKarul,0]} ~~ 200
+				DoExpr {setpvar[DoQuestBSI,0]} ~~ 200
+				DoExpr {setpvar[DoQuestHaltDericost,0]} ~~ 200
+				ChatExpr {\/t +getcharstringprop[1]+`,Disabling Quests above level 200 requirement.`}
+	IF: Expr {getcharintprop[25]<180}
+		DO: DoAll
+				DoExpr {setpvar[DoDR,0]} ~~ 180
+				DoExpr {setpvar[DoQuestDR,0]} ~~ 180
+				DoExpr {setpvar[DoQuestPurge,0]} ~~ 180
+				DoExpr {setpvar[DoQuestDee,0]} ~~ 180
+				DoExpr {setpvar[DoQuestLugianAssault,0]} ~~ 180
+				DoExpr {setpvar[DoQuestGeraineStudy,0]} ~~ 150 setting to 180 though
+				DoExpr {setpvar[DoQuestLU,0]} ~~ 180
+				DoExpr {setpvar[DoQuestCP,0]} ~~ 180
+				DoExpr {setpvar[DoQuestSBG,0]} ~~ 150
+				DoExpr {setpvar[DoQuestEOD,0]} ~~ 180
+				DoExpr {setpvar[DoQuestRynthidWeapon,0]} ~~ 180
+				ChatExpr {\/t +getcharstringprop[1]+`,Disabling Quests above level 180 requirement.`}
+	IF: Expr {getcharintprop[25]<175}
+		DO: DoAll
+				DoExpr {setpvar[DoQuestHermit,0]} ~~ 175
+				ChatExpr {\/t +getcharstringprop[1]+`,Disabling Quests above level 175 requirement.`}
+	IF: Expr {getcharintprop[25]<150}
+		DO: DoAll
+				DoExpr {setpvar[DoQuestMouf,0]} ~~ 150
+				DoExpr {setpvar[DoQuestProdigalBanderling,0]} ~~ 120
+				DoExpr {setpvar[DoQuestLostLore,0]} ~~ 150
+				DoExpr {setpvar[DoQuestFalatacotDepot,0]} ~~ 150
+				DoExpr {setpvar[DoQuestProdigalTusker,0]} ~~ 130
+				DoExpr {setpvar[DoQuestIQSQ,0]} ~~ 130
+				DoExpr {setpvar[DoQuestGrael,0]} ~~ 150
+				DoExpr {setpvar[DoQuestVR,0]} ~~ 150
+				DoExpr {setpvar[DoQuestNexus,0]} ~~ 150
+				DoExpr {setpvar[DoQuestGX,0]} ~~ 0 but 150
+				DoExpr {setpvar[DoQuestReleasingTheLight,1]} ~~ 150
+				DoExpr {setpvar[DoQuestSBG,0]} ~~ 150
+				ChatExpr {\/t +getcharstringprop[1]+`,Disabling Quests above level 150 requirement.`}
+	IF: Expr {getcharintprop[25]<130}
+		DO: DoAll
+				DoExpr {setpvar[DoQuestProdigalBanderling,0]} ~~ 120
+				DoExpr {setpvar[DoQuestProdigalTusker,0]} ~~ 130
+				DoExpr {setpvar[DoQuestIQSQ,0]} ~~ 130
+				ChatExpr {\/t +getcharstringprop[1]+`,Disabling Quests above level 130 requirement.`}
+	IF: Expr {getcharintprop[25]<120}
+		DO: DoAll
+				DoExpr {setpvar[DoQuestProdigalBanderling,0]} ~~ 120
+				ChatExpr {\/t +getcharstringprop[1]+`,You're too low level to run the quest meta load, try again after level 120.`}
 	IF:	All
 			Expr {getcharintprop[25]>=150}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
@@ -993,7 +1042,7 @@ STATE: {CheckQuests} ~~ {
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestSBG]}
 				SetState {LoadQuest}
 	IF:	All
-			Expr {getcharintprop[25]>=180}
+			Expr {getcharintprop[25]>=200}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getpvar[DoQuestSaveKarul]==1}
 			Expr {getpvar[FellowCount]>=3}
@@ -1350,14 +1399,8 @@ STATE: {CheckQuests} ~~ {
 				SetState {Finished}
 ~~ }
 STATE: {Default} ~~ {
-	IF:	Any
-			SecsInStateGE 30
-			All
-				Expr {uboptget[`VTank.PatchExpressionEngine`]==0}
-				Not Expr {testpvar[Options]}
-		DO:	DoAll
-				Chat {/ub opt set VTank.PatchExpressionEngine true}
-				Chat {/ub delay 3000 /ub mexec setpvar[PatchToggle,1]}
+	IF:	SecsInStateGE 30
+		DO:	Chat {/ub opt set VTank.PatchExpressionEngine true}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
 			Expr {testpvar[Options]==0}
@@ -2883,8 +2926,6 @@ STATE: {Finished} ~~ {
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SyncStuck,1]" /></control></view>}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncStuck]==1}
 		DO:	SetState {SyncStuck}
-	IF: Expr {getpvar[PatchToggle]==1}
-		DO: DoExpr {uboptset[`VTank.PatchExpressionEngine`, 0]}
 	IF: Expr {getpvar[DoNotClearOptionsAtEnd]==0}
 		DO: DoExpr {clearpvar[Options]}
 	IF: Always
@@ -3205,9 +3246,9 @@ STATE: {Quests} ~~ {
 		DO:	DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]}
 				Chat {/f Going to Spend Lum}
-				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[ReturnProfile,RynDQLQuestCheck]}
-				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[StateName,KeyCheck]}
-				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load RynDQLLumTokens}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setpvar[ReturnProfile,RynDQLQuestCheck]`}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setpvar[StateName,KeyCheck]`}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/vt meta load RynDQLLumTokens`}
 	IF: All
 			Expr {getcharquadprop[6]>=1010001}
 			Not All
@@ -3452,10 +3493,10 @@ STATE: {Quests} ~~ {
 		DO:	DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]}
 				Chat {/f Going to Spend Lum}
-				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[ReturnProfile,RynDQLQuestCheck]}
-				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[StateName,KeyCheck]}
-				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/ub mexec setpvar[Finished,1]}
-				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load RynDQLLumTokens}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setpvar[ReturnProfile,RynDQLQuestCheck]`}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setpvar[StateName,KeyCheck]`}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setpvar[Finished,1]`}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/vt meta load RynDQLLumTokens`}
 	IF: All
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ColoRecallKnown]==1}
 			Any

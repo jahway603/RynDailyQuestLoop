@@ -80,8 +80,9 @@ STATE: {LumAuraCheck} ~~ {
 				DoExpr {setgvar[LumAuraCheckList,listcreate[]]}
 				SetState {LumAuraCheck}
 	IF:	All
-			Expr {listcontains[getgvar[LumAuraCheckList],getcharstringprop[1]]==0}
+			Expr {testgvar[LumAuraCheckList]}
 			Expr {testpvar[LumAuraCheckList]}
+			Expr {listcontains[getgvar[LumAuraCheckList],getcharstringprop[1]]==0}
 		DO:	DoAll
 				DoExpr {listadd[getgvar[LumAuraCheckList],getcharstringprop[1]]}
 				SetState {LumAuraCheck}

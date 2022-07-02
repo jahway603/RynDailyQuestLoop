@@ -72,17 +72,19 @@ STATE: {Default}  ~~{
 		DO: DoAll
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirpFailGlobal,1]}
 				Chat {/ub delay 2000 /ub quit}
-	IF:	Any
-			Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1}
-			Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1}
-			Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameThree]]==1}
-			Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameThree]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFour]]==1}
-			Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameThree]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFour]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFive]]==1}
-			Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameThree]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFour]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFive]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameSix]]==1}
-			Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameThree]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFour]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFive]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameSix]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameSeven]]==1}
-			Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameThree]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFour]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFive]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameSix]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameEight]]==1}
-			Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameThree]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFour]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFive]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameSix]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameEight]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameNine]]==1}
-			Expr {getgvar[NetworkChirpFinished]==1}
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameThree]]==1}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameThree]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFour]]==1}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameThree]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFour]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFive]]==1}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameThree]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFour]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFive]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameSix]]==1}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameThree]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFour]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFive]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameSix]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameSeven]]==1}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameThree]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFour]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFive]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameSix]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameEight]]==1}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameTwo]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameThree]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFour]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameFive]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameSix]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameSeven]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameEight]]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[FellowNameNine]]==1}
+				Expr {getgvar[NetworkChirpFinished]==1}
 		DO: DoAll
 				DoExpr {setgvar[NetworkChirpFinished,1]}
 				SetState {Finished}
@@ -164,22 +166,25 @@ STATE: {Default}  ~~{
 				ChatExpr {\/t +getpvar[FellowNameNine]+`,!ByeBye`}
 				SetState {NetworkChirpDelayForRelog}
 	IF: All
+			Expr {getcharstringprop[1]==getpvar[LeaderName]}
+			All
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirpFailGlobal]}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirpFailGlobal]==1}
 			All
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]}
 				Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]]<getpvar[FellowCount]}
 			All
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]}
 				Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getpvar[LeaderName]]==0}
-			Expr {getvar[NetworkChirpFail]>=5}
-			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 		DO: DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirpFailGlobal]}
 				Chat {/ub delay 2000 /ub quit}
-				SetState {NetworkChirpDelayForRelog}
 	IF: All
-			SecsInStateGE 2
+			SecsInStateGE 6
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirpFailGlobal]==1}
+			All
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirpFailGlobal]}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirpFailGlobal]==1}
 		DO: SetState {NetworkChirpDelayForRelog}
 	IF: All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}

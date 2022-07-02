@@ -53,15 +53,16 @@ STATE: {ClearMobs} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF: Expr {getcharskill_traininglevel[33]==3}
 		DO: SetOpt {SummonPets} {True}
+	IF: Always
+		DO: DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	Any
 			All
 				Expr {getvar[Factory]==1}
@@ -74,10 +75,20 @@ STATE: {ClearMobs} ~~ {
 				Return
 	IF:	All
 			Expr {getvar[Factory]==0}
-			NoMobsInDist 15
+			Any
+				NoMobsInDist 30
+				SecsInStateGE 30
+				All
+					SecsInStateGE 3
+					NoMobsInDist 15
+				All
+					SecsInStateGE 15
+					NoMobsInDist 8
+				All
+					SecsInStateGE 10
+					NoMobsInDist 3
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
-				SetOpt {SummonPets} {False}
 				SetOpt {EnableNav} {True}
 				Return
 ~~ }
@@ -93,16 +104,18 @@ STATE: {SkipQuest} ~~{
 	IF: Always
 		DO: DoAll
 				DoExpr {setpvar[DoQuestBSI,0]}
+				DoExpr {clearpvar[Death+getpvar[Profile]]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
 	IF:	All
 			Expr {getpvar[DoQuestBSI]==0}
+			Expr {getpvar[Death+getpvar[Profile]]==0}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
 		DO:	DoAll
 				DoExpr {setpvar[Profile,RynDQLQuestCheck]}
 				DoExpr {setpvar[StateName,Default]}
 				Chat {/vt meta load RynDQLQuestCheck}
 ~~}
-STATE: {DeathRecall} ~~ {
+STATE: {ReGroupRecall} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -130,13 +143,13 @@ STATE: {DeathRecall} ~~ {
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestBSI]==1}
 		DO: SetState {SkipQuest}
-	IF: Expr {getpvar[Death+getpvar[Profile]]>5}
+	IF: Expr {getpvar[Death+getpvar[Profile]]>4}
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestBSI,1]}
 	IF:	BlockE 00070000
 		DO: SetState {ToTN}
 	IF:	Always
 		DO:	DoAll
-				DoExpr {setpvar[StateName,DeathRecall]}
+				DoExpr {setpvar[StateName,ReGroupRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {NavCloseStopRange} {0.00625}
@@ -147,7 +160,7 @@ STATE: {DeathRecall} ~~ {
 	IF:	Not BlockE 7DE80000
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[2645]} ~~ SpellId 2645 is "Portal Recall".
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF:	BlockE 7DE80000
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
@@ -162,13 +175,17 @@ STATE: {DeathRecall} ~~ {
 				SetOpt {EnableNav} {True}
 				SetState {ToDonovan}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				SecsInStateGE 60
+				ExitPortal
 			BlockE 7DE80000
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {clearvar[CombatStuck]}
 				SetOpt {EnableNav} {True}
 				DoExpr {setpvar[StateName,ToDonovan]}
+				DoExpr {ifthen[getpvar[Leader]==1,`setpvar[Death+getpvar[Profile],getpvar[Death+getpvar[Profile]]+1]&&setpvar[StateName,getpvar[StateName]]`,`setpvar[StateName,getpvar[StateName]]`]}
 				DoExpr {setpvar[CheckSync,Death]}
 				Chat {/vt meta load RynDQLCheck} ~~ Death
 ~~ }
@@ -530,26 +547,24 @@ STATE: {Factory} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	All
 			SecsInStateGE 2
 			Not NoMobsInDist 5
 		DO:	DoAll
 				SetOpt {EnableNav} {False}
 				DoExpr {setvar[Factory,1]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetOpt {LootOnlyRareCorpses} {True}
-				SetOpt {SummonPets} {True}
 				CallState {ClearMobs} {Factory}
 	IF:	Always
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetOpt {EnableNav} {True}
 	IF:	CellE 79E9033A
 		DO:	EmbedNav nav3 {BSIFactoryA.nav}
@@ -563,7 +578,7 @@ STATE: {Factory} ~~ {
 				CellE 79E90264
 		DO:	DoAll
 				SetOpt {EnableNav} {False}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {setpvar[StateName,Factory]}
@@ -727,13 +742,12 @@ STATE: {FrozenTomb} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Any
 			CellE 77E702E4
 			CellE 77E702E5
@@ -766,18 +780,19 @@ STATE: {Gregor} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Any
 			CellE 77E701CA
 			CellE 77E70221
 			CellE 77E70223
-		DO:	EmbedNav nav6 {[none]}
+		DO:	DoAll
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
+				EmbedNav nav6 {[none]}
 	IF:	All
 			NavEmpty
 			CellE 77E7017D
@@ -809,19 +824,16 @@ STATE: {KillStockpile} ~~ {
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestBSI]==1}
 		DO: SetState {SkipQuest}
 	IF:	Always
-		DO:	DoAll
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.08333333333]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
-				SetOpt {SummonPets} {True}
+		DO:	DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.08333333333]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 	IF: Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	All
 			Expr {testvar[StateTimer]}
 			Expr {stopwatchelapsedseconds[getvar[StateTimer]]>=1080}
@@ -833,8 +845,7 @@ STATE: {KillStockpile} ~~ {
 	IF:	Not NoMobsInDist 15
 		DO:	DoAll
 				SetOpt {EnableNav} {False}
-				SetOpt {EnableCombat} {True}
-				SetOpt {SummonPets} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				CallState {ClearMobs} {KillStockpile}
 	IF:	Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete]}
 		DO:	DoAll
@@ -848,7 +859,7 @@ STATE: {KillStockpile} ~~ {
 				Expr {getitemcountininventorybyname[Shattered Master Bloodstone Shard]==getpvar[MasterShard]}
 		DO:	DoAll
 				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestComplete],getcharstringprop[1]]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetState {KillStockpile}
 	IF:	All
 			Expr {getitemcountininventorybyname[Shattered Master Bloodstone Shard]==getpvar[MasterShard]}
@@ -876,7 +887,7 @@ STATE: {KillStockpile} ~~ {
 			Expr {getpvar[QuestCompletedSkip]==0}
 			NoMobsInDist 15
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setvar[CorpseName,Treasure of Master Bloodstone]]}
 				DoExpr {setvar[LootItem,Shattered Master Bloodstone Shard]}
@@ -900,13 +911,12 @@ STATE: {Lab} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	All
 			CellE 79E90393
 			Expr {getobjectinternaltype[wobjectfindnearestdoor[]]==7}
@@ -939,7 +949,7 @@ STATE: {Lab} ~~ {
 				Expr {getpvar[LargeTome]==1}
 		DO:	DoAll
 				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LargeTome],getcharstringprop[1]]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetState {Lab}
 	IF:	All
 			Expr {getpvar[LargeTome]==1}
@@ -967,7 +977,7 @@ STATE: {Lab} ~~ {
 	IF:	All
 			NavEmpty
 			CellE 79E9016B
-		DO:	DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindininventorybyname[Large Tome]]==1}
 			Expr {getobjectinternaltype[wobjectfindnearestbynameandobjectclass[27,Corpse of Lord Kastellar]]==7}
@@ -1002,8 +1012,7 @@ STATE: {Loot} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000 ~~ Lifestone Landblock
 		DO:	DoAll
@@ -1023,8 +1032,8 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootCloseCorpse]}
 				DoExpr {clearvar[LootCloseCorpseTwo]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				EmbedNav nav9 {[none]}
@@ -1080,9 +1089,12 @@ STATE: {Loot} ~~ {
 			Expr {getobjectinternaltype[getvar[LootItem]]==3&&getitemcountininventorybyname[getvar[LootItem]]==getvar[LootCount]&&getobjectinternaltype[wobjectgetopencontainer[]]==7}
 		DO:	DoAll
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]] && listcount[$CorpseDetect] > 0 && (actiontryuseitem[$CorpseDetect{{0}}] || 1)}
-	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]>listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]+4}
 		DO:	DoAll
-				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`/ /ub mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`}
 				DoExpr {setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobjectgetname[$1]#getvar[CorpseName]&&coordinatedistancewithz[getplayercoordinates[],wobjectgetphysicscoordinates[$1]]<getvar[LootRange]`]]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]}
 	IF:	Expr {getvar[SourceNotFound]>9}
@@ -1168,10 +1180,12 @@ STATE: {Loot} ~~ {
 				DoExpr {clearvar[LootStuckDelay]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				SetState {LootStuckDelay}
-	IF: All
-			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==getpvar[FellowCount]}
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]}
+			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]]}
 			SecsInStateGE 30
-		DO: DoAll
+		DO:	DoAll
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]}
 				SetState {Loot}
 ~~ }
@@ -1248,13 +1262,12 @@ STATE: {LPDoor} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	ChatMatch {The Door has been unlocked.}
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestdoor[]]}
 	IF:	All
@@ -1394,13 +1407,12 @@ STATE: {PickUpNote} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Carefully rolled scroll`]]==1}
 		DO:	DoExpr {actiontryuseitem[wobjectfindnearestbynameandobjectclass[34,Carefully rolled scroll]]]}
 	IF:	Any
@@ -1423,7 +1435,7 @@ STATE: {PickUpNote} ~~ {
 				Expr {getpvar[Scroll]==1}
 		DO:	DoAll
 				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+Scroll],getcharstringprop[1]]}
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				SetState {PickUpNote}
 	IF:	All
 			Expr {getpvar[Scroll]==1}
@@ -1544,13 +1556,12 @@ STATE: {StockpileJump} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	SetOpt {EnableCombat} {False}
 	IF:	Expr {coordinategetz[getplayercoordinates[]]>=0.388099161783854}
@@ -1563,7 +1574,7 @@ STATE: {StockpileJump} ~~ {
 				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
 				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}
 	IF:	All
-			Expr {$dir>0}
+			Expr {testvar[dir]}
 			SecsInStateGE 4
 		DO:	DoAll
 				ChatExpr {`/ub jumpsw `+cstrf[$dir,`G0`]+` `+cstrf[$pwr,`G0`]}
@@ -1577,7 +1588,7 @@ STATE: {StockpileJump} ~~ {
 			NavEmpty
 			CellE 79E90125
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {setpvar[StateName,KillStockpile]}
 				DoExpr {setpvar[CheckSync,KillStockpile]}
@@ -1682,7 +1693,7 @@ STATE: {ToDonovan} ~~ {
 		DO:	EmbedNav nav14 {[none]}
 	IF:	BlockE 7DE80000
 		DO:	DoAll
-				DoExpr {setpvar[Stuck,DeathRecall]}
+				DoExpr {setpvar[Stuck,ReGroupRecall]}
 				EmbedNav nav15 {Junkdelete.nav}
 	IF:	All
 			Expr {getpvar[KTFlag]==0}
@@ -1767,7 +1778,7 @@ STATE: {ToFactory} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Step,2]}
 				DoExpr {setpvar[Death,1]}
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {ToFrozenTomb} ~~ {
 	IF:	All
@@ -1785,13 +1796,12 @@ STATE: {ToFrozenTomb} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	Always
@@ -1830,13 +1840,12 @@ STATE: {ToIceCave} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	SetWatchdog 5 90 {Watchdog}
 	IF:	Any
@@ -1870,13 +1879,12 @@ STATE: {ToLab} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoExpr {setpvar[StateName,vtgetmetastate[]]}
 	IF:	CellE 77E7017D
@@ -1918,18 +1926,17 @@ STATE: {ToLockedDoor} ~~ {
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 			Any
 				BlockE C8E90000
 		DO:	DoAll
-				Chat {/f !ManDown}
-				SetState {DeathRecall}
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	SetWatchdog 5 180 {Watchdog}
 	IF:	Always
 		DO:	DoAll
-				SetOpt {EnableCombat} {True}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 	IF:	All
 			Any
@@ -2070,7 +2077,7 @@ STATE: {ToTN} ~~ {
 		DO:	DoExpr {clearpvar[Town]}
 	IF:	BlockE F6820000
 		DO:	DoAll
-				DoExpr {setvar[Recall,1}
+				DoExpr {setvar[Recall,1]}
 				EmbedNav nav24 {[none]}
 	IF:	All
 			Expr {getvar[Recall]==0}
@@ -2225,18 +2232,17 @@ STATE: {Watchdog} ~~ {
 		DO: SetState {SkipQuest}
 	IF:	Always
 		DO:	DoAll
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				DoExpr {clearvar[StateTimer]}
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
-			ChatMatch {!ManDown}
-			ChatMatch {^.*().* (think|say|says|tells you), \"!ManDown\"$}
+			ChatCapture {!ReGroup} {19}
 		DO:	DoAll
-				Chat {/f !ManDown}
+				Chat {/f !ReGroup}
 				DoExpr {clearvar[StateTimer]}
-				SetState {DeathRecall}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {Zstuck} ~~ {
 	IF:	Always

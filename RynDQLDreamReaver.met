@@ -132,20 +132,7 @@ K
 V
 n
 n
-3
-i
-7
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-setpvar[DoQuestDR,0]
+4
 i
 7
 TABLE
@@ -171,6 +158,32 @@ n
 s
 e
 s
+setpvar[DoQuestDR,0]
+i
+7
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+clearpvar[Death+getpvar[Profile]]
+i
+7
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
 setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]
 s
 SkipQuest
@@ -184,7 +197,7 @@ K
 V
 n
 n
-3
+4
 i
 26
 TABLE
@@ -211,6 +224,19 @@ s
 e
 s
 getpvar[DoQuestDR]==0
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+getpvar[Death+getpvar[Profile]]==0
 i
 26
 TABLE
@@ -329,7 +355,7 @@ e
 s
 clearvar[capturegroup_tellquest]
 s
-DeathRecall
+ReGroupRecall
 i
 21
 i
@@ -370,7 +396,7 @@ x
 ba
 436
 <?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDR,1]" /></control></view>s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -389,7 +415,7 @@ getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1
 s
 Zstuck
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -408,7 +434,7 @@ getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDR]==1
 s
 SkipQuest
 s
-DeathRecall
+ReGroupRecall
 i
 21
 i
@@ -445,7 +471,7 @@ e
 s
 stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]
 s
-DeathRecall
+ReGroupRecall
 i
 2
 i
@@ -521,7 +547,7 @@ getequippedweapontype[]==Wand&&getcombatstate[]==Melee
 s
 /ub quit
 s
-DeathRecall
+ReGroupRecall
 i
 19
 i
@@ -540,7 +566,7 @@ e
 s
 clearvar[CombatStuck]
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -559,7 +585,7 @@ getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDR]==1
 s
 SkipQuest
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -574,7 +600,7 @@ n
 s
 e
 s
-getpvar[Death+getpvar[Profile]]>5
+getpvar[Death+getpvar[Profile]]>4
 TABLE
 2
 k
@@ -587,7 +613,7 @@ e
 s
 setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDR,1]
 s
-DeathRecall
+ReGroupRecall
 i
 17
 i
@@ -597,7 +623,7 @@ i
 s
 ToTN
 s
-DeathRecall
+ReGroupRecall
 i
 1
 i
@@ -623,7 +649,7 @@ n
 s
 e
 s
-setpvar[StateName,DeathRecall]
+setpvar[StateName,ReGroupRecall]
 i
 7
 TABLE
@@ -711,7 +737,7 @@ uTank2 NAV 1.2
 1
 0
 s
-DeathRecall
+ReGroupRecall
 i
 21
 i
@@ -750,9 +776,9 @@ actiontrycastbyid[2645]
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
-DeathRecall
+ReGroupRecall
 i
 17
 i
@@ -834,7 +860,7 @@ uTank2 NAV 1.2
 0.055431342124939
 0
 s
-DeathRecall
+ReGroupRecall
 i
 2
 i
@@ -847,7 +873,24 @@ n
 n
 2
 i
+3
+TABLE
+2
+K
+V
+n
+n
+3
+i
 7
+i
+0
+i
+6
+i
+60
+i
+20
 i
 0
 i
@@ -860,7 +903,7 @@ K
 V
 n
 n
-5
+6
 i
 7
 TABLE
@@ -916,13 +959,26 @@ n
 s
 e
 s
+ifthen[getpvar[Leader]==1,`setpvar[Death+getpvar[Profile],getpvar[Death+getpvar[Profile]]+1]&&setpvar[StateName,getpvar[StateName]]`,`setpvar[StateName,getpvar[StateName]]`]
+i
+7
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
 setpvar[CheckSync,Death]
 i
 2
 s
 /vt meta load RynDQLCheck
 s
-DeathRecall
+ReGroupRecall
 i
 1
 i
@@ -967,7 +1023,7 @@ v
 s
 False
 s
-DeathRecall
+ReGroupRecall
 i
 4
 i
@@ -986,7 +1042,7 @@ e
 s
 setpvar[Step,0]
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -1014,7 +1070,7 @@ e
 s
 setgvar[getworldname[]+getpvar[GroupIdentifier]+Keys,1]
 s
-DeathRecall
+ReGroupRecall
 i
 26
 i
@@ -1042,7 +1098,7 @@ e
 s
 setgvar[getworldname[]+getpvar[GroupIdentifier]+Keys,0]
 s
-DeathRecall
+ReGroupRecall
 i
 2
 i
@@ -1369,7 +1425,7 @@ K
 V
 n
 n
-15
+14
 i
 2
 s
@@ -1463,23 +1519,6 @@ s
 v
 s
 False
-i
-12
-TABLE
-2
-k
-v
-n
-n
-2
-s
-o
-s
-SummonPets
-s
-v
-s
-True
 i
 7
 TABLE
@@ -2948,7 +2987,7 @@ K
 V
 n
 n
-5
+4
 i
 8
 i
@@ -2958,13 +2997,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 3
 TABLE
@@ -3204,11 +3252,11 @@ setgvar[getworldname[]+getpvar[GroupIdentifier]+Looting,0]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 Loot
 i
@@ -3848,9 +3896,44 @@ setvar[CorpseDetect,listfilter[wobjectfindalllandscapebyobjectclass[27],`wobject
 s
 Loot
 i
-26
+2
 i
 3
+TABLE
+2
+K
+V
+n
+n
+3
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+testgvar[getworldname[]+getpvar[GroupIdentifier]+LootFail]
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]
+i
+26
 TABLE
 2
 k
@@ -3881,7 +3964,7 @@ n
 s
 e
 s
-\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`  mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+`/ /ub mexec actiontryuseitem[wobjectfindnearestbyobjectclass[27]]`
 i
 7
 TABLE
@@ -4892,7 +4975,7 @@ K
 V
 n
 n
-2
+4
 i
 26
 TABLE
@@ -4905,7 +4988,33 @@ n
 s
 e
 s
-listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==getpvar[FellowCount]
+testgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+testgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+FailDelayCounter]]==listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+LootingCounter]]
 i
 6
 i
@@ -5759,7 +5868,7 @@ K
 V
 n
 n
-6
+5
 i
 8
 i
@@ -5769,13 +5878,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 2
 TABLE
@@ -5834,11 +5952,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 MaskBottom
 i
@@ -6438,7 +6556,7 @@ K
 V
 n
 n
-6
+5
 i
 8
 i
@@ -6448,13 +6566,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 2
 TABLE
@@ -6513,11 +6640,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 MaskDoor
 i
@@ -6801,7 +6928,7 @@ K
 V
 n
 n
-7
+6
 i
 6
 i
@@ -6815,13 +6942,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 2
 TABLE
@@ -6880,11 +7016,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 MaskDoorOne
 i
@@ -7331,7 +7467,7 @@ K
 V
 n
 n
-7
+6
 i
 6
 i
@@ -7345,13 +7481,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 2
 TABLE
@@ -7410,11 +7555,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 MaskDoorTwo
 i
@@ -7895,7 +8040,7 @@ K
 V
 n
 n
-6
+5
 i
 8
 i
@@ -7905,13 +8050,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 2
 TABLE
@@ -7970,11 +8124,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 Masked
 i
@@ -8017,7 +8171,7 @@ Masked
 i
 1
 i
-12
+7
 i
 0
 TABLE
@@ -8026,15 +8180,11 @@ k
 v
 n
 n
-2
+1
 s
-o
+e
 s
-EnableCombat
-s
-v
-s
-True
+ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]
 s
 Masked
 i
@@ -8763,7 +8913,7 @@ K
 V
 n
 n
-6
+5
 i
 8
 i
@@ -8773,13 +8923,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 2
 TABLE
@@ -8838,11 +8997,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 MaskKeyOne
 i
@@ -9726,7 +9885,7 @@ K
 V
 n
 n
-6
+5
 i
 8
 i
@@ -9736,13 +9895,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 2
 TABLE
@@ -9801,11 +9969,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 MaskKeyTwo
 i
@@ -10991,7 +11159,7 @@ K
 V
 n
 n
-6
+5
 i
 8
 i
@@ -11001,13 +11169,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 2
 TABLE
@@ -11066,11 +11243,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 NearestPortal
 i
@@ -12595,7 +12772,7 @@ n
 s
 e
 s
-setpvar[Stuck, DeathRecall]
+setpvar[Stuck, ReGroupRecall]
 i
 4
 ba
@@ -13203,7 +13380,7 @@ K
 V
 n
 n
-6
+5
 i
 8
 i
@@ -13213,13 +13390,22 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-!ManDown
-i
-4
+p
 s
-^.*().* (think|say|says|tells you), \"!ManDown\"$
+!ReGroup
+s
+c
+s
+19
 i
 2
 TABLE
@@ -13278,11 +13464,11 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
-DeathRecall
+ReGroupRecall
 s
 ToSent
 i
@@ -13398,9 +13584,31 @@ ToSent
 i
 18
 i
-7
+3
 i
 1483473368
+TABLE
+2
+K
+V
+n
+n
+2
+i
+7
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]
+i
+7
 TABLE
 2
 k

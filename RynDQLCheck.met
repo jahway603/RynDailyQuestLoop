@@ -11,7 +11,7 @@ n
 n
 n
 n
-113
+116
 i
 21
 i
@@ -164,6 +164,28 @@ e
 s
 getcharstringprop[1]==getpvar[LeaderName]
 i
+2
+TABLE
+2
+K
+V
+n
+n
+2
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]
+i
 26
 TABLE
 2
@@ -176,6 +198,28 @@ s
 e
 s
 listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]]==0
+i
+2
+TABLE
+2
+K
+V
+n
+n
+2
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[CheckSync]]
 i
 26
 TABLE
@@ -266,6 +310,28 @@ e
 s
 getcharstringprop[1]!=getpvar[LeaderName]
 i
+2
+TABLE
+2
+K
+V
+n
+n
+2
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]
+i
 26
 TABLE
 2
@@ -278,6 +344,28 @@ s
 e
 s
 listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]]==0
+i
+2
+TABLE
+2
+K
+V
+n
+n
+2
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[CheckSync]]
 i
 26
 TABLE
@@ -1082,7 +1170,7 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
@@ -1109,13 +1197,39 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!Stuck\"$
+p
+s
+!ReGroup
+s
+c
+s
+19
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!ManDown\"$
+p
+s
+!Stuck
+s
+c
+s
+19
 TABLE
 2
 K
@@ -1139,7 +1253,7 @@ setvar[stuck, 1]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
@@ -1425,6 +1539,25 @@ ba
 uTank2 NAV 1.2
 1
 0
+s
+Default
+i
+26
+i
+1
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+getfellowshipcount[]<getpvar[FellowCount]
+s
+Fellow
 s
 Default
 i
@@ -2070,13 +2203,39 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!Stuck\"$
+p
+s
+!ReGroup
+s
+c
+s
+19
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!ManDown\"$
+p
+s
+!Stuck
+s
+c
+s
+19
 TABLE
 2
 K
@@ -2113,7 +2272,7 @@ setvar[stuck, 1]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
@@ -2164,7 +2323,7 @@ s
 i
 4
 s
-!ManDown
+!ReGroup
 TABLE
 2
 K
@@ -2175,7 +2334,7 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 s
 ConfirmProfile
 i
@@ -3631,7 +3790,7 @@ n
 s
 e
 s
-getpvar[Profile]==RynDQLUuseBot
+getpvar[Profile]==RynDQLUseBot
 TABLE
 2
 K
@@ -3655,7 +3814,7 @@ clearvar[ConfirmProfileFail]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 s
 ConfirmProfile
 i
@@ -4358,13 +4517,39 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!Stuck\"$
+p
+s
+!ReGroup
+s
+c
+s
+19
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!ManDown\"$
+p
+s
+!Stuck
+s
+c
+s
+19
 TABLE
 2
 K
@@ -4401,7 +4586,7 @@ setvar[stuck, 1]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
@@ -4603,18 +4788,9 @@ Fellow
 i
 1
 i
-3
+7
 i
 0
-TABLE
-2
-K
-V
-n
-n
-3
-i
-7
 TABLE
 2
 k
@@ -4626,6 +4802,10 @@ s
 e
 s
 setgvar[getworldname[]+getpvar[GroupIdentifier]+Checking,1]
+s
+Fellow
+i
+26
 i
 7
 TABLE
@@ -4638,9 +4818,7 @@ n
 s
 e
 s
-listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear],getcharstringprop[1]]
-i
-7
+testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]
 TABLE
 2
 k
@@ -4652,6 +4830,34 @@ s
 e
 s
 cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]
+s
+Fellow
+i
+26
+i
+7
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear],getcharstringprop[1]]
 s
 Fellow
 i
@@ -4944,7 +5150,7 @@ n
 n
 8
 i
-8
+7
 TABLE
 2
 k
@@ -4955,9 +5161,9 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameTwo]
+ifthen[getpvar[FellowCount]>=2,`chatbox[\\/ub fellow recruit +getpvar[FellowNameTwo]]`,`Null`]
 i
-8
+7
 TABLE
 2
 k
@@ -4968,9 +5174,9 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameThree]
+ifthen[getpvar[FellowCount]>=3,`chatbox[\\/ub fellow recruit +getpvar[FellowNameThree]]`,`Null`]
 i
-8
+7
 TABLE
 2
 k
@@ -4981,9 +5187,9 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameFour]
+ifthen[getpvar[FellowCount]>=4,`chatbox[\\/ub fellow recruit +getpvar[FellowNameFour]]`,`Null`]
 i
-8
+7
 TABLE
 2
 k
@@ -4994,9 +5200,9 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameFive]
+ifthen[getpvar[FellowCount]>=5,`chatbox[\\/ub fellow recruit +getpvar[FellowNameFive]]`,`Null`]
 i
-8
+7
 TABLE
 2
 k
@@ -5007,9 +5213,9 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameSix]
+ifthen[getpvar[FellowCount]>=6,`chatbox[\\/ub fellow recruit +getpvar[FellowNameSix]]`,`Null`]
 i
-8
+7
 TABLE
 2
 k
@@ -5020,9 +5226,9 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameSeven]
+ifthen[getpvar[FellowCount]>=7,`chatbox[\\/ub fellow recruit +getpvar[FellowNameSeven]]`,`Null`]
 i
-8
+7
 TABLE
 2
 k
@@ -5033,9 +5239,9 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameEight]
+ifthen[getpvar[FellowCount]>=8,`chatbox[\\/ub fellow recruit +getpvar[FellowNameEight]]`,`Null`]
 i
-8
+7
 TABLE
 2
 k
@@ -5046,7 +5252,7 @@ n
 s
 e
 s
-\/ub fellow recruit +getpvar[FellowNameNine]
+ifthen[getpvar[FellowCount]>=9,`chatbox[\\/ub fellow recruit +getpvar[FellowNameNine]]`,`Null`]
 s
 Fellow
 i
@@ -5253,13 +5459,39 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!Stuck\"$
+p
+s
+!ReGroup
+s
+c
+s
+19
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!ManDown\"$
+p
+s
+!Stuck
+s
+c
+s
+19
 TABLE
 2
 K
@@ -5309,7 +5541,7 @@ setvar[stuck, 1]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
@@ -6227,13 +6459,39 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!Stuck\"$
+p
+s
+!ReGroup
+s
+c
+s
+19
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!ManDown\"$
+p
+s
+!Stuck
+s
+c
+s
+19
 TABLE
 2
 K
@@ -6257,7 +6515,7 @@ setvar[stuck, 1]
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
@@ -6403,7 +6661,7 @@ K
 V
 n
 n
-13
+12
 i
 7
 TABLE
@@ -6547,19 +6805,6 @@ s
 e
 s
 clearvar[FailFellow]
-i
-7
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear],getcharstringprop[1]]
 i
 7
 TABLE
@@ -6915,13 +7160,39 @@ i
 s
 ^Your fellow .* has died!$
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!Stuck\"$
+p
+s
+!ReGroup
+s
+c
+s
+19
 i
-4
+28
+TABLE
+2
+k
+v
+n
+n
+2
 s
-^\[Fellowship\] (|).* (say|says), \"!ManDown\"$
+p
+s
+!Stuck
+s
+c
+s
+19
 TABLE
 2
 K
@@ -6932,7 +7203,7 @@ n
 i
 2
 s
-/f !ManDown
+/f !ReGroup
 i
 1
 s
