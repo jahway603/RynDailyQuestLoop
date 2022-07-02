@@ -495,7 +495,7 @@ K
 V
 n
 n
-2
+3
 i
 26
 TABLE
@@ -508,7 +508,7 @@ n
 s
 e
 s
-listcontains[getgvar[LumAuraCheckList],getcharstringprop[1]]==0
+testgvar[LumAuraCheckList]
 i
 26
 TABLE
@@ -522,6 +522,19 @@ s
 e
 s
 testpvar[LumAuraCheckList]
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+listcontains[getgvar[LumAuraCheckList],getcharstringprop[1]]==0
 TABLE
 2
 K
