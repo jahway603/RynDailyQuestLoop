@@ -27644,7 +27644,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestUnleashTheGearknightDaily]==0
 TABLE
 2
 k
@@ -27672,7 +27672,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestProdigalBanderlingDaily]==0
 TABLE
 2
 k
@@ -27700,7 +27700,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestProdigalTuskerDaily]==0
 TABLE
 2
 k
@@ -27728,7 +27728,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestNexusDaily]==0
 TABLE
 2
 k
@@ -27756,7 +27756,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestPurgeDaily]==0
 TABLE
 2
 k
@@ -27784,7 +27784,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestRynthidWeaponDaily]==0
 TABLE
 2
 k
@@ -27812,7 +27812,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestMoufDaily]==0
 TABLE
 2
 k
@@ -27840,7 +27840,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestLugianAssaultDaily]==0
 TABLE
 2
 k
@@ -27868,7 +27868,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestLUDaily]==0
 TABLE
 2
 k
@@ -27896,7 +27896,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestIQSQDaily]==0
 TABLE
 2
 k
@@ -27924,7 +27924,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestHaltDericostDaily]==0
 TABLE
 2
 k
@@ -27952,7 +27952,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestFalatacotDepotDaily]==0
 TABLE
 2
 k
@@ -27980,7 +27980,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestEODDaily]==0
 TABLE
 2
 k
@@ -28008,7 +28008,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestCPDaily]==0
 TABLE
 2
 k
@@ -28036,7 +28036,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestDRDaily]==0
 TABLE
 2
 k
@@ -28064,7 +28064,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoDRDaily]==0
 TABLE
 2
 k
@@ -28092,7 +28092,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestBSIDaily]==0
 TABLE
 2
 k
@@ -28120,7 +28120,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestAFDaily]==0
 TABLE
 2
 k
@@ -28148,7 +28148,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestVRDaily]==0
 TABLE
 2
 k
@@ -28176,7 +28176,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestLostLoreDaily]==0
 TABLE
 2
 k
@@ -28204,7 +28204,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestSaveKarulDaily]==0
 TABLE
 2
 k
@@ -28232,7 +28232,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestHermitDaily]==0
 TABLE
 2
 k
@@ -28260,7 +28260,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestReleasingTheLightDaily]==0
 TABLE
 2
 k
@@ -28288,7 +28288,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestGXDaily]==0
 TABLE
 2
 k
@@ -28316,7 +28316,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestSBGDaily]==0
 TABLE
 2
 k
@@ -28344,7 +28344,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestDeeDaily]==0
 TABLE
 2
 k
@@ -28372,7 +28372,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestGraelDaily]==0
 TABLE
 2
 k
@@ -28400,7 +28400,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==0
+getpvar[DoQuestGeraineStudyDaily]==0
 TABLE
 2
 k
@@ -28428,7 +28428,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestUnleashTheGearknightDaily]==1
 TABLE
 2
 k
@@ -28456,7 +28456,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestProdigalBanderlingDaily]==1
 TABLE
 2
 k
@@ -28484,7 +28484,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestProdigalTuskerDaily]==1
 TABLE
 2
 k
@@ -28512,7 +28512,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestNexusDaily]==1
 TABLE
 2
 k
@@ -28540,7 +28540,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestPurgeDaily]==1
 TABLE
 2
 k
@@ -28568,7 +28568,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestRynthidWeaponDaily]==1
 TABLE
 2
 k
@@ -28596,7 +28596,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestMoufDaily]==1
 TABLE
 2
 k
@@ -28624,7 +28624,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestLugianAssaultDaily]==1
 TABLE
 2
 k
@@ -28652,7 +28652,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestLUDaily]==1
 TABLE
 2
 k
@@ -28680,7 +28680,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestIQSQDaily]==1
 TABLE
 2
 k
@@ -28708,7 +28708,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestHaltDericostDaily]==1
 TABLE
 2
 k
@@ -28736,7 +28736,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestFalatacotDepotDaily]==1
 TABLE
 2
 k
@@ -28764,7 +28764,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestEODDaily]==1
 TABLE
 2
 k
@@ -28792,7 +28792,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestCPDaily]==1
 TABLE
 2
 k
@@ -28820,7 +28820,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestDRDaily]==1
 TABLE
 2
 k
@@ -28848,7 +28848,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoDRDaily]==1
 TABLE
 2
 k
@@ -28876,7 +28876,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestBSIDaily]==1
 TABLE
 2
 k
@@ -28904,7 +28904,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestAFDaily]==1
 TABLE
 2
 k
@@ -28932,7 +28932,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestVRDaily]==1
 TABLE
 2
 k
@@ -28960,7 +28960,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestLostLoreDaily]==1
 TABLE
 2
 k
@@ -28988,7 +28988,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestSaveKarulDaily]==1
 TABLE
 2
 k
@@ -29016,7 +29016,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestHermitDaily]==1
 TABLE
 2
 k
@@ -29044,7 +29044,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestReleasingTheLightDaily]==1
 TABLE
 2
 k
@@ -29072,7 +29072,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestGXDaily]==1
 TABLE
 2
 k
@@ -29100,7 +29100,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestSBGDaily]==1
 TABLE
 2
 k
@@ -29128,7 +29128,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestDeeDaily]==1
 TABLE
 2
 k
@@ -29156,7 +29156,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestGraelDaily]==1
 TABLE
 2
 k
@@ -29184,7 +29184,7 @@ n
 s
 e
 s
-getpvar[DoQuestUnleashTheGearknight]==1
+getpvar[DoQuestGeraineStudyDaily]==1
 TABLE
 2
 k

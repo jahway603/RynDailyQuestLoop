@@ -7917,7 +7917,7 @@ K
 V
 n
 n
-6
+7
 i
 4
 s
@@ -7942,6 +7942,10 @@ i
 4
 s
 ^Royal Guard tells you, "Come back tomorrow and we will plan another assault on the Shadows."$
+i
+4
+s
+^Royal Guard tells you, "You do not meet the requirements to do this task."$
 TABLE
 2
 k
