@@ -1047,13 +1047,15 @@ STATE: {PortalRecall} ~~ {
 				DoExpr {setpvar[StateName,ToPlateau]}
 				SetState {ToPlateau}
 	IF:	All
-			Expr {getpvar[RouteToggleUGK]==SummonPortal}
+			Any
+				Expr {getpvar[RouteToggleUGK]==`SummonPortal`}
+				Expr {getpvar[RouteToggleUGK]==`UseBot`}
 			Not CellE 3FB10024
 		DO:	DoAll
 				DoExpr {actiontrycastbyid[2645]} ~~ SpellId 2645 is "Portal Recall".
 				SetState {PortalRecall}
 	IF:	All
-			Expr {getpvar[RouteToggleUGK]==Run}
+			Expr {getpvar[RouteToggleUGK]==`Run`}
 			Any
 				Not BlockE 40B10000
 				Not BlockE 42AE0000
