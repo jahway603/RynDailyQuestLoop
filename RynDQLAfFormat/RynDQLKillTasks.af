@@ -711,6 +711,7 @@ STATE: {KilltaskTouTou} ~~ {
 				ChatMatch {^Royal Guard tells you, "Destroy 4 of these Shadowy Pillars and I will reward you for your efforts."$}
 				ChatMatch {^Royal Guard tells you, "Once you've destroyed 4 Shadowy Pillars, I will reward you."$}
 				ChatMatch {^Royal Guard tells you, "Come back tomorrow and we will plan another assault on the Shadows."$}
+				ChatMatch {^Royal Guard tells you, "You do not meet the requirements to do this task."$}
 		DO:	CallState {ReactNPC} {KilltaskTouTou}
 	IF:	All
 			Expr {getvar[NPC]==4}
