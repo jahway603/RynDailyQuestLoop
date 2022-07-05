@@ -1767,7 +1767,6 @@ STATE: {TurnIn} ~~ {
 			Expr {getpvar[ApostateFinaleTurnIn]==1}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn]}
 			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getcharstringprop[1]]}
-			Expr {getobjectinternaltype[wobjectfindininventorybyname[Sparkling Apostate Shard]]==7}
 		DO:	DoAll
 				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getcharstringprop[1]]}
 				SetState {TurnIn}
