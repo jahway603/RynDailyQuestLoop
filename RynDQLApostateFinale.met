@@ -21269,7 +21269,7 @@ K
 V
 n
 n
-4
+3
 i
 26
 TABLE
@@ -21318,19 +21318,6 @@ s
 e
 s
 listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+ApostateFinaleTurnIn],getcharstringprop[1]]
-i
-26
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-getobjectinternaltype[wobjectfindininventorybyname[Sparkling Apostate Shard]]==7
 TABLE
 2
 K
