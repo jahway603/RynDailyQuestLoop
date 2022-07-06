@@ -266,10 +266,10 @@ STATE: {Depot} ~~ {
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				DoExpr {setvar[Combat,1]}
-				EmbedNav nav2 {Junk.nav}
+				EmbedNav nav2 {junk.nav}
 	IF:	All
 			Expr {getvar[PitStop]==2}
-			CellE 585E0189
+			CellE 585E018E
 			Any
 				NavEmpty
 				Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[47190]]==1}
@@ -1377,10 +1377,7 @@ NAV: nav1 once ~~ {
 	pnt -30.328773244222 -27.1662946383158 2.08333134651184E-05
 ~~ }
 NAV: nav2 once ~~ {
-	pnt -29.8344577789307 -27.2086198488871 2.08333134651184E-05
-	pnt -29.9109026590983 -27.227943166097 2.08333134651184E-05
-	pnt -30.3280604044596 -27.1662396748861 2.08333134651184E-05
-	pnt -30.3127208709717 -27.1671635945638 2.08333134651184E-05
+	pnt -30.3215344746908 -27.166365814209 2.08333134651184E-05
 	chk -30.3127208709717 -27.1671635945638 2.08333134651184E-05
 	pnt -30.2585385640462 -27.1661513010661 2.08333134651184E-05
 	pnt -30.2607758839925 -27.081657854716 2.08333134651184E-05
@@ -1433,6 +1430,9 @@ NAV: nav2 once ~~ {
 	pnt -29.8305199940999 -27.2090887705485 2.08333134651184E-05
 	chk -29.8305199940999 -27.2090887705485 2.08333134651184E-05
 	pnt -29.9133668263753 -27.2488574981689 2.08333134651184E-05
+	pnt -29.9201321919759 -27.2393032709758 2.08333134651184E-05
+	pnt -29.9058134714762 -27.2241943359375 2.08333134651184E-05
+	pnt -29.8368927001953 -27.2081113497416 2.08333134651184E-05
 ~~ }
 NAV: nav3 once ~~ {
 ~~ }

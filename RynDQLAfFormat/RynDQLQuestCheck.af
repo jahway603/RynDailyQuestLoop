@@ -2910,7 +2910,7 @@ STATE: {DefaultTwo} ~~ {
 		DO:	DoAll
 				DoExpr {setpvar[Profile,RynDQLQuestCheck]}
 				DoExpr {setpvar[StateName,DefaultTwo]}
-				Chat {/f You need more Tapers}
+				ChatExpr {\/f +getcharstringprop[1]+\ needs more Tapers}
 	IF:	All
 			SecsInStateGE 2
 			ItemCountGE 251 {Prismatic Taper}
@@ -2921,6 +2921,11 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {setpvar[CheckSync,QuestsDefaultTwo]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]}
 				Chat {/vt meta load RynDQLCheck} ~~ QuestsDefaultTwo
+	IF:	All
+			SecsInStateGE 28
+			Expr {getfellowshipcount[]==getpvar[FellowCount]}
+			ItemCountLE 250 {Prismatic Taper}
+		DO: SetState {DefaultTwo}
 ~~ }
 STATE: {Finished} ~~ {
 	IF:	Not Expr {uiviewexists[STUCK]}
