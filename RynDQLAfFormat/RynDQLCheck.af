@@ -57,7 +57,9 @@ STATE: {ClearListsCheck} ~~ {
 				Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[CheckSync]]]==0}
 		DO:	DoAll
 				DoExpr {ifthen[vtgetsetting[EnableCombat]==1,`setvar[Combat,On]`,`setvar[Combat,Off]`]}
+				DoExpr {ifthen[vtgetsetting[EnableBuffing]==1,`setvar[EnableBuffing,On]`,`setvar[EnableBuffing,Off]`]}
 				DoExpr {vtsetsetting[EnableCombat,cstr[0]]}
+				DoExpr {vtsetsetting[EnableBuffing,cstr[0]]}
 				DoExpr {clearvar[DefaultPassStuck]}
 				SetState {C}
 	IF:	All
@@ -70,7 +72,9 @@ STATE: {ClearListsCheck} ~~ {
 				Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[CheckSync]]]==0}
 		DO:	DoAll
 				DoExpr {ifthen[vtgetsetting[EnableCombat]==1,`setvar[Combat,On]`,`setvar[Combat,Off]`]}
+				DoExpr {ifthen[vtgetsetting[EnableBuffing]==1,`setvar[EnableBuffing,On]`,`setvar[EnableBuffing,Off]`]}
 				DoExpr {vtsetsetting[EnableCombat,cstr[0]]}
+				DoExpr {vtsetsetting[EnableBuffing,cstr[0]]}
 				DoExpr {clearvar[DefaultPassStuck]}
 				SetState {W}
 	IF: Any
@@ -571,7 +575,6 @@ STATE: {GoNow} ~~ {
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]}
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Checking]}
 		DO:	DoAll
-				SetOpt {EnableBuffing} {True}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]+Finished]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[CheckSync]+ListSet]}
@@ -580,6 +583,7 @@ STATE: {GoNow} ~~ {
 				DoExpr {clearvar[check]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]}
 				DoExpr {ifthen[getvar[Combat]==On,`vtsetsetting[EnableCombat,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[0]]`]}
+				DoExpr {ifthen[getvar[EnableBuffing]==On,`vtsetsetting[EnableBuffing,cstr[1]]`,`vtsetsetting[EnableBuffing,cstr[0]]`]}
 				ChatExpr {\/vt meta load +getpvar[Profile]}
 				ChatExpr {\/vt setmetastate +getpvar[StateName]}
 	IF: All
