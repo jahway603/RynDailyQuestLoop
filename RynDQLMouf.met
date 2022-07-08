@@ -14844,18 +14844,9 @@ SkipQuest
 s
 UberCheck
 i
-3
+26
 i
 1
-TABLE
-2
-K
-V
-n
-n
-2
-i
-26
 TABLE
 2
 k
@@ -14867,19 +14858,6 @@ s
 e
 s
 getpvar[MoufDone]==1
-i
-26
-TABLE
-2
-k
-v
-n
-n
-1
-s
-e
-s
-getobjectinternaltype[wobjectfindininventorybynamerx[`Letter from Mouf`]]==7
 s
 UberTurnin
 s
@@ -14898,7 +14876,7 @@ n
 s
 e
 s
-getobjectinternaltype[wobjectfindininventorybynamerx[`Letter from Mouf`]]==1
+getpvar[MoufDone]==0
 s
 ToFrigid
 s
