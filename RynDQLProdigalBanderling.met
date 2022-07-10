@@ -18843,7 +18843,20 @@ K
 V
 n
 n
-3
+4
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+getobjectinternaltype[wobjectfindininventorybytemplatetype[35345]]
 i
 4
 s
@@ -19329,7 +19342,7 @@ n
 s
 e
 s
-getobjectinternaltype[wobjectfindininventorybyname[Shard of Harraag's Dagger]]==7
+getobjectinternaltype[wobjectfindininventorybytemplatetype[87338]]==7
 TABLE
 2
 K
@@ -19349,7 +19362,7 @@ n
 s
 e
 s
-actiontrygiveitem[wobjectfindininventorybyname[Shard of Harraag's Dagger],wobjectfindnearestbynameandobjectclass[37,Guard Winterborn]]]
+actiontrygiveitem[wobjectfindininventorybytemplatetype[87338],wobjectfindnearestbynameandobjectclass[37,Guard Winterborn]]]
 i
 1
 s
