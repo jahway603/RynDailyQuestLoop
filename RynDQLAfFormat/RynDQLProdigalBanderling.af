@@ -1475,6 +1475,7 @@ STATE: {WinterbornTurnin} ~~ {
 	IF: All
 			Expr {getpvar[TurnIn]==1}
 			Any
+				Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[35345]]}
 				ChatMatch {^You give Guard Winterborn Shard of Harraag's Dagger}
 				ChatMatch {^Guard Winterborn murmurs something while passing a hand over the shard.}
 				ChatMatch {^You've earned}
@@ -1516,9 +1517,9 @@ STATE: {WinterbornTurnin} ~~ {
 				Chat {/vt meta load RynDQLCheck}	
 	IF:	All
 			Expr {getpvar[TurnIn]==1}
-			Expr {getobjectinternaltype[wobjectfindininventorybyname[Shard of Harraag's Dagger]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[87338]]==7}
 		DO:	DoAll
-				DoExpr {actiontrygiveitem[wobjectfindininventorybyname[Shard of Harraag's Dagger],wobjectfindnearestbynameandobjectclass[37,Guard Winterborn]]]}
+				DoExpr {actiontrygiveitem[wobjectfindininventorybytemplatetype[87338],wobjectfindnearestbynameandobjectclass[37,Guard Winterborn]]]}
 				SetState {WinterbornTurnin}
 	IF: All
 			Expr {getpvar[TurnIn]==0}

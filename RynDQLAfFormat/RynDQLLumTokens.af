@@ -641,10 +641,16 @@ STATE: {TokenCountVar} ~~ {
 			Expr {getcharintprop[344]==5}
 			Expr {getquestktprogress[lumaugskillquest]==2}
 		DO:	SetState {SpecializationMath}
-	IF:	Any
-			Expr {getpvar[TokenVar]#`^Token of the Aura of (Purity|Mana Infusion|Mana Flow|the Craftsman|Aetheric Vision|Glory|Temperance|Valor|Protection)$`}
-			Expr {getpvar[TokenVar]==Token of Skill}
+	IF:	Expr {getpvar[TokenVar]#`^Token of the Aura of (Purity|Mana Infusion|Mana Flow|the Craftsman|Aetheric Vision|Glory|Temperance|Valor|Protection)$`}
 		DO:	DoExpr {setpvar[TokenCount,6-getpvar[CurrentAura]]}
+	IF: All
+			Expr {getcharquadprop[6]>=1000000}
+			Expr {getpvar[TokenVar]==Token of Skill}
+		DO: DoExpr {setpvar[TokenCount,2]}
+	IF: All
+			Expr {getcharquadprop[6]<1000000}
+			Expr {getpvar[TokenVar]==Token of Skill}
+		DO: DoExpr {setpvar[TokenCount,0]}
 	IF:	All
 			Expr {getpvar[TokenVar]==Token of the Aura of the World}
 		DO:	SetState {WorldMath}
