@@ -105,6 +105,26 @@ STATE: {Bridge} ~~ {
 				CellE 7E03075C
 		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 	IF:	All
+			Expr {getpvar[UsePortalBridgePortal]==0}
+			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[43789]]==7}
+			Any
+				CellE 7E03071E
+				CellE 7E0306FA
+				CellE 7E0306F9
+				CellE 7E0306F8
+				CellE 7E03071C
+				CellE 7E03071D
+				CellE 7E03075E
+				CellE 7E03075D
+				CellE 7E03075C
+		DO: DoAll
+				DoExpr {setpvar[Profile,RynDQLDeewains]}
+				DoExpr {setpvar[StateName,Bridge]}
+				DoExpr {setpvar[CheckSync,BridgePortal]}
+				DoExpr {setpvar[UsePortalBridgePortal,1]}
+				Chat {/vt meta load RynDQLCheck}
+	IF:	All
+			Expr {getpvar[UsePortalBridgePortal]==1}
 			Expr {getobjectinternaltype[wobjectfindnearestbytemplatetype[43789]]==7}
 			Any
 				CellE 7E03071E
@@ -121,14 +141,14 @@ STATE: {Bridge} ~~ {
 				DoExpr {actiontryuseitem[wobjectfindnearestbyobjectclass[37]]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridgeGo,1]}
 				SetState {Bridge}
-	IF:	Any
-			CellE 7E030865
+	IF:	CellE 7E030865
 		DO:	DoAll
 				DoExpr {clearvar[JumpTimer]}
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridgeGo,1]}
+				SetOpt {EnableCombat} {True}
 				SetState {DeewainFight}
 ~~ }
 STATE: {SkipQuest} ~~ {
@@ -192,9 +212,12 @@ STATE: {ReGroupRecall} ~~ {
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[JumpTimer]}
 				DoExpr {clearvar[StateTimer]}
+				DoExpr {clearpvar[UsePortalBridgePortal]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+JumpComplete]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridge]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridgeGo]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Alive]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Go]}
 				SetOpt {EnableCombat} {False}
@@ -262,6 +285,9 @@ STATE: {PortalRecall} ~~ {
 				SetOpt {NavCloseStopRange} {0.00625}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Alive]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Go]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+JumpComplete]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridge]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridgeGo]}
 				SetOpt {EnableCombat} {False}
 				SetOpt {EnableNav} {False}
 				EmbedNav nav3 {[none]}
@@ -318,7 +344,7 @@ STATE: {DeewainFight} ~~ {
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
 	IF:	All
-			SecsInStateGE 20
+			SecsInStateGE 10
 			All
 				Expr {getpvar[FellowCount]==9&&getobjectinternaltype[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameTwo]+`$`]]==7&&getobjectinternaltype[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameThree]+`$`]]==7&&getobjectinternaltype[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameFour]+`$`]]==7&&getobjectinternaltype[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameFive]+`$`]]==7&&getobjectinternaltype[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameSix]+`$`]]==7&&getobjectinternaltype[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameSeven]+`$`]]==7&&getobjectinternaltype[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameEight]+`$`]]==7&&getobjectinternaltype[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameNine]+`$`]]==7}
 				Expr {isfalse[getpvar[FellowCount]==9&&coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameTwo]+`$`]],getplayercoordinates[]]>30&&coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameThree]+`$`]],getplayercoordinates[]]>30&&coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameFour]+`$`]],getplayercoordinates[]]>30&&coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameFive]+`$`]],getplayercoordinates[]]>30&&coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameSix]+`$`]],getplayercoordinates[]]>30&&coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameSeven]+`$`]],getplayercoordinates[]]>30&&coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameEight]+`$`]],getplayercoordinates[]]>30&&coordinatedistancewithz[wobjectgetphysicscoordinates[wobjectfindnearestbynameandobjectclass[24,`^`+getpvar[FellowNameNine]+`$`]],getplayercoordinates[]]>30]}
@@ -427,6 +453,7 @@ STATE: {Default} ~~ {
 	IF:	Any
 			All
 				Expr {getcharskill_buffed[32]>=391}
+				Expr {getcancastspell_buff[4400]}
 				Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=1800}
 			All
 				Expr {getcharskill_buffed[32]<=390}
@@ -434,11 +461,11 @@ STATE: {Default} ~~ {
 		DO:	DoAll
 				Chat {/vt forcebuff}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing,1]}
-				DoExpr {setpvar[StateName,vtgetmetastate[]]}
+				DoExpr {setpvar[StateName,ToTN]}
 				SetState {SyncBuff}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
 		DO:	DoAll
-				DoExpr {setpvar[StateName,vtgetmetastate[]]}
+				DoExpr {setpvar[StateName,ToTN]}
 				SetState {SyncBuff}
 	IF:	All
 			SecsInStateGE 3
@@ -464,10 +491,6 @@ STATE: {SyncBuff} ~~ {
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]}
 			SecsInStateGE 240
 		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
-	IF:	Not Expr {testpvar[BuffingStartAll]}
-		DO:	DoAll
-				DoExpr {setpvar[BuffingStartAll,1]}
-				Chat {/vt forcebuff}
 	IF:	All
 			NeedToBuff
 			Expr {vtgetsetting[EnableBuffing]!=True}
@@ -500,7 +523,6 @@ STATE: {SyncBuff} ~~ {
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]}
-				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~ }
 STATE: {Defenders} ~~ {
@@ -653,10 +675,28 @@ STATE: {FallingRocks} ~~ {
 				SetOpt {Recharge-Norm-Mana} {0}
 				EmbedNav nav6 {[none]}
 	IF:	All
+			Expr {getcharskill_traininglevel[33]==3}
 			NavEmpty
 			CellE 7E030724
 		DO:	DoAll
 				SetOpt {Recharge-Helper-HitP} {75}
+				SetOpt {Recharge-Norm-HitP} {75}
+				SetOpt {Recharge-Helper-Stam} {15}
+				SetOpt {Recharge-Helper-Mana} {15}
+				SetOpt {Recharge-Norm-Stam} {50}
+				SetOpt {Recharge-Norm-Mana} {45}
+				SetOpt {EnableNav} {False}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridge,1]}
+				DoExpr {setpvar[StateName,Bridge]}
+				DoExpr {setpvar[CheckSync,Bridge]}
+				Chat {/vt meta load RynDQLCheck}
+	IF:	All
+			Not Expr {getcharskill_traininglevel[33]==3}
+			NavEmpty
+			CellE 7E030724
+		DO:	DoAll
+				SetOpt {Recharge-Helper-HitP} {25}
 				SetOpt {Recharge-Norm-HitP} {75}
 				SetOpt {Recharge-Helper-Stam} {15}
 				SetOpt {Recharge-Helper-Mana} {15}
@@ -680,6 +720,7 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[DeewainTurnIn]==1}
 				Expr {testpvar[EnableDeath]==1}
 				Expr {testpvar[Keys]==1}
+				Expr {testpvar[UsePortalBridgePortal]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DefenderCheck]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Alive]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Go]==1}
@@ -700,8 +741,8 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[Death+getpvar[Profile]]}
 				DoExpr {clearpvar[DeewainTurnIn]}
 				DoExpr {clearpvar[EnableDeath]}
-				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[Keys]}
+				DoExpr {clearpvar[UsePortalBridgePortal]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DefenderCheck]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Alive]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Go]}
@@ -724,6 +765,7 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[DeewainTurnIn]==0}
 			Expr {testpvar[EnableDeath]==0}
 			Expr {testpvar[Keys]==0}
+			Expr {testpvar[UsePortalBridgePortal]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DefenderCheck]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Alive]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Go]==0}
@@ -1083,17 +1125,10 @@ STATE: {ToDarkCavern} ~~ {
 			CellE 73ED0033
 		DO:	SetState {DeewainGroupSync}
 	IF:	CellE 7E030865
-		DO:	DoAll
-				Chat {/ub bc 3000 /vt opt set EnableMeta True}
-				Chat {/ub bc 3000 /vt opt set EnableNav True}
-				Chat {/ub bc 3000 /vt opt set AutoFellowManagement False}
-				SetState {DeewainFight}
+		DO:	SetState {DeewainFight}
 	IF:	BlockE 7E030000
 		DO:	DoAll
 				DoExpr {clearvar[PitStop]}
-				Chat {/ub bc 3000 /vt opt set EnableMeta True}
-				Chat {/ub bc 3000 /vt opt set EnableNav True}
-				Chat {/ub bc 3000 /vt opt set AutoFellowManagement False}
 				SetState {Maze}
 	IF:	Any
 			BlockE C8E90000

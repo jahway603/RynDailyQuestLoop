@@ -329,6 +329,18 @@ STATE: {%% Options %%} ~~ {
 	IF: Always
 		DO: DoExpr {setpvar[DoNotClearOptionsAtEnd,0]}
 	IF:	Never
+		DO:	Chat {%% Auto-spend lum at Nalicana %%}
+	IF:	Never
+		DO:	Chat {%% Set to 1 auto spend at nalicana when above 1 million luminace %%}
+	IF:	Never
+		DO:	Chat {%% Set to 0 not spend luminace %%}
+	IF: Always
+		DO: DoExpr {setpvar[SpendLumNalicana,1]}
+	IF:	Never
+		DO:	Chat {%% Bloodstone Shards to Keep before Turning in %%}
+	IF: Always
+		DO: DoExpr {setpvar[BSIKeepCount,15]}
+	IF:	Never
 		DO:	Chat {%% Do Not Edit Below Here %%}
 	IF:	Never
 		DO:	Chat {%% Do Not Edit Below Here %%}
@@ -381,6 +393,7 @@ STATE: {%% Options %%} ~~ {
 	IF:	All
 			Expr {testpvar[LeaderName]}
 			Expr {testpvar[FellowCount]}
+			Expr {uboptget[`Networking.Tags`]#DailyLoop+getworldname[]+getpvar[GroupIdentifier]}
 			Expr {getvar[ReloadOptions]>=3}
 			Any
 				Expr {getpvar[FellowCount]==2&&testpvar[FellowNameTwo]==1}
@@ -1785,7 +1798,7 @@ STATE: {Default} ~~ {
 		DO:	SetState {%% Options %%}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoNotClearOptionsAtEnd]==1}
 		DO: DoAll
-				ChatExpr {\/t +getcharstringprop[1]+`,You pressed Do Not Ask Again, if you clear your persistent or global variables you will have to re-apply your options from Preset or Auto-setup.`}
+				ChatExpr {\/t +getcharstringprop[1]+`,You pressed Do Not Ask Again, if you clear your persistent or global variables you will have to re-apply your options from Preset or Assisted-Setup.`}
 				DoExpr {setpvar[DoNotClearOptionsAtEnd,1]}
 	IF:	Any
 			SecsInStateGE 60

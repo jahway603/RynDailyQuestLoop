@@ -187,10 +187,6 @@ STATE: {Default}  ~~{
 				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirpFailGlobal]==1}
 		DO: SetState {NetworkChirpDelayForRelog}
 	IF: All
-			Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]==1}
-		DO: ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp,1]`}
-	IF: All
 			SecsInStateGE 10
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 		DO: DoAll
@@ -202,6 +198,12 @@ STATE: {Default}  ~~{
 		DO: DoAll
 				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getcharstringprop[1]]}
 				SetState {Default}
+	IF: All
+			Expr {getcharstringprop[1]==getpvar[LeaderName]}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]==1}
+			SecsInStateGE 2
+		DO: ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp,1]`}
+	
 ~~}
 STATE: {NetworkChirpDelayForRelog} ~~ {
 	IF:	Not Expr {uiviewexists[STUCK]}

@@ -278,6 +278,7 @@ STATE: {Default} ~~ {
 	IF:	Any
 			All
 				Expr {getcharskill_buffed[32]>=391}
+				Expr {getcancastspell_buff[4400]}
 				Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=1800}
 			All
 				Expr {getcharskill_buffed[32]<=390}
@@ -307,8 +308,8 @@ STATE: {Default} ~~ {
 			Not NeedToBuff
 		DO:	DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn]}
-				DoExpr {setpvar[StateName,TurnInCheck]}
-				DoExpr {setpvar[CheckSync,TurnInCheck]}
+				DoExpr {setpvar[StateName,TrinketCheck]}
+				DoExpr {setpvar[CheckSync,TrinketCheck]}
 				Chat {/vt meta load RynDQLCheck} ~~ TurnInCheck
 ~~ }
 STATE: {DonovanCheck} ~~ {
@@ -650,7 +651,6 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[Death+getpvar[Profile]]}
 				DoExpr {clearpvar[Scroll]}
 				DoExpr {clearpvar[LargeTome]}
-				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[FlagKT]}
 				DoExpr {clearpvar[MasterShard]}
 				DoExpr {clearpvar[TurnIn]}
@@ -1613,10 +1613,6 @@ STATE: {SyncBuff} ~~ {
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]}
 			SecsInStateGE 240
 		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
-	IF: Not Expr {testpvar[BuffingStartAll]}
-		DO: DoAll
-				DoExpr {setpvar[BuffingStartAll,1]}
-				Chat {/vt forcebuff}
 	IF: All
 			NeedToBuff
 			Expr {vtgetsetting[EnableBuffing]!=True}
@@ -2199,20 +2195,45 @@ STATE: {TranslatorTurnIn} ~~ {
 				DoExpr {clearpvar[Death]}
 				SetState {ToTN}
 ~~ }
+STATE: {TrinketCheck} ~~ {
+	IF: Expr {getspellexpiration[5153]} ~~ Trinket Spell 1 2
+		DO: DoExpr {setpvar[TOV,0.02]}
+	IF: Expr {getspellexpiration[5154]} ~~ Trinket Spell 2 4
+		DO: DoExpr {setpvar[TTV,0.04]}
+	IF: Expr {getspellexpiration[5137]} ~~ Trinket Spell 3 6
+		DO: DoExpr {setpvar[TThV,0.06]}
+	IF: Not Expr {getspellexpiration[5153]} ~~ Trinket Spell 1 2
+		DO: DoExpr {setpvar[TOV,0]}
+	IF: Not Expr {getspellexpiration[5154]} ~~ Trinket Spell 2 4
+		DO: DoExpr {setpvar[TTV,0]}
+	IF: Not Expr {getspellexpiration[5137]} ~~ Trinket Spell 3 6
+		DO: DoExpr {setpvar[TThV,0]}
+	IF: All
+			Expr {testpvar[TOV]}
+			Expr {testpvar[TTV]}
+			Expr {testpvar[TThV]}
+		DO: DoAll
+				DoExpr {setpvar[TrinkValue,1+getpvar[TOV]+getpvar[TTV]+getpvar[TThV]]}
+				SetState {TurnInCheck}
+~~ }
 STATE: {TurnInCheck} ~~ {
+	IF: Always
+		DO: DoExpr {setpvar[BSIKCM,1500000-(getpvar[BSIKeepCount]*(45000*getpvar[TrinkValue]))]}
 	IF:	All
-			Expr {getitemcountininventorybyname[Shattered Master Bloodstone Shard]>=15}
-			Expr {getcharquadprop[6]<=572500}
+			Expr {getitemcountininventorybyname[Shattered Master Bloodstone Shard]>=getpvar[BSIKeepCount]}
+			Expr {getcharquadprop[6]<=getpvar[BSIKCM]}
 		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn,getgvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn]+1]}
 	IF:	All
 			SecsInStateGE 3
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn]<getpvar[FellowCount]}
 		DO:	DoExpr {setpvar[TurnIn,0]}
 	IF:	All
 			SecsInStateGE 3
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn]}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn]>=getpvar[FellowCount]}
 		DO:	DoExpr {setpvar[TurnIn,1]}
-	IF:	SecsInStateGE 3
+	IF:	Expr {testpvar[TurnIn]}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,ToTN]}
 				SetState {ToTN}

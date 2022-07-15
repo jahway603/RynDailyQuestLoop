@@ -35,7 +35,52 @@
 ~~		pau					chk															
 ~~		cht					jmp															
 ~~		prt (deprecated in VTank)														
-~~ }																					
+~~ }	
+STATE: {ClearMobs} ~~ {
+	IF:	All
+			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
+			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
+		DO:	DoAll
+				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
+				DoExpr {clearvar[capturegroup_tellquest]}
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestFD,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestFD]==1}
+		DO:	SetState {SkipQuest}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatCapture {!ReGroup} {19}
+			Any
+				BlockE C8E90000
+		DO:	DoAll
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
+	IF:	Expr {getcharskill_traininglevel[33]==3}
+		DO:	SetOpt {SummonPets} {True}
+	IF:	Always
+		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
+	IF:	Any
+			NoMobsInDist 30
+			SecsInStateGE 30
+			All
+				SecsInStateGE 3
+				NoMobsInDist 15
+			All
+				SecsInStateGE 15
+				NoMobsInDist 8
+			All
+				SecsInStateGE 10
+				NoMobsInDist 3
+		DO:	DoAll
+				SetOpt {EnableNav} {True}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
+				Return
+	IF:	Always
+		DO:	DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0625]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
+~~ }																				
 STATE: {SkipQuest} ~~{
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
@@ -183,6 +228,7 @@ STATE: {Default} ~~ {
 	IF:	Any
 			All
 				Expr {getcharskill_buffed[32]>=391}
+				Expr {getcancastspell_buff[4400]}
 				Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=1800}
 			All
 				Expr {getcharskill_buffed[32]<=390}
@@ -190,11 +236,11 @@ STATE: {Default} ~~ {
 		DO:	DoAll
 				Chat {/vt forcebuff}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing,1]}
-				DoExpr {setpvar[StateName,vtgetmetastate[]]}
+				DoExpr {setpvar[StateName,ToTN]}
 				SetState {SyncBuff}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
 		DO:	DoAll
-				DoExpr {setpvar[StateName,vtgetmetastate[]]}
+				DoExpr {setpvar[StateName,ToTN]}
 				SetState {SyncBuff}
 	IF:	All
 			SecsInStateGE 3
@@ -233,7 +279,6 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Stuck]}
 				DoExpr {clearpvar[Death+getpvar[Profile]]}
-				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[Step]}
 				DoExpr {clearpvar[QuestCompletedSkip]}
 				DoExpr {clearpvar[C]}
@@ -554,6 +599,12 @@ STATE: {MaskBottom} ~~ {
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
+	IF:	All
+			Not NoMobsInDist 10
+			Expr {vtgetsetting[EnableCombat]==1}
+		DO:	DoAll
+				SetOpt {EnableNav} {False}
+				CallState {ClearMobs} {MaskBottom}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Any
@@ -595,6 +646,12 @@ STATE: {MaskDoor} ~~ {
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
+	IF:	All
+			Not NoMobsInDist 10
+			Expr {vtgetsetting[EnableCombat]==1}
+		DO:	DoAll
+				SetOpt {EnableNav} {False}
+				CallState {ClearMobs} {MaskDoor}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	CellE 586C03ED
@@ -633,6 +690,12 @@ STATE: {MaskDoorOne} ~~ {
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
+	IF:	All
+			Not NoMobsInDist 10
+			Expr {vtgetsetting[EnableCombat]==1}
+		DO:	DoAll
+				SetOpt {EnableNav} {False}
+				CallState {ClearMobs} {MaskDoorOne}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Crackling Key]]==7}
@@ -685,6 +748,12 @@ STATE: {MaskDoorTwo} ~~ {
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
+	IF:	All
+			Not NoMobsInDist 10
+			Expr {vtgetsetting[EnableCombat]==1}
+		DO:	DoAll
+				SetOpt {EnableNav} {False}
+				CallState {ClearMobs} {MaskDoorTwo}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Expr {getobjectinternaltype[wobjectfindininventorybyname[Sealed Sparkling Key]]==7}
@@ -742,6 +811,12 @@ STATE: {Masked} ~~ {
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
+	IF:	All
+			Not NoMobsInDist 10
+			Expr {vtgetsetting[EnableCombat]==1}
+		DO:	DoAll
+				SetOpt {EnableNav} {False}
+				CallState {ClearMobs} {Masked}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Always
@@ -827,6 +902,12 @@ STATE: {MaskKeyOne} ~~ {
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
+	IF:	All
+			Not NoMobsInDist 10
+			Expr {vtgetsetting[EnableCombat]==1}
+		DO:	DoAll
+				SetOpt {EnableNav} {False}
+				CallState {ClearMobs} {MaskKeyOne}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Always
@@ -890,6 +971,12 @@ STATE: {MaskKeyTwo} ~~ {
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
+	IF:	All
+			Not NoMobsInDist 10
+			Expr {vtgetsetting[EnableCombat]==1}
+		DO:	DoAll
+				SetOpt {EnableNav} {False}
+				CallState {ClearMobs} {MaskKeyTwo}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Always
@@ -950,6 +1037,12 @@ STATE: {NearestPortal} ~~ {
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
+	IF:	All
+			Not NoMobsInDist 10
+			Expr {vtgetsetting[EnableCombat]==1}
+		DO:	DoAll
+				SetOpt {EnableNav} {False}
+				CallState {ClearMobs} {NearestPortal}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Always
@@ -995,10 +1088,6 @@ STATE: {SyncBuff} ~~ {
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]}
 			SecsInStateGE 240
 		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
-	IF:	Not Expr {testpvar[BuffingStartAll]}
-		DO:	DoAll
-				DoExpr {setpvar[BuffingStartAll,1]}
-				Chat {/vt forcebuff}
 	IF:	All
 			NeedToBuff
 			Expr {vtgetsetting[EnableBuffing]!=True}
@@ -1031,7 +1120,6 @@ STATE: {SyncBuff} ~~ {
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]}
-				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~ }
 STATE: {ToKhay} ~~ {
@@ -1131,6 +1219,12 @@ STATE: {ToSent} ~~ {
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
+	IF:	All
+			Not NoMobsInDist 10
+			Expr {vtgetsetting[EnableCombat]==1}
+		DO:	DoAll
+				SetOpt {EnableNav} {False}
+				CallState {ClearMobs} {ToSent}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	Any

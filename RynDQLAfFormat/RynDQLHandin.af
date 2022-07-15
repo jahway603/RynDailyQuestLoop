@@ -840,8 +840,7 @@ STATE: {Falatacot2} ~~ {
 STATE: {Finished} ~~ {
 	IF:	Always
 		DO:	DoAll
-				ChatExpr {\/vt meta load +getpvar[Profile]}
-				ChatExpr {\/vt setmetastate +getpvar[StateName]}
+				ChatExpr {\/vt meta load RynDQLCheck}
 				EmbedNav nav1 {[none]}
 ~~ }
 STATE: {FirstContact} ~~ {

@@ -356,21 +356,47 @@ STATE: {Default} ~~ {
 				SetOpt {IdlePeaceMode} {False}
 	IF:	SecsInStateGE 180
 		DO:	Chat {/ub quit}
-	IF:	Any
-			All
-				Expr {getcharskill_buffed[32]>=391}
-				Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=1800}
-			All
-				Expr {getcharskill_buffed[32]<=390}
-				Expr {getspellexpirationbyname[Aura of Cragstone's Will]<=1800}
+	IF:	All
+			BlockE 7DE80000
+			Any
+				All
+					Expr {getcharskill_buffed[32]>=391}
+					Expr {getcancastspell_buff[4400]}
+					Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=1800}
+				All
+					Expr {getcharskill_buffed[32]<=390}
+					Expr {getspellexpirationbyname[Aura of Cragstone's Will]<=1800}
 		DO:	DoAll
 				Chat {/vt forcebuff}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing,1]}
-				DoExpr {setpvar[StateName,vtgetmetastate[]]}
+				DoExpr {setpvar[StateName,ToDaenerah]}
 				SetState {SyncBuff}
-	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
+	IF:	All
+			BlockE 7DE80000
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
 		DO:	DoAll
-				DoExpr {setpvar[StateName,vtgetmetastate[]]}
+				DoExpr {setpvar[StateName,ToDaenerah]}
+				SetState {SyncBuff}
+	IF:	All
+			Not BlockE 7DE80000
+			Any
+				All
+					Expr {getcharskill_buffed[32]>=391}
+					Expr {getcancastspell_buff[4400]}
+					Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=1800}
+				All
+					Expr {getcharskill_buffed[32]<=390}
+					Expr {getspellexpirationbyname[Aura of Cragstone's Will]<=1800}
+		DO:	DoAll
+				Chat {/vt forcebuff}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing,1]}
+				DoExpr {setpvar[StateName,ToTN]}
+				SetState {SyncBuff}
+	IF:	All
+			Not BlockE 7DE80000
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
+		DO:	DoAll
+				DoExpr {setpvar[StateName,ToTN]}
 				SetState {SyncBuff}
 	IF:	All
 			BlockE 7DE80000
@@ -1463,10 +1489,6 @@ STATE: {SyncBuff} ~~ {
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]}
 			SecsInStateGE 240
 		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
-	IF:	Not Expr {testpvar[BuffingStartAll]}
-		DO:	DoAll
-				DoExpr {setpvar[BuffingStartAll,1]}
-				Chat {/vt forcebuff}
 	IF:	All
 			NeedToBuff
 			Expr {vtgetsetting[EnableBuffing]!=True}
@@ -1499,7 +1521,6 @@ STATE: {SyncBuff} ~~ {
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]}
-				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~ }
 STATE: {ToDaenerah} ~~ {

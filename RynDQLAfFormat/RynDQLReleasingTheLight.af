@@ -67,8 +67,22 @@ STATE: {ClearMobs} ~~ {
 		DO: SetOpt {SummonPets} {True}
 	IF: Always
 		DO: DoAll
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0208]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
+	IF:	Any
+			CellE F81E01BC
+			CellE F81E01BD
+			CellE F81E01C6
+			CellE F81E01CF
+			CellE F81E01CE
+			CellE F81E01CD
+			CellE F81E01C4
+			CellE F81E01BB
+			CellE F81E01D1
+			Expr {coordinategetz[getplayercoordinates[]]#-0.3566}
+		DO:	DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.25]]`,`vtsetsetting[AttackDistance,cstr[0.01041666666]]`]}
+
 	IF:	Any
 			NoMobsInDist 30
 			SecsInStateGE 30
@@ -83,6 +97,7 @@ STATE: {ClearMobs} ~~ {
 				NoMobsInDist 3
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
+				SetOpt {SummonPets} {False}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
 				Return
 ~~ }
@@ -219,6 +234,7 @@ STATE: {Default} ~~ {
 	IF:	Any
 			All
 				Expr {getcharskill_buffed[32]>=391}
+				Expr {getcancastspell_buff[4400]}
 				Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=1800}
 			All
 				Expr {getcharskill_buffed[32]<=390}
@@ -226,11 +242,11 @@ STATE: {Default} ~~ {
 		DO:	DoAll
 				Chat {/vt forcebuff}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing,1]}
-				DoExpr {setpvar[StateName,vtgetmetastate[]]}
+				DoExpr {setpvar[StateName,ToSanc]}
 				SetState {SyncBuff}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
 		DO: DoAll
-				DoExpr {setpvar[StateName,vtgetmetastate[]]}
+				DoExpr {setpvar[StateName,ToSanc]}
 				SetState {SyncBuff}
 	IF:	All
 			SecsInStateGE 3
@@ -256,10 +272,6 @@ STATE: {SyncBuff} ~~ {
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]}
 			SecsInStateGE 240
 		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
-	IF: Not Expr {testpvar[BuffingStartAll]}
-		DO: DoAll
-				DoExpr {setpvar[BuffingStartAll,1]}
-				Chat {/vt forcebuff}
 	IF: All
 			NeedToBuff
 			Expr {vtgetsetting[EnableBuffing]!=True}
@@ -292,7 +304,6 @@ STATE: {SyncBuff} ~~ {
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameNine]]}		
 		DO: DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]}
-				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~}
 STATE: {Dungeon} ~~ {
@@ -441,6 +452,7 @@ STATE: {Dungeon} ~~ {
 				CellE F81E0128
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.02083333]]`,`vtsetsetting[AttackDistance,cstr[0.01041666666]]`]}
 				DoExpr {setpvar[StateName,FightBoss]}
 				DoExpr {setpvar[CheckSync,FightBoss]}
 				Chat {/vt meta load RynDQLCheck} ~~ FightBoss
@@ -543,8 +555,9 @@ STATE: {DungeonJump} ~~ {
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {clearvar[JumpStuck]}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
-				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.125]]`,`vtsetsetting[AttackDistance,cstr[0.01041666666]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.25]]`,`vtsetsetting[AttackDistance,cstr[0.01041666666]]`]}
 				SetState {Dungeon}
 	IF:	All
 			Any
@@ -675,7 +688,6 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Stuck]}
 				DoExpr {clearpvar[Death+getpvar[Profile]]}
-				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[Step]}
 				DoExpr {clearpvar[RTLFlag]}
 				DoExpr {clearpvar[RTLTurnIn]}

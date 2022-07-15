@@ -597,6 +597,7 @@ STATE: {ReGroupRecall} ~~ {
 				DoExpr {setpvar[StateName,ReGroupRecall]}
 				DoExpr {clearvar[PitStop]}
 				DoExpr {clearvar[StateTimer]}
+				DoExpr {clearvar[Recall]}
 				SetOpt {NavCloseStopRange} {0.00625}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0208]]`]}
 				SetOpt {EnableCombat} {False}
@@ -725,6 +726,7 @@ STATE: {Default} ~~ {
 	IF:	Any
 			All
 				Expr {getcharskill_buffed[32]>=391}
+				Expr {getcancastspell_buff[4400]}
 				Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=1800}
 			All
 				Expr {getcharskill_buffed[32]<=390}
@@ -732,11 +734,11 @@ STATE: {Default} ~~ {
 		DO:	DoAll
 				Chat {/vt forcebuff}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing,1]}
-				DoExpr {setpvar[StateName,vtgetmetastate[]]}
+				DoExpr {setpvar[StateName,ToTN]}
 				SetState {SyncBuff}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
 		DO:	DoAll
-				DoExpr {setpvar[StateName,vtgetmetastate[]]}
+				DoExpr {setpvar[StateName,ToTN]}
 				SetState {SyncBuff}
 	IF:	All
 			SecsInStateGE 3
@@ -784,7 +786,6 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Death+getpvar[Profile]]}
 				DoExpr {clearpvar[Stuck]}
-				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[Given]}
 				DoExpr {clearpvar[Altar]}
 				DoExpr {clearpvar[Char]}
@@ -1389,10 +1390,6 @@ STATE: {SyncBuff} ~~ {
 			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]}
 			SecsInStateGE 240
 		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
-	IF:	Not Expr {testpvar[BuffingStartAll]}
-		DO:	DoAll
-				DoExpr {setpvar[BuffingStartAll,1]}
-				Chat {/vt forcebuff}
 	IF:	All
 			NeedToBuff
 			Expr {vtgetsetting[EnableBuffing]!=True}
@@ -1425,7 +1422,6 @@ STATE: {SyncBuff} ~~ {
 				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffComplete],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]}
-				DoExpr {setpvar[StateName,Default]}
 				DoExpr {vtsetmetastate[getpvar[StateName]]}
 ~~ }
 STATE: {ToAltars} ~~ {
@@ -1760,6 +1756,7 @@ STATE: {ToGY} ~~ {
 			Any
 				BlockE C8E90000
 		DO:	DoAll
+				DoExpr {setvar[Recall,0]}
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
 	IF:	All

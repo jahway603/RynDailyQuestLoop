@@ -474,13 +474,31 @@ STATE: {CheckQuests} ~~ {
 		DO: DoAll
 				ChatExpr {\/t +getcharstringprop[1]+`,It appears you do not know GK Recall on all characters skipping Apostate Finale, skipping the quest till tomorrow.`}
 				DoExpr {setpvar[DoQuestAF,0]}
-	IF: Expr {getcharintprop[25]<200}
+	IF: All
+			Expr {getcharintprop[25]<200}
+			Any
+				Expr {getpvar[DoQuestSaveKarul]==1}
+				Expr {getpvar[DoQuestBSI]==1}
+				Expr {getpvar[DoQuestHaltDericost]==1}
 		DO: DoAll
 				DoExpr {setpvar[DoQuestSaveKarul,0]} ~~ 200
 				DoExpr {setpvar[DoQuestBSI,0]} ~~ 200
 				DoExpr {setpvar[DoQuestHaltDericost,0]} ~~ 200
 				ChatExpr {\/t +getcharstringprop[1]+`,Disabling Quests above level 200 requirement.`}
-	IF: Expr {getcharintprop[25]<180}
+	IF: All
+			Expr {getcharintprop[25]<180}
+			Any
+				Expr {getpvar[DoDR]==1}
+				Expr {getpvar[DoQuestDR]==1}
+				Expr {getpvar[DoQuestPurge]==1}
+				Expr {getpvar[DoQuestDee]==1}
+				Expr {getpvar[DoQuestLugianAssault]==1}
+				Expr {getpvar[DoQuestGeraineStudy]==1}
+				Expr {getpvar[DoQuestLU]==1}
+				Expr {getpvar[DoQuestCP]==1}
+				Expr {getpvar[DoQuestSBG]==1}
+				Expr {getpvar[DoQuestEOD]==1}
+				Expr {getpvar[DoQuestRynthidWeapon]==1}
 		DO: DoAll
 				DoExpr {setpvar[DoDR,0]} ~~ 180
 				DoExpr {setpvar[DoQuestDR,0]} ~~ 180
@@ -494,18 +512,28 @@ STATE: {CheckQuests} ~~ {
 				DoExpr {setpvar[DoQuestEOD,0]} ~~ 180
 				DoExpr {setpvar[DoQuestRynthidWeapon,0]} ~~ 180
 				ChatExpr {\/t +getcharstringprop[1]+`,Disabling Quests above level 180 requirement.`}
-	IF: Expr {getcharintprop[25]<175}
+	IF: All
+			Expr {getcharintprop[25]<175}
+			Expr {getpvar[DoQuestHermit]==1}
 		DO: DoAll
 				DoExpr {setpvar[DoQuestHermit,0]} ~~ 175
 				ChatExpr {\/t +getcharstringprop[1]+`,Disabling Quests above level 175 requirement.`}
-	IF: Expr {getcharintprop[25]<150}
+	IF: All
+			Expr {getcharintprop[25]<150}
+			Any
+				Expr {getpvar[DoQuestMouf]==1}
+				Expr {getpvar[DoQuestLostLore]==1}
+				Expr {getpvar[DoQuestFalatacotDepot]==1}
+				Expr {getpvar[DoQuestGrael]==1}
+				Expr {getpvar[DoQuestVR]==1}
+				Expr {getpvar[DoQuestNexus]==1}
+				Expr {getpvar[DoQuestGX]==1}
+				Expr {getpvar[DoQuestReleasingTheLight]==1}
+				Expr {getpvar[DoQuestSBG]==1}
 		DO: DoAll
 				DoExpr {setpvar[DoQuestMouf,0]} ~~ 150
-				DoExpr {setpvar[DoQuestProdigalBanderling,0]} ~~ 120
 				DoExpr {setpvar[DoQuestLostLore,0]} ~~ 150
 				DoExpr {setpvar[DoQuestFalatacotDepot,0]} ~~ 150
-				DoExpr {setpvar[DoQuestProdigalTusker,0]} ~~ 130
-				DoExpr {setpvar[DoQuestIQSQ,0]} ~~ 130
 				DoExpr {setpvar[DoQuestGrael,0]} ~~ 150
 				DoExpr {setpvar[DoQuestVR,0]} ~~ 150
 				DoExpr {setpvar[DoQuestNexus,0]} ~~ 150
@@ -513,13 +541,18 @@ STATE: {CheckQuests} ~~ {
 				DoExpr {setpvar[DoQuestReleasingTheLight,1]} ~~ 150
 				DoExpr {setpvar[DoQuestSBG,0]} ~~ 150
 				ChatExpr {\/t +getcharstringprop[1]+`,Disabling Quests above level 150 requirement.`}
-	IF: Expr {getcharintprop[25]<130}
+	IF: All
+			Expr {getcharintprop[25]<130}
+			Any
+				Expr {getpvar[DoQuestProdigalTusker]==1}
+				Expr {getpvar[DoQuestIQSQ]==1}
 		DO: DoAll
-				DoExpr {setpvar[DoQuestProdigalBanderling,0]} ~~ 120
 				DoExpr {setpvar[DoQuestProdigalTusker,0]} ~~ 130
 				DoExpr {setpvar[DoQuestIQSQ,0]} ~~ 130
 				ChatExpr {\/t +getcharstringprop[1]+`,Disabling Quests above level 130 requirement.`}
-	IF: Expr {getcharintprop[25]<120}
+	IF: All
+			Expr {getcharintprop[25]<120}
+			Expr {getpvar[DoQuestProdigalBanderling]==1}
 		DO: DoAll
 				DoExpr {setpvar[DoQuestProdigalBanderling,0]} ~~ 120
 				ChatExpr {\/t +getcharstringprop[1]+`,You're too low level to run the quest meta load, try again after level 120.`}
@@ -1464,14 +1497,13 @@ STATE: {Default} ~~ {
 				Expr {getpvar[FellowCount]>=7&&getcharstringprop[1]==getpvar[FellowNameSeven]}
 				Expr {getpvar[FellowCount]>=8&&getcharstringprop[1]==getpvar[FellowNameEight]}
 				Expr {getpvar[FellowCount]>=9&&getcharstringprop[1]==getpvar[FellowNameNine]}
-			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
 			Expr {getpvar[SyncBuff]==0}
-			SecsInStateGE 2
 		DO: DoAll
 				Chat {/vt forcebuff}
 				DoExpr {setpvar[SyncBuff,1]}
 				SetState {SyncBuff}
 	IF: All
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+BuffSyncAll]==0}
 			SecsInStateGE 2
 			Any
 				Expr {getpvar[FellowCount]>=1&&getcharstringprop[1]==getpvar[LeaderName]}
@@ -1486,6 +1518,7 @@ STATE: {Default} ~~ {
 			Any
 				All
 					Expr {getcharskill_buffed[32]>=391}
+					Expr {getcancastspell_buff[4400]}
 					Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=1800}
 				All
 					Expr {getcharskill_buffed[32]<=390}
@@ -2399,120 +2432,120 @@ STATE: {IntialProfileSetup} ~~ {
 				SetState {IntialProfileSetup}
 ~~}
 STATE: {DailyReset} ~~ {
-	
-	IF: Expr {getpvar[DoQuestUnleashTheGearknightDaily]==0}
+	IF: Expr {getpvar[DoQuestUnleashTheGearknight]==0}
 		DO: DoExpr {setpvar[DoQuestUnleashTheGearknightDailyReset,0]}
-	IF: Expr {getpvar[DoQuestProdigalBanderlingDaily]==0}
+	IF: Expr {getpvar[DoQuestProdigalBanderling]==0}
 		DO: DoExpr {setpvar[DoQuestProdigalBanderlingDailyReset,0]}
-	IF: Expr {getpvar[DoQuestProdigalTuskerDaily]==0}
+	IF: Expr {getpvar[DoQuestProdigalTusker]==0}
 		DO: DoExpr {setpvar[DoQuestProdigalTuskerDailyReset,0]}
-	IF: Expr {getpvar[DoQuestNexusDaily]==0}
+	IF: Expr {getpvar[DoQuestNexus]==0}
 		DO: DoExpr {setpvar[DoQuestNexusDailyReset,0]}
-	IF: Expr {getpvar[DoQuestPurgeDaily]==0}
+	IF: Expr {getpvar[DoQuestPurge]==0}
 		DO: DoExpr {setpvar[DoQuestPurgeDailyReset,0]}
-	IF: Expr {getpvar[DoQuestRynthidWeaponDaily]==0}
+	IF: Expr {getpvar[DoQuestRynthidWeapon]==0}
 		DO: DoExpr {setpvar[DoQuestRynthidWeaponDailyReset,0]}
-	IF: Expr {getpvar[DoQuestMoufDaily]==0}
+	IF: Expr {getpvar[DoQuestMouf]==0}
 		DO: DoExpr {setpvar[DoQuestMoufDailyReset,0]}
-	IF: Expr {getpvar[DoQuestLugianAssaultDaily]==0}
+	IF: Expr {getpvar[DoQuestLugianAssault]==0}
 		DO: DoExpr {setpvar[DoQuestLugianAssaultDailyReset,0]}
-	IF: Expr {getpvar[DoQuestLUDaily]==0}
+	IF: Expr {getpvar[DoQuestLU]==0}
 		DO: DoExpr {setpvar[DoQuestLUDailyReset,0]}
-	IF: Expr {getpvar[DoQuestIQSQDaily]==0}
+	IF: Expr {getpvar[DoQuestIQSQ]==0}
 		DO: DoExpr {setpvar[DoQuestIQSQDailyReset,0]}
-	IF: Expr {getpvar[DoQuestHaltDericostDaily]==0}
+	IF: Expr {getpvar[DoQuestHaltDericost]==0}
 		DO: DoExpr {setpvar[DoQuestHaltDericostDailyReset,0]}
-	IF: Expr {getpvar[DoQuestFalatacotDepotDaily]==0}
+	IF: Expr {getpvar[DoQuestFalatacotDepot]==0}
 		DO: DoExpr {setpvar[DoQuestFalatacotDepotDailyReset,0]}
-	IF: Expr {getpvar[DoQuestEODDaily]==0}
+	IF: Expr {getpvar[DoQuestEOD]==0}
 		DO: DoExpr {setpvar[DoQuestEODDailyReset,0]}
-	IF: Expr {getpvar[DoQuestCPDaily]==0}
+	IF: Expr {getpvar[DoQuestCP]==0}
 		DO: DoExpr {setpvar[DoQuestCPDailyReset,0]}
-	IF: Expr {getpvar[DoQuestDRDaily]==0}
+	IF: Expr {getpvar[DoQuestDR]==0}
 		DO: DoExpr {setpvar[DoQuestDRDailyReset,0]}
-	IF: Expr {getpvar[DoDRDaily]==0}
+	IF: Expr {getpvar[DoDR]==0}
 		DO: DoExpr {setpvar[DoDRDailyReset,0]}
-	IF: Expr {getpvar[DoQuestBSIDaily]==0}
+	IF: Expr {getpvar[DoQuestBSI]==0}
 		DO: DoExpr {setpvar[DoQuestBSIDailyReset,0]}
-	IF: Expr {getpvar[DoQuestAFDaily]==0}
+	IF: Expr {getpvar[DoQuestAF]==0}
 		DO: DoExpr {setpvar[DoQuestAFDailyReset,0]}
-	IF: Expr {getpvar[DoQuestVRDaily]==0}
+	IF: Expr {getpvar[DoQuestVR]==0}
 		DO: DoExpr {setpvar[DoQuestVRDailyReset,0]}
-	IF: Expr {getpvar[DoQuestLostLoreDaily]==0}
+	IF: Expr {getpvar[DoQuestLostLore]==0}
 		DO: DoExpr {setpvar[DoQuestLostLoreDailyReset,0]}
-	IF: Expr {getpvar[DoQuestSaveKarulDaily]==0}
+	IF: Expr {getpvar[DoQuestSaveKarul]==0}
 		DO: DoExpr {setpvar[DoQuestSaveKarulDailyReset,0]}
-	IF: Expr {getpvar[DoQuestHermitDaily]==0}
+	IF: Expr {getpvar[DoQuestHermit]==0}
 		DO: DoExpr {setpvar[DoQuestHermitDailyReset,0]}
-	IF: Expr {getpvar[DoQuestReleasingTheLightDaily]==0}
+	IF: Expr {getpvar[DoQuestReleasingTheLight]==0}
 		DO: DoExpr {setpvar[DoQuestReleasingTheLightDailyReset,0]}
-	IF: Expr {getpvar[DoQuestGXDaily]==0}
+	IF: Expr {getpvar[DoQuestGX]==0}
 		DO: DoExpr {setpvar[DoQuestGXDailyReset,0]}
-	IF: Expr {getpvar[DoQuestSBGDaily]==0}
+	IF: Expr {getpvar[DoQuestSBG]==0}
 		DO: DoExpr {setpvar[DoQuestSBGDailyReset,0]}
-	IF: Expr {getpvar[DoQuestDeeDaily]==0}
+	IF: Expr {getpvar[DoQuestDee]==0}
 		DO: DoExpr {setpvar[DoQuestDeeDailyReset,0]}
-	IF: Expr {getpvar[DoQuestGraelDaily]==0}
+	IF: Expr {getpvar[DoQuestGrael]==0}
 		DO: DoExpr {setpvar[DoQuestGraelDailyReset,0]}
-	IF: Expr {getpvar[DoQuestGeraineStudyDaily]==0}
+	IF: Expr {getpvar[DoQuestGeraineStudy]==0}
 		DO: DoExpr {setpvar[DoQuestGeraineStudyDailyReset,0]}
-	IF: Expr {getpvar[DoQuestUnleashTheGearknightDaily]==1}
+	IF: Expr {getpvar[DoQuestUnleashTheGearknight]==1}
 		DO: DoExpr {setpvar[DoQuestUnleashTheGearknightDailyReset,1]}
-	IF: Expr {getpvar[DoQuestProdigalBanderlingDaily]==1}
+	IF: Expr {getpvar[DoQuestProdigalBanderling]==1}
 		DO: DoExpr {setpvar[DoQuestProdigalBanderlingDailyReset,1]}
-	IF: Expr {getpvar[DoQuestProdigalTuskerDaily]==1}
+	IF: Expr {getpvar[DoQuestProdigalTusker]==1}
 		DO: DoExpr {setpvar[DoQuestProdigalTuskerDailyReset,1]}
-	IF: Expr {getpvar[DoQuestNexusDaily]==1}
+	IF: Expr {getpvar[DoQuestNexus]==1}
 		DO: DoExpr {setpvar[DoQuestNexusDailyReset,1]}
-	IF: Expr {getpvar[DoQuestPurgeDaily]==1}
+	IF: Expr {getpvar[DoQuestPurge]==1}
 		DO: DoExpr {setpvar[DoQuestPurgeDailyReset,1]}
-	IF: Expr {getpvar[DoQuestRynthidWeaponDaily]==1}
+	IF: Expr {getpvar[DoQuestRynthidWeapon]==1}
 		DO: DoExpr {setpvar[DoQuestRynthidWeaponDailyReset,1]}
-	IF: Expr {getpvar[DoQuestMoufDaily]==1}
+	IF: Expr {getpvar[DoQuestMouf]==1}
 		DO: DoExpr {setpvar[DoQuestMoufDailyReset,1]}
-	IF: Expr {getpvar[DoQuestLugianAssaultDaily]==1}
+	IF: Expr {getpvar[DoQuestLugianAssault]==1}
 		DO: DoExpr {setpvar[DoQuestLugianAssaultDailyReset,1]}
-	IF: Expr {getpvar[DoQuestLUDaily]==1}
+	IF: Expr {getpvar[DoQuestLU]==1}
 		DO: DoExpr {setpvar[DoQuestLUDailyReset,1]}
-	IF: Expr {getpvar[DoQuestIQSQDaily]==1}
+	IF: Expr {getpvar[DoQuestIQSQ]==1}
 		DO: DoExpr {setpvar[DoQuestIQSQDailyReset,1]}
-	IF: Expr {getpvar[DoQuestHaltDericostDaily]==1}
+	IF: Expr {getpvar[DoQuestHaltDericost]==1}
 		DO: DoExpr {setpvar[DoQuestHaltDericostDailyReset,1]}
-	IF: Expr {getpvar[DoQuestFalatacotDepotDaily]==1}
+	IF: Expr {getpvar[DoQuestFalatacotDepot]==1}
 		DO: DoExpr {setpvar[DoQuestFalatacotDepotDailyReset,1]}
-	IF: Expr {getpvar[DoQuestEODDaily]==1}
+	IF: Expr {getpvar[DoQuestEOD]==1}
 		DO: DoExpr {setpvar[DoQuestEODDailyReset,1]}
-	IF: Expr {getpvar[DoQuestCPDaily]==1}
+	IF: Expr {getpvar[DoQuestCP]==1}
 		DO: DoExpr {setpvar[DoQuestCPDailyReset,1]}
-	IF: Expr {getpvar[DoQuestDRDaily]==1}
+	IF: Expr {getpvar[DoQuestDR]==1}
 		DO: DoExpr {setpvar[DoQuestDRDailyReset,1]}
-	IF: Expr {getpvar[DoDRDaily]==1}
+	IF: Expr {getpvar[DoDR]==1}
 		DO: DoExpr {setpvar[DoDRDailyReset,1]}
-	IF: Expr {getpvar[DoQuestBSIDaily]==1}
+	IF: Expr {getpvar[DoQuestBSI]==1}
 		DO: DoExpr {setpvar[DoQuestBSIDailyReset,1]}
-	IF: Expr {getpvar[DoQuestAFDaily]==1}
+	IF: Expr {getpvar[DoQuestAF]==1}
 		DO: DoExpr {setpvar[DoQuestAFDailyReset,1]}
-	IF: Expr {getpvar[DoQuestVRDaily]==1}
+	IF: Expr {getpvar[DoQuestVR]==1}
 		DO: DoExpr {setpvar[DoQuestVRDailyReset,1]}
-	IF: Expr {getpvar[DoQuestLostLoreDaily]==1}
+	IF: Expr {getpvar[DoQuestLostLore]==1}
 		DO: DoExpr {setpvar[DoQuestLostLoreDailyReset,1]}
-	IF: Expr {getpvar[DoQuestSaveKarulDaily]==1}
+	IF: Expr {getpvar[DoQuestSaveKarul]==1}
 		DO: DoExpr {setpvar[DoQuestSaveKarulDailyReset,1]}
-	IF: Expr {getpvar[DoQuestHermitDaily]==1}
+	IF: Expr {getpvar[DoQuestHermit]==1}
 		DO: DoExpr {setpvar[DoQuestHermitDailyReset,1]}
-	IF: Expr {getpvar[DoQuestReleasingTheLightDaily]==1}
+	IF: Expr {getpvar[DoQuestReleasingTheLight]==1}
 		DO: DoExpr {setpvar[DoQuestReleasingTheLightDailyReset,1]}
-	IF: Expr {getpvar[DoQuestGXDaily]==1}
+	IF: Expr {getpvar[DoQuestGX]==1}
 		DO: DoExpr {setpvar[DoQuestGXDailyReset,1]}
-	IF: Expr {getpvar[DoQuestSBGDaily]==1}
+	IF: Expr {getpvar[DoQuestSBG]==1}
 		DO: DoExpr {setpvar[DoQuestSBGDailyReset,1]}
-	IF: Expr {getpvar[DoQuestDeeDaily]==1}
+	IF: Expr {getpvar[DoQuestDee]==1}
 		DO: DoExpr {setpvar[DoQuestDeeDailyReset,1]}
-	IF: Expr {getpvar[DoQuestGraelDaily]==1}
+	IF: Expr {getpvar[DoQuestGrael]==1}
 		DO: DoExpr {setpvar[DoQuestGraelDailyReset,1]}
-	IF: Expr {getpvar[DoQuestGeraineStudyDaily]==1}
+	IF: Expr {getpvar[DoQuestGeraineStudy]==1}
 		DO: DoExpr {setpvar[DoQuestGeraineStudyDailyReset,1]}
 	IF: All
+			SecsInStateGE 2
 			Expr {testpvar[DoQuestUnleashTheGearknightDailyReset]}
 			Expr {testpvar[DoQuestProdigalBanderlingDailyReset]}
 			Expr {testpvar[DoQuestProdigalTuskerDailyReset]}
@@ -2572,7 +2605,6 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {clearpvar[Scroll]}
 				DoExpr {clearpvar[LargeTome]}
 				DoExpr {clearpvar[TwoDone]}
-				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {clearpvar[Step]}
 				DoExpr {clearpvar[Town]}
 				DoExpr {clearpvar[UseBistElleDone]}
@@ -2611,7 +2643,6 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {clearpvar[ReturnMetaProfile]}
 				DoExpr {clearpvar[TurnIn]}
 				DoExpr {clearpvar[DoorOpenPTC]}
-				~~ DoExpr {clearpvar[IntialCleanUp]}
 				DoExpr {clearpvar[ApostateFinaleShardOne]}
 				DoExpr {clearpvar[ApostateFinaleShardTwo]}
 				DoExpr {clearpvar[ApostateFinaleShardThree]}
@@ -2713,7 +2744,6 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+BSI]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+HaltDericost]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GeraineStudy]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+BuffSyncAll]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LiberationOfUziz]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+CountPhainor]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SerpentBurialGrounds]}
@@ -2791,9 +2821,7 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RangeDown]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SplittingGraelTurnIn]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DepotFlag]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ToTNKaitroFunland]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RynDQLLostLoreFinished]}
-				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+ToTorchKaitroFunland]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RynDQLSplittingGrael]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Death]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RynDQLSplittingGraelFinished]}
@@ -2814,6 +2842,7 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+JilnaTurnIn]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Turnin]}
@@ -2940,6 +2969,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[DailyReset]}
 				DoExpr {clearpvar[IntialCleanUp]}
 				DoExpr {clearpvar[SyncBuff]}
+				DoExpr {clearpvar[BuffingStartAll]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Start]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupheck]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}
@@ -2999,6 +3029,7 @@ STATE: {Finished} ~~ {
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestFD]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestEOD]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDR]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+BuffSyncAll]}
 	IF: Expr {getpvar[DoQuestUnleashTheGearknightDailyReset]==1}
 		DO: DoAll
 				DoExpr {setpvar[DoQuestUnleashTheGearknight,1]}
@@ -3231,7 +3262,9 @@ STATE: {PackCleanUp} ~~ {
 			Expr {getpvar[FinishedAllQuests]==0}
 			CellE 00AF0118
 		DO:	DoAll
-				DoExpr {setpvar[StateName,Quests]}
+				DoExpr {setpvar[Profile, RynDQLQuestCheck]}
+				DoExpr {setpvar[StateName,KeyCheck]}
+				DoExpr {setpvar[CheckSync,KeyCheckQuests]}
 				Chat {/vt meta load RynDQLHandin}
 ~~ }
 STATE: {Quests} ~~ {
@@ -3244,6 +3277,7 @@ STATE: {Quests} ~~ {
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeetUp]}
 				Chat {/ub myquests}
 	IF: All
+			Expr {getpvar[SpendLumNalicana]==1}
 			Expr {isrefreshingquests[]==0}
 			Expr {getcharquadprop[6]>=1010001}
 			Not All
@@ -3256,6 +3290,7 @@ STATE: {Quests} ~~ {
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setpvar[StateName,KeyCheck]`}
 				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/vt meta load RynDQLLumTokens`}
 	IF: All
+			Expr {getpvar[SpendLumNalicana]==1}
 			Expr {getcharquadprop[6]>=1010001}
 			Not All
 				Expr {getcharquadprop[6]==1500000}

@@ -281,6 +281,7 @@ STATE: {ConfirmProfile} ~~{
 	IF: All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Expr {getpvar[FellowCount]>=2}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]}
 			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]],getpvar[FellowNameTwo]]}
 			SecsInStateGE 29
 		DO: DoAll
@@ -288,6 +289,7 @@ STATE: {ConfirmProfile} ~~{
 	IF: All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Expr {getpvar[FellowCount]>=3}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]}
 			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]],getpvar[FellowNameThree]]}
 			SecsInStateGE 29
 		DO: DoAll
@@ -295,6 +297,7 @@ STATE: {ConfirmProfile} ~~{
 	IF: All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Expr {getpvar[FellowCount]>=4}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]}
 			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]],getpvar[FellowNameFour]]}
 			SecsInStateGE 29
 		DO: DoAll
@@ -302,6 +305,7 @@ STATE: {ConfirmProfile} ~~{
 	IF: All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Expr {getpvar[FellowCount]>=5}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]}
 			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]],getpvar[FellowNameFive]]}
 			SecsInStateGE 29
 		DO: DoAll
@@ -309,6 +313,7 @@ STATE: {ConfirmProfile} ~~{
 	IF: All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Expr {getpvar[FellowCount]>=6}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]}
 			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]],getpvar[FellowNameSix]]}
 			SecsInStateGE 29
 		DO: DoAll
@@ -316,6 +321,7 @@ STATE: {ConfirmProfile} ~~{
 	IF: All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Expr {getpvar[FellowCount]>=7}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]}
 			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]],getpvar[FellowNameSeven]]}
 			SecsInStateGE 29
 		DO: DoAll
@@ -323,6 +329,7 @@ STATE: {ConfirmProfile} ~~{
 	IF: All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Expr {getpvar[FellowCount]>=8}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]}
 			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]],getpvar[FellowNameEight]]}
 			SecsInStateGE 29
 		DO: DoAll
@@ -330,6 +337,7 @@ STATE: {ConfirmProfile} ~~{
 	IF: All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Expr {getpvar[FellowCount]>=9}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]}
 			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]],getpvar[FellowNameNine]]}
 			SecsInStateGE 29
 		DO: DoAll
