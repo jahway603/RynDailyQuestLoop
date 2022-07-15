@@ -722,9 +722,6 @@ STATE: {HeartJump} ~~ {
 		DO:	DoAll
 				DoExpr {stopwatchstart[setvar[JumpTimer, stopwatchcreate[]]]}
 	IF:	All
-			All
-				Expr {testvar[JumpTimer]}
-				Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=5}
 			NoMobsInDist 15
 			Any
 				CellE 8B030169
@@ -732,20 +729,30 @@ STATE: {HeartJump} ~~ {
 				CellE 8B03016C
 				CellE 8B03016D
 				CellE 8B0301CA
-		DO:	EmbedNav nav5 {[none]}
-	IF:	All
-			All
-				Expr {testvar[JumpTimer]}
-				Expr {stopwatchelapsedseconds[getvar[JumpTimer]]>=10}
-			NoMobsInDist 15
-			Any
-				CellE 8B030169
-				CellE 8B03016E
-				CellE 8B03016C
-				CellE 8B03016D
-				CellE 8B0301CA
+			Not Expr {coordinategetz[getplayercoordinates[]]#-0.4749} 
 		DO:	DoAll
-				DoExpr {stopwatchstart[setvar[JumpTimer, stopwatchcreate[]]]}
+				DoExpr {$pwr=150}
+				DoExpr {$PI=3.1415926535897932;}
+				DoExpr {$pt=listcreate[0-99.86,0-10.4,0-0.47Z];} ~~ 99.86S, 10.04E, -0.47Z 
+				DoExpr {$myPos=getplayercoordinates[];}
+				DoExpr {$dx=$pt{{1}}-coordinategetwe[$myPos];}
+				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
+				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}
+				DoExpr {ifthen[getvar[dir]>=360,`setvar[dir,0]`,`setvar[dir,round[450-atan2[$dy,$dx]*180/$PI]%360]`]}
+	IF:	All
+			Expr {testvar[dir]}
+			SecsInStateGE 4
+			NoMobsInDist 15
+			Any
+				CellE 8B030169
+				CellE 8B03016E
+				CellE 8B03016C
+				CellE 8B03016D
+				CellE 8B0301CA
+			Not Expr {coordinategetz[getplayercoordinates[]]#-0.4749}
+		DO:	DoAll
+				ChatExpr {`/ub jumpsw `+cstrf[$dir,`G0`]+` `+cstrf[$pwr,`G0`]}
+				DoExpr {clearvar[dir]}
 				SetState {HeartJump}
 	IF:	All
 			Expr {getpvar[Leader]==1}
