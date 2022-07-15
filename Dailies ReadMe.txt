@@ -10,6 +10,12 @@
 	Requires edits to %%RynDQLOptions%%.met under %% Options %% state.
 	Requires edits to %%RynDQLOptions%%.met under %% ToBotLocation %% state if you'd like to use a portal bot.
 
+This meta pack has two options for setup, Preset and Assisted-Setup.
+Preset requires you to follow the instructions below.
+
+Assisted-Setup will handle the setup through in game prompts. If you clear persisent or global variables you will have to go through the setup again.
+
+
 Under %%% Enable Options %%% in %%Options%% state.
 	Change Never to Always on the options you'd like to use.
 	Under the associated QuestToggles enable one of the toggles for Run,UseBot, or SummonPortal. feel free to mix and match if you'd prefer one method over another.
@@ -31,9 +37,7 @@ Under %% ToBotLocation %% state if you set any of the above metas to UseBot.
 	Under the Line containing "Landcell in front of bots to return to previous meta" Update the Landblock to the block in front of the bot.
 
 LSRecall - Will use Lifestone Recall(not where you end up when you die) to get to candeth if you don't have the candeth recall for Purging the Corruption quest turnin.
-Grael - Will enable the use of lifestone sending to bring you to Dark Isle LS, otherwise the quest is skipped.
 TuskerSecondary - Will use secondary portal recall to get to Prodigal Tusker instead of running from Facility Hub. Very long run for this quest.
-RynthidWeapon - Will Run Rynthid as the last quest in the loop. Warning very deadly quest to run on a meta will complete the quest but not 100% safe if your fellow is not strong.
 
 Under %%% Edit Fellow Count %%% in %%Options%% state.
 	Change setpvar[FellowCount,number] to the number of members you plan to run the meta with.
@@ -67,7 +71,13 @@ Under %% Summon Names Below %% If Summoning portals yourself is the wanted.These
 	Change setpvar[DeathsAllureSummon,CharSix] to the character that is tied to the respective portals from the list below. Thrungus Hole Surface Ex setpvar[DeathsAllureSummon,Ryn VI]
 	Change setpvar[CountPhainorSummon,CharSeven] to the character that is tied to the respective portals from the list below. Count Phainor Surface Ex setpvar[CountPhainorSummon,Ryn VII]
 
-Under %% Quest Toggles Below %% Set to 1 to run the quest, 0 to skip the quest.
+Under %% Quest Toggles Below %% Set to 1 to run the quest, set to 0 to skip the quest.
+
+Under %% Clear At End Toggles Below %% Set to 1 not clear options at the end, Set to 0 clear options at the end.
+
+Under %% Auto-spend lum at Nalicana %% Set to 1 auto spend at nalicana when above 1 million luminace, Set to 0 not spend luminace.
+
+Under %% Bloodstone Shards to Keep before Turning in %% Set the number of BloodStone shards you'd like to keep before turning in. (Default is 15)
 
 ~~ Routes ~~
 Primary Ties   Pathing
