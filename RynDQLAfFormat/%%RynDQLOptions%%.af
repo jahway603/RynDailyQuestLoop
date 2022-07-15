@@ -1801,8 +1801,10 @@ STATE: {Default} ~~ {
 				ChatExpr {\/t +getcharstringprop[1]+`,You pressed Do Not Ask Again, if you clear your persistent or global variables you will have to re-apply your options from Preset or Assisted-Setup.`}
 				DoExpr {setpvar[DoNotClearOptionsAtEnd,1]}
 	IF:	Any
-			SecsInStateGE 60
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AutoSetup]==1}
+			All
+				Expr {getpvar[DoNotClearOptionsAtEnd]==1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+AutoSetup]==1}
 		DO: DoAll
 				DoExpr {clearpvar[RouteTogglePhainor]}
 				DoExpr {clearpvar[RouteToggleDeathsAllure]}
@@ -1860,7 +1862,11 @@ STATE: {Default} ~~ {
 				DestroyAllViews
 				DoExpr {setpvar[DoNotClearOptionsAtEnd,1]}
 				SetState {AutoSetupIntial}
-	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Manual]==1}
+	IF:	Any
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Manual]==1}
+			All
+				Expr {getpvar[DoNotClearOptionsAtEnd]==1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Manual]==1}
 		DO:	DoAll
 				DoExpr {clearpvar[RouteTogglePhainor]}
 				DoExpr {clearpvar[RouteToggleDeathsAllure]}
