@@ -733,7 +733,7 @@ STATE: {HeartJump} ~~ {
 		DO:	DoAll
 				DoExpr {$pwr=150}
 				DoExpr {$PI=3.1415926535897932;}
-				DoExpr {$pt=listcreate[0-99.86,0-10.4,0-0.47Z];} ~~ 99.86S, 10.04E, -0.47Z 
+				DoExpr {$pt=listcreate[0-99.89,10.04,0-0.47Z];} ~~ 99.89S, 10.04E, -0.47Z
 				DoExpr {$myPos=getplayercoordinates[];}
 				DoExpr {$dx=$pt{{1}}-coordinategetwe[$myPos];}
 				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];}
