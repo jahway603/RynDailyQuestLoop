@@ -422,6 +422,31 @@ STATE: {Default} ~~ {
 	IF:	SecsInStateGE 180
 		DO:	Chat {/ub quit}
 	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[RouteTogglePhainor]==`SummonPortal`}
+			Any
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
+				All
+					Expr {getcharskill_buffed[32]>=391}
+					Expr {getcancastspell_buff[4400]}
+					Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=1800}
+				All
+					Expr {getcharskill_buffed[32]<=390}
+					Expr {getspellexpirationbyname[Aura of Cragstone's Will]<=1800}
+		DO:	DoAll
+				Chat {/vt forcebuff}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing,1]}
+				DoExpr {setpvar[StateName,ToTN]}
+				SetState {SyncBuff}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[RouteTogglePhainor]==`SummonPortal`}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
+		DO:	DoAll
+				DoExpr {setpvar[StateName,ToTN]}
+				SetState {SyncBuff}
+	IF:	All
+			Expr {getpvar[Leader]==0}
 			Expr {getpvar[RouteTogglePhainor]==`SummonPortal`}
 			Any
 				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
@@ -438,6 +463,7 @@ STATE: {Default} ~~ {
 				DoExpr {setpvar[StateName,ToMP]}
 				SetState {SyncBuff}
 	IF:	All
+			Expr {getpvar[Leader]==0}
 			Expr {getpvar[RouteTogglePhainor]==`SummonPortal`}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
 		DO:	DoAll
@@ -466,6 +492,31 @@ STATE: {Default} ~~ {
 				DoExpr {setpvar[StateName,ToTN]}
 				SetState {SyncBuff}
 	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[RouteTogglePhainor]==`Run`}
+			Any
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
+				All
+					Expr {getcharskill_buffed[32]>=391}
+					Expr {getcancastspell_buff[4400]}
+					Expr {getspellexpirationbyname[Aura of Incantation of Defender Self]<=1800}
+				All
+					Expr {getcharskill_buffed[32]<=390}
+					Expr {getspellexpirationbyname[Aura of Cragstone's Will]<=1800}
+		DO:	DoAll
+				Chat {/vt forcebuff}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing,1]}
+				DoExpr {setpvar[StateName,ToTN]}
+				SetState {SyncBuff}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[RouteTogglePhainor]==`Run`}
+			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
+		DO:	DoAll
+				DoExpr {setpvar[StateName,ToTN]}
+				SetState {SyncBuff}
+	IF:	All
+			Expr {getpvar[Leader]==0}
 			Expr {getpvar[RouteTogglePhainor]==`Run`}
 			Any
 				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
@@ -482,6 +533,7 @@ STATE: {Default} ~~ {
 				DoExpr {setpvar[StateName,ToGY]}
 				SetState {SyncBuff}
 	IF:	All
+			Expr {getpvar[Leader]==0}
 			Expr {getpvar[RouteTogglePhainor]==`Run`}
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Buffing]==1}
 		DO:	DoAll

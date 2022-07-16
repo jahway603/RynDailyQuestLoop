@@ -325,6 +325,33 @@ STATE: {DonovanCheck} ~~ {
 		DO:	SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestBSI]==1}
 		DO: SetState {SkipQuest}
+	IF:	All
+			Expr {getpvar[Step]==4}
+			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Shattered Master Bloodstone Shard`]]==7}
+			Expr {getpvar[TurnIn]==0}
+		DO:	SetState {Finished}
+	IF:	All
+			Expr {getpvar[Step]==4}
+			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Shattered Master Bloodstone Shard`]]==7}
+			Expr {getpvar[TurnIn]==1}
+		DO:	DoAll
+				DoExpr {setpvar[Profile,RynDQLBSI]}
+				DoExpr {setpvar[StateName,DonovanTurnInQueue]}
+				DoExpr {setpvar[CheckSync,DonovanTurnInQueue]}
+				Chat {/vt meta load RynDQLCheck} ~~ DonovanTurnInQueue
+	IF:	All
+			Expr {getpvar[Step]==4}
+			Expr {getpvar[TurnIn]==1}
+		DO:	DoAll
+				DoExpr {setpvar[StateName,DonovanTurnInQueue]}
+				DoExpr {setpvar[CheckSync,DonovanTurnInQueue]}
+				Chat {/vt meta load RynDQLCheck} ~~ DonovanTurnInQueue
+	IF:	Expr {getpvar[Step]==3}
+		DO:	DoAll
+				DoExpr {setpvar[Profile,RynDQLBSI]}
+				DoExpr {setpvar[StateName,ToFactory]}
+				DoExpr {setpvar[CheckSync,ToFactory]}
+				Chat {/vt meta load RynDQLCheck} ~~ ToFactory
 	IF:	Any
 			Expr {getpvar[Step]==0}
 			All
@@ -350,33 +377,6 @@ STATE: {DonovanCheck} ~~ {
 				DoExpr {setpvar[StateName,DonovanTurnIn]}
 				DoExpr {setpvar[CheckSync,DonovanTurnIn]}
 				Chat {/vt meta load RynDQLCheck} ~~ DonovanTurnIn
-	IF:	Expr {getpvar[Step]==3}
-		DO:	DoAll
-				DoExpr {setpvar[Profile,RynDQLBSI]}
-				DoExpr {setpvar[StateName,ToFactory]}
-				DoExpr {setpvar[CheckSync,ToFactory]}
-				Chat {/vt meta load RynDQLCheck} ~~ ToFactory
-	IF:	All
-			Expr {getpvar[Step]==4}
-			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Shattered Master Bloodstone Shard`]]==7}
-			Expr {getpvar[TurnIn]==0}
-		DO:	SetState {Finished}
-	IF:	All
-			Expr {getpvar[Step]==4}
-			Expr {getobjectinternaltype[wobjectfindininventorybynamerx[`Shattered Master Bloodstone Shard`]]==7}
-			Expr {getpvar[TurnIn]==1}
-		DO:	DoAll
-				DoExpr {setpvar[Profile,RynDQLBSI]}
-				DoExpr {setpvar[StateName,DonovanTurnInQueue]}
-				DoExpr {setpvar[CheckSync,DonovanTurnInQueue]}
-				Chat {/vt meta load RynDQLCheck} ~~ DonovanTurnInQueue
-	IF:	All
-			Expr {getpvar[Step]==4}
-			Expr {getpvar[TurnIn]==1}
-		DO:	DoAll
-				DoExpr {setpvar[StateName,DonovanTurnInQueue]}
-				DoExpr {setpvar[CheckSync,DonovanTurnInQueue]}
-				Chat {/vt meta load RynDQLCheck} ~~ DonovanTurnInQueue
 ~~ }
 STATE: {DonovanTurnIn} ~~ {
 	IF:	All
