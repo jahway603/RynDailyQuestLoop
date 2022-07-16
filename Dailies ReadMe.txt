@@ -11,9 +11,9 @@
 	Requires edits to %%RynDQLOptions%%.met under %% ToBotLocation %% state if you'd like to use a portal bot.
 
 This meta pack has two options for setup, Preset and Assisted-Setup.
-Preset requires you to follow the instructions below.
+Preset requires you to follow the instructions below, to begin turn off vtank and type /vt meta load %%RynDQLOptions%% then follow the setup process below.
 
-Assisted-Setup will handle the setup through in game prompts. If you clear persisent or global variables you will have to go through the setup again.
+Assisted-Setup will handle the setup through in game prompts, to begin /ub bc /vt meta load %%RynDQLOptions%%. If you clear persisent or global variables you will have to go through the setup again.
 
 
 Under %%% Enable Options %%% in %%Options%% state.
