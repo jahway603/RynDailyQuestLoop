@@ -2224,17 +2224,16 @@ STATE: {TurnInCheck} ~~ {
 			Expr {getcharquadprop[6]<=getpvar[BSIKCM]}
 		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn,getgvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn]+1]}
 	IF:	All
-			Any
-				Expr {getitemcountininventorybyname[Shattered Master Bloodstone Shard]>=getpvar[BSIKeepCount]}
-				Expr {getitemcountininventorybyname[Shattered Master Bloodstone Shard]<getpvar[BSIKeepCount]}
-			Any
-				Expr {getcharquadprop[6]<=getpvar[BSIKCM]}
-				Expr {getcharquadprop[6]<getpvar[BSIKCM]}
+			Expr {getitemcountininventorybyname[Shattered Master Bloodstone Shard]>=getpvar[BSIKeepCount]}
+			Expr {getcharquadprop[6]<getpvar[BSIKCM]}
 		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn,getgvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn]+1]}
 	IF:	All
 			SecsInStateGE 3
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn]}
-			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn]<getpvar[FellowCount]}
+			Any
+				Expr {getitemcountininventorybyname[Shattered Master Bloodstone Shard]<getpvar[BSIKeepCount]}
+				All
+					Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn]}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+TurnIn]<getpvar[FellowCount]}
 		DO:	DoExpr {setpvar[TurnIn,0]}
 	IF:	All
 			SecsInStateGE 3

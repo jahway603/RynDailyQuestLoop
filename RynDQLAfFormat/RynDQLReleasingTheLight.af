@@ -1132,17 +1132,17 @@ STATE: {WatchdogToShahhi} ~~ {
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestRTL]==1}
 		DO: SetState {SkipQuest}
 	IF:	All
-			Not Expr {getcharskill_traininglevel[37]==3}
+			Not Expr {getcharskill_traininglevel[33]==3}
 			Not NoMobsInDist 8
 		DO:	SetOpt {EnableCombat} {True}
 	IF:	All
-			Not Expr {getcharskill_traininglevel[37]==3}
+			Not Expr {getcharskill_traininglevel[33]==3}
 			NoMobsInDist 8
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {EnableCombat} {False}
 				SetState {ToSanc}
-	IF:	Expr {getcharskill_traininglevel[37]==3}
+	IF:	Expr {getcharskill_traininglevel[33]==3}
 		DO:	DoAll
 				DoExpr {clearvar[StateTimer]}
 				SetOpt {EnableCombat} {False}
