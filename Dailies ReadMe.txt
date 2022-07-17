@@ -89,7 +89,7 @@ Primary Ties   Pathing
 	Deaths Allure - Take the Eastwatch portal in the Town Network, run through the Shattered Outlands pass at 93.0N, 47.0W, and then head due east to the small cave at 94.2N 43.0W. Once inside tie to surface.
 	Count Phainor - Tie to surface portal at the end of Count Phainor. Graveyard at 65.0S 44.1W.
 ~ To Begin ~~
-Once all settings are completed load QuestCheck on all characters setup above with /vt meta load QuestCheck or with a broadcast command of /ub bc QuestCheck 
+Once all settings are completed load QuestCheck on all characters setup above with /vt meta load RynDQLQuestCheck or with a broadcast command of /ub bc /vt meta load RynDQLQuestCheck 
 Warning the broadcast will send to all open clients if Vital sharing is on
 If you're missing recalls it will warn you that it is skipping associated quests.
 If all options are setup correctly a Start button will pop up. Press Start to start the meta loop. Settings must be setup before you send start or it will not function!
