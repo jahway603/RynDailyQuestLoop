@@ -517,59 +517,42 @@ STATE: {DungeonJump} ~~ {
 		DO:	DoAll
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
-				SetState {Dungeon}
-	IF:	All
+				SetState {Dungeon}	
+	IF: All
 			Expr {getvar[PitStop]==4}
-			Any
-				CellE F81E01DD
-				CellE F81E01DA
-				CellE F81E01D8
-		DO:	DoAll
-				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
-				EmbedNav nav9 {MoveUp.nav}
-	IF:	All
-			Expr {testvar[JumpStuck]}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=2}
+			Not Expr {coordinategetz[getplayercoordinates[]]#-0.3566}
+			Not NoMobsInDist 3
+		DO: DoAll
+				SetOpt {EnableCombat} {False}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
+				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.25]]`,`vtsetsetting[AttackDistance,cstr[0.01041666666]]`]}
+	IF: All
 			Expr {getvar[PitStop]==4}
-			Any
-				CellE F81E01DD
-				CellE F81E01DA
-				Not Expr {coordinategetz[getplayercoordinates[]]#-0.3566}
-		DO:	DoAll
-				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
-				EmbedNav nav10 {MoveUp.nav}
-	IF:	All
-			Expr {getvar[PitStop]==4}
-			Expr {coordinategetz[getplayercoordinates[]]#-0.3566}
-			Any
-				CellE F81E01BC
-				CellE F81E01BD
-				CellE F81E01C6
-				CellE F81E01CF
-				CellE F81E01CE
-				CellE F81E01CD
-				CellE F81E01C4
-				CellE F81E01BB
-				CellE F81E01D1
-				CellE F81E01C5
-		DO:	DoAll
+			NoMobsInDist 3
+			Not Expr {coordinategetz[getplayercoordinates[]]#-0.3566} ~~  0xF81E01DA [7.450611 67.417618 -79.594994] -0.918538 0.000000 0.000000 0.395332
+		DO: DoAll
+				DoExpr {$pwr=150}  ~~ Jump Power
+				DoExpr {$PI=3.1415926535897932;}  ~~ Pie is better than cake
+				DoExpr {$pt=listcreate[0-77.57,96.57,0-0.36];}  ~~ 77.57S, 96.57E, -0.36Z
+				DoExpr {$myPos=getplayercoordinates[];} ~~~ My Coords
+				DoExpr {$dx=$pt{{1}}-coordinategetwe[$myPos];} ~~~ Get List Spot 1 - My Coords
+				DoExpr {$dy=$pt{{0}}-coordinategetns[$myPos];} ~~~ Get List Spot 2 - My Coords
+				DoExpr {$dir=round[450-atan2[$dy,$dx]*180/$PI]%360}  ~~~ Direction to face
+	IF: All
+			Expr {testvar[dir]}
+			SecsInStateGE 4
+		DO: DoAll
+				ChatExpr {`/ub jumpsw `+cstrf[$dir,`G0`]+` `+cstrf[$pwr,`G0`]}
+				DoExpr {clearvar[dir]}
+				SetState {DungeonJump}
+	IF:  Expr {coordinategetz[getplayercoordinates[]]#-0.3566}
+		DO: DoAll
 				DoExpr {clearvar[StateTimer]}
-				DoExpr {clearvar[JumpStuck]}
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.25]]`,`vtsetsetting[AttackDistance,cstr[0.01041666666]]`]}
 				SetState {Dungeon}
-	IF:	All
-			Any
-				CellE F81E01DD
-				CellE F81E01DA
-				CellE F81E0464
-				Not Expr {coordinategetz[getplayercoordinates[]]#-0.3566}
-			Expr {testvar[JumpStuck]}
-			Expr {stopwatchelapsedseconds[getvar[JumpStuck]]>=4}
-		DO:	DoAll
-				DoExpr {stopwatchstart[setvar[JumpStuck, stopwatchcreate[]]]}
-				SetState {DungeonJump}
 ~~ }
 STATE: {FightBoss} ~~ {
 	IF:	All
@@ -963,7 +946,7 @@ STATE: {ToShahhi} ~~ {
 				SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
-				SetWatchdog 5 45 {ToSanc}
+				SetWatchdog 5 45 {WatchdogToShahhi}
 				DoExpr {setpvar[Stuck,ReGroupRecall]}
 	IF:	BlockE F4180000
 		DO:	EmbedNav nav15 {ToShahhiFromSanc.nav}
@@ -1134,6 +1117,36 @@ STATE: {Watchdog} ~~ {
 				Chat {/f !ReGroup}
 				DoExpr {clearvar[StateTimer]}
 				SetState {ReGroupRecall}
+~~ }
+STATE: {WatchdogToShahhi} ~~ {
+	IF:	All
+			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
+			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
+		DO:	DoAll
+				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
+				DoExpr {clearvar[capturegroup_tellquest]}
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestRTL,1]" /></control></view>}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO: SetState {Zstuck}
+	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestRTL]==1}
+		DO: SetState {SkipQuest}
+	IF:	All
+			Not Expr {getcharskill_traininglevel[37]==3}
+			Not NoMobsInDist 8
+		DO:	SetOpt {EnableCombat} {True}
+	IF:	All
+			Not Expr {getcharskill_traininglevel[37]==3}
+			NoMobsInDist 8
+		DO:	DoAll
+				DoExpr {clearvar[StateTimer]}
+				SetOpt {EnableCombat} {False}
+				SetState {ToSanc}
+	IF:	Expr {getcharskill_traininglevel[37]==3}
+		DO:	DoAll
+				DoExpr {clearvar[StateTimer]}
+				SetOpt {EnableCombat} {False}
+				SetState {ToSanc}
 ~~ }
 
 STATE: {Zstuck} ~~ {

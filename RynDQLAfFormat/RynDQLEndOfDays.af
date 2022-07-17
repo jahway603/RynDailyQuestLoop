@@ -1264,7 +1264,7 @@ STATE: {ToDungeon} ~~ {
 				CellE 2C310009
 				CellE 2C310001
 		DO:	DoAll
-				SetOpt {EnableCombat} {False}
+				DoExpr {ifthen[getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[Clear,1]}
 	IF:	All
 			Expr {getvar[PitStop]==3}
