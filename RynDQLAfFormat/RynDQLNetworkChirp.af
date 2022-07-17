@@ -200,7 +200,7 @@ STATE: {Default}  ~~{
 				SetState {Default}
 	IF: All
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]==1}
+			Not Expr {testvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]}
 			SecsInStateGE 2
 		DO: ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp,1]`}
 	
