@@ -1820,6 +1820,15 @@ e
 s
 getcharstringprop[1]==getpvar[LeaderName]
 i
+21
+TABLE
+2
+K
+V
+n
+n
+1
+i
 26
 TABLE
 2
@@ -1831,7 +1840,7 @@ n
 s
 e
 s
-testgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]==1
+testvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]
 i
 6
 i
