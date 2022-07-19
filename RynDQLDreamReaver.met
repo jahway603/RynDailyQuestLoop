@@ -552,11 +552,20 @@ ba
 <?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDR,1]" /></control></view>s
 SkipQuest
 i
-1
+26
 i
 3
-i
-0
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+getcharstringprop[1]==getpvar[LeaderName]
 TABLE
 2
 K
@@ -565,7 +574,7 @@ n
 n
 4
 i
-7
+8
 TABLE
 2
 k
@@ -576,9 +585,9 @@ n
 s
 e
 s
-setpvar[DoDR,0]
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setpvar[DoDR,0]`
 i
-7
+8
 TABLE
 2
 k
@@ -589,9 +598,9 @@ n
 s
 e
 s
-setpvar[DoQuestDR,0]
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setpvar[DoQuestDR,0]`
 i
-7
+8
 TABLE
 2
 k
@@ -602,7 +611,7 @@ n
 s
 e
 s
-clearpvar[Death+getpvar[Profile]]
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec clearpvar[Death+getpvar[Profile]]`
 i
 7
 TABLE
@@ -16292,9 +16301,11 @@ True
 s
 ToTurnIn
 i
-2
+18
 i
-1
+3
+i
+1483473363
 TABLE
 2
 K
@@ -16303,13 +16314,16 @@ n
 n
 2
 i
-18
-i
-1483473363
-i
-7
-i
+4
+ba
+36
+Empty.nav
 0
+uTank2 NAV 1.2
+4
+0
+i
+1
 s
 Turnin
 s

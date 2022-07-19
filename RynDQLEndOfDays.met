@@ -660,11 +660,20 @@ ba
 <?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestEOD,1]" /></control></view>s
 SkipQuest
 i
-1
+26
 i
 3
-i
-0
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+getcharstringprop[1]==getpvar[LeaderName]
 TABLE
 2
 K
@@ -673,7 +682,7 @@ n
 n
 3
 i
-7
+8
 TABLE
 2
 k
@@ -684,9 +693,9 @@ n
 s
 e
 s
-setpvar[DoQuestEOD,0]
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setpvar[DoQuestEOD,0]`
 i
-7
+8
 TABLE
 2
 k
@@ -697,7 +706,7 @@ n
 s
 e
 s
-clearpvar[Death+getpvar[Profile]]
+\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec clearpvar[Death+getpvar[Profile]]`
 i
 7
 TABLE
