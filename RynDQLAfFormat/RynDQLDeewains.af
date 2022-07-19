@@ -139,7 +139,6 @@ STATE: {Bridge} ~~ {
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
 				DoExpr {actiontryuseitem[wobjectfindnearestbyobjectclass[37]]}
-				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridgeGo,1]}
 				SetState {Bridge}
 	IF:	CellE 7E030865
 		DO:	DoAll
@@ -147,7 +146,6 @@ STATE: {Bridge} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
-				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridgeGo,1]}
 				SetOpt {EnableCombat} {True}
 				SetState {DeewainFight}
 ~~ }
@@ -160,10 +158,10 @@ STATE: {SkipQuest} ~~ {
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDee,1]" /></control></view>}
-	IF:	Always
+	IF:	Expr {getcharstringprop[1]==getpvar[LeaderName]}
 		DO:	DoAll
-				DoExpr {setpvar[DoQuestDee,0]}
-				DoExpr {clearpvar[Death+getpvar[Profile]]}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setpvar[DoQuestDee,0]`}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec clearpvar[Death+getpvar[Profile]]`}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
 	IF:	All
 			Expr {getpvar[DoQuestDee]==0}
@@ -1025,25 +1023,6 @@ STATE: {PortalMaze} ~~ {
 	IF:	SecsInStateGE 30
 		DO:	SetState {PortalMaze}
 ~~ }
-STATE: {DeewainGroupSync} ~~ {
-	IF:	All
-			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Checking]==1}
-			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridge]==0}
-		DO:	DoAll
-				DoExpr {setpvar[StateName,DeewainGroupSync]}
-				DoExpr {setpvar[CheckSync,DeewainGroupSyncOne]}
-				Chat {/vt meta load RynDQLCheck}
-	IF:	All
-			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Checking]==1}
-			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridge]==1}
-		DO:	DoAll
-				DoExpr {clearpvar[DeewainRoomFlagged]}
-				DoExpr {setpvar[StateName,DeewainGroupSync]}
-				DoExpr {setpvar[CheckSync,DeewainGroupSyncTwo]}
-				Chat {/vt meta load RynDQLCheck}
-	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBridgeGo]==1}
-		DO:	SetState {ToDarkCavern}
-~~ }
 STATE: {ToDarkCavern} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
@@ -1118,12 +1097,6 @@ STATE: {ToDarkCavern} ~~ {
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
 				EmbedNav nav30 {Junk.nav}
-	IF:	All
-			NoMobsInDist 15
-			Expr {getvar[PitStop]==1}
-			Expr {getpvar[DeewainRoomFlagged]==1}
-			CellE 73ED0033
-		DO:	SetState {DeewainGroupSync}
 	IF:	CellE 7E030865
 		DO:	SetState {DeewainFight}
 	IF:	BlockE 7E030000
@@ -1646,6 +1619,18 @@ STATE: {ToPortalMaze} ~~ {
 				Chat {/vt meta load RynDQLCheck}
 ~~ }
 STATE: {PortalMazeTransition} ~~ {
+	IF:	All
+			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
+			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
+		DO:	DoAll
+				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
+				DoExpr {clearvar[capturegroup_tellquest]}
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDee,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDee]==1}
+		DO:	SetState {SkipQuest}
 	IF:	Always
 		DO:	EmbedNav nav37 {empty}
 	IF:	All

@@ -436,6 +436,60 @@ STATE: {LoadQuest} ~~ {
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Quest]==QuestRynthidWeapon}
 		DO:	ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+\ \/vt meta load RynDQLRynthidWeapon}
 ~~ }
+STATE: {DeewainCheckFlag} ~~ {
+	IF: Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom]}
+		DO: DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom,listcreate[]]}
+				SetState {DeewainCheckFlag}
+	IF: All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom]}
+			Expr {getqueststatus[deewainbossroomflag]==1}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getcharstringprop[1]]}
+		DO: DoAll
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getcharstringprop[1]]}
+				SetState {DeewainCheckFlag}
+	IF:	All
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom]==1}
+			Not NeedToBuff
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom],getpvar[FellowNameNine]]}		
+		DO: SetState {DeewainCheckFlagB}
+~~}
+STATE: {DeewainCheckFlagB} ~~ {
+	IF: All
+			SecsInStateGE 2
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom]}
+			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom]]>=getpvar[FellowCount]}
+		DO: DoExpr {setpvar[DeewainBossRoomFlagged,1]} ~~ Run
+	IF: All
+			SecsInStateGE 2
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom]}
+			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+DeewainBossRoom]]<getpvar[FellowCount]}
+		DO: DoAll
+				DoExpr {setpvar[DeewainBossRoomFlagged,0]} ~~ Dont Run
+				Chat {/f The group is desync'd for Deewain, skipping the quest for the day. If you'd like to run the quest in the future ensure all members enter at the maze and not the boss room.}
+				Chat {/f On anyone entering the boss room complete the Energy Rcok turnin to make them enter through the maze next run.}
+	IF: All
+			Expr {testpvar[DeewainBossRoomFlagged]}
+			Expr {getpvar[DeewainBossRoomFlagged]==1}
+		DO: DoAll
+				DoExpr {setpvar[DoQuestDee,1]} ~~ Run
+				SetState {CheckQuests}
+	IF: All
+			Expr {testpvar[DeewainBossRoomFlagged]}
+			Expr {getpvar[DeewainBossRoomFlagged]==0}
+		DO: DoAll
+				DoExpr {setpvar[DoQuestDee,0]} ~~ Run
+				SetState {CheckQuests}
+~~}
 STATE: {CheckQuests} ~~ {
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SyncStuck,1]" /></control></view>}
@@ -443,6 +497,8 @@ STATE: {CheckQuests} ~~ {
 		DO:	SetState {SyncStuck}
 	IF: SecsInStateGE 180
 		DO: Chat {/vt meta load RynDQLQuestCheckEcho}
+	IF: Not Expr {testpvar[DeewainBossRoomFlagged]}
+		DO: SetState {DeewainCheckFlag}
 	IF: All
 			Expr {getpvar[DoQuestGrael]==1}
 			Expr {testquestflag[abyssaltotemgatewayflag]==0}
@@ -906,12 +962,12 @@ STATE: {CheckQuests} ~~ {
 			Expr {getpvar[DoQuestDee]==1}
 			Expr {getcharstringprop[1]==getpvar[LeaderName]}
 			Any
-				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDee]>=1}
+				Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDee]==getpvar[FellowCount]}
 				All
 					Any	
 						Expr {getpvar[AdminSkip]==1}
 						Expr {getpvar[FellowCount]<2}
-					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDee]>=1}
+					Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestDee]==getpvar[FellowCount]}
 		DO:	DoAll
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Quest,QuestDee]}
 				SetState {LoadQuest}
@@ -1593,16 +1649,12 @@ STATE: {NetworkChirpCheck} ~~{
 				DoExpr {setpvar[Profile, RynDQLQuestCheck]}
 				DoExpr {setpvar[StateName,DefaultTwo]}
 				SetState {DefaultTwo}
-	IF: All
-			Expr {getvar[RynDQLNetworkChirp]==0}
-			Not NeedToBuff
+	IF: Expr {getvar[RynDQLNetworkChirp]==0}
 		DO: DoAll
 				DoExpr {setpvar[Profile, RynDQLQuestCheck]}
 				DoExpr {setpvar[StateName,NetworkChirpCheck]}
 				Chat {/vt meta load RynDQLNetworkChirp}
-	IF: All
-			Expr {getvar[RynDQLNetworkChirp]==1}
-			Not NeedToBuff
+	IF: Expr {getvar[RynDQLNetworkChirp]==1}
 		DO: DoAll
 				DoExpr {setpvar[Profile, RynDQLQuestCheck]}
 				DoExpr {setpvar[StateName,DefaultTwo]}
@@ -2599,6 +2651,7 @@ STATE: {DefaultTwo} ~~ {
 	IF:	Always
 		DO:	DoAll
 				DoExpr {clearpvar[StateName]}
+				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[FinishedAllQuests]}
 				DoExpr {clearpvar[Stuck]}
@@ -2666,9 +2719,7 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {clearpvar[JilnaTurnIn]}
 				DoExpr {clearpvar[Meta\ +getpvar[Profile]]}
 				DoExpr {clearpvar[Turnin]}
-				DoExpr {clearallvars[]}
 				DoExpr {clearpvar[DeewainTurnIn]}
-				DoExpr {clearvar[PitStop]}
 				DoExpr {clearpvar[ShadeFail]}
 				DoExpr {clearpvar[RWTurnIn]}
 				DoExpr {clearpvar[RelogTimerComplete]}
@@ -2713,6 +2764,40 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {clearpvar[ReturnProfile]}
 				DoExpr {clearpvar[EoDAbortCounter]}
 				DoExpr {clearpvar[EoDAbortSkip]}
+				DoExpr {clearpvar[TTV]}
+				DoExpr {clearpvar[TThV]}
+				DoExpr {clearpvar[TOV]}
+				DoExpr {clearpvar[TrinkValue]}
+				DoExpr {clearpvar[BSIKCM]}
+	IF: Always
+		DO: DoAll
+				DoExpr {clearpvar[DeathRynDQLNexusCrawl]}
+				DoExpr {clearpvar[DeathRynDQLDreamReaver]}
+				DoExpr {clearpvar[DeathRynDQLDeewains]}
+				DoExpr {clearpvar[DeathRynDQLPurgingTheCorruption]}
+				DoExpr {clearpvar[DeathRynDQLFalatacotDepot]}
+				DoExpr {clearpvar[DeathRynDQLApostateFinale]}
+				DoExpr {clearpvar[RynDQLVirindiRescue]}
+				DoExpr {clearpvar[RynDQLUnleashTheGearknight]}
+				DoExpr {clearpvar[RynDQLSplittingGrael]}
+				DoExpr {clearpvar[RynDQLSerpentBurialGrounds]}
+				DoExpr {clearpvar[RynDQLSaveKarul]}
+				DoExpr {clearpvar[RynDQLRynthidWeapon]}
+				DoExpr {clearpvar[RynDQLReleasingTheLight]}
+				DoExpr {clearpvar[RynDQLProdigalBanderling]}
+				DoExpr {clearpvar[RynDQLMouf]}
+				DoExpr {clearpvar[RynDQLLugianAssault]}
+				DoExpr {clearpvar[RynDQLLostLore]}
+				DoExpr {clearpvar[RynDQLLiberationOfUziz]}
+				DoExpr {clearpvar[RynDQLIQSQ]}
+				DoExpr {clearpvar[RynDQLHaltDericost]}
+				DoExpr {clearpvar[RynDQLGeraineStudy]}
+				DoExpr {clearpvar[RynDQLGearXbow]}
+				DoExpr {clearpvar[RynDQLEndOfDays]}
+				DoExpr {clearpvar[RynDQLDeathsAllure]}
+				DoExpr {clearpvar[RynDQLCountPhainor]}
+				DoExpr {clearpvar[RynDQLBSI]}
+				DoExpr {clearpvar[RynDQLProdigalTusker]}
 	IF: Always
 		DO: DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LargeTome]}
@@ -2846,10 +2931,8 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+getcharstringprop[1]]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+JilnaTurnIn]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Turnin]}
-				DoExpr {clearallvars[]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DefenderCheck]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Alive]}
-				DoExpr {clearvar[PitStop]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+JumpComplete]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Deewain]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DeewainTurnIn]}
@@ -2970,6 +3053,35 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[IntialCleanUp]}
 				DoExpr {clearpvar[SyncBuff]}
 				DoExpr {clearpvar[BuffingStartAll]}
+				DoExpr {clearpvar[DeathRynDQLNexusCrawl]}
+				DoExpr {clearpvar[DeathRynDQLDreamReaver]}
+				DoExpr {clearpvar[DeathRynDQLDeewains]}
+				DoExpr {clearpvar[DeathRynDQLPurgingTheCorruption]}
+				DoExpr {clearpvar[DeathRynDQLFalatacotDepot]}
+				DoExpr {clearpvar[DeathRynDQLApostateFinale]}
+				DoExpr {clearpvar[RynDQLVirindiRescue]}
+				DoExpr {clearpvar[RynDQLUnleashTheGearknight]}
+				DoExpr {clearpvar[RynDQLSplittingGrael]}
+				DoExpr {clearpvar[RynDQLSerpentBurialGrounds]}
+				DoExpr {clearpvar[RynDQLSaveKarul]}
+				DoExpr {clearpvar[RynDQLRynthidWeapon]}
+				DoExpr {clearpvar[RynDQLReleasingTheLight]}
+				DoExpr {clearpvar[RynDQLProdigalBanderling]}
+				DoExpr {clearpvar[RynDQLMouf]}
+				DoExpr {clearpvar[RynDQLLugianAssault]}
+				DoExpr {clearpvar[RynDQLLostLore]}
+				DoExpr {clearpvar[RynDQLLiberationOfUziz]}
+				DoExpr {clearpvar[RynDQLIQSQ]}
+				DoExpr {clearpvar[RynDQLHaltDericost]}
+				DoExpr {clearpvar[RynDQLGeraineStudy]}
+				DoExpr {clearpvar[RynDQLGearXbow]}
+				DoExpr {clearpvar[RynDQLEndOfDays]}
+				DoExpr {clearpvar[RynDQLDeathsAllure]}
+				DoExpr {clearpvar[RynDQLCountPhainor]}
+				DoExpr {clearpvar[RynDQLBSI]}
+				DoExpr {clearpvar[RynDQLProdigalTusker]}
+	IF: Always
+		DO: DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+Start]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroupheck]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+MeleeGroup]}

@@ -122,24 +122,15 @@ STATE: {ClearMobs} ~~ {
 		DO: SetState {SkipQuest}
 	IF:	Always
 		DO:	DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatCapture {!ReGroup} {19}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatCapture {!ReGroup} {19}
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ReGroup}
-	IF:	Any
-			ChatCapture {!ReGroup} {19}
-		DO:	SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All
@@ -169,7 +160,7 @@ STATE: {ClearMobs} ~~ {
 				SetOpt {EnableCombat} {False}
 				ChatExpr {\/vt setmetastate +getpvar[ClearMobs]}
 ~~ }
-STATE: {SkipQuest} ~~{
+STATE: {SkipQuest} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -178,10 +169,10 @@ STATE: {SkipQuest} ~~{
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestNC,1]" /></control></view>}
-	IF: Always
+	IF: Expr {getcharstringprop[1]==getpvar[LeaderName]}
 		DO: DoAll
-				DoExpr {setpvar[DoQuestNexus,0]}
-				DoExpr {clearpvar[Death+getpvar[Profile]]}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setpvar[DoQuestNexus,0]`}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec clearpvar[Death+getpvar[Profile]]`}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
 	IF:	All
 			Expr {getpvar[DoQuestNexus]==0}
@@ -417,24 +408,15 @@ STATE: {LeverDoor} ~~ {
 		DO:	SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestNC]==1}
 		DO: SetState {SkipQuest}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatCapture {!ReGroup} {19}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatCapture {!ReGroup} {19}
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ReGroup}
-	IF:	Any
-			ChatCapture {!ReGroup} {19}
-		DO:	SetState {ReGroupRecall}
 	IF:	All
 			Any
 				CellE 7F0201F8
@@ -902,24 +884,15 @@ STATE: {Nexus} ~~ {
 		DO:	SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestNC]==1}
 		DO: SetState {SkipQuest}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatCapture {!ReGroup} {19}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatCapture {!ReGroup} {19}
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ReGroup}
-	IF:	Any
-			ChatCapture {!ReGroup} {19}
-		DO:	SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoExpr {setpvar[Step,2]}
 	IF:	Not Expr {testvar[StateTimer]}
@@ -976,24 +949,15 @@ STATE: {NexusDoor} ~~ {
 		DO:	SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestNC]==1}
 		DO: SetState {SkipQuest}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatCapture {!ReGroup} {19}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatCapture {!ReGroup} {19}
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ReGroup}
-	IF:	Any
-			ChatCapture {!ReGroup} {19}
-		DO:	SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				SetOpt {EnableCombat} {False}
@@ -1067,24 +1031,15 @@ STATE: {NexusThree} ~~ {
 		DO:	SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestNC]==1}
 		DO: SetState {SkipQuest}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatCapture {!ReGroup} {19}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatCapture {!ReGroup} {19}
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ReGroup}
-	IF:	Any
-			ChatCapture {!ReGroup} {19}
-		DO:	SetState {ReGroupRecall}
 	IF:	Always
 		DO:	DoAll
 				SetOpt {EnableNav} {True}
@@ -1176,24 +1131,15 @@ STATE: {NexusTwo} ~~ {
 		DO:	SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestNC]==1}
 		DO: SetState {SkipQuest}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatCapture {!ReGroup} {19}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatCapture {!ReGroup} {19}
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ReGroup}
-	IF:	Any
-			ChatCapture {!ReGroup} {19}
-		DO:	SetState {ReGroupRecall}
 	IF:	Always
 		DO:	SetOpt {EnableCombat} {False}
 	IF:	Always
@@ -1320,24 +1266,15 @@ STATE: {OldNexus} ~~ {
 		DO:	SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestNC]==1}
 		DO: SetState {SkipQuest}
-	IF:	All
-			Expr {getpvar[Leader]==1}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatCapture {!ReGroup} {19}
 			Any
-				Death
-				ChatMatch {^Your fellow .* has died!$}
 				BlockE C8E90000
-				ChatCapture {!ReGroup} {19}
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
-	IF:	Any
-			Death
-			Any
-				BlockE C8E90000
-		DO:	Chat {/f !ReGroup}
-	IF:	Any
-			ChatCapture {!ReGroup} {19}
-		DO:	SetState {ReGroupRecall}
 	IF:	Not Expr {testvar[StateTimer]}
 		DO:	DoExpr {stopwatchstart[setvar[StateTimer, stopwatchcreate[]]]}
 	IF:	All

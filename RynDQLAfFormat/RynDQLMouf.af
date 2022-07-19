@@ -36,7 +36,7 @@
 ~~		cht					jmp															
 ~~		prt (deprecated in VTank)														
 ~~ }																					
-STATE: {SkipQuest} ~~{
+STATE: {SkipQuest} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -45,10 +45,10 @@ STATE: {SkipQuest} ~~{
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestMouf,1]" /></control></view>}
-	IF: Always
+	IF: Expr {getcharstringprop[1]==getpvar[LeaderName]}
 		DO: DoAll
-				DoExpr {setpvar[DoQuestMouf,0]}
-				DoExpr {clearpvar[Death+getpvar[Profile]]}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setpvar[DoQuestMouf,0]`}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec clearpvar[Death+getpvar[Profile]]`}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
 	IF:	All
 			Expr {getpvar[DoQuestMouf]==0}

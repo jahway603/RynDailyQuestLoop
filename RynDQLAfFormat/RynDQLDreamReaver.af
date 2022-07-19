@@ -81,7 +81,7 @@ STATE: {ClearMobs} ~~ {
 	IF:	Always
 		DO:	DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0625]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 ~~ }																				
-STATE: {SkipQuest} ~~{
+STATE: {SkipQuest} ~~ {
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -90,11 +90,11 @@ STATE: {SkipQuest} ~~{
 				DoExpr {clearvar[capturegroup_tellquest]}
 	IF:	Not Expr {uiviewexists[STUCK]}
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestDR,1]" /></control></view>}
-	IF: Always
+	IF: Expr {getcharstringprop[1]==getpvar[LeaderName]}
 		DO: DoAll
-				DoExpr {setpvar[DoDR,0]}
-				DoExpr {setpvar[DoQuestDR,0]}
-				DoExpr {clearpvar[Death+getpvar[Profile]]}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setpvar[DoDR,0]`}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec setpvar[DoQuestDR,0]`}
+				ChatExpr {\/ub bct DailyLoop+getworldname[]+getpvar[GroupIdentifier]+` \/ub mexec clearpvar[Death+getpvar[Profile]]`}
 				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
 	IF:	All
 			Expr {getpvar[DoDR]==0}
@@ -1362,10 +1362,10 @@ STATE: {ToTurnIn} ~~ {
 		DO: SetState {SkipQuest}
 	IF:	BlockE 586C0000
 		DO:	EmbedNav nav16 {EndDream.nav}
-	IF:	All
-			CellE 586C01D3
-			NavEmpty
-		DO:	SetState {Turnin}
+	IF:	CellE 586C01D3
+		DO:	DoAll
+				EmbedNav nav999 {Empty.nav}
+				SetState {Turnin}
 ~~ }
 STATE: {Turnin} ~~ {
 	IF:	All
@@ -1907,4 +1907,6 @@ NAV: nav16 once ~~ {
 	chk -31.1177968343099 -16.0018703142802 -0.149979162216187
 	ptl -31.0293125152588 -15.675 -0.149979162216187 -31.1377858479818 -15.9931541760763 -0.150262504816055 14 {Portal}
 	pau -31.0293125152588 -15.675 -0.149979162216187 5000
+~~ }
+NAV: nav999 once ~~ {
 ~~ }
