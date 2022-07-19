@@ -431,38 +431,38 @@ STATE: {SetTokenVar} ~~ {
 				DoExpr {setpvar[TokenVar,Token of the Aura of the World]}
 				DoExpr {setpvar[TokenLocation,Castle]}
 				SetState {TokenCountVar}
-	IF:	All
-			Expr {getcharskill_traininglevel[37]<3}
-			Expr {getcharintprop[334]<10}
-		DO:	DoAll
-				DoExpr {setpvar[CurrentAura,getcharintprop[334]]}
-				DoExpr {setpvar[TokenVar,Light Falatacot Token of the Aura of Invulnerability]}
-				DoExpr {setpvar[TokenLocation,Sanctuary]}
-				SetState {TokenCountVar}
-	IF:	All
-			Expr {getcharskill_traininglevel[37]<3}
-			Expr {getcharintprop[344]<5}
-		DO:	DoAll
-				DoExpr {setpvar[CurrentAura,getcharintprop[344]]}
-				DoExpr {setpvar[TokenVar,Light Falatacot Token of the Aura of Specialization Mastery]}
-				DoExpr {setpvar[TokenLocation,Sanctuary]}
-				SetState {TokenCountVar}
-	IF:	All
-			Expr {getcharskill_traininglevel[37]>=3}
-			Expr {getcharintprop[333]<10}
-		DO:	DoAll
-				DoExpr {setpvar[CurrentAura,getcharintprop[334]]}
-				DoExpr {setpvar[TokenVar,Dark Falatacot Token of the Aura of Destruction]}
-				DoExpr {setpvar[TokenLocation,Kahiri]}
-				SetState {TokenCountVar}
-	IF:	All
-			Expr {getcharskill_traininglevel[37]>=3}
-			Expr {getcharintprop[344]<5}
-		DO:	DoAll
-				DoExpr {setpvar[CurrentAura,getcharintprop[344]]}
-				DoExpr {setpvar[TokenVar,Dark Falatacot Token of the Aura of Specialization Mastery]}
-				DoExpr {setpvar[TokenLocation,Kahiri]}
-				SetState {TokenCountVar}
+	~~ IF:	All
+			~~ Expr {getcharskill_traininglevel[37]<3}
+			~~ Expr {getcharintprop[334]<10}
+		~~ DO:	DoAll
+				~~ DoExpr {setpvar[CurrentAura,getcharintprop[334]]}
+				~~ DoExpr {setpvar[TokenVar,Light Falatacot Token of the Aura of Invulnerability]}
+				~~ DoExpr {setpvar[TokenLocation,Sanctuary]}
+				~~ SetState {TokenCountVar}
+	~~ IF:	All
+			~~ Expr {getcharskill_traininglevel[37]<3}
+			~~ Expr {getcharintprop[344]<5}
+		~~ DO:	DoAll
+				~~ DoExpr {setpvar[CurrentAura,getcharintprop[344]]}
+				~~ DoExpr {setpvar[TokenVar,Light Falatacot Token of the Aura of Specialization Mastery]}
+				~~ DoExpr {setpvar[TokenLocation,Sanctuary]}
+				~~ SetState {TokenCountVar}
+	~~ IF:	All
+			~~ Expr {getcharskill_traininglevel[37]>=3}
+			~~ Expr {getcharintprop[333]<10}
+		~~ DO:	DoAll
+				~~ DoExpr {setpvar[CurrentAura,getcharintprop[334]]}
+				~~ DoExpr {setpvar[TokenVar,Dark Falatacot Token of the Aura of Destruction]}
+				~~ DoExpr {setpvar[TokenLocation,Kahiri]}
+				~~ SetState {TokenCountVar}
+	~~ IF:	All
+			~~ Expr {getcharskill_traininglevel[37]>=3}
+			~~ Expr {getcharintprop[344]<5}
+		~~ DO:	DoAll
+				~~ DoExpr {setpvar[CurrentAura,getcharintprop[344]]}
+				~~ DoExpr {setpvar[TokenVar,Dark Falatacot Token of the Aura of Specialization Mastery]}
+				~~ DoExpr {setpvar[TokenLocation,Kahiri]}
+				~~ SetState {TokenCountVar}
 ~~ }
 STATE: {SpecializationMath} ~~ {
 	IF:	All
