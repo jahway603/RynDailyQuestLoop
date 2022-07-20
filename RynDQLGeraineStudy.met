@@ -6142,7 +6142,7 @@ K
 V
 n
 n
-2
+3
 i
 26
 TABLE
@@ -6169,6 +6169,19 @@ s
 e
 s
 getequippedweapontype[]==Wand&&getcombatstate[]==Melee
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+stopwatchelapsedseconds[getvar[CombatStuck]]>=120
 s
 /ub quit
 s
@@ -8517,7 +8530,7 @@ n
 s
 e
 s
-clearpvar[Death+getpvar[Profile]]
+clearpvar[DeathRynDQLGeraineStudy]
 i
 7
 TABLE
@@ -25478,7 +25491,7 @@ K
 V
 n
 n
-2
+3
 i
 26
 TABLE
@@ -25505,6 +25518,19 @@ s
 e
 s
 getequippedweapontype[]==Wand&&getcombatstate[]==Melee
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+stopwatchelapsedseconds[getvar[CombatStuck]]>=120
 s
 /ub quit
 s
