@@ -147,6 +147,7 @@ STATE: {ReGroupRecall} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -628,7 +629,7 @@ STATE: {Dungeon} ~~ {
 				CellE 59510161
 				CellE 5951016A
 		DO:	DoAll
-				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {setvar[PitStop,1]}
 				DoExpr {setpvar[StateName,Dungeon]}
 				DoExpr {setpvar[CheckSync,DungeonPitStopOne]}
@@ -650,7 +651,7 @@ STATE: {Dungeon} ~~ {
 			NavEmpty
 			CellE 5951010F
 		DO:	DoAll
-				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+InsideDungeon]}
 				DoExpr {setpvar[StateName,FightBoss]}
@@ -748,6 +749,7 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[QuestCompletedSkip]==1}
 				Expr {testpvar[KTFlag]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+RangeDown]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]==1}
@@ -767,7 +769,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[Stuck]}
-				DoExpr {clearpvar[Death+getpvar[Profile]]}
+				DoExpr {clearpvar[DeathRynDQLLugianAssault]}
 				DoExpr {clearpvar[Door]}
 				DoExpr {clearpvar[LugianAssaultTurnIn]}
 				DoExpr {clearpvar[LugianAssaultFlag]}
@@ -775,6 +777,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[QuestCompletedSkip]}
 				DoExpr {clearpvar[KTFlag]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+RangeDown]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]}
@@ -805,6 +808,7 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[QuestCompletedSkip]==0}
 			Expr {testpvar[KTFlag]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DoorLA]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+RangeDown]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]==0}
@@ -1535,6 +1539,7 @@ STATE: {ToRynthid} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	BlockE 30320000
 		DO:	DoExpr {clearvar[CombatStuck]}

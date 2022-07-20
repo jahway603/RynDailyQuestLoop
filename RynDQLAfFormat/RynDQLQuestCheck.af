@@ -1604,9 +1604,7 @@ STATE: {SyncBuff} ~~{
 		DO: DoAll
 				DoExpr {setpvar[BuffingStartAll,1]}
 				Chat {/vt forcebuff}
-	IF: All
-			NeedToBuff
-			Expr {vtgetsetting[EnableBuffing]!=True}
+	IF: Always
 		DO: SetOpt {EnableBuffing} {True}
 	IF:	All
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+SyncBuffQCComplete]==0}
@@ -2769,6 +2767,9 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {clearpvar[TOV]}
 				DoExpr {clearpvar[TrinkValue]}
 				DoExpr {clearpvar[BSIKCM]}
+				DoExpr {clearpvar[LoUDoorOne]}
+				DoExpr {clearpvar[LoUDoorTwo]}
+				DoExpr {clearpvar[LoUDoorThree]}
 	IF: Always
 		DO: DoAll
 				DoExpr {clearpvar[DeathRynDQLNexusCrawl]}
@@ -2777,27 +2778,27 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {clearpvar[DeathRynDQLPurgingTheCorruption]}
 				DoExpr {clearpvar[DeathRynDQLFalatacotDepot]}
 				DoExpr {clearpvar[DeathRynDQLApostateFinale]}
-				DoExpr {clearpvar[RynDQLVirindiRescue]}
-				DoExpr {clearpvar[RynDQLUnleashTheGearknight]}
-				DoExpr {clearpvar[RynDQLSplittingGrael]}
-				DoExpr {clearpvar[RynDQLSerpentBurialGrounds]}
-				DoExpr {clearpvar[RynDQLSaveKarul]}
-				DoExpr {clearpvar[RynDQLRynthidWeapon]}
-				DoExpr {clearpvar[RynDQLReleasingTheLight]}
-				DoExpr {clearpvar[RynDQLProdigalBanderling]}
-				DoExpr {clearpvar[RynDQLMouf]}
-				DoExpr {clearpvar[RynDQLLugianAssault]}
-				DoExpr {clearpvar[RynDQLLostLore]}
-				DoExpr {clearpvar[RynDQLLiberationOfUziz]}
-				DoExpr {clearpvar[RynDQLIQSQ]}
-				DoExpr {clearpvar[RynDQLHaltDericost]}
-				DoExpr {clearpvar[RynDQLGeraineStudy]}
-				DoExpr {clearpvar[RynDQLGearXbow]}
-				DoExpr {clearpvar[RynDQLEndOfDays]}
-				DoExpr {clearpvar[RynDQLDeathsAllure]}
-				DoExpr {clearpvar[RynDQLCountPhainor]}
-				DoExpr {clearpvar[RynDQLBSI]}
-				DoExpr {clearpvar[RynDQLProdigalTusker]}
+				DoExpr {clearpvar[DeathRynDQLVirindiRescue]}
+				DoExpr {clearpvar[DeathRynDQLUnleashTheGearknight]}
+				DoExpr {clearpvar[DeathRynDQLSplittingGrael]}
+				DoExpr {clearpvar[DeathRynDQLSerpentBurialGrounds]}
+				DoExpr {clearpvar[DeathRynDQLSaveKarul]}
+				DoExpr {clearpvar[DeathRynDQLRynthidWeapon]}
+				DoExpr {clearpvar[DeathRynDQLReleasingTheLight]}
+				DoExpr {clearpvar[DeathRynDQLProdigalBanderling]}
+				DoExpr {clearpvar[DeathRynDQLMouf]}
+				DoExpr {clearpvar[DeathRynDQLLugianAssault]}
+				DoExpr {clearpvar[DeathRynDQLLostLore]}
+				DoExpr {clearpvar[DeathRynDQLLiberationOfUziz]}
+				DoExpr {clearpvar[DeathRynDQLIQSQ]}
+				DoExpr {clearpvar[DeathRynDQLHaltDericost]}
+				DoExpr {clearpvar[DeathRynDQLGeraineStudy]}
+				DoExpr {clearpvar[DeathRynDQLGearXbow]}
+				DoExpr {clearpvar[DeathRynDQLEndOfDays]}
+				DoExpr {clearpvar[DeathRynDQLDeathsAllure]}
+				DoExpr {clearpvar[DeathRynDQLCountPhainor]}
+				DoExpr {clearpvar[DeathRynDQLBSI]}
+				DoExpr {clearpvar[DeathRynDQLProdigalTusker]}
 	IF: Always
 		DO: DoAll
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LargeTome]}
@@ -2992,6 +2993,9 @@ STATE: {DefaultTwo} ~~ {
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EoDAbort]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+PortalStuck]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EODTurnIn]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree]}
 	IF:	Always
 		DO:	DoExpr {clearallvars[]}
 	IF:	Expr {getfellowshipcount[]<getpvar[FellowCount]}

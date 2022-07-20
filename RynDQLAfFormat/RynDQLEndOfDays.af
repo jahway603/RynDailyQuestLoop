@@ -135,6 +135,7 @@ STATE: {ReGroupRecall} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -699,7 +700,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Stuck]}
-				DoExpr {clearpvar[Death+getpvar[Profile]]}
+				DoExpr {clearpvar[DeathRynDQLEndOfDays]}
 				DoExpr {clearpvar[TurnIn]}
 				DoExpr {clearpvar[EODTurnIn]}
 				DoExpr {clearpvar[ReturnProfile]}
@@ -1356,6 +1357,7 @@ STATE: {ToRynthid} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	BlockE 30320000
 		DO:	DoExpr {clearvar[CombatStuck]}

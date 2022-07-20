@@ -177,7 +177,7 @@ STATE: {CountDungeon} ~~ {
 	IF:	Any
 			CellE 5862011A
 			CellE 5862011B
-			MobsInDist_Name 1 5 {Spirit of Protection}
+			MobsInDist_Name 1 25 {Spirit of Protection}
 		DO:	DoAll
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.25]]`]}
 				SetOpt {EnableNav} {False}
@@ -323,6 +323,7 @@ STATE: {ReGroupRecall} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -638,7 +639,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[StateName]}
 				DoExpr {clearpvar[Stuck]}
-				DoExpr {clearpvar[Death+getpvar[Profile]]}
+				DoExpr {clearpvar[DeathRynDQLCountPhainor]}
 				DoExpr {clearpvar[QuestCompletedSkip]}
 				DoExpr {clearpvar[Step]}
 				DoExpr {clearpvar[RelogTimerComplete]}
@@ -1125,6 +1126,7 @@ STATE: {Summon} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	Never
 		DO:	Chat {%%% Surface Portal Count Phainor %%%}
@@ -1367,6 +1369,7 @@ STATE: {ToGY} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	Any
 			CellE 482D0104
@@ -1476,6 +1479,7 @@ STATE: {ToTN} ~~ {
 				Any
 					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+					Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}

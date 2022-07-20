@@ -80,6 +80,7 @@ STATE: {ReGroupRecall} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -97,10 +98,16 @@ STATE: {ReGroupRecall} ~~ {
 				DoExpr {clearvar[StateTimer]}
 				DoExpr {clearvar[JumpStuck]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorOne]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne]}
+				DoExpr {clearpvar[LoUDoorOne]}
 				DoExpr {clearvar[EdificeDoorOne]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo]}
+				DoExpr {clearpvar[LoUDoorTwo]}
 				DoExpr {clearvar[EdificeDoorTwo]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorThree]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree]}
+				DoExpr {clearpvar[LoUDoorThree]}
 				DoExpr {clearvar[EdificeDoorThree]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DelegateDoorOpen]}
 				SetOpt {NavCloseStopRange} {0.00625}
@@ -266,11 +273,17 @@ STATE: {EdificeDoorOne} ~~ {
 			Expr {getpvar[Leader]==1}
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744831]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744831]]==0}
-		DO:	DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]}
+		DO:	DoAll
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]}
+				DoExpr {clearpvar[LoUDoorOne]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744831]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744831]]==0}
-		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorOne,0]}
+		DO:	DoAll
+				DoExpr {clearpvar[LoUDoorOne]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne]}
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorOne,0]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744831]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744831]]==1}
@@ -310,11 +323,17 @@ STATE: {EdificeDoorThree} ~~ {
 			Expr {getpvar[Leader]==1}
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744829]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744829]]==0}
-		DO:	DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]}
+		DO:	DoAll
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]}
+				DoExpr {clearpvar[LoUDoorThree]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744829]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744829]]==0}
-		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorThree,0]}
+		DO:	DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorThree,0]}
+				DoExpr {clearpvar[LoUDoorThree]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744829]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744829]]==1}
@@ -354,11 +373,17 @@ STATE: {EdificeDoorTwo} ~~ {
 			Expr {getpvar[Leader]==1}
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744830]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744830]]==0}
-		DO:	DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]}
+		DO:	DoAll
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]}
+				DoExpr {clearpvar[LoUDoorTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744830]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744830]]==0}
-		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorTwo,0]}
+		DO:	DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+EdificeDoorTwo,0]}
+				DoExpr {clearpvar[LoUDoorTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo]}
 	IF:	All
 			Expr {getobjectinternaltype[wobjectfindbyid[1971744830]]==7}
 			Expr {wobjectgetisdooropen[wobjectfindbyid[1971744830]]==1}
@@ -401,6 +426,34 @@ STATE: {EdificeJump} ~~ {
 	IF:	All
 			NavEmpty
 			CellE 5867034D
+		DO:	DoExpr {setpvar[LoUDoorTwo,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[LoUDoorTwo]==1}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo]}
+		DO:	DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo,listcreate[]]}
+				SetState {EdificeJump}
+	IF:	All
+			Expr {getpvar[LoUDoorTwo]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo]}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getcharstringprop[1]]}
+				SetState {EdificeJump}
+	IF:	All
+			Expr {getpvar[LoUDoorTwo]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,EdificeUseLeverTwo]}
 				DoExpr {setpvar[CheckSync,EdificeTwoA]}
@@ -615,8 +668,10 @@ STATE: {EdificeToDoorOne} ~~ {
 		DO:	SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLU]==1}
 		DO: SetState {SkipQuest}
-	IF:	Always
+	IF:	Expr {getpvar[Leader]==0}
 		DO:	SetWatchdog 5 45 {WatchDog}
+	IF:	Expr {getpvar[Leader]==1}
+		DO:	SetWatchdog 5 180 {WatchDog}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
@@ -639,11 +694,40 @@ STATE: {EdificeToDoorOne} ~~ {
 			CellE 586702B3
 		DO:	DoAll
 				DoExpr {setvar[EdificeDoorOne,1]}
+				DoExpr {setpvar[LoUDoorOne,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[LoUDoorOne]==1}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne]}
+		DO:	DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne,listcreate[]]}
+				SetState {EdificeToDoorOne}
+	IF:	All
+			Expr {getpvar[LoUDoorOne]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne]}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getcharstringprop[1]]}
+				SetState {EdificeToDoorOne}
+	IF:	All
+			Expr {getpvar[LoUDoorOne]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameNine]]}
+		DO:	DoAll
 				DoExpr {setpvar[StateName,EdificeDoorOne]}
-				DoExpr {setpvar[CheckSync,EdificeOneA]}
+				DoExpr {setpvar[CheckSync,EdificeDoorOneA]}
 				Chat {/vt meta load RynDQLCheck}
 	IF:	All
-			SecsInStateGE 2
+			Expr {getpvar[Leader]==1}
 			NavEmpty
 			CellE 586702B3
 		DO:	SetState {EdificeDoorOne}
@@ -661,8 +745,10 @@ STATE: {EdificeToDoorThree} ~~ {
 		DO:	SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLU]==1}
 		DO: SetState {SkipQuest}
-	IF:	Always
+	IF:	Expr {getpvar[Leader]==0}
 		DO:	SetWatchdog 5 45 {WatchDog}
+	IF:	Expr {getpvar[Leader]==1}
+		DO:	SetWatchdog 5 180 {WatchDog}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
@@ -685,11 +771,40 @@ STATE: {EdificeToDoorThree} ~~ {
 			CellE 58670188
 		DO:	DoAll
 				DoExpr {setvar[EdificeDoorThree,1]}
+				DoExpr {setpvar[LoUDoorThree,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[LoUDoorThree]==1}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree]}
+		DO:	DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree,listcreate[]]}
+				SetState {EdificeToDoorThree}
+	IF:	All
+			Expr {getpvar[LoUDoorThree]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree]}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getcharstringprop[1]]}
+				SetState {EdificeToDoorThree}
+	IF:	All
+			Expr {getpvar[LoUDoorThree]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameNine]]}
+		DO:	DoAll
 				DoExpr {setpvar[StateName,EdificeDoorThree]}
 				DoExpr {setpvar[CheckSync,EdificeThreeA]}
 				Chat {/vt meta load RynDQLCheck}
 	IF:	All
-			SecsInStateGE 2
+			Expr {getpvar[Leader]==1}
 			NavEmpty
 			CellE 58670188
 		DO:	SetState {EdificeDoorThree}
@@ -707,8 +822,10 @@ STATE: {EdificeToDoorTwo} ~~ {
 		DO:	SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLU]==1}
 		DO: SetState {SkipQuest}
-	IF:	Always
-		DO:	SetWatchdog 5 45 {WatchDog}
+	IF:	Expr {getpvar[Leader]==0}
+		DO:	SetWatchdog 5 180 {WatchDog}
+	IF:	Expr {getpvar[Leader]==1}
+		DO:	SetWatchdog 5 180 {WatchDog}
 	IF:	Any
 			Death
 			ChatMatch {^Your fellow .* has died!$}
@@ -733,11 +850,40 @@ STATE: {EdificeToDoorTwo} ~~ {
 			CellE 58670262
 		DO:	DoAll
 				DoExpr {setvar[EdificeDoorTwo,1]}
+				DoExpr {setpvar[LoUDoorTwo,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[LoUDoorTwo]==1}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo]}
+		DO:	DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo,listcreate[]]}
+				SetState {EdificeToDoorTwo}
+	IF:	All
+			Expr {getpvar[LoUDoorTwo]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo]}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getcharstringprop[1]]}
+				SetState {EdificeToDoorTwo}
+	IF:	All
+			Expr {getpvar[LoUDoorTwo]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo],getpvar[FellowNameNine]]}
+		DO:	DoAll
 				DoExpr {setpvar[StateName,EdificeDoorTwo]}
 				DoExpr {setpvar[CheckSync,EdificeTwoA]}
 				Chat {/vt meta load RynDQLCheck}
 	IF:	All
-			SecsInStateGE 2
+			Expr {getpvar[Leader]==1}
 			NavEmpty
 			CellE 58670262
 		DO:	SetState {EdificeDoorTwo}
@@ -757,8 +903,10 @@ STATE: {EdificeToLeverOne} ~~ {
 		DO: SetState {SkipQuest}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+DoorStep]>0}
 		DO:	SetState {DoorStep}
-	IF:	Always
+	IF:	Expr {getpvar[Leader]==0}
 		DO:	SetWatchdog 5 45 {WatchDog}
+	IF:	Expr {getpvar[Leader]==1}
+		DO:	SetWatchdog 5 180 {WatchDog}
 	IF:	Any
 			CellE 5867026B
 			CellE 5867026A
@@ -767,9 +915,37 @@ STATE: {EdificeToLeverOne} ~~ {
 			NavEmpty
 			CellE 5867031F
 			Expr {getpvar[Leader]==1}
+		DO:	DoExpr {setpvar[LoUDoorOne,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[LoUDoorOne]==1}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne]}
+		DO:	DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne,listcreate[]]}
+				SetState {EdificeToLeverOne}
+	IF:	All
+			Expr {getpvar[LoUDoorOne]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne]}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getcharstringprop[1]]}
+				SetState {EdificeToLeverOne}
+	IF:	All
+			Expr {getpvar[LoUDoorOne]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,EdificeUseLeverOne]}
-				DoExpr {setpvar[CheckSync,EdificeOneA]}
+				DoExpr {setpvar[CheckSync,EdificeDoorOneA]}
 				Chat {/vt meta load RynDQLCheck}
 	IF:	All
 			NavEmpty
@@ -803,12 +979,42 @@ STATE: {EdificeToLeverThree} ~~ {
 		DO:	SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLU]==1}
 		DO: SetState {SkipQuest}
-	IF:	Always
+	IF:	Expr {getpvar[Leader]==0}
 		DO:	SetWatchdog 5 75 {WatchDog}
+	IF:	Expr {getpvar[Leader]==1}
+		DO:	SetWatchdog 5 240 {WatchDog}
 	IF:	All
 			NavEmpty
 			CellE 586702F4
 			Expr {getpvar[Leader]==1}
+		DO:	DoExpr {setpvar[LoUDoorThree,1]}
+	IF:	All
+			Expr {getpvar[Leader]==1}
+			Expr {getpvar[LoUDoorThree]==1}
+			Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree]}
+		DO:	DoAll
+				DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree,listcreate[]]}
+				SetState {EdificeToLeverThree}
+	IF:	All
+			Expr {getpvar[LoUDoorThree]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree]}
+			Not Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getcharstringprop[1]]}
+		DO:	DoAll
+				DoExpr {listadd[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getcharstringprop[1]]}
+				SetState {EdificeToLeverThree}
+	IF:	All
+			Expr {getpvar[LoUDoorThree]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree]}
+			Any
+				Expr {getpvar[FellowCount]==1&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]}
+				Expr {getpvar[FellowCount]==2&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]}
+				Expr {getpvar[FellowCount]==3&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameThree]]}
+				Expr {getpvar[FellowCount]==4&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFour]]}
+				Expr {getpvar[FellowCount]==5&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFive]]}
+				Expr {getpvar[FellowCount]==6&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameSix]]}
+				Expr {getpvar[FellowCount]==7&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameSeven]]}
+				Expr {getpvar[FellowCount]==8&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameEight]]}
+				Expr {getpvar[FellowCount]==9&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[LeaderName]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameTwo]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameThree]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFour]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameFive]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameSix]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameSeven]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameEight]]&&listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree],getpvar[FellowNameNine]]}
 		DO:	DoAll
 				DoExpr {setpvar[StateName,EdificeUseLeverThree]}
 				DoExpr {setpvar[CheckSync,EdificeThreeA]}
@@ -863,8 +1069,10 @@ STATE: {EdificeToLeverTwo} ~~ {
 		DO:	SetState {Zstuck}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLU]==1}
 		DO: SetState {SkipQuest}
-	IF:	Always
+	IF:	Expr {getpvar[Leader]==0}
 		DO:	SetWatchdog 5 45 {WatchDog}
+	IF:	Expr {getpvar[Leader]==1}
+		DO:	SetWatchdog 5 180 {WatchDog}
 	IF:	All
 			CellE 586702B3
 			Expr {getvar[JumpStuck]==0}
@@ -1036,12 +1244,18 @@ STATE: {Finished} ~~ {
 				Expr {testpvar[Profile]==1}
 				Expr {testpvar[DelegateJumpsDone]==1}
 				Expr {testpvar[Stuck]==1}
+				Expr {testpvar[LoUDoorOne ]==1}
+				Expr {testpvar[LoUDoorTwo ]==1}
+				Expr {testpvar[LoUDoorThree ]==1}
 				Expr {testpvar[Death+getpvar[Profile]]==1}
 				Expr {testpvar[LiberationOfUzizTurnIn]==1}
 				Expr {testpvar[Step]==1}
 				Expr {testpvar[Meta\ +getpvar[Profile]]==1}
 				Expr {testpvar[QuestCompletedSkip]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne ]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo ]==1}
+				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree ]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DelegateDoorOpen]==1}
 				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]==1}
@@ -1059,12 +1273,18 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[DelegateJumpsDone]}
 				DoExpr {clearpvar[Stuck]}
-				DoExpr {clearpvar[Death+getpvar[Profile]]}
+				DoExpr {clearpvar[LoUDoorOne]}
+				DoExpr {clearpvar[LoUDoorTwo]}
+				DoExpr {clearpvar[LoUDoorThree]}
+				DoExpr {clearpvar[DeathRynDQLLiberationOfUziz]}
 				DoExpr {clearpvar[LiberationOfUzizTurnIn]}
 				DoExpr {clearpvar[Step]}
 				DoExpr {clearpvar[Meta\ +getpvar[Profile]]}
 				DoExpr {clearpvar[QuestCompletedSkip]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+DelegateDoorOpen]}
 				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]}
@@ -1095,12 +1315,18 @@ STATE: {Finished} ~~ {
 			Expr {testpvar[Profile]==0}
 			Expr {testpvar[DelegateJumpsDone]==0}
 			Expr {testpvar[Stuck]==0}
+			Expr {testpvar[LoUDoorOne]==0}
+			Expr {testpvar[LoUDoorTwo]==0}
+			Expr {testpvar[LoUDoorThree]==0}
 			Expr {testpvar[Death+getpvar[Profile]]==0}
 			Expr {testpvar[LiberationOfUzizTurnIn]==0}
 			Expr {testpvar[Step]==0}
 			Expr {testpvar[Meta\ +getpvar[Profile]]==0}
 			Expr {testpvar[QuestCompletedSkip]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNow]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorOne]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorTwo]==0}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+LoUDoorThree]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DefaultPass]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+DelegateDoorOpen]==0}
 			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+GoNowClear]==0}
@@ -1113,7 +1339,9 @@ STATE: {Finished} ~~ {
 		DO:	Chat {/vt meta load RynDQLQuestCheck}
 ~~ }
 STATE: {FixJump} ~~ {
-	IF:	Expr {coordinategetz[getplayercoordinates[]]>=0.079}
+	IF:	All
+			Expr {getpvar[LoUDoorTwo]==0}
+			Expr {coordinategetz[getplayercoordinates[]]>=0.079}
 		DO:	DoAll
 				DoExpr {$pwr=150}
 				DoExpr {$PI=3.1415926535897932;}
@@ -1129,7 +1357,9 @@ STATE: {FixJump} ~~ {
 				ChatExpr {`/ub jumpsw `+cstrf[$dir,`G0`]+` `+cstrf[$pwr,`G0`]}
 				DoExpr {clearvar[dir]}
 				SetState {FixJump}
-	IF:	Expr {coordinategetz[getplayercoordinates[]]<=0.079}
+	IF:	Any
+			Expr {getpvar[LoUDoorTwo]==1}
+			Expr {coordinategetz[getplayercoordinates[]]<=0.079}
 		DO:	DoAll
 				DoExpr {clearvar[dir]}
 				DoExpr {clearvar[StateTimer]}
@@ -1823,6 +2053,7 @@ STATE: {ToTN} ~~ {
 				Any
 					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+					Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}

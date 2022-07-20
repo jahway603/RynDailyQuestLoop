@@ -499,7 +499,7 @@ STATE: {Finished} ~~ {
 				DoExpr {clearpvar[Step]}
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[Stuck]}
-				DoExpr {clearpvar[Death+getpvar[Profile]]}
+				DoExpr {clearpvar[DeathRynDQLPurgingTheCorruption]}
 				DoExpr {clearpvar[Out]}
 				DoExpr {clearpvar[PTCTurnIn]}
 				DoExpr {clearpvar[Meta\ +getpvar[Profile]]}
@@ -594,6 +594,7 @@ STATE: {GoTurnin} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -998,6 +999,7 @@ STATE: {ReGroupRecall} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -1201,6 +1203,7 @@ STATE: {Summon} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -1466,6 +1469,7 @@ STATE: {ToLS} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -1711,6 +1715,7 @@ STATE: {ToTN} ~~ {
 				Any
 					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+					Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}

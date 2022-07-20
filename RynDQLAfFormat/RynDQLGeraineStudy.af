@@ -583,6 +583,7 @@ STATE: {ReGroupRecall} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -784,7 +785,7 @@ STATE: {Finished} ~~ {
 		DO:	DoAll
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[StateName]}
-				DoExpr {clearpvar[Death+getpvar[Profile]]}
+				DoExpr {clearpvar[DeathRynDQLGeraineStudy]}
 				DoExpr {clearpvar[Stuck]}
 				DoExpr {clearpvar[Given]}
 				DoExpr {clearpvar[Altar]}
@@ -2189,6 +2190,7 @@ STATE: {ToTN} ~~ {
 				Any
 					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+					Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}

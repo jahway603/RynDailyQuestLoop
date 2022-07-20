@@ -138,6 +138,7 @@ STATE: {ReGroupRecall} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -364,7 +365,7 @@ STATE: {DonovanCheck} ~~ {
 				DoExpr {setpvar[Profile,RynDQLBSI]}
 				DoExpr {setpvar[StateName,ToIceCave]}
 				DoExpr {setpvar[CheckSync,ToIceCave]}
-				Chat {/vt meta load RynDQLCheck}
+				Chat {/vt meta load RynDQLCheck} ~~ To IceCave
 	IF:	All
 			Expr {getpvar[Death]==0}
 			Any
@@ -648,7 +649,7 @@ STATE: {Finished} ~~ {
 		DO:	DoAll
 				DoExpr {clearpvar[Profile]}
 				DoExpr {clearpvar[Stuck]}
-				DoExpr {clearpvar[Death+getpvar[Profile]]}
+				DoExpr {clearpvar[DeathRynDQLBSI]}
 				DoExpr {clearpvar[Scroll]}
 				DoExpr {clearpvar[LargeTome]}
 				DoExpr {clearpvar[FlagKT]}
@@ -1491,6 +1492,7 @@ STATE: {PortalRecall} ~~ {
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
@@ -1711,8 +1713,9 @@ STATE: {ToDonovan} ~~ {
 				CellE 79E8003A
 		DO:	DoAll
 				DoExpr {setpvar[StateName,DonovanCheck]}
+				DoExpr {setpvar[CheckSync,DonovanCheckSync]} 
 				DoExpr {setpvar[Profile,RynDQLBSI]}
-				Chat {/vt meta load RynDQLCheck}
+				Chat {/vt meta load RynDQLCheck} ~~ DonovanCheck
 	IF:	SecsInStateGE 300
 		DO:	SetState {ToTN}
 	IF:	Always
@@ -2053,6 +2056,7 @@ STATE: {ToTN} ~~ {
 				Any
 					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
 					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+					Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
 	IF:	IntoPortal
 		DO:	DoExpr {clearvar[CombatStuck]}
