@@ -1,3 +1,6 @@
+~~ Required Plugins ~~ 
+Utility belt latest version from https://ubstaging.surge.sh/master/releases/ 
+
 ~~ Objective ~~
 	Objective to run all the included luminance quests as a group or solo.
 	Keep Fellow sync'd together throughout.
@@ -70,6 +73,8 @@ Under %% Summon Names Below %% If Summoning portals yourself is the wanted.These
 	Change setpvar[NexusCrawlSummon,CharFive] to the character that is tied to the respective portals from the list below. Nexus Crawl Surface Ex setpvar[NexusCrawlSummon,Ryn V]
 	Change setpvar[DeathsAllureSummon,CharSix] to the character that is tied to the respective portals from the list below. Thrungus Hole Surface Ex setpvar[DeathsAllureSummon,Ryn VI]
 	Change setpvar[CountPhainorSummon,CharSeven] to the character that is tied to the respective portals from the list below. Count Phainor Surface Ex setpvar[CountPhainorSummon,Ryn VII]
+
+Under %% Summon Toggles Below %% Set to 1 to Enable, set to 0 to disable.
 
 Under %% Quest Toggles Below %% Set to 1 to run the quest, set to 0 to skip the quest.
 
