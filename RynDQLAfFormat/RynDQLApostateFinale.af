@@ -1113,7 +1113,7 @@ STATE: {ReGroupRecall} ~~ {
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
-	IF:	IntoPortal
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
 		DO:	SetState {SkipQuest}
@@ -1373,6 +1373,20 @@ STATE: {SkipQuest} ~~ {
 ~~ }
 STATE: {SyncBuff} ~~ {
 	IF:	All
+			Not Expr {testvar[CombatStuck]}
+			Not Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
+		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
+	IF:	All
+			Expr {testvar[CombatStuck]]}
+			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=180}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=210}
+		DO:	Chat {/ub quit}
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
+		DO:	DoExpr {clearvar[CombatStuck]}
+	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
 		DO:	DoAll
@@ -1495,7 +1509,7 @@ STATE: {ToGK} ~~ {
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
-	IF:	IntoPortal
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF:	Always
 		DO:	DoAll

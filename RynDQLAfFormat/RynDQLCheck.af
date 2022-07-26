@@ -389,6 +389,7 @@ STATE: {ConfirmProfile} ~~{
 			SecsInStateGE 600
 			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+getpvar[Profile]]]<getpvar[FellowCount]}
 			Expr {getpvar[Profile]!=CMD}
+			Expr {getpvar[Profile]!=RynDQLLumTokens}
 		DO: DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]}
 ~~}
 STATE: {DefaultPass}  ~~{

@@ -42,9 +42,7 @@ STATE: {Finished} ~~ {
 		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="50" title="STUCK"><control type="layout"><control type="button" name="STUCK" left="0" top="0" width="149" height="49" text="STUCK"  actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SyncStuck,1]" /></control></view>}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SyncStuck]==1}
 		DO:	SetState {SyncStuck}
-	IF:	All
-			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]}
-			Expr {listcount[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]]==0}
+	IF:	Not Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]}
 		DO:	DoAll
 				DoExpr {setvar[RynDQLNetworkChirp,1]}
 				DoExpr {clearvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]}
@@ -53,12 +51,10 @@ STATE: {Finished} ~~ {
 				ChatExpr {\/vt setmetastate +getpvar[StateName]}
 	IF: All
 			SecsInStateGE 3
-			All
-				Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]}
-				Expr {listcontains[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getcharstringprop[1]]==1}
+			Expr {testgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]}
 		DO: DoAll
 				DoExpr {setvar[RynDQLNetworkChirp,1]}
-				DoExpr {listremove[getgvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp],getcharstringprop[1]]}
+				DoExpr {cleargvar[getworldname[]+getpvar[GroupIdentifier]+NetworkChirp]}
 				SetState {Finished}
 ~~ }
 STATE: {Default}  ~~{

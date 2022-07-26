@@ -585,7 +585,7 @@ STATE: {ReGroupRecall} ~~ {
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
-	IF:	IntoPortal
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF:	BlockE 00070000
 		DO:	SetState {ToTN}
@@ -1375,6 +1375,18 @@ STATE: {StudyCheck} ~~ {
 				Chat {/vt meta load RynDQLCheck}
 ~~ }
 STATE: {SyncBuff} ~~ {
+	IF:	Not Expr {testvar[CombatStuck]}
+		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
+	IF:	All
+			Expr {testvar[CombatStuck]]}
+			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=180}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=210}
+		DO:	Chat {/ub quit}
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
+		DO:	DoExpr {clearvar[CombatStuck]}
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -2111,7 +2123,9 @@ STATE: {ToStudy} ~~ {
 			BlockE F24F0000
 		DO:	SetState {ToTN}
 	IF:	Always
-		DO:	SetOpt {EnableNav} {True}
+		DO:	DoAll
+				SetWatchdog 5 30 {Watchdog}
+				SetOpt {EnableNav} {True}
 	IF:	BlockE 00070000
 		DO:	EmbedNav nav35 {ToTouTou.nav}
 	IF:	BlockE F5590000
@@ -2192,7 +2206,7 @@ STATE: {ToTN} ~~ {
 					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 					Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
-	IF:	IntoPortal
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF:	Always
 		DO:	DoAll
@@ -2427,6 +2441,34 @@ STATE: {UseBook} ~~ {
 		DO:	Return
 	IF:	SecsInStateGE 3
 		DO:	SetState {UseBook}
+~~ }
+STATE: {Watchdog} ~~ {
+	IF:	All
+			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
+			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
+		DO:	DoAll
+				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
+				DoExpr {clearvar[capturegroup_tellquest]}
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF]==1}
+		DO:	SetState {SkipQuest}
+	IF:	Always
+		DO:	DoAll
+				Chat {/f !ReGroup}
+				DoExpr {clearvar[StateTimer]}
+				SetState {ReGroupRecall}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatCapture {!ReGroup} {19}
+			Any
+				BlockE C8E90000
+		DO:	DoAll
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {Zstuck} ~~ {
 	IF:	Always

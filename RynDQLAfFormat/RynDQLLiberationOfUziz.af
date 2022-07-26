@@ -82,7 +82,7 @@ STATE: {ReGroupRecall} ~~ {
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
-	IF:	IntoPortal
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestLU]==1}
 		DO: SetState {SkipQuest}
@@ -1625,6 +1625,18 @@ STATE: {LootStuckDelay} ~~ {
 				DoExpr {vtsetmetastate[getvar[LootReturn]]}
 ~~ }
 STATE: {SyncBuff} ~~ {
+	IF:	Not Expr {testvar[CombatStuck]}
+		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
+	IF:	All
+			Expr {testvar[CombatStuck]]}
+			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=180}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=210}
+		DO:	Chat {/ub quit}
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
+		DO:	DoExpr {clearvar[CombatStuck]}
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -1820,7 +1832,9 @@ STATE: {ToDelegate} ~~ {
 			Expr {testvar[dir]}
 			NavEmpty
 			SecsInStateGE 4
-			CellE 58670126
+			Any
+				CellE 58670126
+				CellE 58670127
 			Not Expr {coordinategetz[getplayercoordinates[]]#-0.2999}
 		DO:	DoAll
 				ChatExpr {`/ub jumpsw `+cstrf[$dir,`G0`]+` `+cstrf[$pwr,`G0`]}
@@ -1829,6 +1843,7 @@ STATE: {ToDelegate} ~~ {
 	IF:	All
 			Any
 				CellE 58670126
+				CellE 58670127
 				CellE 58670114
 				CellE 58670115
 			Expr {coordinategetz[getplayercoordinates[]]#-0.2999}
@@ -2055,7 +2070,7 @@ STATE: {ToTN} ~~ {
 					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 					Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
-	IF:	IntoPortal
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF:	Always
 		DO:	DoExpr {setpvar[Stuck, ToTN]}

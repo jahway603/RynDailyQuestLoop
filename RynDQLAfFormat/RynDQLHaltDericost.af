@@ -261,7 +261,7 @@ STATE: {ReGroupRecall} ~~ {
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
-	IF:	IntoPortal
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestHD]==1}
 		DO: SetState {SkipQuest}
@@ -1036,6 +1036,8 @@ STATE: {MenhirEastToBottom} ~~ {
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
 	IF:	Always
+		DO:	SetWatchdog 5 90 {Watchdog}
+	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,MenhirEastToBottom]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.0625]]`]}
@@ -1105,6 +1107,8 @@ STATE: {MenhirEastToMid} ~~ {
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
+	IF:	Always
+		DO:	SetWatchdog 5 90 {Watchdog}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,MenhirEastToMid]}
@@ -1248,6 +1252,8 @@ STATE: {MenhirWest} ~~ {
 		DO:	DoAll
 				Chat {/f !ReGroup}
 				SetState {ReGroupRecall}
+	IF:	Always
+		DO:	SetWatchdog 5 90 {Watchdog}
 	IF:	Always
 		DO:	DoAll
 				DoExpr {setpvar[ClearMobs,MenhirWest]}
@@ -1474,6 +1480,18 @@ STATE: {MenhirWest} ~~ {
 		DO:	DoExpr {clearvar[RampTimer]}
 ~~ }
 STATE: {SyncBuff} ~~ {
+	IF:	Not Expr {testvar[CombatStuck]}
+		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
+	IF:	All
+			Expr {testvar[CombatStuck]]}
+			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=180}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=210}
+		DO:	Chat {/ub quit}
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
+		DO:	DoExpr {clearvar[CombatStuck]}
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -1698,7 +1716,7 @@ STATE: {ToTN} ~~ {
 					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 					Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
-	IF:	IntoPortal
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF:	Always
 		DO:	DoAll
@@ -1851,6 +1869,34 @@ STATE: {UseEnchantedMnemosynes} ~~ {
 				Chat {/vt meta load RynDQLCheck}
 	IF:	SecsInStateGE 3
 		DO:	SetState {UseEnchantedMnemosynes}
+~~ }
+STATE: {Watchdog} ~~ {
+	IF:	All
+			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
+			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
+		DO:	DoAll
+				ChatExpr {\/t +getvar[capturegroup_tellquest]+\,Meta +getpvar[Profile]+\ on State +getpvar[StateName]}
+				DoExpr {clearvar[capturegroup_tellquest]}
+	IF:	Not Expr {uiviewexists[STUCK]}
+		DO:	CreateView {STUCK} {<?xml version="1.0"?><view width="150" height="101" title="Stuck"><control type="layout"><control type="button" name="Stuck" left="0" top="0" width="149" height="49" text="Stuck" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck,1]" /><control type="button" name="Skip" left="0" top="50" width="149" height="49" text="Skip" actionexpr="setgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestAF,1]" /></control></view>}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+Zstuck]==1}
+		DO:	SetState {Zstuck}
+	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestHD]==1}
+		DO:	SetState {SkipQuest}
+	IF:	Always
+		DO:	DoAll
+				Chat {/f !ReGroup}
+				DoExpr {clearvar[StateTimer]}
+				SetState {ReGroupRecall}
+	IF:	Any
+			Death
+			ChatMatch {^Your fellow .* has died!$}
+			ChatCapture {!ReGroup} {19}
+			Any
+				BlockE C8E90000
+		DO:	DoAll
+				Chat {/f !ReGroup}
+				SetState {ReGroupRecall}
 ~~ }
 STATE: {Zstuck} ~~ {
 	IF:	Always

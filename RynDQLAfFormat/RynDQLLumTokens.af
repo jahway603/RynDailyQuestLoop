@@ -520,7 +520,7 @@ STATE: {ToCastle} ~~ {
 		DO:	Chat {/ub quit}
 	IF:	All
 			Expr {getpvar[Recall]==0}
-			IntoPortal
+			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF:	All
 			Expr {getpvar[Recall]==0}
@@ -580,7 +580,7 @@ STATE: {ToKahiri} ~~ {
 		DO:	Chat {/ub quit}
 	IF:	All
 			Expr {getpvar[Recall]==0}
-			IntoPortal
+			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF:	All
 			Expr {getpvar[Recall]==0}
@@ -820,7 +820,7 @@ STATE: {ToSanctuary} ~~ {
 		DO:	Chat {/ub quit}
 	IF:	All
 			Expr {getpvar[Recall]==0}
-			IntoPortal
+			Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF:	All
 			SecsInStateGE 3

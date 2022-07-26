@@ -1597,7 +1597,19 @@ STATE: {Default} ~~ {
 				Expr {getpvar[FellowCount]>=9&&getcharstringprop[1]==getpvar[FellowNameNine]}
 		DO: SetState {SyncBuff}
 ~~}
-STATE: {SyncBuff} ~~{
+STATE: {SyncBuff} ~~ {
+	IF:	Not Expr {testvar[CombatStuck]}
+		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
+	IF:	All
+			Expr {testvar[CombatStuck]]}
+			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=180}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=210}
+		DO:	Chat {/ub quit}
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
+		DO:	DoExpr {clearvar[CombatStuck]}
 	IF: All
 			Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+BuffSyncAll]==1}
 			Expr {testpvar[BuffingStartAll]==0}
