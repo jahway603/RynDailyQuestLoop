@@ -395,7 +395,7 @@ STATE: {ReGroupRecall} ~~ {
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
 				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=120}
 		DO:	Chat {/ub quit}
-	IF:	IntoPortal
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
 		DO:	DoExpr {clearvar[CombatStuck]}
 	IF: Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+SkipQuestRW]==1}
 		DO: SetState {SkipQuest}
@@ -520,6 +520,18 @@ STATE: {Default} ~~ {
 				SetState {ToRynthid}
 ~~ }
 STATE: {SyncBuff} ~~ {
+	IF:	Not Expr {testvar[CombatStuck]}
+		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
+	IF:	All
+			Expr {testvar[CombatStuck]]}
+			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=180}
+			Any
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
+				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Melee}
+				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=210}
+		DO:	Chat {/ub quit}
+	IF:	Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Magic}
+		DO:	DoExpr {clearvar[CombatStuck]}
 	IF:	All
 			ChatMatch {^.*().* (tells you), \"![Ww]hat[Qq]uest\"$}
 			ChatCapture {^\<Tell\:IIDString\:[^\:]*\:[^\>]*>(?<tellquest>[^\<]*)\<\\Tell\> (say|says|tells you), \"(?<telltext>.*)\"$} {}
@@ -605,7 +617,7 @@ STATE: {FightBoss} ~~ {
 	IF:	Not NoMobsInDist 80
 		DO:	DoAll
 				SetOpt {NavPriorityBoost} {True}
-				DoExpr {ifthen[getpvar[SummonAllTheTime]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
+				DoExpr {ifthen[getpvar[SummonAllTheTime]==1||getpvar[SummonForBosses]==1,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[1]]`,`vtsetsetting[EnableCombat,cstr[1]]&&vtsetsetting[SummonPets,cstr[0]]`]}
 				DoExpr {ifthen[getcharskill_traininglevel[41]==3||getcharskill_traininglevel[44]==3||getcharskill_traininglevel[45]==3||getcharskill_traininglevel[46]==3,`vtsetsetting[AttackDistance,cstr[0.0125]]`,`vtsetsetting[AttackDistance,cstr[0.3125]]`]}
 	IF:	All
 			Expr {getpvar[QuestCompletedSkip]==0}
