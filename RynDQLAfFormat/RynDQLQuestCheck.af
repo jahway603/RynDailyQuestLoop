@@ -497,7 +497,9 @@ STATE: {CheckQuests} ~~ {
 		DO:	SetState {SyncStuck}
 	IF: SecsInStateGE 180
 		DO: Chat {/vt meta load RynDQLQuestCheckEcho}
-	IF: Not Expr {testpvar[DeewainBossRoomFlagged]}
+	IF: All
+			Not Expr {testpvar[DeewainBossRoomFlagged]}
+			Expr {getpvar[DoQuestDee]==1}
 		DO: SetState {DeewainCheckFlag}
 	IF: All
 			Expr {getpvar[DoQuestGrael]==1}
@@ -841,7 +843,7 @@ STATE: {CheckQuests} ~~ {
 			Expr {getcharintprop[25]>=175}
 			Expr {getisspellknown[2931]==1} ~~ Aphus
 			Expr {getpvar[DoQuestHermit]==1}
-			Expr {getqueststatus[deathallurecd]==1}
+			Expr {getqueststatus[deathsallurequestfinished]==1}
 		DO:	DoExpr {setgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHermit,getgvar[getworldname[]+getpvar[GroupIdentifier]+QuestHermit]+1]}
 	IF:	All
 			SecsInStateGE 1
@@ -1517,18 +1519,19 @@ STATE: {Default} ~~ {
 		DO: DoAll
 				ChatExpr {\/ub opt set Networking\.Tags remove DailyLoop+getworldname[]+getpvar[GroupIdentifier]}
 				SetState {Finished}
+	IF:	All
+			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
+			Any
+				Expr {getcharboolprop[44]==1}
+				Expr {getpvar[FellowCount]<2}
+		DO:	DoAll
+				DoExpr {setpvar[AdminSkip,1]}
 	IF: All
 			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
 			Expr {getpvar[Profile]==RynDQLQuestCheck}
 			Expr {getpvar[StateName]!=Default}
 			Not NeedToBuff
 		DO:	ChatExpr {\/vt setmetastate +getpvar[StateName]}
-	IF:	All
-			Expr {uboptget[`VTank.PatchExpressionEngine`]==1}
-			Any
-				Expr {getcharboolprop[44]==1}
-				Expr {getpvar[FellowCount]<2}
-		DO:	DoExpr {setpvar[AdminSkip,1]}
 	IF: All
 			Any
 				Expr {getpvar[FellowCount]>=1&&getcharstringprop[1]==getpvar[LeaderName]}
@@ -1601,7 +1604,7 @@ STATE: {SyncBuff} ~~ {
 	IF:	Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	All
-			Expr {testvar[CombatStuck]]}
+			Expr {testvar[CombatStuck]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=180}
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}

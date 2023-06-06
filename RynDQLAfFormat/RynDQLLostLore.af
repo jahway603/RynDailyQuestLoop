@@ -119,7 +119,7 @@ STATE: {ReGroupRecall} ~~ {
 	IF:	Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	All
-			Expr {testvar[CombatStuck]]}
+			Expr {testvar[CombatStuck]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
@@ -158,6 +158,7 @@ STATE: {ReGroupRecall} ~~ {
 	IF:	All
 			Any
 				NavEmpty
+				Expr {isportaling[]==0}
 				SecsInStateGE 60
 				ExitPortal
 			CellE F4180104
@@ -1274,7 +1275,7 @@ STATE: {SyncBuff} ~~ {
 	IF:	Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	All
-			Expr {testvar[CombatStuck]]}
+			Expr {testvar[CombatStuck]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=180}
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
@@ -1455,7 +1456,9 @@ STATE: {ToLostRuin} ~~ {
 			CellE 5765036C
 		DO:	EmbedNav nav19 {Clear}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				Expr {isportaling[]==0}
 			Any
 				CellE 5765036C
 		DO:	DoAll
@@ -1558,7 +1561,7 @@ STATE: {ToSanc} ~~ {
 	IF:	Not Expr {testvar[CombatStuck]}
 		DO:	DoExpr {stopwatchstart[setvar[CombatStuck, stopwatchcreate[]]]}
 	IF:	All
-			Expr {testvar[CombatStuck]]}
+			Expr {testvar[CombatStuck]}
 			Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=15}
 			Any
 				Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
@@ -1576,7 +1579,9 @@ STATE: {ToSanc} ~~ {
 				SetOpt {EnableNav} {True}
 				EmbedNav nav21 {[DeathDelay]}
 	IF:	All
-			NavEmpty
+			Any
+				NavEmpty
+				Expr {isportaling[]==0}
 			CellE F4180104
 		DO:	DoAll
 				DoExpr {clearvar[CombatStuck]}
@@ -1611,7 +1616,7 @@ STATE: {ToTN} ~~ {
 				Expr {getvar[Recall]==1}
 				Not Expr {wobjectfindnearestbynameandobjectclass[14,Portal to Town Network]}
 			All
-				Expr {testvar[CombatStuck]]}
+				Expr {testvar[CombatStuck]}
 				Expr {stopwatchelapsedseconds[getvar[CombatStuck]]>=40}
 				Any
 					Expr {getequippedweapontype[]==Wand&&getcombatstate[]==Missile}
@@ -1682,6 +1687,18 @@ STATE: {ToTranslator} ~~ {
 		DO:	SetWatchdog 5 80 {ToTN}
 	IF:	CellE E64E002F
 		DO:	EmbedNav nav24 {[none]}
+	IF:	All
+			CellE E54E010A
+			Any
+				Expr {getcombatstate[]==Magic}
+				Expr {getcombatstate[]==Melee}
+				Expr {getcombatstate[]==Missile}
+			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[46348]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[46349]]==7}
+			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[46350]]==7}
+		DO:	DoAll
+				DoExpr {setcombatstate[peace]}
+				SetState {ToTranslator}
 	IF:	All
 			CellE E54E010A
 			Expr {getobjectinternaltype[wobjectfindininventorybytemplatetype[46348]]==7}

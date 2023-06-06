@@ -396,6 +396,7 @@ STATE: {%% Options %%} ~~ {
 			Expr {uboptget[`Networking.Tags`]#DailyLoop+getworldname[]+getpvar[GroupIdentifier]}
 			Expr {getvar[ReloadOptions]>=3}
 			Any
+				Expr {getpvar[FellowCount]==1&&testpvar[LeaderName]==1}
 				Expr {getpvar[FellowCount]==2&&testpvar[FellowNameTwo]==1}
 				Expr {getpvar[FellowCount]==3&&testpvar[FellowNameTwo]==1&&testpvar[FellowNameThree]==1}
 				Expr {getpvar[FellowCount]==4&&testpvar[FellowNameTwo]==1&&testpvar[FellowNameThree]==1&&testpvar[FellowNameFour]==1}
@@ -2180,7 +2181,7 @@ STATE: {RecallCheck} ~~ {
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+ColoRecallKnown]==0}
 		DO:	DoAll
 				DoExpr {setpvar[DoQuestIQSQ,0]}
-				ChatExpr {\/t +getcharstringprop[1]+`,You are missing Colosseum Recall. Auto-fellow on crash or quest completion may fail without this recall.`}
+				ChatExpr {\/t +getcharstringprop[1]+`,You are missing Colosseum Recall. Auto-fellow on crash or quest completion will fail without this recall.`}
 	IF:	Expr {getgvar[getworldname[]+getpvar[GroupIdentifier]+GKRecallKnown]==0}
 		DO:	DoAll
 				DoExpr {setpvar[DoQuestAF,0]}
