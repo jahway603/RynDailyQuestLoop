@@ -3769,7 +3769,20 @@ K
 V
 n
 n
-8
+9
+i
+26
+TABLE
+2
+k
+v
+n
+n
+1
+s
+e
+s
+getpvar[FellowCount]==1&&testpvar[LeaderName]==1
 i
 26
 TABLE
@@ -25465,7 +25478,7 @@ n
 s
 e
 s
-\/t +getcharstringprop[1]+`,You are missing Colosseum Recall. Auto-fellow on crash or quest completion may fail without this recall.`
+\/t +getcharstringprop[1]+`,You are missing Colosseum Recall. Auto-fellow on crash or quest completion will fail without this recall.`
 s
 RecallCheck
 i
